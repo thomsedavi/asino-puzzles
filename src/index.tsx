@@ -12,6 +12,7 @@ import { Placeholder } from './common/styled';
 import Lexicologer from './pages/Lexicologer';
 import { getPuzzle, getLexicologer, getUser, isLocalhost } from './common/fetchers';
 import Puzzle from './pages/Puzzle';
+import Something from './pages/Something';
 
 interface AppState {
   user?: User | null;
@@ -95,6 +96,10 @@ export default class App extends React.Component<{}, AppState> {
         {
           index: true,
           element: <Home userId={this.state.user?.id} />,
+        },
+        {
+          path: "/something",
+          element: <Something user={this.state.user} />,
         },
         {
           path: "/miscellany",

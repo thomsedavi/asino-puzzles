@@ -431,6 +431,15 @@ export const TableCellInput = styled.input`
   box-sizing: border-box;
 `;
 
+export const MyParagraph = styled.p`
+`;
+
+export const MyHeading2 = styled.h2`
+`;
+
+export const MySpan = styled.span`
+`;
+
 export const FailureSpan = styled.span`
   font-weight: 700;
 
