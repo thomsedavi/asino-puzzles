@@ -31,10 +31,10 @@ const evaluateStringVariable = (variables: ThingSetVariable[], stringVariableId?
 
   if (variable.type === 'VARIABLE_EVALUATED') {
     if (variable.expression === 'SUBSTITUTE_OPTION') {
-      var setVar = variables.filter(v => v.variableId === variable.variableId)[0];
+      var evalVar = variables.filter(v => v.variableId === variable.variableId)[0];
 
-      if (setVar !== undefined) {
-        var substit = variable.options?.filter(v => v.id === setVar.optionId)[0]?.value;
+      if (evalVar !== undefined) {
+        var substit = variable.options?.filter(v => v.id === evalVar.optionId)[0]?.value;
 
         return substit;
       }
