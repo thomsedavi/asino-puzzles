@@ -1,8 +1,5 @@
-// ideas:
-// * Some options only available when requirements are met
-
 export interface ThingPuzzle {
-  indexPageId?: string;
+  defaultPageId?: string;
   variables?: (ThingVariableSet | ThingVariabelEvaluated)[];
   pages?: ThingPage[];
   elements?: (ThingElement | ThingElementGroup | ThingElementInput)[];
@@ -11,42 +8,54 @@ export interface ThingPuzzle {
 export interface ThingElement {
   id?: string;
   name?: string;
-  type?: 'ELEMENT_PARAGRAPH' | 'ELEMENT_HEADING_2';
-  spans?: (ThingSpanString | ThingSpanVariable)[];
+  type?: 'PARAGRAPH' | 'HEADING_2';
+  spans?: (ThingSpanValue | ThingSpanGroup | ThingSpanVariable)[];
   isVariableId?: string;
-  isNotVariable?: boolean;
 }
 
 export interface ThingElementInput {
   id?: string;
   name?: string;
-  type?: 'ELEMENT_INPUT';
+  type?: 'INPUT';
   variableId?: string;
   isVariableId?: string;
-  isNotVariable?: boolean;
 }
 
 export interface ThingElementGroup {
   id?: string;
   name?: string;
-  type?: 'ELEMENT_GROUP';
+  type?: 'GROUP';
+  elementIds?: string[];
   isVariableId?: string;
-  isNotVariable?: boolean;
 }
 
-export interface ThingSpanString {
-  type?: 'STRING';
-  string?: string;
+export interface ThingSpanGroup {
+  type?: 'GROUP';
+  spans?: (ThingSpanValue | ThingSpanGroup | ThingSpanVariable)[];
+  style?: ThingStyle;
   isVariableId?: string;
-  isNotVariable?: boolean;
+  pageId?: string;
+}
+
+export interface ThingSpanValue {
+  type?: 'STRING';
+  value?: string;
+  style?: ThingStyle;
+  isVariableId?: string;
+  pageId?: string;
 }
 
 export interface ThingSpanVariable {
   type?: 'VARIABLE';
   variableId?: string;
+  style?: ThingStyle;
   isVariableId?: string;
-  isNotVariable?: boolean;
+  pageId?: string;
+}
 
+export interface ThingStyle {
+  fontWeight?: 'normal' | 'bold';
+  fontStyle?: 'italic';
 }
 
 export interface ThingVariableSet {
@@ -62,13 +71,14 @@ export interface ThingVariableSet {
 export interface ThingSelectOptionString {
   id?: string;
   value?: string;
+  isVariableId?: string;
 }
 
 export interface ThingVariabelEvaluated {
   id?: string;
   name?: string;
   type?: 'VARIABLE_EVALUATED';
-  expression?: 'SUBSTITUTE_OPTION' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_OPTION';
+  expression?: 'SUBSTITUTE_OPTION' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_NOT_SET' | 'IS_VARIABLE_OPTION';
   variableId?: string,
   options?: ThingSelectOptionString[];
   optionId?: string;
@@ -86,7 +96,7 @@ export interface ThingSetVariable {
 }
 
 export const ThingTest: ThingPuzzle = {
-  indexPageId: 'home',
+  defaultPageId: 'home',
   variables: [
     {
       id: 'char1class',
@@ -119,6 +129,17 @@ export const ThingTest: ThingPuzzle = {
       options: [{id: 'HARP', value: 'harp'}, {id: 'LUTE', value: 'lute'}, {id: 'KAZOO', value: 'kazoo'}]
     },
     {
+      id: 'startlocation',
+      name: 'Start Location',
+      type: 'VARIABLE_SET_STRING',
+      options: [
+        {id: 'BARD_HALL', value: 'Bard Hall', isVariableId: 'ischar1classbard'},
+        {id: 'MUGGY_INN', value: 'Muggy Inn'},
+        {id: 'ROGUE_COLLEGE', value: 'Rogue College', isVariableId: 'ischar1classrogue'}
+      ],
+      placeholder: 'Start Location'
+    },
+    {
       id: 'char1name',
       name: 'Character 1 Name',
       type: 'VARIABLE_SET_STRING',
@@ -131,6 +152,27 @@ export const ThingTest: ThingPuzzle = {
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
       variableId: 'char1class'
+    },
+    {
+      id: 'ischar1classnotset',
+      name: 'Is Character 1 Class Not Set',
+      type: 'VARIABLE_EVALUATED',
+      expression: 'IS_VARIABLE_NOT_SET',
+      variableId: 'char1class'
+    },
+    {
+      id: 'isstartlocationset',
+      name: 'Is Start Location Set',
+      type: 'VARIABLE_EVALUATED',
+      expression: 'IS_VARIABLE_SET',
+      variableId: 'startlocation'
+    },
+    {
+      id: 'isstartlocationnotset',
+      name: 'Is Start Location Not Set',
+      type: 'VARIABLE_EVALUATED',
+      expression: 'IS_VARIABLE_NOT_SET',
+      variableId: 'startlocation'
     },
     {
       id: 'ischar1classbard',
@@ -156,10 +198,24 @@ export const ThingTest: ThingPuzzle = {
       variableId: 'bardinstrument'
     },
     {
+      id: 'isbardinstrumentnotset',
+      name: 'Is Bard Instrument Not Set',
+      type: 'VARIABLE_EVALUATED',
+      expression: 'IS_VARIABLE_NOT_SET',
+      variableId: 'bardinstrument'
+    },
+    {
       id: 'ischar1nameset',
       name: 'Is Character 1 Name Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
+      variableId: 'char1name'
+    },
+    {
+      id: 'ischar1namenotset',
+      name: 'Is Character 1 Name Not Set',
+      type: 'VARIABLE_EVALUATED',
+      expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'char1name'
     }
   ],
@@ -176,43 +232,102 @@ export const ThingTest: ThingPuzzle = {
         'char1nselectparagraph',
         'char1ninput',
         'char1nresult',
+        'startlocationinput',
+        'startlocationdescription',
         'theend'
+      ]
+    },
+    {
+      id: 'info',
+      elementIds: [
+        'homelink',
+        'elementgroup'
       ]
     }
   ],
   elements: [
     {
-      id: 'introheading',
-      name: 'Introduction',
-      type: 'ELEMENT_HEADING_2',
+      id: 'test1',
+      name: 'Test 1',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'You are going on an adventure!'
+          value: 'Test 1.'
+        }
+      ]
+    },
+    {
+      id: 'test2',
+      name: 'Test 1',
+      type: 'PARAGRAPH',
+      spans: [
+        {
+          type: 'STRING',
+          value: 'Test 2.'
+        }
+      ]
+    },
+    {
+      id: 'elementgroup',
+      name: 'Element Group',
+      type: 'GROUP',
+      elementIds: [
+        'test1',
+        'test2'
+      ]
+    },
+    {
+      id: 'homelink',
+      name: 'Link back home',
+      type: 'PARAGRAPH',
+      spans: [
+        {
+          type: 'STRING',
+          value: 'Go back to'
+        },
+        {
+          type: 'STRING',
+          value: 'home',
+          pageId: 'home'
+        },
+        {
+          type: 'STRING',
+          value: '.'
+        }
+      ]
+    },
+    {
+      id: 'introheading',
+      name: 'Introduction',
+      type: 'HEADING_2',
+      spans: [
+        {
+          type: 'STRING',
+          value: 'You are going on an adventure!'
         }
       ]
     },
     {
       id: 'char1cselectparagraph',
       name: 'Character 1 Class Select Text',
-      type: 'ELEMENT_PARAGRAPH',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'What is the class of your first adventurer?'
+          value: 'What is the class of your first adventurer?'
         }
       ],
-      isVariableId: 'ischar1classset',
-      isNotVariable: true
+      isVariableId: 'ischar1classnotset'
     },
     {
       id: 'char1nselectparagraph',
       name: 'Character 1 Name Select Text',
-      type: 'ELEMENT_PARAGRAPH',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'What is the name of your'
+          value: 'What is the name of your'
         },
         {
           type: 'VARIABLE',
@@ -220,32 +335,31 @@ export const ThingTest: ThingPuzzle = {
         },
         {
           type: 'STRING',
-          string: '?'
+          value: '?'
         }
       ],
-      isVariableId: 'ischar1nameset',
-      isNotVariable: true
+      isVariableId: 'ischar1namenotset'
     },
     {
       id: 'char1cinput',
       name: 'Character 1 Class Select Input',
-      type: 'ELEMENT_INPUT',
+      type: 'INPUT',
       variableId: 'char1class'
     },
     {
       id: 'char1ninput',
       name: 'Character 1 Name Input',
-      type: 'ELEMENT_INPUT',
+      type: 'INPUT',
       variableId: 'char1name'
     },
     {
       id: 'char1isrogueparagraph',
       name: 'Character 1 Is Bard Paragraph',
-      type: 'ELEMENT_PARAGRAPH',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'Huzzah, your party has a rogue!'
+          value: 'Huzzah, your party has a rogue!'
         }
       ],
       isVariableId: 'ischar1classrogue'
@@ -253,11 +367,11 @@ export const ThingTest: ThingPuzzle = {
     {
       id: 'char1nresult',
       name: 'Character 1 Name Result',
-      type: 'ELEMENT_PARAGRAPH',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'Your'
+          value: 'Your'
         },
         {
           type: 'VARIABLE',
@@ -265,7 +379,7 @@ export const ThingTest: ThingPuzzle = {
         },
         {
           type: 'STRING',
-          string: 'is named'
+          value: 'is named'
         },
         {
           type: 'VARIABLE',
@@ -273,28 +387,27 @@ export const ThingTest: ThingPuzzle = {
         },
         {
           type: 'STRING',
-          string: '.'
+          value: '.'
         }
       ]
     },
     {
       id: 'char1isbardparagraph',
       name: 'Character 1 Is Bard Paragraph',
-      type: 'ELEMENT_PARAGRAPH',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'Hurrah, your party has a bard!'
+          value: 'Hurrah, your party has a bard!'
         },
         {
           type: 'STRING',
-          string: 'What kind of instrument does your bard have?',
-          isVariableId: 'isbardinstrumentset',
-          isNotVariable: true
+          value: 'What kind of instrument does your bard have?',
+          isVariableId: 'isbardinstrumentnotset'
         },
         {
           type: 'STRING',
-          string: 'And your bard has a',
+          value: 'And your bard has a',
           isVariableId: 'isbardinstrumentset'
         },
         {
@@ -304,7 +417,7 @@ export const ThingTest: ThingPuzzle = {
         },
         {
           type: 'STRING',
-          string: '!',
+          value: '!',
           isVariableId: 'isbardinstrumentset'
         }
       ],
@@ -313,18 +426,90 @@ export const ThingTest: ThingPuzzle = {
     {
       id: 'bardinstrumentinput',
       name: 'Bard Instrument Input',
-      type: 'ELEMENT_INPUT',
+      type: 'INPUT',
       variableId: 'bardinstrument',
       isVariableId: 'ischar1classbard'
     },
     {
-      id: 'theend',
-      name: 'The End',
-      type: 'ELEMENT_PARAGRAPH',
+      id: 'startlocationinput',
+      name: 'Start Location Input',
+      type: 'INPUT',
+      variableId: 'startlocation'
+    },
+    {
+      id: 'startlocationdescription',
+      name: 'Start Location Description',
+      type: 'PARAGRAPH',
       spans: [
         {
           type: 'STRING',
-          string: 'The End'
+          value: 'You are at the'
+        },
+        {
+          type: 'VARIABLE',
+          variableId: 'startlocation'
+        },
+        {
+          type: 'STRING',
+          value: '.'
+        },
+        {
+          type: 'GROUP',
+          pageId: 'info',
+          spans: [
+            {
+              type: 'VARIABLE',
+              variableId: 'char1name'
+            },
+            {
+              type: 'STRING',
+              value: 'is sitting in the corner practicing their lock picking.'
+            }
+          ],
+          isVariableId: 'ischar1classrogue'
+        },
+        {
+          type: 'GROUP',
+          pageId: 'info',
+          spans: [
+            {
+              type: 'VARIABLE',
+              variableId: 'char1name'
+            },
+            {
+              type: 'STRING',
+              value: 'is sitting in the corner practicing their',
+              style: {
+                fontStyle: 'italic'
+              }
+            },
+            {
+              type: 'VARIABLE',
+              style: {
+                fontWeight: 'normal'
+              },
+              variableId: 'bardinstrumentlowercase'
+            },
+            {
+              type: 'STRING',
+              value: '.'
+            }
+          ],
+          style: {
+            fontWeight: 'bold'
+          },
+          isVariableId: 'ischar1classbard'
+        }
+      ]
+    },
+    {
+      id: 'theend',
+      name: 'The End',
+      type: 'PARAGRAPH',
+      spans: [
+        {
+          type: 'STRING',
+          value: 'The End'
         }
       ]
     }

@@ -437,7 +437,13 @@ export const MyParagraph = styled.p`
 export const MyHeading2 = styled.h2`
 `;
 
-export const MySpan = styled.span`
+interface MySpanProps {
+  isPageLink?: boolean;
+}
+
+export const MySpan = styled.span<MySpanProps>`
+  cursor: ${props => props.isPageLink ? "pointer" : "auto"};
+  color: ${props => props.isPageLink ? "var(--accent-pale)" : "var(--color)"};
 `;
 
 export const FailureSpan = styled.span`
