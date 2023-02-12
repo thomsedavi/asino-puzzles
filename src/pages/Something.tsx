@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup, Container, Heading2, MyParagraph, MyHeading2, MySpan, Overlay, Placeholder } from '../common/styled';
+import { Button, ButtonGroup, Container, Heading2, MyParagraph, MyHeading2, MySpan, Overlay, Placeholder, Input, MyOption, MySelect } from '../common/styled';
 import { User } from '../interfaces';
 import Layout from './Layout';
 import { ThingElement, ThingElementGroup, ThingElementInput, ThingPage, ThingSelectOptionString, ThingSetVariable, ThingSpanGroup, ThingSpanValue, ThingSpanVariable, ThingStyle, ThingTest } from '../common/somethingv2';
@@ -153,9 +153,12 @@ const drawElements = (elementIds: string[], elements: JSX.Element[], variables: 
 
       if (elementVariable.type === 'VARIABLE_SET_STRING') {
         if (elementVariable.options !== undefined) {
-          const setVariable = tempValues.filter(variable => element.variableId === variable.variableId)[0]?.optionId ?? '';
-          var options: JSX.Element[] = [];
+          const setVariable: string | undefined = tempValues.filter(variable => element.variableId === variable.variableId)[0]?.optionId;
     
+          elements.push(<MyParagraph key={`element${keys.join('-')}-${elementIndex}input`}>{elementVariable.description}</MyParagraph>);
+
+          var options: JSX.Element[] = [];
+
           elementVariable.options.forEach((option: ThingSelectOptionString, optionIndex: number) => {
             let isOptionResult = evaluateIsVariable(variables, option.isVariableId);
 
@@ -164,18 +167,19 @@ const drawElements = (elementIds: string[], elements: JSX.Element[], variables: 
                 return;
             }
 
-            options.push(<option key={`element${keys.join('-')}-${elementIndex}option${optionIndex}`} value={option.id}>{option.value}</option>);
+            options.push(<MyOption isSelected={setVariable === option.id} key={`element${keys.join('-')}-${elementIndex}option${optionIndex}`} onClick={() => updateTempValue(elementVariable.id, option.id)}>{option.value}</MyOption>);
           });
 
-          elements.push(<select key={`element${keys.join('-')}-${elementIndex}`} id={elementVariable.id} value={setVariable} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => updateTempValue(elementVariable.id, event.currentTarget.value)}><option value="" disabled>{elementVariable.placeholder}</option>{options}</select>);
-          elements.push(<button key={`division${keys.join('-')}-${elementIndex}button`} onClick={() => saveTempValue(element.variableId)}>Save</button>);
-        } else {
-          const setVariable = tempValues.filter(variable => element.variableId === variable.variableId)[0]?.value ?? '';
+          elements.push(<MySelect key={`element${keys.join('-')}-${elementIndex}`}>{options}</MySelect>);
 
-          elements.push(<input type="text" key={`division${keys.join('-')}-${elementIndex}input`} id={elementVariable.id}
+          elements.push(<ButtonGroup key={`element${keys.join('-')}-${elementIndex}buttons`}><Button disabled={setVariable === undefined} key={`division${keys.join('-')}-${elementIndex}button`} onClick={() => saveTempValue(element.variableId)}>Select</Button></ButtonGroup>);
+        } else {
+          const setVariable: string | undefined = tempValues.filter(variable => element.variableId === variable.variableId)[0]?.value;
+
+          elements.push(<Input width='100%' type="text" key={`division${keys.join('-')}-${elementIndex}input`} id={elementVariable.id}
                                 value={setVariable}
                                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {updateTempValue(elementVariable.id, event.currentTarget.value)}} />);
-          elements.push(<button key={`division${keys.join('-')}-${elementIndex}button`} onClick={() => saveTempValue(element.variableId)}>Save</button>);
+          elements.push(<ButtonGroup key={`element${keys.join('-')}-${elementIndex}buttons`}><Button disabled={setVariable === undefined} key={`division${keys.join('-')}-${elementIndex}button`} onClick={() => saveTempValue(element.variableId)}>Select</Button></ButtonGroup>);
         }
       }
 
@@ -223,9 +227,16 @@ const Something = (props: SomethingProps): JSX.Element => {
       }
     } else {
       if (variable === undefined) {
-        currentTempValues.push({variableId: variableId, value: value});
+        if (value.trim() !== '') {
+          currentTempValues.push({variableId: variableId, value: value});
+        }
       } else {
-        variable.value = value;
+        if (value.trim() === '') {
+          const index = currentTempValues.indexOf(variable);
+          currentTempValues.splice(index, 1);
+        } else {
+          variable.value = value;
+        }
       }
     }
 

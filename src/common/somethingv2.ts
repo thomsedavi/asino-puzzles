@@ -7,7 +7,7 @@ export interface ThingPuzzle {
 
 export interface ThingElement {
   id?: string;
-  name?: string;
+  description?: string;
   type?: 'PARAGRAPH' | 'HEADING_2';
   spans?: (ThingSpanValue | ThingSpanGroup | ThingSpanVariable)[];
   isVariableId?: string;
@@ -15,7 +15,7 @@ export interface ThingElement {
 
 export interface ThingElementInput {
   id?: string;
-  name?: string;
+  description?: string;
   type?: 'INPUT';
   variableId?: string;
   isVariableId?: string;
@@ -23,7 +23,7 @@ export interface ThingElementInput {
 
 export interface ThingElementGroup {
   id?: string;
-  name?: string;
+  description?: string;
   type?: 'GROUP';
   elementIds?: string[];
   isVariableId?: string;
@@ -60,9 +60,8 @@ export interface ThingStyle {
 
 export interface ThingVariableSet {
   id?: string;
-  name?: string;
+  description?: string;
   type?: 'VARIABLE_SET_STRING' | 'VARIABLE_SET_NUMBER' | 'VARIABLE_SET_BOOLEAN';
-  placeholder?: string;
   defaultOptionId?: string;
   defaultValue?: string;
   options?: ThingSelectOptionString[];
@@ -76,7 +75,7 @@ export interface ThingSelectOptionString {
 
 export interface ThingVariabelEvaluated {
   id?: string;
-  name?: string;
+  description?: string;
   type?: 'VARIABLE_EVALUATED';
   expression?: 'SUBSTITUTE_OPTION' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_NOT_SET' | 'IS_VARIABLE_OPTION';
   variableId?: string,
@@ -100,14 +99,13 @@ export const ThingTest: ThingPuzzle = {
   variables: [
     {
       id: 'char1class',
-      name: 'Character 1 Class',
+      description: 'Character 1 Class',
       type: 'VARIABLE_SET_STRING',
-      options: [{id: 'BARD', value: 'Bard'}, {id: 'ROGUE', value: 'Rogue'}],
-      placeholder: 'Character 1 Class'
+      options: [{id: 'BARD', value: 'Bard'}, {id: 'ROGUE', value: 'Rogue'}]
     },
     {
       id: 'char1classlowercase',
-      name: 'Character 1 Class Lower Case',
+      description: 'Character 1 Class Lower Case',
       type: 'VARIABLE_EVALUATED',
       expression: 'SUBSTITUTE_OPTION',
       variableId: 'char1class',
@@ -115,14 +113,13 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'bardinstrument',
-      name: 'Bard Instrument',
+      description: 'Bard Instrument',
       type: 'VARIABLE_SET_STRING',
-      options: [{id: 'HARP', value: 'Harp'}, {id: 'LUTE', value: 'Lute'}, {id: 'KAZOO', value: 'Kazoo'}],
-      placeholder: 'Bard Instrument'
+      options: [{id: 'HARP', value: 'Harp'}, {id: 'LUTE', value: 'Lute'}, {id: 'KAZOO', value: 'Kazoo'}]
     },
     {
       id: 'bardinstrumentlowercase',
-      name: 'Bard Instgrument Lower Case',
+      description: 'Bard Instgrument Lower Case',
       type: 'VARIABLE_EVALUATED',
       expression: 'SUBSTITUTE_OPTION',
       variableId: 'bardinstrument',
@@ -130,53 +127,51 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'startlocation',
-      name: 'Start Location',
+      description: 'Start Location',
       type: 'VARIABLE_SET_STRING',
       options: [
         {id: 'BARD_HALL', value: 'Bard Hall', isVariableId: 'ischar1classbard'},
         {id: 'MUGGY_INN', value: 'Muggy Inn'},
         {id: 'ROGUE_COLLEGE', value: 'Rogue College', isVariableId: 'ischar1classrogue'}
-      ],
-      placeholder: 'Start Location'
+      ]
     },
     {
       id: 'char1name',
-      name: 'Character 1 Name',
+      description: 'Character 1 Name',
       type: 'VARIABLE_SET_STRING',
-      placeholder: 'Character 1 Name',
       defaultValue: 'Incognito'
     },
     {
       id: 'ischar1classset',
-      name: 'Is Character 1 Class Set',
+      description: 'Is Character 1 Class Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
       variableId: 'char1class'
     },
     {
       id: 'ischar1classnotset',
-      name: 'Is Character 1 Class Not Set',
+      description: 'Is Character 1 Class Not Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'char1class'
     },
     {
       id: 'isstartlocationset',
-      name: 'Is Start Location Set',
+      description: 'Is Start Location Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
       variableId: 'startlocation'
     },
     {
       id: 'isstartlocationnotset',
-      name: 'Is Start Location Not Set',
+      description: 'Is Start Location Not Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'startlocation'
     },
     {
       id: 'ischar1classbard',
-      name: 'Is Character 1 Bard',
+      description: 'Is Character 1 Bard',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_OPTION',
       variableId: 'char1class',
@@ -184,7 +179,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'ischar1classrogue',
-      name: 'Is Character 1 Rogue',
+      description: 'Is Character 1 Rogue',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_OPTION',
       variableId: 'char1class',
@@ -192,28 +187,28 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'isbardinstrumentset',
-      name: 'Is Bard Instrument Set',
+      description: 'Is Bard Instrument Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
       variableId: 'bardinstrument'
     },
     {
       id: 'isbardinstrumentnotset',
-      name: 'Is Bard Instrument Not Set',
+      description: 'Is Bard Instrument Not Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'bardinstrument'
     },
     {
       id: 'ischar1nameset',
-      name: 'Is Character 1 Name Set',
+      description: 'Is Character 1 Name Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_SET',
       variableId: 'char1name'
     },
     {
       id: 'ischar1namenotset',
-      name: 'Is Character 1 Name Not Set',
+      description: 'Is Character 1 Name Not Set',
       type: 'VARIABLE_EVALUATED',
       expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'char1name'
@@ -248,7 +243,7 @@ export const ThingTest: ThingPuzzle = {
   elements: [
     {
       id: 'test1',
-      name: 'Test 1',
+      description: 'Test 1',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -259,7 +254,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'test2',
-      name: 'Test 1',
+      description: 'Test 1',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -270,7 +265,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'elementgroup',
-      name: 'Element Group',
+      description: 'Element Group',
       type: 'GROUP',
       elementIds: [
         'test1',
@@ -279,7 +274,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'homelink',
-      name: 'Link back home',
+      description: 'Link back home',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -299,7 +294,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'introheading',
-      name: 'Introduction',
+      description: 'Introduction',
       type: 'HEADING_2',
       spans: [
         {
@@ -310,7 +305,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'char1cselectparagraph',
-      name: 'Character 1 Class Select Text',
+      description: 'Character 1 Class Select Text',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -322,7 +317,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'char1nselectparagraph',
-      name: 'Character 1 Name Select Text',
+      description: 'Character 1 Name Select Text',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -342,19 +337,19 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'char1cinput',
-      name: 'Character 1 Class Select Input',
+      description: 'Character 1 Class Select Input',
       type: 'INPUT',
       variableId: 'char1class'
     },
     {
       id: 'char1ninput',
-      name: 'Character 1 Name Input',
+      description: 'Character 1 Name Input',
       type: 'INPUT',
       variableId: 'char1name'
     },
     {
       id: 'char1isrogueparagraph',
-      name: 'Character 1 Is Bard Paragraph',
+      description: 'Character 1 Is Bard Paragraph',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -366,7 +361,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'char1nresult',
-      name: 'Character 1 Name Result',
+      description: 'Character 1 Name Result',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -393,7 +388,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'char1isbardparagraph',
-      name: 'Character 1 Is Bard Paragraph',
+      description: 'Character 1 Is Bard Paragraph',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -425,20 +420,20 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'bardinstrumentinput',
-      name: 'Bard Instrument Input',
+      description: 'Bard Instrument Input',
       type: 'INPUT',
       variableId: 'bardinstrument',
       isVariableId: 'ischar1classbard'
     },
     {
       id: 'startlocationinput',
-      name: 'Start Location Input',
+      description: 'Start Location Input',
       type: 'INPUT',
       variableId: 'startlocation'
     },
     {
       id: 'startlocationdescription',
-      name: 'Start Location Description',
+      description: 'Start Location Description',
       type: 'PARAGRAPH',
       spans: [
         {
@@ -504,7 +499,7 @@ export const ThingTest: ThingPuzzle = {
     },
     {
       id: 'theend',
-      name: 'The End',
+      description: 'The End',
       type: 'PARAGRAPH',
       spans: [
         {

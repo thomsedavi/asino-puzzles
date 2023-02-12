@@ -62,13 +62,39 @@ export const ParagraphAccent = styled.p`
   font-size: 0.9em;
 `;
 
+export const MySelect = styled.div`
+
+`
+
+interface MyOptionProps{
+  isSelected?: boolean;
+}
+
+export const MyOption = styled.div<MyOptionProps>`
+  background: ${props => props.isSelected ? "var(--accent-pale)" : "var(--color)"};
+  color: var(--background-color);
+  box-shadow: -0.2em -0.2em ${props => props.isSelected ? "var(--accent)" : "transparent"}, 0.2em 0.2em var(--accent);
+  padding: 0.3em 0.6em;
+  margin: 0.75em 0;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    background: ${props => props.isSelected ? "var(--accent-pale)" : "var(--hover)"};
+  }
+`
+
 export const ButtonGroup = styled.div`
   text-align: center;
 `;
 
-export const Input = styled.input`
+interface InputProps {
+  width: '80%' | '100%';
+}
+
+export const Input = styled.input<InputProps>`
   font-size: 1em;
-  width: 80%;
+  width: ${props => props.width};
 `;
 
 export const Button = styled.button`
@@ -88,6 +114,7 @@ export const Button = styled.button`
 
   &:disabled {
     background: var(--disabled);
+    cursor: auto;
   }
 `;
 

@@ -101,7 +101,7 @@ export const EditableElementHeading1 = (props: EditableElementHeading1Props): JS
 
     return <>
       <Heading1>
-        <Input onBlur={props.onClickSave} autoFocus maxLength={64} disabled={props.isWorking} value={props.inputValue} onKeyDown={onKeyDown} onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.onChange(event.currentTarget.value)} />
+        <Input width='80%' onBlur={props.onClickSave} autoFocus maxLength={64} disabled={props.isWorking} value={props.inputValue} onKeyDown={onKeyDown} onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.onChange(event.currentTarget.value)} />
       </Heading1>
       {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
     </>
