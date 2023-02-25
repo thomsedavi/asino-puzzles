@@ -1,4 +1,4 @@
-import { LexicologerGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User } from "../interfaces";
+import { LexicologerGame, BraiderlyGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User, BraiderlySummary } from "./interfaces";
 
 export const isLocalhost = (): boolean => {
   return window.location.hostname === 'localhost';
@@ -230,6 +230,150 @@ export const deletePuzzle = async (id: string | undefined): Promise<boolean> => 
     }
   } else {
     const response: Response = await fetch(`/api/puzzles/${id}`, { method: 'DELETE' });
+
+    if (response.status === 200) {
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(false);
+    }
+  }
+}
+
+export const getBraiderly = async (id: string | undefined): Promise<BraiderlyGame | string | undefined> => {
+  if (isLocalhost()) {
+    const storedBraiderly = window.localStorage.getItem('braiderly_' + id);
+
+    if (storedBraiderly) {
+      return Promise.resolve(JSON.parse(storedBraiderly));
+    } else {
+      return Promise.resolve(undefined);
+    }
+  } else {
+    const response: Response = await fetch(`/api/braiderlys/${id}`, { method: 'GET' });
+
+    if (response.status === 200) {
+      const json = await response.json();
+
+      return Promise.resolve(json);
+    } else {
+      return Promise.resolve(undefined);
+    }
+  }
+}
+
+export const putBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyGame | undefined | string> => {
+  if (isLocalhost()) {
+      const storedUserString = window.localStorage.getItem('user_0-00');
+
+      if (storedUserString) {
+        const date = getISODate();
+        const storedUser: User = JSON.parse(storedUserString);
+
+        storedUser.braiderlys?.forEach(userBraiderly => {
+          userBraiderly.id === braiderly.id && (userBraiderly.dateUpdated = date);
+          userBraiderly.id === braiderly.id && (userBraiderly.title = braiderly.title);
+        });
+
+        braiderly.dateUpdated = date;
+
+        window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
+        window.localStorage.setItem('braiderly_' + braiderly.id, JSON.stringify(braiderly));
+
+        return Promise.resolve(braiderly);
+      } else {
+        return Promise.resolve(undefined);      
+      }
+  } else {
+    const response: Response = await fetch(`/api/braiderlys/${braiderly.id}`, { method: 'PUT', body: JSON.stringify(braiderly) });
+
+    if (response.status === 200) {
+      const json = await response.json();
+
+      return Promise.resolve(json);
+    } else if (response.status === 400) {
+      var text = await response.text();
+
+      return Promise.resolve(text);
+    } else {
+      return Promise.resolve(undefined);
+    }
+  }
+}
+
+export const postBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyGame | string | undefined> => {
+  if (isLocalhost()) {
+    const storedUser = window.localStorage.getItem('user_0-00');
+    const user: User = JSON.parse(storedUser!);
+
+    const date = getISODate();
+    braiderly.dateCreated = date;
+    braiderly.dateUpdated = date;
+
+    if (user.braiderlys) {
+      let idSuffix = user.braiderlys.length.toString();
+      
+      if (idSuffix.length === 1) {
+        idSuffix = '00' + idSuffix;
+      } else if (idSuffix.length === 2) {
+        idSuffix = '0' + idSuffix;
+      }
+
+      braiderly.id = '0-00-' + idSuffix;
+
+      user.braiderlys.push({ id: braiderly.id, title: braiderly.title, dateCreated: date, dateUpdated: date});
+      window.localStorage.setItem('user_0-00', JSON.stringify(user));
+      window.localStorage.setItem('braiderly_' + braiderly.id, JSON.stringify(braiderly));
+
+      return Promise.resolve(braiderly);
+    } else {
+      braiderly.id = '0-00-000';
+
+      user.braiderlys = [{ id: braiderly.id, title: braiderly.title, dateCreated: date, dateUpdated: date }];
+      window.localStorage.setItem('user_0-00', JSON.stringify(user));
+      window.localStorage.setItem('braiderly_0-00-000', JSON.stringify(braiderly));
+
+      return Promise.resolve(braiderly);
+    }
+  } else {
+    const response: Response = await fetch('/api/braiderlys', { method: 'POST', body: JSON.stringify(braiderly) });
+
+    if (response.status === 200) {
+      const json = await response.json();
+
+      return Promise.resolve(json);
+    } else if (response.status === 400) {
+      var text = await response.text();
+
+      return Promise.resolve(text);
+    } else {
+      return Promise.resolve(undefined);
+    }
+  }
+}
+
+export const deleteBraiderly = async (id: string | undefined): Promise<boolean> => {
+  if (isLocalhost()) {
+    const storedUserString = window.localStorage.getItem('user_0-00');
+
+    if (storedUserString) {
+      const storedUser: User = JSON.parse(storedUserString);
+      let deleteIndex = -1;
+
+      storedUser.braiderlys?.forEach((userBraiderly: BraiderlySummary, index: number) => {
+        userBraiderly.id === id && (deleteIndex = index);
+      });
+
+      storedUser.braiderlys?.splice(deleteIndex, 1);
+
+      window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
+      window.localStorage.removeItem('braiderly_' + id);
+
+      return Promise.resolve(true);
+    } else {
+      return Promise.resolve(false);
+    }
+  } else {
+    const response: Response = await fetch(`/api/braiderlys/${id}`, { method: 'DELETE' });
 
     if (response.status === 200) {
       return Promise.resolve(true);

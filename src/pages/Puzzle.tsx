@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import { EditToggleButton } from '../common/components';
 import { useState } from '../common/saveState';
 import { Button, ButtonGroup, Container, Flash, Heading1, Heading2, Overlay, Placeholder } from '../common/styled';
-import { User, AsinoPuzzle } from '../interfaces';
+import { User, AsinoPuzzle } from '../common/interfaces';
 import Layout from './Layout';
 
 interface PuzzleProps {

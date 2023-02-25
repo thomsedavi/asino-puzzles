@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer } from '../interfaces';
+import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer } from './interfaces';
 import { Icon } from './icons';
 import { Paragraph } from './styled';
 

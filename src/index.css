@@ -16,13 +16,13 @@
   --color-light-hover: hsla(var(--hue-azure),25%,75%,1);
   --color-light-disabled: hsla(var(--hue-azure),25%,50%,1);
   --color-light-accent: hsla(var(--hue-chartreuse),75%,50%,1);
-  --color-light-accent-pale: hsla(var(--hue-chartreuse),75%,35%,1);
-  --color-light-accent-strong: hsla(var(--hue-chartreuse),75%,65%,1);
+  --color-light-accent-pale: hsla(var(--hue-chartreuse),75%,25%,1);
+  --color-light-accent-strong: hsla(var(--hue-chartreuse),75%,75%,1);
   --color-light-accent-background: hsla(var(--hue-chartreuse),75%,90%,1);
-  --color-light-accent-faded: hsla(var(--hue-chartreuse),75%,35%,0.5);
+  --color-light-accent-faded: hsla(var(--hue-chartreuse),75%,25%,0.5);
   --color-light-opposite: hsla(var(--hue-violet),75%,50%,1);;
-  --color-light-opposite-pale: hsla(var(--hue-violet),75%,65%,1);;
-  --color-light-opposite-strong: hsla(var(--hue-violet),75%,35%,1);;
+  --color-light-opposite-pale: hsla(var(--hue-violet),75%,75%,1);;
+  --color-light-opposite-strong: hsla(var(--hue-violet),75%,25%,1);;
   --color-light-shadow: hsla(var(--hue-azure),25%,25%,1);
   --color-light-boop: hsla(var(--hue-yellow),75%,50%,1);
   --color-dark: hsla(var(--hue-azure),25%,5%,1);
@@ -30,13 +30,13 @@
   --color-dark-hover: hsla(var(--hue-azure),25%,25%,1);
   --color-dark-disabled: hsla(var(--hue-azure),25%,50%,1);
   --color-dark-accent: hsla(var(--hue-pink),75%,50%,1);
-  --color-dark-accent-pale: hsla(var(--hue-pink),75%,65%,1);
-  --color-dark-accent-strong: hsla(var(--hue-pink),75%,35%,1);
+  --color-dark-accent-pale: hsla(var(--hue-pink),75%,75%,1);
+  --color-dark-accent-strong: hsla(var(--hue-pink),75%,25%,1);
   --color-dark-accent-background: hsla(var(--hue-pink),75%,10%,1);
-  --color-dark-accent-faded: hsla(var(--hue-pink),75%,65%,0.5);
+  --color-dark-accent-faded: hsla(var(--hue-pink),75%,75%,0.5);
   --color-dark-opposite: hsla(var(--hue-mint),75%,50%,1);;
-  --color-dark-opposite-pale: hsla(var(--hue-mint),75%,65%,1);;
-  --color-dark-opposite-strong: hsla(var(--hue-mint),75%,35%,1);;
+  --color-dark-opposite-pale: hsla(var(--hue-mint),75%,75%,1);;
+  --color-dark-opposite-strong: hsla(var(--hue-mint),75%,25%,1);;
   --color-dark-shadow: hsla(var(--hue-azure),25%,25%,1);
   --color-dark-boop: hsla(var(--hue-violet),75%,50%,1);
 }

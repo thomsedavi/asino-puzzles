@@ -7,12 +7,12 @@ import About from "./pages/About";
 import UserPage from './pages/UserPage';
 import NoPage from "./pages/NoPage";
 import './index.css';
-import { User } from './interfaces';
+import { User } from './common/interfaces';
 import { Placeholder } from './common/styled';
 import Lexicologer from './pages/Lexicologer';
-import { getPuzzle, getLexicologer, getUser, isLocalhost } from './common/fetchers';
+import { getPuzzle, getLexicologer, getUser, isLocalhost, getBraiderly } from './common/fetchers';
 import Puzzle from './pages/Puzzle';
-import Something from './pages/Something';
+import Braiderly from './pages/Braiderly';
 
 interface AppState {
   user?: User | null;
@@ -88,6 +88,10 @@ export default class App extends React.Component<{}, AppState> {
     return getPuzzle(params.id);
   }
 
+  braiderlyLoader = async({ params }: LoaderFunctionArgs) => {
+    return getBraiderly(params.id);
+  }
+
   render = (): JSX.Element => {
     if (this.state.user === undefined) {
       return <Placeholder>…</Placeholder>
@@ -98,8 +102,18 @@ export default class App extends React.Component<{}, AppState> {
           element: <Home userId={this.state.user?.id} />,
         },
         {
-          path: "/something",
-          element: <Something user={this.state.user} />,
+          path: "/braiderlys/:id/edit",
+          element: <Braiderly user={this.state.user} mode='update' />,
+          loader: this.braiderlyLoader
+        },
+        {
+          path: "/braiderlys/create",
+          element: <Braiderly user={this.state.user} mode='create' />,
+        },
+        {
+          path: "/braiderlys/:id",
+          element: <Braiderly user={this.state.user} mode='read' />,
+          loader: this.braiderlyLoader
         },
         {
           path: "/miscellany",

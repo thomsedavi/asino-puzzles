@@ -7,7 +7,7 @@ import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Button, ButtonGroup, Code, Column, ColumnGroup, Container, ErrorMessage, FailureSpan, Heading1, Information, InputGroup, Overlay, Paragraph, ParagraphAccent, Placeholder, Flash, SuccessSpan, Table, TableCell, TableCellAction, TableHeader, TableRow, TextArea, TextLink } from '../common/styled';
 import { convertDocumentToString, convertStringToDocument, tidyString } from '../common/utils';
-import { LexicologerGame, LexicologerRequiredWord, User } from '../interfaces';
+import { LexicologerGame, LexicologerRequiredWord, User } from '../common/interfaces';
 import Layout from './Layout';
 
 interface LexicologerProps {
@@ -398,13 +398,14 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </>}
       {mode === 'update' && <>
-          <Paragraph>Link for this game:<br />
-          <Code>{window.location.origin}/lexicologers/{lexicologerGame.id}</Code></Paragraph>
-          <ButtonGroup>
-            <Button onClick={copyLink}>Copy Link to Clipboard</Button>
-          </ButtonGroup>
-        </>}
-        {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
+        <Paragraph>Link for this game:<br />
+          <Code>{window.location.origin}/lexicologers/{lexicologerGame.id}</Code>
+        </Paragraph>
+        <ButtonGroup>
+          <Button onClick={copyLink}>Copy Link to Clipboard</Button>
+        </ButtonGroup>
+      </>}
+      {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
     </Container>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;

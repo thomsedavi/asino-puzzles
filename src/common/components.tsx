@@ -1,6 +1,6 @@
 import React from 'react';
 import { convertDocumentToElements } from './utils';
-import { Document } from '../interfaces';
+import { Document } from './interfaces';
 import { TextArea, Heading1, ErrorMessage, ButtonGroup, Button, Input, InlineLabel, InlineInput, TableCell, TableCellInput, ToggleButton, ParagraphContainer } from './styled';
 import { Icon } from './icons';
 
