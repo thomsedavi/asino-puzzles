@@ -242,14 +242,24 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
   const upsertVariable = () => {
     if (editedVariable !== undefined && editedVariable.id === undefined) {
       let variableId = getRandomId();
+      let found = false;
+      let attemptCount = 0;
 
-      while ((braiderlyGame.variables ?? []).filter(v => v.id === variableId).length !== 0) {
-        variableId = getRandomId();
+      while (!found && attemptCount < 100) {
+        attemptCount++;
+
+        if ((braiderlyGame.variables ?? []).filter(v => v.id === variableId).length === 0) {
+          variableId = getRandomId();          
+        } else {
+          found = true;
+        }
       }
 
-      editedVariable.id = variableId;
-      setBraiderlyGame({ ...braiderlyGame, variables: [...braiderlyGame.variables ?? [], editedVariable]});
-      setEditedVariable(undefined);
+      if (found) {
+        editedVariable.id = variableId;
+        setBraiderlyGame({ ...braiderlyGame, variables: [...braiderlyGame.variables ?? [], editedVariable]});
+        setEditedVariable(undefined);  
+      }
     } else if (editedVariable !== undefined) {
       // update existing variable
     }
