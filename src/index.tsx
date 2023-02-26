@@ -13,6 +13,7 @@ import Lexicologer from './pages/Lexicologer';
 import { getPuzzle, getLexicologer, getUser, isLocalhost, getBraiderly } from './common/fetchers';
 import Puzzle from './pages/Puzzle';
 import Braiderly from './pages/Braiderly';
+import Styles from './pages/Styles';
 
 interface AppState {
   user?: User | null;
@@ -160,6 +161,10 @@ export default class App extends React.Component<{}, AppState> {
           path: "/users/:id",
           element: <UserPage userId={this.state.user?.id} mode='read' />,
           loader: this.userLoader
+        },
+        {
+          path: '/styles',
+          element: <Styles user={this.state.user} />
         },
         {
           path: "/*",

@@ -51,8 +51,26 @@ export const Paragraph = styled.p<ParagraphProps>`
   margin: 0;
 `;
 
+interface ButtonOptionProps {
+  selected?: boolean;
+}
+
+export const ButtonOption = styled.button<ButtonOptionProps>`
+  text-align: center;
+  border: 1px solid var(--accent);
+  background-color: ${props => props.selected ? "var(--accent-strong)" : "var(--background-color)"};
+  box-shadow: -0.2em -0.2em ${props => props.selected ? "var(--accent)" : "transparent"}, 0.2em 0.2em var(--accent);
+  cursor: pointer;
+  padding: 0.3em 0.6em;
+  margin: 0.75em 0;
+
+  &:hover {
+    background-color: ${props => props.selected ? "var(--accent-strong)" : "var(--background-hover)"};
+  }
+`;
+
 export const Code = styled.code`
-  background: var(--background-color-information);
+  background-color: var(--background-color-information);
 `;
 
 export const ParagraphAccent = styled.p`
@@ -62,30 +80,13 @@ export const ParagraphAccent = styled.p`
   font-size: 0.9em;
 `;
 
-export const MySelect = styled.div`
-
-`
-
-interface MyOptionProps{
-  isSelected?: boolean;
-}
-
-export const MyOption = styled.div<MyOptionProps>`
-  background: ${props => props.isSelected ? "var(--accent-pale)" : "var(--color)"};
-  color: var(--background-color);
-  box-shadow: -0.2em -0.2em ${props => props.isSelected ? "var(--accent)" : "transparent"}, 0.2em 0.2em var(--accent);
-  padding: 0.3em 0.6em;
-  margin: 0.75em 0;
-  cursor: pointer;
-  font-weight: bold;
-
-  &:hover {
-    background: ${props => props.isSelected ? "var(--accent-pale)" : "var(--hover)"};
-  }
-`
-
 export const ButtonGroup = styled.div`
   text-align: center;
+`;
+
+export const TabGroup = styled.div`
+  text-align: center;
+  margin: 0.25em 0;
 `;
 
 interface InputProps {
@@ -101,7 +102,7 @@ export const Button = styled.button`
   margin: 0.5em;
   border: none;
   box-shadow: 0.2em 0.2em var(--accent);
-  background: var(--color);
+  background-color: var(--color);
   color: var(--background-color);
   cursor: pointer;
   font-size: 1em;
@@ -109,12 +110,41 @@ export const Button = styled.button`
   font-family: inherit;
 
   &:hover {
-    background: var(--hover);
+    background-color: var(--hover);
   }
 
   &:disabled {
-    background: var(--disabled);
+    background-color: var(--disabled);
     cursor: auto;
+  }
+`;
+
+interface TabProps {
+  selected?: boolean;
+};
+
+export const Tab = styled.button<TabProps>`
+  color: var(--background-color);
+  cursor: pointer;
+  border-radius: 0;
+  border: 1px solid var(--accent-pale);
+  background-color: ${props => props.selected ? "var(--accent-pale)" : "var(--accent-faded)"};
+  padding: 0.25em 0.5em;
+  font-weight: 700;
+
+  &:first-child {
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+  }
+
+  &:last-child {
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+  }
+
+  &:disabled {
+    cursor: auto;
+    background-color: var(--disabled);
   }
 `;
 
@@ -127,7 +157,7 @@ export const ToggleButton = styled.button<ToggleButtonProps>`
   display: block;
   border: none;
   box-shadow: 0.2em 0.2em var(--accent);
-  background: var(--color);
+  background-color: var(--color);
   color: var(--background-color);
   cursor: pointer;
   font-size: 0.8em;
@@ -136,11 +166,11 @@ export const ToggleButton = styled.button<ToggleButtonProps>`
   width: ${props => props.width ?? 'auto'};
 
   &:hover {
-    background: var(--hover);
+    background-color: var(--hover);
   }
 
   &:disabled {
-    background: var(--disabled);
+    background-color: var(--disabled);
   }
 `;
 
@@ -148,7 +178,7 @@ export const ButtonLink = styled(Link)`
   margin: 0.5em;
   border: none;
   box-shadow: 0.2em 0.2em var(--accent);
-  background: var(--color);
+  background-color: var(--color);
   color: var(--background-color);
   cursor: pointer;
   font-size: 1em;
@@ -157,11 +187,11 @@ export const ButtonLink = styled(Link)`
   display: inline-block;
 
   &:hover {
-    background: var(--hover);
+    background-color: var(--hover);
   }
 
   &:disabled {
-    background: var(--disabled);
+    background-color: var(--disabled);
   }
 `;
 
@@ -458,17 +488,11 @@ export const TableCellInput = styled.input`
   box-sizing: border-box;
 `;
 
-export const MyParagraph = styled.p`
-`;
-
-export const MyHeading2 = styled.h2`
-`;
-
 interface MySpanProps {
   isPageLink?: boolean;
 }
 
-export const MySpan = styled.span<MySpanProps>`
+export const Span = styled.span<MySpanProps>`
   cursor: ${props => props.isPageLink ? "pointer" : "auto"};
   color: ${props => props.isPageLink ? "var(--accent-pale)" : "var(--color)"};
 `;

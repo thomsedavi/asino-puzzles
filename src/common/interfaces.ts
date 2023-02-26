@@ -1900,7 +1900,7 @@ export const ThingTest: BraiderlyGame = {
       id: 'char1class',
       description: 'Character 1 Class',
       type: 'VARIABLE_SET_STRING',
-      options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'Bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'Roge' }]}]
+      options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'Bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'Rogue' }]}]
     },
     {
       id: 'char1classlowercase',

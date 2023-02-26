@@ -101,14 +101,16 @@ export const EditableElementHeading1 = (props: EditableElementHeading1Props): JS
 
     return <>
       <Heading1>
-        <Input width='80%' onBlur={props.onClickSave} autoFocus maxLength={64} disabled={props.isWorking} value={props.inputValue} onKeyDown={onKeyDown} onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.onChange(event.currentTarget.value)} />
+        <Input placeholder={props.placeholder ?? 'Heading 1'} width='80%' onBlur={props.onClickSave} autoFocus maxLength={64} disabled={props.isWorking} value={props.inputValue} onKeyDown={onKeyDown} onChange={(event: React.ChangeEvent<HTMLInputElement>) => props.onChange(event.currentTarget.value)} />
       </Heading1>
       {props.errorMessage && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
     </>
   } else if (props.editState === 'editable') {
     return <Heading1 editable onClick={props.onClickEdit} title={props.value}>{props.value} <Icon title='edit' type='pencil' fillSecondary='--accent' /></Heading1>
-  } else {
+  } else if (props.editState === 'disabled') {
     return <Heading1 title={props.value}>{props.value}</Heading1>
+  } else {
+    return <ErrorMessage>Error</ErrorMessage>
   }
 }
 
@@ -151,9 +153,11 @@ export const EditableElementDocument = (props: EditableElementDocumentProps): JS
     return <ParagraphContainer editable={editable} onClick={props.onClickEdit}>
       {convertDocumentToElements(props.value, editable)}
     </ParagraphContainer>
-  } else {
+  } else if (props.editState === 'disabled') {
     return <ParagraphContainer>
       {convertDocumentToElements(props.value)}
     </ParagraphContainer>
+  } else {
+    return <ErrorMessage>Error</ErrorMessage>
   }
 }
