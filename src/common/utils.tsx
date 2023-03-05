@@ -15,6 +15,16 @@ export const formatDate = (dateString: string): string => {
   return `${year}-${month}-${day}`;
 }
 
+// TODO split by words and stuff, this is v basic right now
+export const toTitleCase = (value: string | undefined): string | undefined => {
+  if (value === undefined)
+     return undefined;
+
+  const lower = value.toLowerCase();
+
+  return lower[0].toUpperCase() + lower.substring(1);
+}
+
 // TODO trim line endings and stuff
 export const tidyString = (input?: string): string => {
   let output = input ?? ''
@@ -23,7 +33,7 @@ export const tidyString = (input?: string): string => {
     output = output.replaceAll('  ', ' ');
   }
 
-  return output?.trim();
+  return output.trim();
 }
 
 export const convertDocumentToString = (document?: Document): string => {

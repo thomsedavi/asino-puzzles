@@ -1,13 +1,13 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
-import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Table, ColumnGroup, Column, TableRow, TableHeader, TableCell } from '../common/styled';
-import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySelectOptionString, BraiderlySetVariable, BraiderlySpan, BraiderlyStyle, BraiderlyVariable, User } from '../common/interfaces';
+import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Table, ColumnGroup, Column, TableRow, TableHeader, TableCell, TableCellAction, Select } from '../common/styled';
+import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySelectOptionString, BraiderlySetVariable, BraiderlySpan, BraiderlyStyle, BraiderlyVariable, getExpressionDescription, getVariableFormat, User } from '../common/interfaces';
 import { useState } from '../common/saveState';
 import Layout from './Layout';
 import { EditableElementHeading1, EditToggleButton } from '../common/components';
 import { postBraiderly, putBraiderly } from '../common/fetchers';
-import { tidyString } from '../common/utils';
+import { tidyString, toTitleCase } from '../common/utils';
 import { Icon } from '../common/icons';
 
 interface BraiderlyProps {
@@ -15,13 +15,23 @@ interface BraiderlyProps {
   mode: 'create' | 'read' | 'update';
 }
 
-const sixteen = '0123456789ABCDEF';
+const numbers = '1234567890';
 
-const getRandomId = (): string => {
+const getRandomId = (ids: string[]): string => {
+  let template = [
+    ['#', '-', '#', '#'],
+    ['#', '-', '#', '#', '#'],
+    ['#', '#', '-', '#', '#', '#'],
+    ['#', '-', '#', '#', '-', '#', '#', '#'],
+    ['#', '#', '#', '-', '#', '#', '#', '#'],
+    ['#', '-', '#', '#', '#', '-', '#', '#', '#', '#']
+  ];
   let id = '';
+  let isNew = false;
 
-  for (let i = 0; i < 4; i++) {
-    id += sixteen[Math.floor(Math.random() * sixteen.length)];
+  for (let i = 0; i < template.length && !isNew; i++) {
+    id = template[i].map(t => t === '#' ? numbers[Math.floor(Math.random() * numbers.length)] : '-').join('');
+    isNew = ids.indexOf(id) === -1;
   }
 
   return id;
@@ -36,7 +46,7 @@ const evaluateStringVariable = (puzzle: BraiderlyGame, variables: BraiderlySetVa
   if (variable === undefined)
     return undefined;
 
-  if (variable.type === 'VARIABLE_EVALUATED') {
+  if (variable.type === 'EVALUATED') {
     if (variable.expression === 'SUBSTITUTE_OPTION') {
       var evalVar = variables.filter(v => v.variableId === variable.variableId)[0];
 
@@ -46,7 +56,7 @@ const evaluateStringVariable = (puzzle: BraiderlyGame, variables: BraiderlySetVa
         return substit;
       }
     }
-  } else if (variable.type === 'VARIABLE_SET_STRING') {
+  } else if (variable.type === 'INPUT') {
     var setVar = variables.filter(v => v.variableId === variable.id)[0];
 
     if (setVar === undefined)
@@ -72,16 +82,15 @@ const evaluateIsVariable = (braiderly: BraiderlyGame, variables: BraiderlySetVar
   if (variable === undefined)
     return undefined;
 
-  if (variable.type === 'VARIABLE_EVALUATED') {
-    if (variable.expression === 'IS_VARIABLE_SET' && variable.variableId !== undefined) {
+    if (variable.expression === 'IS_SET' && variable.variableId !== undefined) {
       const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
 
       return isVariableSet !== undefined;
-    } else if (variable.expression === 'IS_VARIABLE_NOT_SET' && variable.variableId !== undefined) {
+    } else if (variable.expression === 'IS_NOT_SET' && variable.variableId !== undefined) {
       const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
 
       return isVariableSet === undefined;
-    } else if (variable.expression === 'IS_VARIABLE_OPTION' && variable.variableId !== undefined) {
+    } else if (variable.expression === 'IS_OPTION' && variable.variableId !== undefined) {
       const setVariable = variables.filter(isVariableOption => isVariableOption.variableId === variable.variableId)[0];
 
       if (setVariable === undefined)
@@ -89,9 +98,8 @@ const evaluateIsVariable = (braiderly: BraiderlyGame, variables: BraiderlySetVar
 
       return setVariable.optionId === variable.optionId;
     }
-  }
 
-  return undefined;
+    return undefined;
 }
 
 const insertSpace = (text: string): string => {
@@ -154,7 +162,7 @@ const drawElements = (puzzle: BraiderlyGame, elementIds: string[], elements: JSX
 
       const elementVariable = puzzle.variables?.filter(variable => variable.id === element.variableId)[0] ?? {};
 
-      if (elementVariable.type === 'VARIABLE_SET_STRING') {
+      if (elementVariable.format === 'TEXT') {
         if (elementVariable.options !== undefined) {
           const setVariable: string | undefined = tempValues.filter(variable => element.variableId === variable.variableId)[0]?.optionId;
     
@@ -221,6 +229,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
   const [ tempValues, setTempValues ] = React.useState<BraiderlySetVariable[]>([]);
   const [ selectedTab, setSelectedTab ] = React.useState<'variables' | 'pages' | 'elements' | 'publish'>('variables');
   const [ editedVariable, setEditedVariable ] = React.useState<BraiderlyVariable | undefined>(undefined);
+  const [ editedPage, setEditedPage ] = React.useState<BraiderlyPage | undefined>(undefined);
   const state = useState();
 
   const onClickLoader = () => {
@@ -240,16 +249,105 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
   }
 
   const upsertVariable = () => {
-    if (editedVariable !== undefined && editedVariable.id === undefined) {
-      let variableId = getRandomId();
+    if (editedVariable === undefined)
+      return;
+    
+    setErrorMessage(undefined);
 
-      // TODO retry variable Id if not unique
-      if ((braiderlyGame.variables ?? []).filter(v => v.id === variableId).length === 0) {
-        setBraiderlyGame({ ...braiderlyGame, variables: [...braiderlyGame.variables ?? [], {...editedVariable, id: variableId}]});
-        setEditedVariable(undefined);  
+    // start with just the name and id
+    const cleanedVariable: BraiderlyVariable = { id: editedVariable.id, description: tidyString(editedVariable.description) };
+    const isNew: boolean = cleanedVariable.id === undefined;
+
+    // requires a description
+    if (cleanedVariable.description === '') {
+      setErrorMessage('Description Required');
+      return;
+    }
+
+    // cannot create a new variable with an existing name, or rename an old variable to have a different existing name
+    if ((braiderlyGame.variables?.filter(v => v.description?.toLowerCase() === cleanedVariable.description!.toLowerCase() && (isNew || v.id !== editedVariable.id)).length ?? []) > 0) {
+      setErrorMessage('Description Must Be Unique');
+      return;
+    }
+
+    // format is required
+    if (editedVariable.format === undefined) {
+      setErrorMessage('Format Required');
+      return;
+    } else {
+      cleanedVariable.format = editedVariable.format;
+    }
+
+    cleanedVariable.options = editedVariable.options;
+
+    if (cleanedVariable.options === undefined) {
+      if (tidyString(editedVariable.defaultValue) === '') {
+        setErrorMessage(`Default ${cleanedVariable.description} Required`);
+        return;  
+      } else {
+        cleanedVariable.defaultValue = tidyString(editedVariable.defaultValue);
       }
-    } else if (editedVariable !== undefined) {
-      // update existing variable
+    }
+
+    if (cleanedVariable.options !== undefined) {
+      if (editedVariable.defaultOptionId === undefined) {
+        setErrorMessage('Default Option Required');
+        return;  
+      } else {
+        cleanedVariable.defaultOptionId = editedVariable.defaultOptionId;
+      }
+    }
+
+    // any other cleanup stuff goes here
+
+    if (isNew) {
+      const existingVariableIds: string[] = braiderlyGame.variables?.map(v => v.id ?? '') ?? [];
+
+      cleanedVariable.id = getRandomId(existingVariableIds);
+      existingVariableIds.push(cleanedVariable.id);
+
+      const isVaraibleSet: BraiderlyVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_SET', variableId: cleanedVariable.id };
+      isVaraibleSet.id = getRandomId(existingVariableIds);
+      existingVariableIds.push(isVaraibleSet.id);
+
+      const isVariableNotSet: BraiderlyVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_NOT_SET', variableId: cleanedVariable.id };
+      isVariableNotSet.id = getRandomId(existingVariableIds);
+
+      setBraiderlyGame({ ...braiderlyGame, variables: [...braiderlyGame.variables ?? [], cleanedVariable, isVaraibleSet, isVariableNotSet]});
+      setEditedVariable(undefined);  
+    } else {
+      const existingVariable = braiderlyGame.variables!.filter(v => v.id === cleanedVariable.id)[0];
+      const variableIndex = braiderlyGame.variables!.indexOf(existingVariable);
+      setBraiderlyGame({...braiderlyGame, variables: [...braiderlyGame.variables!.slice(0, variableIndex), cleanedVariable, ...braiderlyGame.variables!.slice(variableIndex + 1)] });
+      setEditedVariable(undefined);
+    }
+  }
+
+  const upsertPage = () => {
+    if (editedPage === undefined)
+      return;
+
+    setErrorMessage(undefined);
+
+    // start with just the name and id
+    const cleanedPage: BraiderlyPage = { id: editedPage.id, description: tidyString(editedPage.description) };
+    const isNew: boolean = cleanedPage.id === undefined;
+    
+    // requires a description
+    if (cleanedPage.description === '') {
+      setErrorMessage('Description Required');
+      return;
+    }
+
+    // any other cleanup stuff goes here
+
+    if (isNew) {
+      const existingPageIds: string[] = braiderlyGame.pages?.map(v => v.id ?? '') ?? [];
+
+      cleanedPage.id = getRandomId(existingPageIds);
+
+      setBraiderlyGame({ ...braiderlyGame, pages: [...braiderlyGame.pages ?? [], cleanedPage]});
+      setEditedPage(undefined);  
     }
   }
 
@@ -269,7 +367,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
 
     const variable = currentTempValues.filter(varb => varb.variableId === variableId)[0];
 
-    if ((gameVariable.type === 'VARIABLE_SET_STRING') && gameVariable.options !== undefined) {
+    if ((gameVariable.format === 'TEXT') && gameVariable.options !== undefined) {
       if (variable === undefined) {
         currentTempValues.push({variableId: variableId, optionId: value});
       } else {
@@ -301,7 +399,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
     const variable = currentVariables.filter(varb => varb.variableId === variableId)[0];
     const tempVariable = tempValues.filter(varb => varb.variableId === variableId)[0];
 
-    if ((gameVariable.type === 'VARIABLE_SET_STRING') && gameVariable.options !== undefined) {
+    if ((gameVariable.format === 'TEXT') && gameVariable.options !== undefined) {
       if (variable === undefined) {
         currentVariables.push({variableId: variableId, optionId: tempVariable.optionId});
       } else {
@@ -389,6 +487,58 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
 
   const isEditable = mode !== 'read' && props.user !== undefined && props.user !== null && braiderlyGame.userId === props.user?.id;
 
+  const getVariableDescription = (variable: BraiderlyVariable): string => {
+    if (variable.type !== 'SYSTEM') {
+      return variable.description ?? '';
+    } else {
+      const nestedVariable: BraiderlyVariable = braiderlyGame?.variables?.filter(v => v.id === variable.variableId)[0] ?? {};
+      const nestedVariableDescription: string = getVariableDescription(nestedVariable);
+
+      return getExpressionDescription(variable.expression, nestedVariableDescription);
+    }
+  }
+
+  const sortVariables = (a: BraiderlyVariable, b: BraiderlyVariable): number => {
+    if ((a.type !== 'SYSTEM' && b.type !== 'SYSTEM') || (a.type === 'SYSTEM' && b.type === 'SYSTEM')) {
+      return getVariableDescription(a) > getVariableDescription(b) ? 1 : -1;
+    } else if (a.type === 'SYSTEM') {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+
+  const variableElements: JSX.Element[] | undefined = braiderlyGame?.variables?.sort(sortVariables).map((variable: BraiderlyVariable, index: number) => {
+    const description = getVariableDescription(variable);
+
+
+    return <TableRow key={`variable${index}`}>
+      <TableCell title={`${variable.id}: ${variable.description}`}>
+        {description}
+      </TableCell>
+      <TableCell>
+        {toTitleCase(variable.format)}
+      </TableCell>
+      <TableCell textAlign='center'>
+        {variable.type !== 'SYSTEM' && <TableCellAction onClick={() => !isWorking && setEditedVariable(variable)}><Icon title='edit' fillSecondary='--opposite' type='pencil'/></TableCellAction>}
+      </TableCell>
+    </TableRow>;
+  });
+
+  const pageElements: JSX.Element[] | undefined = braiderlyGame?.pages?.sort((a: BraiderlyPage, b: BraiderlyPage) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((variable: BraiderlyPage, index: number) => {
+    const description = getVariableDescription(variable);
+
+
+    return <TableRow key={`variable${index}`}>
+      <TableCell title={`${variable.id}: ${variable.description}`}>
+        {description}
+      </TableCell>
+      <TableCell textAlign='center'>
+        <TableCellAction onClick={() => !isWorking && setEditedPage(variable)}><Icon title='edit' fillSecondary='--opposite' type='pencil'/></TableCellAction>
+      </TableCell>
+    </TableRow>;
+  });
+
   const copyLink = () => {
     navigator.clipboard.writeText(`${window.location.origin}/braiderlys/${braiderlyGame.id}`);
     state.showFlash('Link copied!', 'accent');
@@ -412,9 +562,9 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         isWorking={isWorking}
       />
       {mode !== 'read' && <TabGroup>
-        <Tab selected={selectedTab === 'variables'} onClick={() => setSelectedTab('variables')}>Variables</Tab>
         <Tab selected={selectedTab === 'pages'} onClick={() => setSelectedTab('pages')}>Pages</Tab>
         <Tab selected={selectedTab === 'elements'} onClick={() => setSelectedTab('elements')}>Elements</Tab>
+        <Tab selected={selectedTab === 'variables'} onClick={() => setSelectedTab('variables')}>Variables</Tab>
         <Tab selected={selectedTab === 'publish'} onClick={() => setSelectedTab('publish')}>Publish</Tab>
       </TabGroup>}
       {elements}
@@ -433,10 +583,34 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
             </TableRow>
           </thead>
           <tbody>
+            {variableElements}
             <TableRow>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell><span onClick={() => !isWorking && setEditedVariable({})} style={{ cursor: 'pointer' }}><Icon title='add variable' type='create' /></span></TableCell>
+              <TableCell textAlign='center'>
+                <span onClick={() => !isWorking && setEditedVariable({})} style={{ cursor: 'pointer' }}><Icon title='create variable' type='create' /></span>
+              </TableCell>
+            </TableRow>
+          </tbody>
+        </Table>}
+        {selectedTab === 'pages' && <Table>
+          <ColumnGroup>
+            <Column smallWidth='16.4em' mediumWidth='30.4em' largeWidth='32.4em' />
+            <Column width='4.6em' />
+          </ColumnGroup>
+          <thead>
+            <TableRow>
+              <TableHeader title='Description'>Description</TableHeader>
+              <TableHeader title='Actions'>Actions</TableHeader>
+            </TableRow>
+          </thead>
+          <tbody>
+            {pageElements}
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell textAlign='center'>
+                <span onClick={() => !isWorking && setEditedPage({})} style={{ cursor: 'pointer' }}><Icon title='create page' type='create' /></span>
+              </TableCell>
             </TableRow>
           </tbody>
         </Table>}
@@ -456,6 +630,13 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
           <Button onClick={copyLink}>Copy Link to Clipboard</Button>
         </ButtonGroup>
       </>}
+      {mode !== 'read' && isEditable && <>
+        <ButtonGroup>
+          {mode === 'create' && <Button disabled={isWorking} onClick={create}>Create</Button>}
+          {mode === 'update' && <Button disabled={isWorking} onClick={update}>Update</Button>}
+        </ButtonGroup>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </>}
       {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
     </Container>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
@@ -466,15 +647,46 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         overlayClassName="modal-overlay"
         style={{}}
         contentLabel="Edit Variable"
-      >
-        <Heading2>{editedVariable?.id === undefined ? 'Create Variable' : 'Update Variable'}</Heading2>
-        <Input placeholder={'Variable Description'} width='80%' autoFocus maxLength={64} disabled={false} value={editedVariable?.description ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEditedVariable({ ...editedVariable, description: event.currentTarget.value})} />
-        <ButtonGroup>
-          <Button onClick={() => upsertVariable()}>{editedVariable?.id === undefined ? 'Create' : 'Update'}</Button>
-          <Button onClick={() => { setErrorMessage(undefined); setEditedVariable(undefined) ;}}>Cancel</Button>
-        </ButtonGroup>
-        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      </Modal>
+    >
+      <Heading2>{editedVariable?.id === undefined ? 'Create Variable' : 'Update Variable'}</Heading2>
+      <Input placeholder='Variable Description' width='100%' autoFocus maxLength={64} value={editedVariable?.description ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEditedVariable({ ...editedVariable, description: event.currentTarget.value})} />
+      {(editedVariable?.id === undefined || editedVariable?.format === undefined) && <Select value={editedVariable?.format ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setEditedVariable({...editedVariable, format: getVariableFormat(event.target.value) }); }}>
+        <option value='NONE'>Select Format</option>
+        <option value='TEXT'>Text</option>
+        <option value='NUMBER'>Number</option>
+        <option value='BOOLEAN'>Boolean</option>
+      </Select>}
+      {(editedVariable?.id !== undefined && editedVariable?.format !== undefined) && <Paragraph>{toTitleCase(editedVariable?.format)}</Paragraph>}
+      {(editedVariable?.id === undefined && editedVariable?.format !== undefined) && <Select value={editedVariable?.options === undefined ? 'INPUT' : 'SELECT'}
+                                                                                             onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setEditedVariable({...editedVariable, options: event.target.value === 'INPUT' ? undefined : editedVariable?.options ?? [],
+                                                                                                                                                                                                defaultValue: event.target.value === 'INPUT' ? '' : undefined,
+                                                                                                                                                                                                defaultOptionId: event.target.value === 'INPUT' ? undefined : editedVariable?.defaultOptionId }); }}>
+        <option value='INPUT'>Input</option>
+        <option value='SELECT'>Select</option>
+      </Select>}
+      {editedVariable?.format === 'TEXT' && editedVariable?.options === undefined && <Input placeholder={`Default ${tidyString(editedVariable?.description)}`} width='100%' maxLength={64} value={editedVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEditedVariable({ ...editedVariable, defaultValue: event.currentTarget.value})} />}
+      <ButtonGroup>
+        <Button onClick={() => upsertVariable()}>{editedVariable?.id === undefined ? 'Create' : 'Update'}</Button>
+        <Button onClick={() => { setErrorMessage(undefined); setEditedVariable(undefined) ;}}>Cancel</Button>
+      </ButtonGroup>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+    </Modal>
+    <Modal
+      isOpen={editedPage !== undefined && editedPage.id === undefined}
+      onRequestClose={() => { setErrorMessage(undefined); setEditedPage(undefined) ;}}
+      className="modal"
+      overlayClassName="modal-overlay"
+      style={{}}
+      contentLabel="Create Page"
+    >
+      <Heading2>Create Page</Heading2>
+      <Input placeholder='Page Description' width='100%' autoFocus maxLength={64} value={editedPage?.description ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEditedPage({ ...editedPage, description: event.currentTarget.value} )} />
+      <ButtonGroup>
+        <Button onClick={() => upsertPage()}>Create</Button>
+        <Button onClick={() => { setErrorMessage(undefined); setEditedPage(undefined) ;}}>Cancel</Button>
+      </ButtonGroup>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+    </Modal>
   </>;
 }
 

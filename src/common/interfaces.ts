@@ -1866,13 +1866,38 @@ export interface BraiderlyStyle {
 export interface BraiderlyVariable {
   id?: string;
   description?: string;
-  type?: 'VARIABLE_SET_STRING' | 'VARIABLE_SET_NUMBER' | 'VARIABLE_SET_BOOLEAN' | 'VARIABLE_EVALUATED';
-  expression?: 'SUBSTITUTE_OPTION' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_NOT_SET' | 'IS_VARIABLE_OPTION';
+  type?: 'INPUT' | 'EVALUATED' | 'SYSTEM';
+  format?: 'TEXT' | 'NUMBER' | 'BOOLEAN';
+  expression?: 'SUBSTITUTE_OPTION' | 'IS_SET' | 'IS_NOT_SET' | 'IS_OPTION';
   variableId?: string;
   defaultOptionId?: string;
   defaultValue?: string;
   options?: BraiderlySelectOptionString[];
   optionId?: string;
+}
+
+export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' | undefined => {
+  switch (value) {
+    case 'TEXT':
+      return 'TEXT';
+    case 'NUMBER':
+      return 'NUMBER';
+    case 'BOOLEAN':
+      return 'BOOLEAN';
+    default:
+      return undefined;
+  }
+}
+
+export const getExpressionDescription = (expression: string | undefined, description: string | undefined): string => {
+  switch (expression) {
+    case 'IS_SET':
+      return `Is {${description}} Set`;
+    case 'IS_NOT_SET':
+      return `Is {${description}} Not Set`;
+    default:
+      return `Unknown Expression: {${expression}}`;
+  }
 }
 
 export interface BraiderlySelectOptionString {
@@ -1899,13 +1924,15 @@ export const ThingTest: BraiderlyGame = {
     {
       id: 'char1class',
       description: 'Character 1 Class',
-      type: 'VARIABLE_SET_STRING',
+      type: 'INPUT',
+      format: 'TEXT',
       options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'Bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'Rogue' }]}]
     },
     {
       id: 'char1classlowercase',
       description: 'Character 1 Class Lower Case',
-      type: 'VARIABLE_EVALUATED',
+      type: 'EVALUATED',
+      format: 'TEXT',
       expression: 'SUBSTITUTE_OPTION',
       variableId: 'char1class',
       options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'rogue' }]}]
@@ -1913,13 +1940,15 @@ export const ThingTest: BraiderlyGame = {
     {
       id: 'bardinstrument',
       description: 'Bard Instrument',
-      type: 'VARIABLE_SET_STRING',
+      type: 'INPUT',
+      format: 'TEXT',
       options: [{id: 'HARP', spans: [{ type: 'TEXT', value: 'Harp' }]}, {id: 'LUTE', spans: [{ type: 'TEXT', value: 'Lute' }]}, {id: 'KAZOO', spans: [{ type: 'TEXT', value: 'Kazoo' }]}]
     },
     {
       id: 'bardinstrumentlowercase',
       description: 'Bard Instgrument Lower Case',
-      type: 'VARIABLE_EVALUATED',
+      type: 'EVALUATED',
+      format: 'TEXT',
       expression: 'SUBSTITUTE_OPTION',
       variableId: 'bardinstrument',
       options: [{id: 'HARP', spans: [{ type: 'TEXT', value: 'harp' }]}, {id: 'LUTE', spans: [{ type: 'TEXT', value: 'lute' }]}, {id: 'KAZOO', spans: [{ type: 'TEXT', value: 'kazoo' }]}]
@@ -1927,7 +1956,8 @@ export const ThingTest: BraiderlyGame = {
     {
       id: 'startlocation',
       description: 'Start Location',
-      type: 'VARIABLE_SET_STRING',
+      type: 'INPUT',
+      format: 'TEXT',
       options: [
         {id: 'BARD_HALL', spans: [{ type: 'TEXT', value: 'Bard Hall' }], isVariableId: 'ischar1classbard'},
         {id: 'MUGGY_INN', spans: [{ type: 'TEXT', value: 'Muggy Inn' }]},
@@ -1937,79 +1967,90 @@ export const ThingTest: BraiderlyGame = {
     {
       id: 'char1name',
       description: 'Character 1 Name',
-      type: 'VARIABLE_SET_STRING',
+      type: 'INPUT',
+      format: 'TEXT',
       defaultValue: 'Incognito'
     },
     {
       id: 'ischar1classset',
       description: 'Is Character 1 Class Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_SET',
       variableId: 'char1class'
     },
     {
       id: 'ischar1classnotset',
       description: 'Is Character 1 Class Not Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_NOT_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_NOT_SET',
       variableId: 'char1class'
     },
     {
       id: 'isstartlocationset',
       description: 'Is Start Location Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_SET',
       variableId: 'startlocation'
     },
     {
       id: 'isstartlocationnotset',
       description: 'Is Start Location Not Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_NOT_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_NOT_SET',
       variableId: 'startlocation'
     },
     {
       id: 'ischar1classbard',
       description: 'Is Character 1 Bard',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_OPTION',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_OPTION',
       variableId: 'char1class',
       optionId: 'BARD'
     },
     {
       id: 'ischar1classrogue',
       description: 'Is Character 1 Rogue',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_OPTION',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_OPTION',
       variableId: 'char1class',
       optionId: 'ROGUE'
     },
     {
       id: 'isbardinstrumentset',
       description: 'Is Bard Instrument Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_SET',
       variableId: 'bardinstrument'
     },
     {
       id: 'isbardinstrumentnotset',
       description: 'Is Bard Instrument Not Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_NOT_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_NOT_SET',
       variableId: 'bardinstrument'
     },
     {
       id: 'ischar1nameset',
       description: 'Is Character 1 Name Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_SET',
       variableId: 'char1name'
     },
     {
       id: 'ischar1namenotset',
       description: 'Is Character 1 Name Not Set',
-      type: 'VARIABLE_EVALUATED',
-      expression: 'IS_VARIABLE_NOT_SET',
+      type: 'SYSTEM',
+      format: 'BOOLEAN',
+      expression: 'IS_NOT_SET',
       variableId: 'char1name'
     }
   ],

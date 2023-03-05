@@ -119,6 +119,12 @@ export const Button = styled.button`
   }
 `;
 
+export const Select = styled.select`
+  display: block;
+  margin: 0.5em auto;
+  font-size: 1em;
+`;
+
 interface TabProps {
   selected?: boolean;
 };
