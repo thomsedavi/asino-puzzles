@@ -477,6 +477,10 @@ export const TableCellAction = styled.span<TableCellActionProps>`
   margin-right: ${props => props.marginRight ? '0.5em' :'0'};
 `;
 
+export const SpanAction = styled.span`
+  cursor: pointer;
+`;
+
 interface TableCellLinkProps {
   marginRight?: boolean;
 }

@@ -1889,6 +1889,19 @@ export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' 
   }
 }
 
+export const getSpanType = (value: string): 'GROUP' | 'TEXT' | 'VARIABLE' | undefined => {
+  switch (value) {
+    case 'TEXT':
+      return 'TEXT';
+    case 'VARIABLE':
+      return 'VARIABLE';
+    case 'GROUP':
+      return 'GROUP';
+    default:
+      return undefined;
+  }
+}
+
 export const getExpressionDescription = (expression: string | undefined, description: string | undefined): string => {
   switch (expression) {
     case 'IS_SET':
