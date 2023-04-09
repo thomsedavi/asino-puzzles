@@ -1,14 +1,13 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
-import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Table, ColumnGroup, Column, TableRow, TableHeader, TableCell, TableCellAction, Select } from '../common/styled';
+import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Select } from '../common/styled';
 import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySelectOptionString, BraiderlySetVariable, BraiderlySpan, BraiderlyStyle, BraiderlyVariable, getElementType, getExpressionDescription, getSpanType, getVariableFormat, User } from '../common/interfaces';
 import { useState } from '../common/saveState';
 import Layout from './Layout';
 import { EditableElementHeading1, EditToggleButton } from '../common/components';
 import { postBraiderly, putBraiderly } from '../common/fetchers';
 import { tidyString, toTitleCase } from '../common/utils';
-import { Icon } from '../common/icons';
 import PagesTab from './BraiderlyTabs/Pages';
 import ElementsTab from './BraiderlyTabs/Elements';
 import VariablesTab from './BraiderlyTabs/Variables';

@@ -43,7 +43,7 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
     } else {
       const spans: JSX.Element[] = [];
 
-      (element.spans ?? []).map((span: BraiderlySpan, spanIndex: number) => {
+      (element.spans ?? []).forEach((span: BraiderlySpan, spanIndex: number) => {
         if (span.type === 'TEXT') {
           spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}<SpanAction onClick={() => {props.setUpdatedSpan({type: span.type!, elementId: elementId, index: spanIndex, value: span.value, variableId: span.variableId});}}><Icon title='create span' type='pencil' /></SpanAction></span>);
         } else if (span.type === 'VARIABLE') {
