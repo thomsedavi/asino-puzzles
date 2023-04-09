@@ -511,7 +511,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         const pageIndex = updatedBraiderlyGame.pages!.indexOf(page);
         page.elementIds === undefined ? (page.elementIds = [cleanedElement.id]) : (page.elementIds = [...page.elementIds, cleanedElement.id]);
 
-        setBraiderlyGame({ ... updatedBraiderlyGame, pages: [...updatedBraiderlyGame.pages!.slice(0, pageIndex), page, ...updatedBraiderlyGame.pages!.slice(pageIndex + 1)]});
+        setBraiderlyGame({ ...updatedBraiderlyGame, pages: [...updatedBraiderlyGame.pages!.slice(0, pageIndex), page, ...updatedBraiderlyGame.pages!.slice(pageIndex + 1)]});
       }
     }
   }
@@ -748,7 +748,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
 
   const elements: JSX.Element[] = [];
 
-  page.elementIds && drawElements(braiderlyGame, page.elementIds ?? [], elements, variables, [], tempVariables, updateTempValue, saveTempValue, {}, (pageId: string) => setUpdatedPageId(pageId));
+  page.elementIds && drawElements(braiderlyGame, page.elementIds ?? [], elements, variables, [], tempVariables, updateTempValue, saveTempValue, {}, (pageId: string) => setPageId(pageId));
 
   const create = () => {
     if (isWorking)
