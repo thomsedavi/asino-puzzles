@@ -1,31 +1,35 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySpan, BraiderlyVariable } from '../../common/interfaces';
+import { BraiderlyGame, BraiderlyPage, BraiderlySpan } from '../../common/interfaces';
 import { Button, ButtonGroup, Column, ColumnGroup, Heading1, Paragraph, SpanAction, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 
 interface PagesTabProps {
   braiderlyGame?: BraiderlyGame;
   editedPageId?: string;
-  setEditedPage: Dispatch<SetStateAction<BraiderlyPage | undefined>>;
+  setCreatedPage: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedPageId: Dispatch<SetStateAction<string | undefined>>;
-  setEditedElement: Dispatch<SetStateAction<BraiderlyElement | undefined>>;
+  setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
+  setUpdatedElement: Dispatch<SetStateAction<{id: string, description: string, type: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string} | undefined>>;
   setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
-  setEditedSpan: Dispatch<SetStateAction<BraiderlySpan | undefined>>;
+  setCreatedSpan: Dispatch<SetStateAction<{elementId: string, index: number} | undefined>>;
+  setUpdatedSpan: Dispatch<SetStateAction<{type: 'GROUP' | 'TEXT' | 'VARIABLE', elementId: string, value?: string, index: number, variableId?: string} | undefined>>;
+  setAddedElementId: Dispatch<SetStateAction<string | undefined>>;
   setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>;
+  setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
   setPageId: Dispatch<SetStateAction<string | undefined>>;
-  getVariableDescription: (variable: BraiderlyVariable) => string;
+  getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
 }
 
 const PagesTab = (props: PagesTabProps): JSX.Element => {
   const pageElements: JSX.Element[] | undefined = props.braiderlyGame?.pages?.sort((a: BraiderlyPage, b: BraiderlyPage) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((page: BraiderlyPage, index: number) => {
-    const description = props.getVariableDescription(page);
+    const description = props.getDescription(page);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${page.id}: ${page.description}`}>
         {description}
       </TableCell>
       <TableCell textAlign='center'>
-        <TableCellAction onClick={() => props.setEditedPageId(page.id)}><Icon title='edit' fillSecondary='--opposite' type='pencil'/></TableCellAction>
+        <TableCellAction onClick={() => props.setEditedPageId(page.id)}><Icon title='update' fillSecondary='--opposite' type='pencil'/></TableCellAction>
         <TableCellAction onClick={() => {props.setBraiderlyGame({...props.braiderlyGame, defaultPageId: page.id}); props.setPageId(page.id)}}><Icon title='set home page' type={props.braiderlyGame?.defaultPageId === page.id ? 'down' : 'up'}/></TableCellAction>
       </TableCell>
     </TableRow>;
@@ -41,11 +45,15 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
 
       (element.spans ?? []).map((span: BraiderlySpan, spanIndex: number) => {
         if (span.type === 'TEXT') {
-          spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}</span>);
+          spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}<SpanAction onClick={() => {props.setUpdatedSpan({type: span.type!, elementId: elementId, index: spanIndex, value: span.value, variableId: span.variableId});}}><Icon title='create span' type='pencil' /></SpanAction></span>);
+        } else if (span.type === 'VARIABLE') {
+          const variable = props.braiderlyGame?.variables?.filter(variable => variable.id === span.variableId)[0];
+
+          variable && spans.push(<span key={`pageElement${index}span${spanIndex}`}>({variable.description})</span>);
         }
       });
 
-      return <Paragraph key={`pageElement${index}`}><SpanAction onClick={() => {props.setEditedSpan({}); props.setEditedElementId(elementId)}}>{spans}<Icon title='create span' type='create' /></SpanAction></Paragraph>
+      return <Paragraph key={`pageElement${index}`}><SpanAction onClick={() => props.setDeletedElementId(element.id)}><Icon title='delete element' fillSecondary='--opposite' type='delete' /></SpanAction><SpanAction onClick={() => props.setUpdatedElement({id: element.id!, description: element.description!, type: element.type!, variableId: element.variableId, isVariableId: element.isVariableId})}><Icon title='update element' fillSecondary='--opposite' type='pencil' /></SpanAction>{spans}<SpanAction onClick={() => {props.setCreatedSpan({elementId: elementId, index: index}); props.setEditedElementId(elementId)}}><Icon title='create span' type='create' /></SpanAction></Paragraph>
     }
   });
 
@@ -59,14 +67,14 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
         <TableRow>
           <TableHeader title='Description'>Description</TableHeader>
           <TableHeader title='Actions'>Actions</TableHeader>
-       </TableRow>
+        </TableRow>
       </thead>
       <tbody>
         {pageElements}
         <TableRow>
           <TableCell></TableCell>
           <TableCell textAlign='center'>
-            <span onClick={() => props.setEditedPage({})} style={{ cursor: 'pointer' }}><Icon title='create page' type='create' /></span>
+            <span onClick={() => props.setCreatedPage({description: ''})} style={{ cursor: 'pointer' }}><Icon title='create page' type='create' /></span>
           </TableCell>
         </TableRow>
       </tbody>
@@ -74,7 +82,8 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
       <Heading1>{props.braiderlyGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.description}</Heading1>
       {elementElements}
       <ButtonGroup>
-        <Button onClick={() => props.setEditedElement({})}>Create Element</Button>
+        <Button onClick={() => props.setCreatedElement({description: ''})}>Create Element</Button>
+        <Button onClick={() => props.setAddedElementId('NONE')}>Add Element</Button>
         <Button onClick={() => props.setEditedPageId(undefined)}>Close Page</Button>
       </ButtonGroup>
     </>}

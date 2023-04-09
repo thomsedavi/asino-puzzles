@@ -1,0 +1,57 @@
+import React, { Dispatch, SetStateAction } from 'react';
+import { Icon } from '../../common/icons';
+import { BraiderlyElement, BraiderlyGame } from '../../common/interfaces';
+import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
+
+interface ElementsTabProps {
+  braiderlyGame?: BraiderlyGame;
+  editedElementId?: string;
+  setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
+  setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
+  setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
+  getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
+}
+
+const ElementsTab = (props: ElementsTabProps): JSX.Element => {
+  const elementElements: JSX.Element[] | undefined = props.braiderlyGame?.elements?.sort((a: BraiderlyElement, b: BraiderlyElement) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((element: BraiderlyElement, index: number) => {
+    const description = props.getDescription(element);
+
+    return <TableRow key={`variable${index}`}>
+      <TableCell title={`${element.id}: ${element.description}`}>
+        {description}
+      </TableCell>
+      <TableCell textAlign='center'>
+        <TableCellAction onClick={() => props.setEditedElementId(element.id)}><Icon title='update' fillSecondary='--opposite' type='pencil'/></TableCellAction>
+        <TableCellAction onClick={() => props.setDeletedElementId(element.id)}><Icon title='delete' fillSecondary='--opposite' type='delete' /></TableCellAction>
+      </TableCell>
+    </TableRow>;
+  });
+
+  return <>
+    {props.editedElementId === undefined ? <Table>
+      <ColumnGroup>
+        <Column smallWidth='16.4em' mediumWidth='30.4em' largeWidth='32.4em' />
+        <Column width='4.6em' />
+      </ColumnGroup>
+      <thead>
+        <TableRow>
+          <TableHeader title='Description'>Description</TableHeader>
+          <TableHeader title='Actions'>Actions</TableHeader>
+        </TableRow>
+      </thead>
+      <tbody>
+        {elementElements}
+        <TableRow>
+          <TableCell></TableCell>
+          <TableCell textAlign='center'>
+            <span onClick={() => props.setCreatedElement({description: ''})} style={{ cursor: 'pointer' }}><Icon title='create element' type='create' /></span>
+          </TableCell>
+        </TableRow>
+      </tbody>
+    </Table> : <>
+      
+    </>}
+  </>;
+}
+
+export default ElementsTab;

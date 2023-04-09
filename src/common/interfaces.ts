@@ -1902,6 +1902,21 @@ export const getSpanType = (value: string): 'GROUP' | 'TEXT' | 'VARIABLE' | unde
   }
 }
 
+export const getElementType = (value: string): 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP' | undefined => {
+  switch (value) {
+    case 'PARAGRAPH':
+      return 'PARAGRAPH';
+    case 'HEADING_2':
+      return 'HEADING_2';
+    case 'INPUT':
+      return 'INPUT';
+      case 'GROUP':
+        return 'GROUP';
+      default:
+      return undefined;
+  }
+}
+
 export const getExpressionDescription = (expression: string | undefined, description: string | undefined): string => {
   switch (expression) {
     case 'IS_SET':
