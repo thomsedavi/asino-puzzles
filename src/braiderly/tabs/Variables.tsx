@@ -6,7 +6,7 @@ import { toTitleCase } from '../../common/utils';
 
 interface VariablesTabProps {
   braiderlyGame?: BraiderlyGame;
-  setCreatedVariable: Dispatch<SetStateAction<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
+  setCreatedVariable: Dispatch<SetStateAction<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
   setUpdatedVariable: Dispatch<SetStateAction<{id: string, description: string, format: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
   setDeletedVariableId: Dispatch<SetStateAction<string | undefined>>;
   getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;

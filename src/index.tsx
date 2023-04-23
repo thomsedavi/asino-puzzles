@@ -12,7 +12,7 @@ import { Placeholder } from './common/styled';
 import Lexicologer from './pages/Lexicologer';
 import { getPuzzle, getLexicologer, getUser, isLocalhost, getBraiderly } from './common/fetchers';
 import Puzzle from './pages/Puzzle';
-import Braiderly from './pages/Braiderly';
+import Braiderly from './braiderly/Braiderly';
 import Styles from './pages/Styles';
 
 interface AppState {

@@ -1889,6 +1889,15 @@ export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' 
   }
 }
 
+export const getVariableExpression = (value: string): 'SUBSTITUTE_OPTION' | undefined => {
+  switch (value) {
+    case 'SUBSTITUTE_OPTION':
+      return 'SUBSTITUTE_OPTION';
+    default:
+      return undefined;
+  }
+}
+
 export const getSpanType = (value: string): 'GROUP' | 'TEXT' | 'VARIABLE' | undefined => {
   switch (value) {
     case 'TEXT':
@@ -1917,12 +1926,14 @@ export const getElementType = (value: string): 'PARAGRAPH' | 'HEADING_2' | 'INPU
   }
 }
 
-export const getExpressionDescription = (expression: string | undefined, description: string | undefined): string => {
+export const getExpressionDescription = (expression: string, values: string[]): string => {
   switch (expression) {
     case 'IS_SET':
-      return `Is {${description}} Set`;
+      return `Is {${values[0]}} Set`;
     case 'IS_NOT_SET':
-      return `Is {${description}} Not Set`;
+      return `Is {${values[0]}} Not Set`;
+    case 'IS_OPTION':
+      return `Is {${values[0]}} Set To {${values[1]}}`; 
     default:
       return `Unknown Expression: {${expression}}`;
   }

@@ -11,12 +11,11 @@ interface PagesTabProps {
   setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
   setUpdatedElement: Dispatch<SetStateAction<{id: string, description: string, type: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string} | undefined>>;
   setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
-  setCreatedSpan: Dispatch<SetStateAction<{elementId: string, index: number} | undefined>>;
-  setUpdatedSpan: Dispatch<SetStateAction<{type: 'GROUP' | 'TEXT' | 'VARIABLE', elementId: string, value?: string, index: number, variableId?: string} | undefined>>;
+  setCreatedSpan: Dispatch<SetStateAction<{targetElementId: string, targetIndex: number} | undefined>>;
+  setUpdatedSpan: Dispatch<SetStateAction<{type: 'GROUP' | 'TEXT' | 'VARIABLE', targetElementId: string, value?: string, targetIndex: number, variableId?: string, pageId?: string} | undefined>>;
   setAddedElementId: Dispatch<SetStateAction<string | undefined>>;
   setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>;
   setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
-  setPageId: Dispatch<SetStateAction<string | undefined>>;
   getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
 }
 
@@ -30,7 +29,7 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
       </TableCell>
       <TableCell textAlign='center'>
         <TableCellAction onClick={() => props.setEditedPageId(page.id)}><Icon title='update' fillSecondary='--opposite' type='pencil'/></TableCellAction>
-        <TableCellAction onClick={() => {props.setBraiderlyGame({...props.braiderlyGame, defaultPageId: page.id}); props.setPageId(page.id)}}><Icon title='set home page' type={props.braiderlyGame?.defaultPageId === page.id ? 'down' : 'up'}/></TableCellAction>
+        <TableCellAction onClick={() => {props.setBraiderlyGame({...props.braiderlyGame, defaultPageId: page.id});}}><Icon title='set default page' type={props.braiderlyGame?.defaultPageId === page.id ? 'selected' : 'unselected'} fillPrimary='--opposite' /></TableCellAction>
       </TableCell>
     </TableRow>;
   });
@@ -45,7 +44,7 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
 
       (element.spans ?? []).forEach((span: BraiderlySpan, spanIndex: number) => {
         if (span.type === 'TEXT') {
-          spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}<SpanAction onClick={() => {props.setUpdatedSpan({type: span.type!, elementId: elementId, index: spanIndex, value: span.value, variableId: span.variableId});}}><Icon title='create span' type='pencil' /></SpanAction></span>);
+          spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}<SpanAction onClick={() => {props.setUpdatedSpan({type: span.type!, targetElementId: elementId, targetIndex: spanIndex, value: span.value, variableId: span.variableId, pageId: span.pageId});}}><Icon title='update span' type='pencil' /></SpanAction></span>);
         } else if (span.type === 'VARIABLE') {
           const variable = props.braiderlyGame?.variables?.filter(variable => variable.id === span.variableId)[0];
 
@@ -53,7 +52,18 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
         }
       });
 
-      return <Paragraph key={`pageElement${index}`}><SpanAction onClick={() => props.setDeletedElementId(element.id)}><Icon title='delete element' fillSecondary='--opposite' type='delete' /></SpanAction><SpanAction onClick={() => props.setUpdatedElement({id: element.id!, description: element.description!, type: element.type!, variableId: element.variableId, isVariableId: element.isVariableId})}><Icon title='update element' fillSecondary='--opposite' type='pencil' /></SpanAction>{spans}<SpanAction onClick={() => {props.setCreatedSpan({elementId: elementId, index: index}); props.setEditedElementId(elementId)}}><Icon title='create span' type='create' /></SpanAction></Paragraph>
+      return <Paragraph key={`pageElement${index}`}>
+        <SpanAction onClick={() => props.setDeletedElementId(element.id)}>
+          <Icon title='delete element' fillSecondary='--opposite' type='delete' />
+        </SpanAction>
+        <SpanAction onClick={() => props.setUpdatedElement({id: element.id!, description: element.description!, type: element.type!, variableId: element.variableId, isVariableId: element.isVariableId})}>
+          <Icon title='update element' fillSecondary='--opposite' type='pencil' />
+        </SpanAction>
+        {spans}
+        <SpanAction onClick={() => {props.setCreatedSpan({targetElementId: elementId, targetIndex: element.spans?.length ?? 0}); props.setEditedElementId(elementId)}}>
+          <Icon title='create span' type='create' />
+        </SpanAction>
+      </Paragraph>;
     }
   });
 

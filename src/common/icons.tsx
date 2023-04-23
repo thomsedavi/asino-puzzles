@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface IconProps {
   title: string;
-  type?: 'switch' | 'pencil' | 'up' | 'down' | 'create' | 'delete';
+  type?: 'switch' | 'pencil' | 'up' | 'down' | 'create' | 'delete' | 'selected' | 'unselected';
   fillPrimary?: '--background-color' | '--color' | '--accent' | '--opposite';
   fillSecondary?: '--background-color' | '--color' | '--accent' | '--opposite';
 }
@@ -39,6 +39,12 @@ export const Icon = (props: IconProps): JSX.Element => {
       <Path fill={props.fillPrimary ?? '--color'} d="M80,40L100,40L80,100L70,100Z" />
       <Path fill={props.fillSecondary ?? '--color'} d="M30,0L70,0L80,20L100,20L100,30L0,30L0,20L20,20Z" />
     </>}
+    {props.type === 'selected' && <>
+      <Circle fill={props.fillPrimary ?? '--color'} stroke={props.fillPrimary ?? '--color'} cx="50" cy="50" r="50" strokeWidth={10} />
+    </>}
+    {props.type === 'unselected' && <>
+      <Circle fill="--background-color" stroke={props.fillPrimary ?? '--color'} cx="50" cy="50" r="50" strokeWidth={10} />
+    </>}
   </Svg></span>;
 }
 
@@ -51,9 +57,16 @@ const Svg = styled.svg`
 `;
 
 interface PathProps {
-  fill: '--background-color' | '--color' | '--accent' | '--opposite';
+  fill?: '--background-color' | '--color' | '--accent' | '--opposite';
+  stroke?: '--background-color' | '--color' | '--accent' | '--opposite';
 }
 
 const Path = styled.path<PathProps>`
   fill: var(${props => props.fill});
+  stroke: var(${props => props.stroke});
+`;
+
+const Circle = styled.circle<PathProps>`
+  fill: var(${props => props.fill});
+  stroke: var(${props => props.stroke});
 `;
