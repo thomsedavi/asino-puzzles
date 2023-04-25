@@ -40,6 +40,8 @@ const convertDocumentToElements = (document?: Document, editable?: boolean): JSX
   return test;
 }
 
-export default {
+const ReactUtils = {
   convertDocumentToElements: convertDocumentToElements
-};
+}
+
+export default ReactUtils;

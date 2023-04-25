@@ -1,6 +1,4 @@
 import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, BraiderlyGame, User } from './interfaces';
-import { Icon } from './icons';
-import { Paragraph } from './styled';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -169,7 +167,7 @@ const createBraiderlyGame = (user?: User): BraiderlyGame => {
   }
 }
 
-export default {
+const Utils = {
   tidyString: tidyString,
   toTitleCase: toTitleCase,
   convertStringToDocument: convertStringToDocument,
@@ -177,4 +175,6 @@ export default {
   formatDate: formatDate,
   generateDefaultSudoku: generateDefaultSudoku,
   createBraiderlyGame: createBraiderlyGame
-};
+}
+
+export default Utils;

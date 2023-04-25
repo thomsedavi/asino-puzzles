@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
 import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Select, SpanAction } from '../common/styled';
-import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySelectOptionString, BraiderlySetVariable, BraiderlySpan, BraiderlyStyle, BraiderlyVariable, getElementType, getExpressionDescription, getSpanType, getVariableExpression, getVariableFormat, User } from '../common/interfaces';
+import { BraiderlyElement, BraiderlyGame, BraiderlyPage, BraiderlySelectOptionString, BraiderlySetVariable, BraiderlySpan, BraiderlyStyle, BraiderlyVariable, getElementType, getSpanType, getVariableExpression, getVariableFormat, User } from '../common/interfaces';
 import { useState } from '../common/saveState';
 import Layout from '../pages/Layout';
 import { EditableElementHeading1, EditToggleButton } from '../common/components';
