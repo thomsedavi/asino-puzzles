@@ -2,7 +2,7 @@ import React from 'react';
 import { EditableElementDocument, EditableElementHeading1, EditToggleButton } from '../common/components';
 import { User, Document } from '../common/interfaces';
 import { Button, ButtonGroup, Container, Overlay, Placeholder, Tab, TabGroup } from '../common/styled';
-import { convertDocumentToString, convertStringToDocument, tidyString } from '../common/utils';
+import Utils from '../common/utils';
 import Layout from './Layout';
 
 interface StylesProps {
@@ -28,13 +28,13 @@ const Styles = (props: StylesProps): JSX.Element => {
   const saveHeading1 = () => {
     setIsWorking(true);
     setErrorMessage(undefined);
-    const value = tidyString(inputValue);
+    const value = Utils.tidyString(inputValue);
 
     setTimeout(() => {
       if (value === '') {
         setErrorMessage('Heading 1 Required');
       } else {
-        setHeading1(tidyString(value));
+        setHeading1(Utils.tidyString(value));
         setInputValue(undefined);
         setEditingValue(undefined);  
       }
@@ -46,13 +46,13 @@ const Styles = (props: StylesProps): JSX.Element => {
   const saveDocument = () => {
     setIsWorking(true);
     setErrorMessage(undefined);
-    const value = tidyString(inputValue);
+    const value = Utils.tidyString(inputValue);
 
     setTimeout(() => {
       if (value === '') {
         setErrorMessage('Document Required');
       } else {
-        setDocument(convertStringToDocument(value));
+        setDocument(Utils.convertStringToDocument(value));
         setInputValue(undefined);
         setEditingValue(undefined);  
       }
@@ -83,7 +83,7 @@ const Styles = (props: StylesProps): JSX.Element => {
         editState={mode !== 'read' ? (editingValue === 'DOCUMENT' ? 'editing' : 'editable') : 'disabled'}
         value={document}
         inputValue={inputValue}
-        onClickEdit={() => { setEditingValue('DOCUMENT'); setInputValue(convertDocumentToString(document)); }}
+        onClickEdit={() => { setEditingValue('DOCUMENT'); setInputValue(Utils.convertDocumentToString(document)); }}
         onChange={(value: string) => setInputValue(value)}
         onClickSave={saveDocument}
         onClickCancel={() => { setInputValue(undefined); setEditingValue(undefined) }}

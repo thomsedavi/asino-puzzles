@@ -2,20 +2,20 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
 import { BraiderlyGame, BraiderlySelectOptionString, BraiderlyVariable } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
-import { toTitleCase } from '../../common/utils';
+import Utils from '../../common/utils';
+import { getDescription } from '../functions/Common';
 
 interface VariablesTabProps {
-  braiderlyGame?: BraiderlyGame;
+  braiderlyGame: BraiderlyGame | undefined;
   setCreatedVariable: Dispatch<SetStateAction<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
   setUpdatedVariable: Dispatch<SetStateAction<{id: string, description: string, format: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
   setDeletedVariableId: Dispatch<SetStateAction<string | undefined>>;
-  getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
 }
 
 const VariablesTab = (props: VariablesTabProps): JSX.Element => {
   const sortVariables = (a: BraiderlyVariable, b: BraiderlyVariable): number => {
     if ((a.type !== 'SYSTEM' && b.type !== 'SYSTEM') || (a.type === 'SYSTEM' && b.type === 'SYSTEM')) {
-      return props.getDescription(a) > props.getDescription(b) ? 1 : -1;
+      return getDescription(a, props.braiderlyGame) > getDescription(b, props.braiderlyGame) ? 1 : -1;
     } else if (a.type === 'SYSTEM') {
       return 1;
     } else {
@@ -24,14 +24,14 @@ const VariablesTab = (props: VariablesTabProps): JSX.Element => {
   }
 
   const variableElements: JSX.Element[] | undefined = props.braiderlyGame?.variables?.sort(sortVariables).map((variable: BraiderlyVariable, index: number) => {
-    const description = props.getDescription(variable);
+    const description = getDescription(variable, props.braiderlyGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${variable.id}: ${variable.description}`}>
         {description}
       </TableCell>
       <TableCell>
-        {toTitleCase(variable.format)}
+        {Utils.toTitleCase(variable.format)}
       </TableCell>
       <TableCell textAlign='center'>
         {variable.type !== 'SYSTEM' && <>

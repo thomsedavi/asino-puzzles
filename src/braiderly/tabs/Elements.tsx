@@ -2,19 +2,19 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
 import { BraiderlyElement, BraiderlyGame } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
+import { getDescription } from '../functions/Common';
 
 interface ElementsTabProps {
-  braiderlyGame?: BraiderlyGame;
+  braiderlyGame: BraiderlyGame | undefined;
   editedElementId?: string;
   setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
   setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
-  getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
 }
 
 const ElementsTab = (props: ElementsTabProps): JSX.Element => {
   const elementElements: JSX.Element[] | undefined = props.braiderlyGame?.elements?.sort((a: BraiderlyElement, b: BraiderlyElement) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((element: BraiderlyElement, index: number) => {
-    const description = props.getDescription(element);
+    const description = getDescription(element, props.braiderlyGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${element.id}: ${element.description}`}>

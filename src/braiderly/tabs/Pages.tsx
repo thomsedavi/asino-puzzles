@@ -2,9 +2,10 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
 import { BraiderlyGame, BraiderlyPage, BraiderlySpan } from '../../common/interfaces';
 import { Button, ButtonGroup, Column, ColumnGroup, Heading1, Paragraph, SpanAction, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
+import { getDescription } from '../functions/Common';
 
 interface PagesTabProps {
-  braiderlyGame?: BraiderlyGame;
+  braiderlyGame: BraiderlyGame | undefined;
   editedPageId?: string;
   setCreatedPage: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedPageId: Dispatch<SetStateAction<string | undefined>>;
@@ -16,12 +17,11 @@ interface PagesTabProps {
   setAddedElementId: Dispatch<SetStateAction<string | undefined>>;
   setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>;
   setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
-  getDescription: (variable: { description?: string, type?: string, variableId?: string, expression?: string }) => string;
 }
 
 const PagesTab = (props: PagesTabProps): JSX.Element => {
   const pageElements: JSX.Element[] | undefined = props.braiderlyGame?.pages?.sort((a: BraiderlyPage, b: BraiderlyPage) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((page: BraiderlyPage, index: number) => {
-    const description = props.getDescription(page);
+    const description = getDescription(page, props.braiderlyGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${page.id}: ${page.description}`}>

@@ -1,20 +1,19 @@
-import { Dispatch, SetStateAction } from "react";
 import { BraiderlyGame, BraiderlyPage } from "../../common/interfaces";
-import { tidyString } from "../../common/utils";
+import Utils from "../../common/utils";
 import { getRandomId } from "./Common";
 
 export const createPage = (createdPage: {description: string} | undefined,
                            braiderlyGame: BraiderlyGame,
                            setCreatedPage: (createdPage: undefined) => void,
-                           setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>,
-                           setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
+                           setBraiderlyGame: (braiderlyGame: BraiderlyGame | undefined) => void,
+                           setErrorMessage: (errorMessage: string | undefined) => void) => {
   if (createdPage === undefined)
     return;
 
   setErrorMessage(undefined);
 
   // start with just the name and id
-  const cleanedPage: BraiderlyPage = { description: tidyString(createdPage.description) };
+  const cleanedPage: BraiderlyPage = { description: Utils.tidyString(createdPage.description) };
   
   // requires a description
   if (cleanedPage.description === '') {
@@ -34,7 +33,7 @@ export const createPage = (createdPage: {description: string} | undefined,
 
 export const updatePage = (updatedPage: {id: string, description: string} | undefined,
                            braiderlyGame: BraiderlyGame,
-                           setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
+                           setErrorMessage: (errorMessage: string | undefined) => void) => {
   if (updatedPage === undefined)
     return;
 

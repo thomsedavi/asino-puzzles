@@ -6,7 +6,7 @@ import { postLexicologer, putLexicologer } from '../common/fetchers';
 import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Button, ButtonGroup, Code, Column, ColumnGroup, Container, ErrorMessage, FailureSpan, Heading1, Information, InputGroup, Overlay, Paragraph, ParagraphAccent, Placeholder, Flash, SuccessSpan, Table, TableCell, TableCellAction, TableHeader, TableRow, TextArea, TextLink } from '../common/styled';
-import { convertDocumentToString, convertStringToDocument, tidyString } from '../common/utils';
+import Utils from '../common/utils';
 import { LexicologerGame, LexicologerRequiredWord, User } from '../common/interfaces';
 import Layout from './Layout';
 
@@ -57,13 +57,13 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
   }
 
   const saveName = () => {
-    setLexicologerGame({ ...lexicologerGame, title: tidyString(inputValue) });
+    setLexicologerGame({ ...lexicologerGame, title: Utils.tidyString(inputValue) });
     setInputValue(undefined);
     setEditingValue(undefined);
   }
 
   const saveDetails = () => {
-    setLexicologerGame({ ...lexicologerGame, details: convertStringToDocument(inputValue) });
+    setLexicologerGame({ ...lexicologerGame, details: Utils.convertStringToDocument(inputValue) });
     setInputValue(undefined);
     setEditingValue(undefined);
   }
@@ -105,7 +105,7 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
   const savePrimaryWord = (index: number) => {
     const requiredWords = lexicologerGame.requiredWords ?? [];
 
-    index < requiredWords.length && (requiredWords[index].primaryWord = tidyString(inputValue));
+    index < requiredWords.length && (requiredWords[index].primaryWord = Utils.tidyString(inputValue));
 
     setLexicologerGame({ ...lexicologerGame, requiredWords: requiredWords });
     setInputValue(undefined);
@@ -115,7 +115,7 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
   const saveSecondaryWord = (index: number) => {
     const requiredWords = lexicologerGame.requiredWords ?? [];
 
-    index < requiredWords.length && (requiredWords[index].secondaryWords = inputValue?.split(',').map(word => tidyString(word)) ?? requiredWords[index].secondaryWords);
+    index < requiredWords.length && (requiredWords[index].secondaryWords = inputValue?.split(',').map(word => Utils.tidyString(word)) ?? requiredWords[index].secondaryWords);
 
     setLexicologerGame({ ...lexicologerGame, requiredWords: requiredWords });
     setInputValue(undefined);
@@ -328,7 +328,7 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
         editState={mode !== 'read' && isEditable ? (editingValue === 'DETAILS' ? 'editing' : 'editable') : 'disabled'}
         value={lexicologerGame.details ?? {}}
         inputValue={inputValue}
-        onClickEdit={() => { setEditingValue('DETAILS'); setInputValue(convertDocumentToString(lexicologerGame.details ?? {})); }}
+        onClickEdit={() => { setEditingValue('DETAILS'); setInputValue(Utils.convertDocumentToString(lexicologerGame.details ?? {})); }}
         onChange={(value: string) => setInputValue(value)}
         onClickSave={saveDetails}
         onClickCancel={() => { setInputValue(undefined); setEditingValue(undefined) }}

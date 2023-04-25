@@ -6,7 +6,7 @@ import { deleteBraiderly, deleteLexicologer, putUser } from '../common/fetchers'
 import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Container, Heading1, Overlay, Placeholder, Flash, Heading2, Table, TableRow, TableHeader, ColumnGroup, Column, TableCell, TableCellAction, TextLink, TableCellLink, ButtonGroup, Button, Paragraph, Emphasis, ErrorMessage } from '../common/styled';
-import { convertDocumentToString, convertStringToDocument, formatDate, tidyString } from '../common/utils';
+import Utils from '../common/utils';
 import { LexicologerGame, LexicologerSummary, BraiderlySummary, User } from '../common/interfaces';
 import Layout from './Layout';
 
@@ -37,7 +37,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       return;
     }
 
-    let name = tidyString(inputValue);
+    let name = Utils.tidyString(inputValue);
 
     if (name === user.name) {
       setEditingValue(undefined);
@@ -78,7 +78,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       return;
     }
 
-    const biography = convertStringToDocument(inputValue);
+    const biography = Utils.convertStringToDocument(inputValue);
 
     if (biography === user.biography) {
       setEditingValue(undefined);
@@ -272,7 +272,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
         <EditableElementDocument editState={mode === 'update' && user.id === props.userId ? (editingValue === 'BIOGRAPHY' ? 'editing' : 'editable') : 'disabled'}
                                  value={user.biography ?? {}}
                                  inputValue={inputValue}
-                                 onClickEdit={() => { setEditingValue('BIOGRAPHY'); setInputValue(convertDocumentToString(user.biography ?? {})); }}
+                                 onClickEdit={() => { setEditingValue('BIOGRAPHY'); setInputValue(Utils.convertDocumentToString(user.biography ?? {})); }}
                                  onChange={(value: string) => setInputValue(value)}
                                  onClickSave={saveBiography}
                                  onClickCancel={() => { setInputValue(undefined); setEditingValue(undefined) }}
@@ -301,7 +301,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                   <TextLink href={`/braiderlys/${braiderly.id}`} onClick={onClickLoader}>{braiderly.title}</TextLink>
                 </TableCell>
                   <TableCell textAlign='center'>
-                  {braiderly.dateCreated !== undefined ? formatDate(braiderly.dateCreated) : '(unknown)'}
+                  {braiderly.dateCreated !== undefined ? Utils.formatDate(braiderly.dateCreated) : '(unknown)'}
                 </TableCell>
                 <TableCell textAlign='center'>
                   <TableCellLink marginRight href={`/braiderlys/${braiderly.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
@@ -332,7 +332,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                   <TextLink href={`/lexicologers/${lexicologer.id}`} onClick={onClickLoader}>{lexicologer.title}</TextLink>
                 </TableCell>
                   <TableCell textAlign='center'>
-                  {lexicologer.dateCreated !== undefined ? formatDate(lexicologer.dateCreated) : '(unknown)'}
+                  {lexicologer.dateCreated !== undefined ? Utils.formatDate(lexicologer.dateCreated) : '(unknown)'}
                 </TableCell>
                 <TableCell textAlign='center'>
                   <TableCellLink marginRight href={`/lexicologers/${lexicologer.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
@@ -361,7 +361,7 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                   <TextLink href={`/lexicologers/${lexicologer.id}`} onClick={onClickLoader}>{lexicologer.title}</TextLink>
                 </TableCell>
                 <TableCell>
-                  {lexicologer.dateCreated !== undefined ? formatDate(lexicologer.dateCreated) : '(unknown)'}
+                  {lexicologer.dateCreated !== undefined ? Utils.formatDate(lexicologer.dateCreated) : '(unknown)'}
                 </TableCell>
               </TableRow>)}
             </tbody>

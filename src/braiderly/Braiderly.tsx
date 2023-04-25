@@ -7,84 +7,21 @@ import { useState } from '../common/saveState';
 import Layout from '../pages/Layout';
 import { EditableElementHeading1, EditToggleButton } from '../common/components';
 import { postBraiderly, putBraiderly } from '../common/fetchers';
-import { tidyString, toTitleCase } from '../common/utils';
+import Utils from '../common/utils';
 import PagesTab from './tabs/Pages';
 import ElementsTab from './tabs/Elements';
 import VariablesTab from './tabs/Variables';
 import { Icon } from '../common/icons';
-import { getRandomId } from './functions/Common';
+import { getDescription, getRandomId } from './functions/Common';
 import { createVariable, deleteVariable, updateVariable } from './functions/Variables';
 import { createPage, updatePage } from './functions/Pages';
-import { addElement, createElement, updateElement } from './functions/Elements';
+import { addElement, createElement, deleteElement, updateElement } from './functions/Elements';
+import { evaluateIsVariable, evaluateStringVariable } from './functions/Evaluations';
+import { createSpan, updateSpan } from './functions/Span';
 
 interface BraiderlyProps {
   user?: User | null;
   mode: 'create' | 'read' | 'update';
-}
-
-const evaluateStringVariable = (puzzle: BraiderlyGame, variables: BraiderlySetVariable[], stringVariableId?: string): BraiderlySpan[] | undefined => {
-  if (stringVariableId === undefined)
-    return undefined;
-
-  const variable = puzzle.variables?.filter(variable => variable.id === stringVariableId)[0];
-
-  if (variable === undefined)
-    return undefined;
-
-  if (variable.type === 'EVALUATED') {
-    if (variable.expression === 'SUBSTITUTE_OPTION') {
-      var evalVar = variables.filter(v => v.variableId === variable.variableId)[0];
-
-      if (evalVar !== undefined) {
-        var substit = variable.options?.filter(v => v.id === evalVar.optionId)[0]?.spans;
-
-        return substit;
-      }
-    }
-  } else if (variable.type === 'INPUT') {
-    var setVar = variables.filter(v => v.variableId === variable.id)[0];
-
-    if (setVar === undefined)
-      return undefined;
-
-    if (setVar.optionId !== undefined && variable.options !== undefined) {
-      const optionResult = variable.options.filter(o => o.id === setVar.optionId)[0];
-
-      if (optionResult !== undefined)
-        return optionResult.spans;
-    } else if (setVar.value !== undefined) {
-      return [{ type: 'TEXT', value: setVar.value }];
-    }
-  }
-}
-
-const evaluateIsVariable = (braiderly: BraiderlyGame, variables: BraiderlySetVariable[], isVariableId?: string): boolean | undefined => {
-  if (isVariableId === undefined)
-    return undefined;
-    
-  const variable = braiderly.variables?.filter(variable => variable.id === isVariableId)[0];
-
-  if (variable === undefined)
-    return undefined;
-
-    if (variable.expression === 'IS_SET' && variable.variableId !== undefined) {
-      const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
-
-      return isVariableSet !== undefined;
-    } else if (variable.expression === 'IS_NOT_SET' && variable.variableId !== undefined) {
-      const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
-
-      return isVariableSet === undefined;
-    } else if (variable.expression === 'IS_OPTION' && variable.variableId !== undefined) {
-      const setVariable = variables.filter(isVariableOption => isVariableOption.variableId === variable.variableId)[0];
-
-      if (setVariable === undefined)
-        return false;
-
-      return setVariable.optionId === variable.optionId;
-    }
-
-    return undefined;
 }
 
 const insertSpace = (text: string): string => {
@@ -191,11 +128,7 @@ const drawElements = (puzzle: BraiderlyGame, elementIds: string[], elements: JSX
 }
 
 const Braiderly = (props: BraiderlyProps): JSX.Element => {
-  const defaultPuzzle: BraiderlyGame | undefined = props.user !== undefined && props.user !== null ? {
-    userId: props.user.id,
-    userName: props.user.name,
-    title: 'Braiderly Game'
-  } : undefined;
+  const defaultPuzzle: BraiderlyGame | undefined = props.user !== undefined && props.user !== null ? Utils.createBraiderlyGame(props.user) : undefined;
 
   const [ mode, setMode ] = React.useState<'create' | 'read' | 'update'>(props.mode);
   const [ inputValue, setInputValue ] = React.useState<string | undefined>();
@@ -271,7 +204,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
       setErrorMessage('Type Required');
       return;
     } else if (cleanedOptionSpan.type === 'TEXT') {
-      const value = tidyString(createdOptionSpan.value);
+      const value = Utils.tidyString(createdOptionSpan.value);
 
       if (value === '') {
         setErrorMessage('Text Required');
@@ -292,98 +225,8 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
     }
   }
 
-  const createSpan = () => {
-    if (createdSpan === undefined)
-      return;
-
-    setErrorMessage(undefined);
-
-    const cleanedSpan: BraiderlySpan = { type: createdSpan.type };
-
-    if (cleanedSpan.type === undefined) {
-      setErrorMessage('Type Required');
-      return;
-    } else if (cleanedSpan.type === 'TEXT') {
-      const value = tidyString(createdSpan.value);
-
-      if (value === '') {
-        setErrorMessage('Text Required');
-        return;
-      } else {
-        cleanedSpan.value = value;
-        cleanedSpan.pageId = createdSpan.pageId;
-
-        const element = braiderlyGame.elements!.filter(element => element.id === createdSpan.targetElementId)[0];
-        const elementIndex = braiderlyGame.elements!.indexOf(element);
-
-        setBraiderlyGame({ ...braiderlyGame, elements: [...braiderlyGame.elements!.slice(0, elementIndex), {...element, spans: [...(element.spans?.slice(0, createdSpan.targetIndex) ?? []), cleanedSpan, ...(element.spans?.slice(createdSpan.targetIndex) ?? [])]}, ...braiderlyGame.elements!.slice(elementIndex + 1)] });
-        setCreatedSpan(undefined);
-      }
-    } else if (cleanedSpan.type === 'VARIABLE') {
-      cleanedSpan.variableId = createdSpan.variableId;
-
-      if (cleanedSpan.variableId === undefined) {
-        setErrorMessage('Variable Required');
-        return;
-      } else {
-        cleanedSpan.pageId = createdSpan.pageId;
-
-        const element = braiderlyGame.elements!.filter(element => element.id === createdSpan.targetElementId)[0];
-        const elementIndex = braiderlyGame.elements!.indexOf(element);
-
-        setBraiderlyGame({ ...braiderlyGame, elements: [...braiderlyGame.elements!.slice(0, elementIndex), {...element, spans: [...(element.spans?.slice(0, createdSpan.targetIndex) ?? []), cleanedSpan, ...(element.spans?.slice(createdSpan.targetIndex) ?? [])]}, ...braiderlyGame.elements!.slice(elementIndex + 1)] });
-        setCreatedSpan(undefined);
-      }
-    }
-  }
-
-  const updateSpan = () => {
-    if (updatedSpan === undefined)
-      return;
-
-    setErrorMessage(undefined);
-
-    const cleanedSpan: BraiderlySpan | undefined = (braiderlyGame?.elements?.filter(element => element.id === updatedSpan.targetElementId)[0]?.spans ?? [])[updatedSpan.targetIndex];
-
-    if (cleanedSpan === undefined)
-      return;
-
-    if (cleanedSpan.type === 'TEXT') {
-      const text = tidyString(updatedSpan.value);
-
-      if (text === '') {
-        setErrorMessage('Text Required');
-        return;
-      } else {
-        cleanedSpan.value = text;
-        cleanedSpan.pageId = updatedSpan.pageId;
-
-        const element = braiderlyGame.elements!.filter(element => element.id === updatedSpan.targetElementId)[0];
-        const elementIndex = braiderlyGame.elements!.indexOf(element);
-
-        setBraiderlyGame({ ...braiderlyGame, elements: [...braiderlyGame.elements!.slice(0, elementIndex), {...element, spans: [...(element.spans?.slice(0, updatedSpan.targetIndex) ?? []), cleanedSpan, ...(element.spans?.slice(updatedSpan.targetIndex + 1) ?? [])]}, ...braiderlyGame.elements!.slice(elementIndex + 1)] });
-        setUpdatedSpan(undefined);
-      }
-    } else if (cleanedSpan.type === 'VARIABLE') {
-      cleanedSpan.variableId = updatedSpan.variableId;
-
-      if (cleanedSpan.variableId === undefined) {
-        setErrorMessage('Variable Required');
-        return;
-      } else {
-        cleanedSpan.pageId = updatedSpan.pageId;
-
-        const element = braiderlyGame.elements!.filter(element => element.id === updatedSpan.targetElementId)[0];
-        const elementIndex = braiderlyGame.elements!.indexOf(element);
-
-        setBraiderlyGame({ ...braiderlyGame, elements: [...braiderlyGame.elements!.slice(0, elementIndex), {...element, spans: [...(element.spans ?? []), cleanedSpan]}, ...braiderlyGame.elements!.slice(elementIndex + 1)] });
-        setUpdatedSpan(undefined);
-      }
-    }
-  }
-
   const saveName = () => {
-    setBraiderlyGame({ ...braiderlyGame, title: tidyString(inputValue) });
+    setBraiderlyGame({ ...braiderlyGame, title: Utils.tidyString(inputValue) });
     setInputValue(undefined);
     setEditingValue(undefined);
   }
@@ -445,47 +288,6 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
     }
 
     setVariables(currentVariables);
-  }
-
-  const deleteElement = () => {
-    if (deletedElementId === undefined)
-      return;
-    
-    if (selectedTab === 'elements') {
-      const deletedElement = braiderlyGame.elements?.filter(element => element.id === deletedElementId)[0];
-
-      if (deletedElement === undefined)
-        return;
-
-      const deletedElementIndex = braiderlyGame.elements?.indexOf(deletedElement) ?? -1;
-
-      if (deletedElementIndex !== -1)
-        setBraiderlyGame({...braiderlyGame, elements: [...braiderlyGame.elements?.slice(0, deletedElementIndex) ?? [], ...braiderlyGame.elements?.slice(deletedElementIndex + 1) ?? []]});
-
-      setErrorMessage(undefined);
-      setDeletedElementId(undefined);
-    } else {
-      if (updatedPageId === undefined)
-        return;
-
-      const page = braiderlyGame.pages?.filter(page => page.id === updatedPageId)[0];
-
-      if (page === undefined)
-        return;
-
-      const pageIndex = braiderlyGame.pages?.indexOf(page);
-      const elementIndex = page.elementIds?.indexOf(deletedElementId);
-
-      if (pageIndex === undefined || elementIndex === undefined || elementIndex === -1)
-        return;
-
-      page.elementIds = [...(page.elementIds?.slice(0, elementIndex) ?? []), ...(page.elementIds?.slice(elementIndex + 1) ?? [])];
-
-      setBraiderlyGame({...braiderlyGame, pages: [...(braiderlyGame.pages?.slice(0, pageIndex) ?? []), page, ...(braiderlyGame.pages?.slice(pageIndex + 1) ?? [])]});
-
-      setErrorMessage(undefined);
-      setDeletedElementId(undefined);
-    }
   }
 
   const page: BraiderlyPage = braiderlyGame.pages?.filter(page => page.id === pageId)[0] ?? {};
@@ -564,29 +366,6 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
     setUpdatedPage(undefined);
     setUpdatedPageId(undefined);
     setSelectedTab(tab);
-  }
-
-  const getDescription = (variable: { description?: string, type?: string, variableId?: string, expression?: string, optionId?: string }): string => {
-    if (variable.type !== 'SYSTEM') {
-      return variable.description ?? '';
-    } else {
-      const nestedVariable: BraiderlyVariable = braiderlyGame?.variables?.filter(v => v.id === variable.variableId)[0] ?? {};
-      const nestedVariableDescription: string = getDescription(nestedVariable);
-
-      if (variable.optionId === undefined) {
-        return getExpressionDescription(variable.expression ?? 'NONE', [nestedVariableDescription]);
-      } else {
-        const myvariable = braiderlyGame.variables?.filter(thisvariable => (thisvariable.options?.filter(option => option.id === variable.optionId).length ?? 0) > 0)[0];
-        const myoption = myvariable?.options?.filter(thisoption => thisoption.id === variable.optionId)[0];
-        let spanDescription: string = '';
-
-        myoption?.spans?.forEach(span => {
-          span.value && (spanDescription += span.value);
-        });
-
-        return getExpressionDescription(variable.expression ?? 'NONE', [nestedVariableDescription, spanDescription]);
-      }
-    }
   }
 
   //const newElement = () => {
@@ -668,8 +447,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         {selectedTab === 'variables' && <VariablesTab braiderlyGame={braiderlyGame}
                                                       setCreatedVariable={setCreatedVariable}
                                                       setUpdatedVariable={setUpdatedVariable}
-                                                      setDeletedVariableId={setDeletedVariableId}
-                                                      getDescription={getDescription} />}
+                                                      setDeletedVariableId={setDeletedVariableId} />}
         {selectedTab === 'pages' && <PagesTab braiderlyGame={braiderlyGame}
                                               editedPageId={updatedPageId}
                                               setCreatedPage={setCreatedPage}
@@ -681,14 +459,12 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
                                               setUpdatedSpan={setUpdatedSpan}
                                               setBraiderlyGame={setBraiderlyGame}
                                               setDeletedElementId={setDeletedElementId}
-                                              setAddedElementId={setAddedElementId}
-                                              getDescription={getDescription} />}
+                                              setAddedElementId={setAddedElementId} />}
         {selectedTab === 'elements' && <ElementsTab braiderlyGame={braiderlyGame}
                                                     editedElementId={updatedElementId}
                                                     setCreatedElement={setCreatedElement}
                                                     setEditedElementId={setUpdatedElementId}
-                                                    setDeletedElementId={setDeletedElementId}
-                                                    getDescription={getDescription} />}
+                                                    setDeletedElementId={setDeletedElementId} />}
         {selectedTab === 'publish' && <>
           <ButtonGroup>
             {mode === 'create' && <Button disabled={isWorking} onClick={create}>Create</Button>}
@@ -734,7 +510,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         <option value='INPUT_SELECT'>Input (Select)</option>
         <option value='EVALUATED'>Evaluated</option>
       </Select>}
-      {createdVariable?.type === 'INPUT' && createdVariable?.format === 'TEXT' && createdVariable?.options === undefined && <Input placeholder={`Default ${tidyString(createdVariable?.description)}`} width='100%' maxLength={64} value={createdVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable, defaultValue: event.currentTarget.value})} />}
+      {createdVariable?.type === 'INPUT' && createdVariable?.format === 'TEXT' && createdVariable?.options === undefined && <Input placeholder={`Default ${Utils.tidyString(createdVariable?.description)}`} width='100%' maxLength={64} value={createdVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable, defaultValue: event.currentTarget.value})} />}
       {createdVariable?.type === 'INPUT' && createdVariable?.options !== undefined && <>
         {createdVariable.options.map(option => <Paragraph key={`option${option.id}`}>{option.spans?.map(span => span.value)}<SpanAction onClick={() => {setCreatedOptionSpan({targetVariableId: 'NONE', targetOptionId: option.id!});}}><Icon title='create span' type='pencil' /></SpanAction><SpanAction onClick={() => {setCreatedVariable({...createdVariable, defaultOptionId: option.id});}}><Icon title='set default option' type={createdVariable!.defaultOptionId === option.id ? 'selected' : 'unselected'} /></SpanAction></Paragraph>)}
         <ButtonGroup><Button onClick={() => { setCreatedVariable({...createdVariable, options: [...(createdVariable?.options ?? []), {id: getRandomId([...getVariableOptionIds(), ...(createdVariable?.options?.map(option => option.id ?? 'NONE') ?? [])])}]}); }}>Add Option</Button></ButtonGroup>
@@ -768,7 +544,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
     >
       <Heading2>Update Variable</Heading2>
       <Input placeholder='Variable Description' width='100%' autoFocus maxLength={64} value={updatedVariable?.description ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUpdatedVariable({ ...updatedVariable!, description: event.currentTarget.value})} />
-      <Paragraph>{toTitleCase(updatedVariable?.format)}</Paragraph>
+      <Paragraph>{Utils.toTitleCase(updatedVariable?.format)}</Paragraph>
       <Select value={updatedVariable?.options === undefined ? 'INPUT' : 'SELECT'}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setUpdatedVariable({...updatedVariable!, options: event.target.value === 'INPUT' ? undefined : updatedVariable?.options ?? [],
                                                                                                                     defaultValue: event.target.value === 'INPUT' ? '' : undefined,
@@ -776,7 +552,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         <option value='INPUT'>Input</option>
         <option value='SELECT'>Select</option>
       </Select>
-      {updatedVariable?.format === 'TEXT' && updatedVariable?.options === undefined && <Input placeholder={`Default ${tidyString(updatedVariable?.description)}`} width='100%' maxLength={64} value={updatedVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUpdatedVariable({ ...updatedVariable, defaultValue: event.currentTarget.value})} />}
+      {updatedVariable?.format === 'TEXT' && updatedVariable?.options === undefined && <Input placeholder={`Default ${Utils.tidyString(updatedVariable?.description)}`} width='100%' maxLength={64} value={updatedVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUpdatedVariable({ ...updatedVariable, defaultValue: event.currentTarget.value})} />}
       <ButtonGroup>
         <Button onClick={() => updateVariable(updatedVariable, braiderlyGame, setUpdatedVariable, setBraiderlyGame, setErrorMessage)}>Update</Button>
         <Button onClick={() => { setErrorMessage(undefined); setUpdatedVariable(undefined);}}>Cancel</Button>
@@ -837,7 +613,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         </Select>
       </>}
       <ButtonGroup>
-        <Button onClick={() => createSpan()}>Create</Button>
+        <Button onClick={() => createSpan(createdSpan, braiderlyGame, setCreatedSpan, setBraiderlyGame, setErrorMessage)}>Create</Button>
         <Button onClick={() => { setErrorMessage(undefined); setCreatedSpan(undefined); }}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -864,7 +640,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
         </Select>
       </>}
       <ButtonGroup>
-        <Button onClick={() => updateSpan()}>Update</Button>
+        <Button onClick={() => updateSpan(updatedSpan, braiderlyGame, setUpdatedSpan, setBraiderlyGame, setErrorMessage)}>Update</Button>
         <Button onClick={() => { setErrorMessage(undefined); setUpdatedSpan(undefined) ;}}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -913,7 +689,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
       <Paragraph>Show If:</Paragraph>
       <Select value={updatedElement?.isVariableId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setUpdatedElement({ ...updatedElement!, isVariableId: event.target.value === 'NONE' ? undefined : event.target.value }); }}>
         <option value='NONE'>Always Show</option>
-        {braiderlyGame.variables?.filter(variable => variable.format === 'BOOLEAN').map((variable: BraiderlyVariable, index: number) => <option value={variable.id} key={`variable${index}`}>{getDescription(variable)}</option>)}
+        {braiderlyGame.variables?.filter(variable => variable.format === 'BOOLEAN').map((variable: BraiderlyVariable, index: number) => <option value={variable.id} key={`variable${index}`}>{getDescription(variable, braiderlyGame)}</option>)}
       </Select>
       <ButtonGroup>
         <Button onClick={() => updateElement(updatedElement, braiderlyGame, setUpdatedElement, setBraiderlyGame, setErrorMessage)}>Update</Button>
@@ -933,7 +709,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
       <Paragraph>Delete "{braiderlyGame.elements?.filter(element => element.id === deletedElementId)[0]?.description}"</Paragraph>
       {selectedTab === 'elements' && dependentPageNames.length > 0 && <ErrorMessage>Element used by pages: {dependentPageNames.map(name => `"${name}"`).join(',')}</ErrorMessage>}
       <ButtonGroup>
-        {(selectedTab === 'pages' || dependentPageNames.length === 0) && <Button onClick={() => deleteElement()}>Delete</Button>}
+        {(selectedTab === 'pages' || dependentPageNames.length === 0) && <Button onClick={() => deleteElement(deletedElementId, updatedPageId, braiderlyGame, selectedTab, setDeletedElementId, setBraiderlyGame, setErrorMessage)}>Delete</Button>}
         <Button onClick={() => { setErrorMessage(undefined); setDeletedElementId(undefined) ;}}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}

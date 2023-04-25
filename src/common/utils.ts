@@ -1,9 +1,8 @@
-import React from 'react';
-import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer } from './interfaces';
+import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, BraiderlyGame, User } from './interfaces';
 import { Icon } from './icons';
 import { Paragraph } from './styled';
 
-export const formatDate = (dateString: string): string => {
+const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
 
   const year = date.getFullYear().toString();
@@ -16,7 +15,7 @@ export const formatDate = (dateString: string): string => {
 }
 
 // TODO split by words and stuff, this is v basic right now
-export const toTitleCase = (value: string | undefined): string | undefined => {
+const toTitleCase = (value: string | undefined): string | undefined => {
   if (value === undefined)
      return undefined;
 
@@ -26,7 +25,7 @@ export const toTitleCase = (value: string | undefined): string | undefined => {
 }
 
 // TODO trim line endings and stuff
-export const tidyString = (input?: string): string => {
+const tidyString = (input: string | undefined): string => {
   let output = input ?? ''
 
   while (output.includes('  ')) {
@@ -36,7 +35,7 @@ export const tidyString = (input?: string): string => {
   return output.trim();
 }
 
-export const convertDocumentToString = (document?: Document): string => {
+const convertDocumentToString = (document?: Document): string => {
   var result = '';
 
   document?.sections?.forEach((section: Section, index: number) => {
@@ -59,44 +58,7 @@ export const convertDocumentToString = (document?: Document): string => {
   return result;
 }
 
-export const convertDocumentToElements = (document?: Document, editable?: boolean): JSX.Element[] => {
-  const test: JSX.Element[] = [];
-
-  document?.sections?.forEach((section: Section, index: number) => {
-    if (section.type === 'PARAGRAPH') {
-      if (section.element) {
-        if (editable && index === document!.sections!.length - 1) {
-          test.push(<Paragraph key={`s${index}`}>{section.element.text} <Icon title='edit' type='pencil' fillSecondary='--accent' /></Paragraph>);
-        } else {
-          test.push(<Paragraph key={`s${index}`}>{section.element.text}</Paragraph>);
-        }
-      } else if (section.elements) {
-        const paragraphBits: (JSX.Element | string)[] = [];
-
-        section.elements.forEach((element: Element, index: number) => {
-          if (element.text) {
-            paragraphBits.push(element.text!);
-          }
-
-          if (index < section.elements!.length - 1) {
-            paragraphBits.push(<br key={`s${index}br${index}`} />);
-          }
-        });
-
-        if (editable && index === document!.sections!.length - 1) {
-          test.push(<Paragraph key={`s${index}`}>{paragraphBits} <Icon title='edit' type='pencil' fillSecondary='--accent' /></Paragraph>);
-        } else {
-          test.push(<Paragraph key={`s${index}`}>{paragraphBits}</Paragraph>);
-        }
-
-      }
-    }
-  });
-
-  return test;
-}
-
-export const convertStringToDocument = (text?: string): Document => {
+const convertStringToDocument = (text?: string): Document => {
   const document: Document = {};
 
   if (text) {
@@ -153,7 +115,7 @@ export const convertStringToDocument = (text?: string): Document => {
   return document;
 }
 
-export const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
+const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
   const objects: AsinoObject[] = [];
   const classes: AsinoClass[] = [];
   const numbers: AsinoNumber[] = [
@@ -196,3 +158,23 @@ export const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
 
   return puzzle;
 }
+
+const createBraiderlyGame = (user?: User): BraiderlyGame => {
+  return {
+    userId: user?.id ?? '0-00',
+    userName: user?.name ?? 'User Name',
+    title: 'Braiderly Game',
+    pages: [{id: '0-00', description: 'Home'}],
+    defaultPageId: '0-00'
+  }
+}
+
+export default {
+  tidyString: tidyString,
+  toTitleCase: toTitleCase,
+  convertStringToDocument: convertStringToDocument,
+  convertDocumentToString: convertDocumentToString,
+  formatDate: formatDate,
+  generateDefaultSudoku: generateDefaultSudoku,
+  createBraiderlyGame: createBraiderlyGame
+};

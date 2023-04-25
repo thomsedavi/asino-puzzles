@@ -1,5 +1,5 @@
 import React from 'react';
-import { convertDocumentToElements } from './utils';
+import Utils from './utilsReact';
 import { Document } from './interfaces';
 import { TextArea, Heading1, ErrorMessage, ButtonGroup, Button, Input, InlineLabel, InlineInput, TableCell, TableCellInput, ToggleButton, ParagraphContainer } from './styled';
 import { Icon } from './icons';
@@ -151,11 +151,11 @@ export const EditableElementDocument = (props: EditableElementDocumentProps): JS
     </>
   } else if (props.editState === 'editable') {
     return <ParagraphContainer editable={editable} onClick={props.onClickEdit}>
-      {convertDocumentToElements(props.value, editable)}
+      {Utils.convertDocumentToElements(props.value, editable)}
     </ParagraphContainer>
   } else if (props.editState === 'disabled') {
     return <ParagraphContainer>
-      {convertDocumentToElements(props.value)}
+      {Utils.convertDocumentToElements(props.value)}
     </ParagraphContainer>
   } else {
     return <ErrorMessage>Error</ErrorMessage>

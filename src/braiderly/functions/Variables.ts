@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { BraiderlyGame, BraiderlySelectOptionString, BraiderlyVariable } from "../../common/interfaces";
 import { getRandomId } from "./Common";
-import { tidyString } from "../../common/utils";
+import Utils from "../../common/utils";
 
 export const createVariable = (createdVariable: {description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'SUBSTITUTE_OPTION', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string, variableId?: string} | undefined,
                                braiderlyGame: BraiderlyGame,
@@ -14,7 +14,7 @@ export const createVariable = (createdVariable: {description: string, format?: '
   setErrorMessage(undefined);
 
   // start with just the name and id
-  const cleanedVariable: BraiderlyVariable = { type: createdVariable.type, description: tidyString(createdVariable.description) };
+  const cleanedVariable: BraiderlyVariable = { type: createdVariable.type, description: Utils.tidyString(createdVariable.description) };
 
   // requires a description
   if (cleanedVariable.description === '') {
@@ -46,11 +46,11 @@ export const createVariable = (createdVariable: {description: string, format?: '
     cleanedVariable.options = createdVariable.options;
 
     if (cleanedVariable.options === undefined) {
-      if (tidyString(createdVariable.defaultValue) === '') {
+      if (Utils.tidyString(createdVariable.defaultValue) === '') {
         setErrorMessage(`Default ${cleanedVariable.description} Required`);
         return;  
       } else {
-        cleanedVariable.defaultValue = tidyString(createdVariable.defaultValue);
+        cleanedVariable.defaultValue = Utils.tidyString(createdVariable.defaultValue);
       }
     }
 
@@ -132,11 +132,11 @@ export const updateVariable = (updatedVariable: {id: string, description: string
   }
 
   if (cleanedVariable.options === undefined) {
-    if (tidyString(updatedVariable.defaultValue) === '') {
+    if (Utils.tidyString(updatedVariable.defaultValue) === '') {
       setErrorMessage(`Default ${cleanedVariable.description} Required`);
       return;  
     } else {
-      cleanedVariable.defaultValue = tidyString(updatedVariable.defaultValue);
+      cleanedVariable.defaultValue = Utils.tidyString(updatedVariable.defaultValue);
     }
   }
 
