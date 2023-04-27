@@ -88,8 +88,8 @@ test('Can Update Page', () => {
   }
 
   _braiderlyGame.pages = [
-    {id: '1-00', description: 'Existing Page 2'},
     {id: '0-00', description: 'Existing Page 1', elementIds: ['0-01']},
+    {id: '1-00', description: 'Existing Page 2'},
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
@@ -118,8 +118,8 @@ test('Cannot Update Page With Existing Description', () => {
   }
 
   _braiderlyGame.pages = [
-    {id: '1-00', description: 'Existing Page 2'},
     {id: '0-00', description: 'Existing Page 1', elementIds: ['0-01']},
+    {id: '1-00', description: 'Existing Page 2'},
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
@@ -147,8 +147,8 @@ test('Cannot Update Page With No Description', () => {
   }
 
   _braiderlyGame.pages = [
-    {id: '1-00', description: 'Existing Page 2'},
     {id: '0-00', description: 'Existing Page 1', elementIds: ['0-01']},
+    {id: '1-00', description: 'Existing Page 2'},
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
@@ -176,8 +176,8 @@ test('Can Delete Page', () => {
   }
 
   _braiderlyGame.pages = [
-    {id: '1-00', description: 'Existing Page 2'},
     {id: '0-00', description: 'Existing Page 1', elementIds: ['0-01']},
+    {id: '1-00', description: 'Existing Page 2'},
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
@@ -206,8 +206,8 @@ test('Cannot Delete Default Page', () => {
   }
 
   _braiderlyGame.pages = [
-    {id: '1-00', description: 'Existing Page 2'},
     {id: '0-00', description: 'Existing Page 1', elementIds: ['0-01']},
+    {id: '1-00', description: 'Existing Page 2'},
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
