@@ -757,7 +757,7 @@ const Braiderly = (props: BraiderlyProps): JSX.Element => {
       <Heading2>Update Page</Heading2>
       <Input placeholder='Page Description' width='100%' autoFocus maxLength={64} value={updatedPage?.description ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setUpdatedPage({ ...updatedPage!, description: event.currentTarget.value} )} />
       <ButtonGroup>
-        <Button onClick={() => updatePage(updatedPage, braiderlyGame, setErrorMessage)}>Update</Button>
+        <Button onClick={() => updatePage(updatedPage, braiderlyGame, setUpdatedPage, setBraiderlyGame, setErrorMessage)}>Update</Button>
         <Button onClick={() => { setErrorMessage(undefined); setUpdatedPage(undefined) ;}}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
