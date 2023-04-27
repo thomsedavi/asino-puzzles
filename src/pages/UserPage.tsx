@@ -2,12 +2,12 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
 import { EditableElementDocument, EditableElementHeading1, EditToggleButton } from '../common/components';
-import { deleteBraiderly, deleteLexicologer, putUser } from '../common/fetchers';
+import { deleteBraider, deleteLexicologer, putUser } from '../common/fetchers';
 import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Container, Heading1, Overlay, Placeholder, Flash, Heading2, Table, TableRow, TableHeader, ColumnGroup, Column, TableCell, TableCellAction, TextLink, TableCellLink, ButtonGroup, Button, Paragraph, Emphasis, ErrorMessage } from '../common/styled';
 import Utils from '../common/utils';
-import { LexicologerGame, LexicologerSummary, BraiderlySummary, User } from '../common/interfaces';
+import { LexicologerGame, LexicologerSummary, BraiderSummary, User } from '../common/interfaces';
 import Layout from './Layout';
 
 interface UserPageProps {
@@ -24,9 +24,9 @@ const UserPage = (props: UserPageProps): JSX.Element => {
   const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   const [ user, setUser ] = React.useState<User>(useLoaderData() as User);
-  const [ braiderlySortColumn, setBraiderlySortColumn ] = React.useState<'title' | 'date'>('title');
-  const [ braiderlySortOrder, setBraiderlySortOrder ] = React.useState<'descending' | 'ascending'>('descending');
-  const [ braiderlyToDelete, setBraiderlyToDelete ] = React.useState<string | undefined>(undefined);
+  const [ braiderSortColumn, setBraiderSortColumn ] = React.useState<'title' | 'date'>('title');
+  const [ braiderSortOrder, setBraiderSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
+  const [ braiderToDelete, setBraiderToDelete ] = React.useState<string | undefined>(undefined);
   const [ lexicologerSortColumn, setLexicologerSortColumn ] = React.useState<'title' | 'date'>('title');
   const [ lexicologerSortOrder, setLexicologerSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
   const [ lexicologerToDelete, setLexicologerToDelete ] = React.useState<string | undefined>(undefined);
@@ -114,27 +114,27 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       });
   }
 
-  const confirmDeleteBraiderly = () => {
-    if (braiderlyToDelete === undefined)
+  const confirmDeleteBraider = () => {
+    if (braiderToDelete === undefined)
       return;
 
     setErrorMessage(undefined);
     setIsWorking(true);
 
-    deleteBraiderly(braiderlyToDelete)
+    deleteBraider(braiderToDelete)
       .then((response: boolean) => {
         if (response) {
-          const braiderlys = user.braiderlys ?? [];
+          const braiders = user.braiders ?? [];
 
-          const braiderly = braiderlys.find(braiderly => braiderly.id === braiderlyToDelete)!;
-          const index = braiderlys.indexOf(braiderly);
+          const braider = braiders.find(braider => braider.id === braiderToDelete)!;
+          const index = braiders.indexOf(braider);
           
-          braiderlys.splice(index, 1);
+          braiders.splice(index, 1);
 
-          setUser({...user, braiderlys: braiderlys});
+          setUser({...user, braiders: braiders});
           setIsWorking(false);
-          setBraiderlyToDelete(undefined);
-          state.showFlash('Braiderly Deleted!', 'opposite');
+          setBraiderToDelete(undefined);
+          state.showFlash('Braider Deleted!', 'opposite');
         } else {
           setIsWorking(false);
           setErrorMessage('Unknown Error');
@@ -186,33 +186,33 @@ const UserPage = (props: UserPageProps): JSX.Element => {
     setIsLoading(true);
   }
 
-  const toggleBraiderlySort = (columnName: 'title' | 'date') => {
+  const toggleBraiderSort = (columnName: 'title' | 'date') => {
     if (columnName === 'title') {
-      if (braiderlySortColumn === 'title') {
-        setBraiderlySortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
+      if (braiderSortColumn === 'title') {
+        setBraiderSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
       } else {
-        setBraiderlySortColumn('title');
-        setBraiderlySortOrder('descending');
+        setBraiderSortColumn('title');
+        setBraiderSortOrder('descending');
       }
     } else {
-      if (braiderlySortColumn === 'date') {
-        setBraiderlySortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
+      if (braiderSortColumn === 'date') {
+        setBraiderSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
       } else {
-        setBraiderlySortColumn('date');
-        setBraiderlySortOrder('descending');
+        setBraiderSortColumn('date');
+        setBraiderSortOrder('descending');
       }
     }
   }
 
-  const braiderlySort = (a: BraiderlySummary, b: BraiderlySummary): number => {
-    if (braiderlySortColumn === 'title') {
-      if (braiderlySortOrder === 'ascending') {
+  const braiderSort = (a: BraiderSummary, b: BraiderSummary): number => {
+    if (braiderSortColumn === 'title') {
+      if (braiderSortOrder === 'ascending') {
         return (a.title ?? '') > (b.title ?? '') ? 1 : -1;
       } else {
         return (a.title ?? '') > (b.title ?? '') ? -1 : 1;
       }
     } else {
-      if (braiderlySortOrder === 'ascending') {
+      if (braiderSortOrder === 'ascending') {
         return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? 1 : -1;
       } else {
         return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? -1 : 1;
@@ -280,8 +280,8 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                                  placeholder='User Biography'
                                  errorMessage={errorMessage} />
         {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
-        {user.id === props.userId && (user.braiderlys?.length ?? 0) > 0 && <>
-          <Heading2>Braiderlys</Heading2>
+        {user.id === props.userId && (user.braiders?.length ?? 0) > 0 && <>
+          <Heading2>Braiders</Heading2>
           <Table>
           <ColumnGroup>
               <Column smallWidth='10.2em' mediumWidth='24.2em' largeWidth='26.2em' />
@@ -290,22 +290,22 @@ const UserPage = (props: UserPageProps): JSX.Element => {
             </ColumnGroup>
             <thead>
               <TableRow>
-                <TableHeader clickable title='Title' onClick={() => toggleBraiderlySort('title')}>Title{braiderlySortColumn === 'title' ? [' ', <Icon key='titleSort' title='sort' type={braiderlySortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='titleBlank' title='sort' />]}</TableHeader>
-                <TableHeader clickable title='Date' onClick={() => toggleBraiderlySort('date')}>Date{braiderlySortColumn === 'date' ? [' ', <Icon key='dateSort' title='sort' type={braiderlySortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='dateBlank' title='sort' />]}</TableHeader>
+                <TableHeader clickable title='Title' onClick={() => toggleBraiderSort('title')}>Title{braiderSortColumn === 'title' ? [' ', <Icon key='titleSort' title='sort' type={braiderSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='titleBlank' title='sort' />]}</TableHeader>
+                <TableHeader clickable title='Date' onClick={() => toggleBraiderSort('date')}>Date{braiderSortColumn === 'date' ? [' ', <Icon key='dateSort' title='sort' type={braiderSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='dateBlank' title='sort' />]}</TableHeader>
                 <TableHeader title='Actions'>Actions</TableHeader>
               </TableRow>
             </thead>
             <tbody>
-              {user.braiderlys?.sort(braiderlySort).map((braiderly: BraiderlySummary, index: number) => <TableRow key={`braiderly${index}`}>
+              {user.braiders?.sort(braiderSort).map((braider: BraiderSummary, index: number) => <TableRow key={`braider${index}`}>
                 <TableCell>
-                  <TextLink href={`/braiderlys/${braiderly.id}`} onClick={onClickLoader}>{braiderly.title}</TextLink>
+                  <TextLink href={`/braiders/${braider.id}`} onClick={onClickLoader}>{braider.title}</TextLink>
                 </TableCell>
                   <TableCell textAlign='center'>
-                  {braiderly.dateCreated !== undefined ? Utils.formatDate(braiderly.dateCreated) : '(unknown)'}
+                  {braider.dateCreated !== undefined ? Utils.formatDate(braider.dateCreated) : '(unknown)'}
                 </TableCell>
                 <TableCell textAlign='center'>
-                  <TableCellLink marginRight href={`/braiderlys/${braiderly.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
-                  <TableCellAction onClick={() => setBraiderlyToDelete(braiderly.id)}><Icon title='delete' fillSecondary='--opposite' type='delete'/></TableCellAction>
+                  <TableCellLink marginRight href={`/braiders/${braider.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
+                  <TableCellAction onClick={() => setBraiderToDelete(braider.id)}><Icon title='delete' fillSecondary='--opposite' type='delete'/></TableCellAction>
                 </TableCell>
               </TableRow>)}
             </tbody>
@@ -370,18 +370,18 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       </Container>
       {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
       <Modal
-        isOpen={braiderlyToDelete !== undefined}
-        onRequestClose={() => setBraiderlyToDelete(undefined)}
+        isOpen={braiderToDelete !== undefined}
+        onRequestClose={() => setBraiderToDelete(undefined)}
         className="modal"
         overlayClassName="modal-overlay"
         style={{}}
-        contentLabel="Delete Braiderly"
+        contentLabel="Delete Braider"
       >
-        <Heading2>Delete Braiderly</Heading2>
-        <Paragraph>Are you sure you want to delete <Emphasis>{user.braiderlys?.find(b => b.id === braiderlyToDelete)?.title}</Emphasis>?</Paragraph>
+        <Heading2>Delete Braider</Heading2>
+        <Paragraph>Are you sure you want to delete <Emphasis>{user.braiders?.find(b => b.id === braiderToDelete)?.title}</Emphasis>?</Paragraph>
         <ButtonGroup>
-          <Button disabled={isWorking} onClick={confirmDeleteBraiderly}>Delete</Button>
-          <Button disabled={isWorking} onClick={() => { setErrorMessage(undefined); setBraiderlyToDelete(undefined) ;}}>Cancel</Button>
+          <Button disabled={isWorking} onClick={confirmDeleteBraider}>Delete</Button>
+          <Button disabled={isWorking} onClick={() => { setErrorMessage(undefined); setBraiderToDelete(undefined) ;}}>Cancel</Button>
         </ButtonGroup>
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </Modal>

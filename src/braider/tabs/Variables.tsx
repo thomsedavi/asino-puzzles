@@ -1,21 +1,21 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderlyGame, BraiderlySelectOptionString, BraiderlyVariable } from '../../common/interfaces';
+import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 import Utils from '../../common/utils';
 import { getDescription } from '../functions/Common';
 
 interface VariablesTabProps {
-  braiderlyGame: BraiderlyGame | undefined;
-  setCreatedVariable: Dispatch<SetStateAction<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
-  setUpdatedVariable: Dispatch<SetStateAction<{id: string, description: string, format: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderlySelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
+  braiderGame: BraiderGame | undefined;
+  setCreatedVariable: Dispatch<SetStateAction<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
+  setUpdatedVariable: Dispatch<SetStateAction<{id: string, description: string, format: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>>;
   setDeletedVariableId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const VariablesTab = (props: VariablesTabProps): JSX.Element => {
-  const sortVariables = (a: BraiderlyVariable, b: BraiderlyVariable): number => {
+  const sortVariables = (a: BraiderVariable, b: BraiderVariable): number => {
     if ((a.type !== 'SYSTEM' && b.type !== 'SYSTEM') || (a.type === 'SYSTEM' && b.type === 'SYSTEM')) {
-      return getDescription(a, props.braiderlyGame) > getDescription(b, props.braiderlyGame) ? 1 : -1;
+      return getDescription(a, props.braiderGame) > getDescription(b, props.braiderGame) ? 1 : -1;
     } else if (a.type === 'SYSTEM') {
       return 1;
     } else {
@@ -23,8 +23,8 @@ const VariablesTab = (props: VariablesTabProps): JSX.Element => {
     }
   }
 
-  const variableElements: JSX.Element[] | undefined = props.braiderlyGame?.variables?.sort(sortVariables).map((variable: BraiderlyVariable, index: number) => {
-    const description = getDescription(variable, props.braiderlyGame);
+  const variableElements: JSX.Element[] | undefined = props.braiderGame?.variables?.sort(sortVariables).map((variable: BraiderVariable, index: number) => {
+    const description = getDescription(variable, props.braiderGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${variable.id}: ${variable.description}`}>

@@ -1,14 +1,14 @@
 import { Dispatch, SetStateAction } from "react";
-import { BraiderlyElement, BraiderlyGame } from "../../common/interfaces";
+import { BraiderElement, BraiderGame } from "../../common/interfaces";
 import Utils from "../../common/utils";
 import { getRandomId } from "./Common";
 
 export const createElement = (createdElement: {description: string, type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string} | undefined,
                               updatedPageId: string | undefined,
-                              braiderlyGame: BraiderlyGame,
+                              braiderGame: BraiderGame,
                               selectedTab: 'variables' | 'pages' | 'elements' | 'publish',
                               setCreatedElement: (createdElement: undefined) => void,
-                              setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>,
+                              setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>,
                               setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
   if (createdElement === undefined)
     return;
@@ -16,7 +16,7 @@ export const createElement = (createdElement: {description: string, type?: 'PARA
   setErrorMessage(undefined);
 
   // start with just the name and id
-  const cleanedElement: BraiderlyElement = { description: Utils.tidyString(createdElement.description), type: createdElement.type };
+  const cleanedElement: BraiderElement = { description: Utils.tidyString(createdElement.description), type: createdElement.type };
 
   // requires a description
   if (cleanedElement.description === '') {
@@ -38,31 +38,31 @@ export const createElement = (createdElement: {description: string, type?: 'PARA
 
   // any other cleanup stuff goes here
 
-  const existingElementIds: string[] = braiderlyGame.elements?.map(v => v.id ?? '') ?? [];
+  const existingElementIds: string[] = braiderGame.elements?.map(v => v.id ?? '') ?? [];
 
   cleanedElement.id = getRandomId(existingElementIds);
 
-  const updatedBraiderlyGame: BraiderlyGame = { ...braiderlyGame, elements: [...braiderlyGame.elements ?? [], cleanedElement] };
+  const updatedBraiderGame: BraiderGame = { ...braiderGame, elements: [...braiderGame.elements ?? [], cleanedElement] };
 
-  setBraiderlyGame(updatedBraiderlyGame);
+  setBraiderGame(updatedBraiderGame);
   setCreatedElement(undefined);
 
   if (selectedTab === 'pages') {
-    const page = updatedBraiderlyGame.pages?.filter(page => page.id === updatedPageId)[0];
+    const page = updatedBraiderGame.pages?.filter(page => page.id === updatedPageId)[0];
 
     if (page) {
-      const pageIndex = updatedBraiderlyGame.pages!.indexOf(page);
+      const pageIndex = updatedBraiderGame.pages!.indexOf(page);
       page.elementIds === undefined ? (page.elementIds = [cleanedElement.id]) : (page.elementIds = [...page.elementIds, cleanedElement.id]);
 
-      setBraiderlyGame({ ...updatedBraiderlyGame, pages: [...updatedBraiderlyGame.pages!.slice(0, pageIndex), page, ...updatedBraiderlyGame.pages!.slice(pageIndex + 1)]});
+      setBraiderGame({ ...updatedBraiderGame, pages: [...updatedBraiderGame.pages!.slice(0, pageIndex), page, ...updatedBraiderGame.pages!.slice(pageIndex + 1)]});
     }
   }
 }
 
 export const updateElement = (updatedElement: {id: string, description: string, type: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string} | undefined,
-                              braiderlyGame: BraiderlyGame,
+                              braiderGame: BraiderGame,
                               setUpdatedElement: (updatedElement: undefined) => void,
-                              setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>,
+                              setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>,
                               setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
   if (updatedElement === undefined)
     return;
@@ -70,7 +70,7 @@ export const updateElement = (updatedElement: {id: string, description: string, 
   setErrorMessage(undefined);
 
   // start with just the name and id
-  const cleanedElement: BraiderlyElement | undefined = braiderlyGame?.elements?.filter(element => element.id === updatedElement.id)[0];
+  const cleanedElement: BraiderElement | undefined = braiderGame?.elements?.filter(element => element.id === updatedElement.id)[0];
 
   if (cleanedElement === undefined)
     return;
@@ -86,35 +86,35 @@ export const updateElement = (updatedElement: {id: string, description: string, 
 
   // any other cleanup stuff goes here
 
-  const elementIndex = braiderlyGame?.elements?.indexOf(cleanedElement);
+  const elementIndex = braiderGame?.elements?.indexOf(cleanedElement);
 
   if (elementIndex === undefined || elementIndex === -1)
     return;
 
-  setBraiderlyGame({...braiderlyGame, elements: [...(braiderlyGame?.elements?.slice(0, elementIndex) ?? []), cleanedElement, ...(braiderlyGame?.elements?.slice(elementIndex + 1) ?? [])]});
+  setBraiderGame({...braiderGame, elements: [...(braiderGame?.elements?.slice(0, elementIndex) ?? []), cleanedElement, ...(braiderGame?.elements?.slice(elementIndex + 1) ?? [])]});
   setUpdatedElement(undefined);
 }
 
 export const deleteElement = (deletedElementId: string | undefined,
                               updatedPageId: string | undefined,
-                              braiderlyGame: BraiderlyGame,
+                              braiderGame: BraiderGame,
                               selectedTab: 'variables' | 'pages' | 'elements' | 'publish',
                               setDeletedElementId: (deletedElementId: undefined) => void,
-                              setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>,
+                              setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>,
                               setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
   if (deletedElementId === undefined)
     return;
   
   if (selectedTab === 'elements') {
-    const deletedElement = braiderlyGame.elements?.filter(element => element.id === deletedElementId)[0];
+    const deletedElement = braiderGame.elements?.filter(element => element.id === deletedElementId)[0];
 
     if (deletedElement === undefined)
       return;
 
-    const deletedElementIndex = braiderlyGame.elements?.indexOf(deletedElement) ?? -1;
+    const deletedElementIndex = braiderGame.elements?.indexOf(deletedElement) ?? -1;
 
     if (deletedElementIndex !== -1)
-      setBraiderlyGame({...braiderlyGame, elements: [...braiderlyGame.elements?.slice(0, deletedElementIndex) ?? [], ...braiderlyGame.elements?.slice(deletedElementIndex + 1) ?? []]});
+      setBraiderGame({...braiderGame, elements: [...braiderGame.elements?.slice(0, deletedElementIndex) ?? [], ...braiderGame.elements?.slice(deletedElementIndex + 1) ?? []]});
 
     setErrorMessage(undefined);
     setDeletedElementId(undefined);
@@ -122,12 +122,12 @@ export const deleteElement = (deletedElementId: string | undefined,
     if (updatedPageId === undefined)
       return;
 
-    const page = braiderlyGame.pages?.filter(page => page.id === updatedPageId)[0];
+    const page = braiderGame.pages?.filter(page => page.id === updatedPageId)[0];
 
     if (page === undefined)
       return;
 
-    const pageIndex = braiderlyGame.pages?.indexOf(page);
+    const pageIndex = braiderGame.pages?.indexOf(page);
     const elementIndex = page.elementIds?.indexOf(deletedElementId);
 
     if (pageIndex === undefined || elementIndex === undefined || elementIndex === -1)
@@ -135,7 +135,7 @@ export const deleteElement = (deletedElementId: string | undefined,
 
     page.elementIds = [...(page.elementIds?.slice(0, elementIndex) ?? []), ...(page.elementIds?.slice(elementIndex + 1) ?? [])];
 
-    setBraiderlyGame({...braiderlyGame, pages: [...(braiderlyGame.pages?.slice(0, pageIndex) ?? []), page, ...(braiderlyGame.pages?.slice(pageIndex + 1) ?? [])]});
+    setBraiderGame({...braiderGame, pages: [...(braiderGame.pages?.slice(0, pageIndex) ?? []), page, ...(braiderGame.pages?.slice(pageIndex + 1) ?? [])]});
 
     setErrorMessage(undefined);
     setDeletedElementId(undefined);
@@ -144,20 +144,20 @@ export const deleteElement = (deletedElementId: string | undefined,
 
 export const addElement = (addedElementId: string | undefined,
                           updatedPageId: string | undefined,
-                          braiderlyGame: BraiderlyGame,
+                          braiderGame: BraiderGame,
                           setAddedElementId: (addedElementId: undefined) => void,
-                          setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>,
+                          setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>,
                           setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
   if (addedElementId === undefined || addedElementId === 'NONE' || updatedPageId === undefined)
     return;
   
-  const page = braiderlyGame.pages?.filter(page => page.id === updatedPageId)[0];
-  const pageIndex = page && braiderlyGame.pages?.indexOf(page);
+  const page = braiderGame.pages?.filter(page => page.id === updatedPageId)[0];
+  const pageIndex = page && braiderGame.pages?.indexOf(page);
 
   if (pageIndex === undefined || pageIndex === -1)
     return;
 
-  setBraiderlyGame({...braiderlyGame, pages: [...(braiderlyGame.pages?.slice(0, pageIndex) || []), {...page, elementIds: [...(page?.elementIds ?? []), addedElementId]}, ...(braiderlyGame.pages?.slice(pageIndex + 1) || [])]});
+  setBraiderGame({...braiderGame, pages: [...(braiderGame.pages?.slice(0, pageIndex) || []), {...page, elementIds: [...(page?.elementIds ?? []), addedElementId]}, ...(braiderGame.pages?.slice(pageIndex + 1) || [])]});
   setErrorMessage(undefined);
   setAddedElementId(undefined);
 }

@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderlyGame, BraiderlyPage, BraiderlySpan } from '../../common/interfaces';
+import { BraiderGame, BraiderPage, BraiderSpan } from '../../common/interfaces';
 import { Button, ButtonGroup, Column, ColumnGroup, Heading1, Paragraph, SpanAction, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 import { getDescription } from '../functions/Common';
 
 interface PagesTabProps {
-  braiderlyGame: BraiderlyGame | undefined;
+  braiderGame: BraiderGame | undefined;
   editedPageId?: string;
   setCreatedPage: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedPageId: Dispatch<SetStateAction<string | undefined>>;
@@ -15,13 +15,13 @@ interface PagesTabProps {
   setCreatedSpan: Dispatch<SetStateAction<{targetElementId: string, targetIndex: number} | undefined>>;
   setUpdatedSpan: Dispatch<SetStateAction<{type: 'GROUP' | 'TEXT' | 'VARIABLE', targetElementId: string, value?: string, targetIndex: number, variableId?: string, pageId?: string} | undefined>>;
   setAddedElementId: Dispatch<SetStateAction<string | undefined>>;
-  setBraiderlyGame: Dispatch<SetStateAction<BraiderlyGame | undefined>>;
+  setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>;
   setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const PagesTab = (props: PagesTabProps): JSX.Element => {
-  const pageElements: JSX.Element[] | undefined = props.braiderlyGame?.pages?.sort((a: BraiderlyPage, b: BraiderlyPage) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((page: BraiderlyPage, index: number) => {
-    const description = getDescription(page, props.braiderlyGame);
+  const pageElements: JSX.Element[] | undefined = props.braiderGame?.pages?.sort((a: BraiderPage, b: BraiderPage) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((page: BraiderPage, index: number) => {
+    const description = getDescription(page, props.braiderGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${page.id}: ${page.description}`}>
@@ -29,24 +29,24 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
       </TableCell>
       <TableCell textAlign='center'>
         <TableCellAction onClick={() => props.setEditedPageId(page.id)}><Icon title='update' fillSecondary='--opposite' type='pencil'/></TableCellAction>
-        <TableCellAction onClick={() => {props.setBraiderlyGame({...props.braiderlyGame, defaultPageId: page.id});}}><Icon title='set default page' type={props.braiderlyGame?.defaultPageId === page.id ? 'selected' : 'unselected'} fillPrimary='--opposite' /></TableCellAction>
+        <TableCellAction onClick={() => {props.setBraiderGame({...props.braiderGame, defaultPageId: page.id});}}><Icon title='set default page' type={props.braiderGame?.defaultPageId === page.id ? 'selected' : 'unselected'} fillPrimary='--opposite' /></TableCellAction>
       </TableCell>
     </TableRow>;
   });
 
-  const elementElements: JSX.Element[] | undefined = props.braiderlyGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.elementIds?.map((elementId: string, index: number) => {
-    const element = props.braiderlyGame?.elements?.filter(element => element.id === elementId)[0];
+  const elementElements: JSX.Element[] | undefined = props.braiderGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.elementIds?.map((elementId: string, index: number) => {
+    const element = props.braiderGame?.elements?.filter(element => element.id === elementId)[0];
 
     if (element === undefined) {
       return <Paragraph key={`pageElement${index}`}>Error: element not found</Paragraph>
     } else {
       const spans: JSX.Element[] = [];
 
-      (element.spans ?? []).forEach((span: BraiderlySpan, spanIndex: number) => {
+      (element.spans ?? []).forEach((span: BraiderSpan, spanIndex: number) => {
         if (span.type === 'TEXT') {
           spans.push(<span key={`pageElement${index}span${spanIndex}`}>{span.value}<SpanAction onClick={() => {props.setUpdatedSpan({type: span.type!, targetElementId: elementId, targetIndex: spanIndex, value: span.value, variableId: span.variableId, pageId: span.pageId});}}><Icon title='update span' type='pencil' /></SpanAction></span>);
         } else if (span.type === 'VARIABLE') {
-          const variable = props.braiderlyGame?.variables?.filter(variable => variable.id === span.variableId)[0];
+          const variable = props.braiderGame?.variables?.filter(variable => variable.id === span.variableId)[0];
 
           variable && spans.push(<span key={`pageElement${index}span${spanIndex}`}>({variable.description})</span>);
         }
@@ -89,7 +89,7 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
         </TableRow>
       </tbody>
     </Table> : <>
-      <Heading1>{props.braiderlyGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.description}</Heading1>
+      <Heading1>{props.braiderGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.description}</Heading1>
       {elementElements}
       <ButtonGroup>
         <Button onClick={() => props.setCreatedElement({description: ''})}>Create Element</Button>

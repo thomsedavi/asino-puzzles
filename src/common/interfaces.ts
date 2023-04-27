@@ -17,7 +17,7 @@ export interface User {
   name?: string;
   biography?: Document;
   lexicologers?: LexicologerSummary[];
-  braiderlys?: BraiderlySummary[];
+  braiders?: BraiderSummary[];
   puzzles?: PuzzleSummary[];
   dateCreated?: string;
   dateUpdated?: string;
@@ -35,7 +35,7 @@ export interface LexicologerSummary {
   dateUpdated?: string;
 }
 
-export interface BraiderlySummary {
+export interface BraiderSummary {
   id?: string;
   title?: string;
   dateCreated?: string;
@@ -1825,45 +1825,45 @@ export const asinoPuzzle: AsinoPuzzle = {
   ]
 }
 
-export interface BraiderlyGame {
+export interface BraiderGame {
   id?: string;
   userId?: string;
   userName?: string;
   title?: string;
   defaultPageId?: string;
-  variables?: BraiderlyVariable[];
-  pages?: BraiderlyPage[];
-  elements?: BraiderlyElement[];
+  variables?: BraiderVariable[];
+  pages?: BraiderPage[];
+  elements?: BraiderElement[];
   dateCreated?: string;
   dateUpdated?: string;
 }
 
-export interface BraiderlyElement {
+export interface BraiderElement {
   id?: string;
   description?: string;
   type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP';
-  spans?: BraiderlySpan[];
+  spans?: BraiderSpan[];
   isVariableId?: string;
   variableId?: string;
   elementIds?: string[];
 }
 
-export interface BraiderlySpan {
+export interface BraiderSpan {
   type?: 'GROUP' | 'TEXT' | 'VARIABLE';
-  spans?: BraiderlySpan[];
-  style?: BraiderlyStyle;
+  spans?: BraiderSpan[];
+  style?: BraiderStyle;
   isVariableId?: string;
   pageId?: string;
   value?: string;
   variableId?: string;
 }
 
-export interface BraiderlyStyle {
+export interface BraiderStyle {
   fontWeight?: 'normal' | 'bold';
   fontStyle?: 'italic';
 }
 
-export interface BraiderlyVariable {
+export interface BraiderVariable {
   id?: string;
   description?: string;
   type?: 'INPUT' | 'EVALUATED' | 'SYSTEM';
@@ -1872,7 +1872,7 @@ export interface BraiderlyVariable {
   variableId?: string;
   defaultOptionId?: string;
   defaultValue?: string;
-  options?: BraiderlySelectOptionString[];
+  options?: BraiderSelectOptionString[];
   optionId?: string;
 }
 
@@ -1939,25 +1939,25 @@ export const getExpressionDescription = (expression: string, values: string[]): 
   }
 }
 
-export interface BraiderlySelectOptionString {
+export interface BraiderSelectOptionString {
   id?: string;
-  spans?: BraiderlySpan[];
+  spans?: BraiderSpan[];
   isVariableId?: string;
 }
 
-export interface BraiderlyPage {
+export interface BraiderPage {
   id?: string;
   description?: string;
   elementIds?: string[];
 }
 
-export interface BraiderlySetVariable {
+export interface BraiderSetVariable {
   variableId?: string;
   optionId?: string;
   value?: string;
 }
 
-export const ThingTest: BraiderlyGame = {
+export const ThingTest: BraiderGame = {
   defaultPageId: 'home',
   variables: [
     {

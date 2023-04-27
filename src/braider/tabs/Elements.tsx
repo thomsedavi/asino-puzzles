@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderlyElement, BraiderlyGame } from '../../common/interfaces';
+import { BraiderElement, BraiderGame } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 import { getDescription } from '../functions/Common';
 
 interface ElementsTabProps {
-  braiderlyGame: BraiderlyGame | undefined;
+  braiderGame: BraiderGame | undefined;
   editedElementId?: string;
   setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
@@ -13,8 +13,8 @@ interface ElementsTabProps {
 }
 
 const ElementsTab = (props: ElementsTabProps): JSX.Element => {
-  const elementElements: JSX.Element[] | undefined = props.braiderlyGame?.elements?.sort((a: BraiderlyElement, b: BraiderlyElement) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((element: BraiderlyElement, index: number) => {
-    const description = getDescription(element, props.braiderlyGame);
+  const elementElements: JSX.Element[] | undefined = props.braiderGame?.elements?.sort((a: BraiderElement, b: BraiderElement) => { return (a.description ?? '') > (b.description ?? '') ? 1 : -1; }).map((element: BraiderElement, index: number) => {
+    const description = getDescription(element, props.braiderGame);
 
     return <TableRow key={`variable${index}`}>
       <TableCell title={`${element.id}: ${element.description}`}>

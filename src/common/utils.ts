@@ -1,4 +1,4 @@
-import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, BraiderlyGame, User } from './interfaces';
+import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, BraiderGame, User } from './interfaces';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -157,11 +157,11 @@ const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
   return puzzle;
 }
 
-const createBraiderlyGame = (user?: User): BraiderlyGame => {
+const createBraiderGame = (user?: User): BraiderGame => {
   return {
     userId: user?.id ?? '0-00',
     userName: user?.name ?? 'User Name',
-    title: 'Braiderly Game',
+    title: 'Braider Game',
     pages: [{id: '0-00', description: 'Home'}],
     defaultPageId: '0-00'
   }
@@ -174,7 +174,7 @@ const Utils = {
   convertDocumentToString: convertDocumentToString,
   formatDate: formatDate,
   generateDefaultSudoku: generateDefaultSudoku,
-  createBraiderlyGame: createBraiderlyGame
+  createBraiderGame: createBraiderGame
 }
 
 export default Utils;

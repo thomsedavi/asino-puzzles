@@ -1,4 +1,4 @@
-import { LexicologerGame, BraiderlyGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User, BraiderlySummary } from "./interfaces";
+import { LexicologerGame, BraiderGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User, BraiderSummary } from "./interfaces";
 
 export const isLocalhost = (): boolean => {
   return window.location.hostname === 'localhost';
@@ -239,17 +239,17 @@ export const deletePuzzle = async (id: string | undefined): Promise<boolean> => 
   }
 }
 
-export const getBraiderly = async (id: string | undefined): Promise<BraiderlyGame | string | undefined> => {
+export const getBraider = async (id: string | undefined): Promise<BraiderGame | string | undefined> => {
   if (isLocalhost()) {
-    const storedBraiderly = window.localStorage.getItem('braiderly_' + id);
+    const storedBraider = window.localStorage.getItem('braider_' + id);
 
-    if (storedBraiderly) {
-      return Promise.resolve(JSON.parse(storedBraiderly));
+    if (storedBraider) {
+      return Promise.resolve(JSON.parse(storedBraider));
     } else {
       return Promise.resolve(undefined);
     }
   } else {
-    const response: Response = await fetch(`/api/braiderlys/${id}`, { method: 'GET' });
+    const response: Response = await fetch(`/api/braiders/${id}`, { method: 'GET' });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -261,7 +261,7 @@ export const getBraiderly = async (id: string | undefined): Promise<BraiderlyGam
   }
 }
 
-export const putBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyGame | undefined | string> => {
+export const putBraider = async (braider: BraiderGame): Promise<BraiderGame | undefined | string> => {
   if (isLocalhost()) {
       const storedUserString = window.localStorage.getItem('user_0-00');
 
@@ -269,22 +269,22 @@ export const putBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyG
         const date = getISODate();
         const storedUser: User = JSON.parse(storedUserString);
 
-        storedUser.braiderlys?.forEach(userBraiderly => {
-          userBraiderly.id === braiderly.id && (userBraiderly.dateUpdated = date);
-          userBraiderly.id === braiderly.id && (userBraiderly.title = braiderly.title);
+        storedUser.braiders?.forEach(userBraider => {
+          userBraider.id === braider.id && (userBraider.dateUpdated = date);
+          userBraider.id === braider.id && (userBraider.title = braider.title);
         });
 
-        braiderly.dateUpdated = date;
+        braider.dateUpdated = date;
 
         window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-        window.localStorage.setItem('braiderly_' + braiderly.id, JSON.stringify(braiderly));
+        window.localStorage.setItem('braider_' + braider.id, JSON.stringify(braider));
 
-        return Promise.resolve(braiderly);
+        return Promise.resolve(braider);
       } else {
         return Promise.resolve(undefined);      
       }
   } else {
-    const response: Response = await fetch(`/api/braiderlys/${braiderly.id}`, { method: 'PUT', body: JSON.stringify(braiderly) });
+    const response: Response = await fetch(`/api/braiders/${braider.id}`, { method: 'PUT', body: JSON.stringify(braider) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -300,17 +300,17 @@ export const putBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyG
   }
 }
 
-export const postBraiderly = async (braiderly: BraiderlyGame): Promise<BraiderlyGame | string | undefined> => {
+export const postBraider = async (braider: BraiderGame): Promise<BraiderGame | string | undefined> => {
   if (isLocalhost()) {
     const storedUser = window.localStorage.getItem('user_0-00');
     const user: User = JSON.parse(storedUser!);
 
     const date = getISODate();
-    braiderly.dateCreated = date;
-    braiderly.dateUpdated = date;
+    braider.dateCreated = date;
+    braider.dateUpdated = date;
 
-    if (user.braiderlys) {
-      let idSuffix = user.braiderlys.length.toString();
+    if (user.braiders) {
+      let idSuffix = user.braiders.length.toString();
       
       if (idSuffix.length === 1) {
         idSuffix = '00' + idSuffix;
@@ -318,24 +318,24 @@ export const postBraiderly = async (braiderly: BraiderlyGame): Promise<Braiderly
         idSuffix = '0' + idSuffix;
       }
 
-      braiderly.id = '0-00-' + idSuffix;
+      braider.id = '0-00-' + idSuffix;
 
-      user.braiderlys.push({ id: braiderly.id, title: braiderly.title, dateCreated: date, dateUpdated: date});
+      user.braiders.push({ id: braider.id, title: braider.title, dateCreated: date, dateUpdated: date});
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('braiderly_' + braiderly.id, JSON.stringify(braiderly));
+      window.localStorage.setItem('braider_' + braider.id, JSON.stringify(braider));
 
-      return Promise.resolve(braiderly);
+      return Promise.resolve(braider);
     } else {
-      braiderly.id = '0-00-000';
+      braider.id = '0-00-000';
 
-      user.braiderlys = [{ id: braiderly.id, title: braiderly.title, dateCreated: date, dateUpdated: date }];
+      user.braiders = [{ id: braider.id, title: braider.title, dateCreated: date, dateUpdated: date }];
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('braiderly_0-00-000', JSON.stringify(braiderly));
+      window.localStorage.setItem('braider_0-00-000', JSON.stringify(braider));
 
-      return Promise.resolve(braiderly);
+      return Promise.resolve(braider);
     }
   } else {
-    const response: Response = await fetch('/api/braiderlys', { method: 'POST', body: JSON.stringify(braiderly) });
+    const response: Response = await fetch('/api/braiders', { method: 'POST', body: JSON.stringify(braider) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -351,7 +351,7 @@ export const postBraiderly = async (braiderly: BraiderlyGame): Promise<Braiderly
   }
 }
 
-export const deleteBraiderly = async (id: string | undefined): Promise<boolean> => {
+export const deleteBraider = async (id: string | undefined): Promise<boolean> => {
   if (isLocalhost()) {
     const storedUserString = window.localStorage.getItem('user_0-00');
 
@@ -359,21 +359,21 @@ export const deleteBraiderly = async (id: string | undefined): Promise<boolean> 
       const storedUser: User = JSON.parse(storedUserString);
       let deleteIndex = -1;
 
-      storedUser.braiderlys?.forEach((userBraiderly: BraiderlySummary, index: number) => {
-        userBraiderly.id === id && (deleteIndex = index);
+      storedUser.braiders?.forEach((userBraider: BraiderSummary, index: number) => {
+        userBraider.id === id && (deleteIndex = index);
       });
 
-      storedUser.braiderlys?.splice(deleteIndex, 1);
+      storedUser.braiders?.splice(deleteIndex, 1);
 
       window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-      window.localStorage.removeItem('braiderly_' + id);
+      window.localStorage.removeItem('braider_' + id);
 
       return Promise.resolve(true);
     } else {
       return Promise.resolve(false);
     }
   } else {
-    const response: Response = await fetch(`/api/braiderlys/${id}`, { method: 'DELETE' });
+    const response: Response = await fetch(`/api/braiders/${id}`, { method: 'DELETE' });
 
     if (response.status === 200) {
       return Promise.resolve(true);

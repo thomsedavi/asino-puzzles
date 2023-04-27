@@ -1,6 +1,6 @@
-import { BraiderlyGame, BraiderlySetVariable, BraiderlySpan } from "../../common/interfaces";
+import { BraiderGame, BraiderSetVariable, BraiderSpan } from "../../common/interfaces";
 
-export const evaluateStringVariable = (puzzle: BraiderlyGame, variables: BraiderlySetVariable[], stringVariableId?: string): BraiderlySpan[] | undefined => {
+export const evaluateStringVariable = (puzzle: BraiderGame, variables: BraiderSetVariable[], stringVariableId?: string): BraiderSpan[] | undefined => {
   if (stringVariableId === undefined)
     return undefined;
 
@@ -36,11 +36,11 @@ export const evaluateStringVariable = (puzzle: BraiderlyGame, variables: Braider
   }
 }
 
-export const evaluateIsVariable = (braiderly: BraiderlyGame, variables: BraiderlySetVariable[], isVariableId?: string): boolean | undefined => {
+export const evaluateIsVariable = (braider: BraiderGame, variables: BraiderSetVariable[], isVariableId?: string): boolean | undefined => {
   if (isVariableId === undefined)
     return undefined;
     
-  const variable = braiderly.variables?.filter(variable => variable.id === isVariableId)[0];
+  const variable = braider.variables?.filter(variable => variable.id === isVariableId)[0];
 
   if (variable === undefined)
     return undefined;
