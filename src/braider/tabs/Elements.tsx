@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderElement, BraiderGame } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 import { getDescription } from '../functions/Common';
+import { BraiderElement, BraiderGame } from '../Interfaces';
 
 interface ElementsTabProps {
   braiderGame: BraiderGame | undefined;

@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
 import { Button, ButtonGroup, Container, Span, Overlay, Placeholder, Input, Heading1, ErrorMessage, Paragraph, Code, Flash, Heading2, ButtonOption, TabGroup, Tab, Select, SpanAction } from '../common/styled';
-import { BraiderElement, BraiderGame, BraiderPage, BraiderSelectOptionString, BraiderSetVariable, BraiderSpan, BraiderStyle, BraiderVariable, getElementType, getSpanType, getVariableExpression, getVariableFormat, User } from '../common/interfaces';
+import { User } from '../common/interfaces';
 import { useState } from '../common/saveState';
 import Layout from '../pages/Layout';
 import { EditableElementHeading1, EditToggleButton } from '../common/components';
@@ -18,6 +18,7 @@ import { createPage, updatePage } from './functions/Pages';
 import { addElement, createElement, deleteElement, updateElement } from './functions/Elements';
 import { evaluateIsVariable, evaluateStringVariable } from './functions/Evaluations';
 import { createSpan, updateSpan } from './functions/Span';
+import { BraiderElement, BraiderGame, BraiderPage, BraiderSelectOptionString, BraiderSetVariable, BraiderSpan, BraiderStyle, BraiderVariable, getElementType, getSpanType, getVariableExpression, getVariableFormat } from './Interfaces';
 
 interface BraiderProps {
   user?: User | null;
@@ -518,6 +519,7 @@ const Braider = (props: BraiderProps): JSX.Element => {
       {createdVariable?.type === 'EVALUATED' && <>
         <Select value={createdVariable?.expression ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {setCreatedVariable({...createdVariable, expression: getVariableExpression(event.target.value)})}}>
           <option value='NONE'>Select Expression</option>
+          <option value='SUBSTITUTE_OPTION'>Substitute Option</option>
           <option value='SUBSTITUTE_OPTION'>Substitute Option</option>
         </Select>
         {createdVariable?.expression === 'SUBSTITUTE_OPTION' && <>

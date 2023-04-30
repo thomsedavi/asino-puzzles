@@ -1,5 +1,5 @@
-import { BraiderGame, BraiderPage } from "../../common/interfaces";
 import Utils from "../../common/utils";
+import { BraiderGame, BraiderPage } from "../Interfaces";
 import { getRandomId } from "./Common";
 
 export const createPage = (createdPage: {description: string} | undefined,

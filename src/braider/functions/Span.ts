@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { BraiderGame, BraiderSpan } from "../../common/interfaces";
 import Utils from "../../common/utils";
+import { BraiderGame, BraiderSpan } from "../Interfaces";
 
 export const createSpan = (createdSpan: {type?: 'GROUP' | 'TEXT' | 'VARIABLE', value?: string, targetElementId: string, targetIndex: number, variableId?: string, pageId?: string} | undefined,
                            braiderGame: BraiderGame,

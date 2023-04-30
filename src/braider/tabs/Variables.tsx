@@ -1,9 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Icon } from '../../common/icons';
-import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from '../../common/interfaces';
 import { Column, ColumnGroup, Table, TableCell, TableCellAction, TableHeader, TableRow } from '../../common/styled';
 import Utils from '../../common/utils';
 import { getDescription } from '../functions/Common';
+import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from '../Interfaces';
 
 interface VariablesTabProps {
   braiderGame: BraiderGame | undefined;

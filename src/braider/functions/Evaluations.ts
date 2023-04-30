@@ -1,4 +1,4 @@
-import { BraiderGame, BraiderSetVariable, BraiderSpan } from "../../common/interfaces";
+import { BraiderGame, BraiderSetVariable, BraiderSpan } from "../Interfaces";
 
 export const evaluateStringVariable = (puzzle: BraiderGame, variables: BraiderSetVariable[], stringVariableId?: string): BraiderSpan[] | undefined => {
   if (stringVariableId === undefined)

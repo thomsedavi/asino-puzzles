@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from "../../common/interfaces";
 import { getRandomId } from "./Common";
 import Utils from "../../common/utils";
+import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from "../Interfaces";
 
 export const createVariable = (createdVariable: {description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'SUBSTITUTE_OPTION', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string, variableId?: string} | undefined,
                                braiderGame: BraiderGame,

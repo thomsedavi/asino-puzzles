@@ -1,4 +1,4 @@
-import { BraiderGame, BraiderVariable, getExpressionDescription } from "../../common/interfaces";
+import { BraiderGame, BraiderVariable, getExpressionDescription } from "../Interfaces";
 
 const numbers = '1234567890';
 

@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { BraiderElement, BraiderGame } from "../../common/interfaces";
 import Utils from "../../common/utils";
 import { getRandomId } from "./Common";
+import { BraiderElement, BraiderGame } from "../Interfaces";
 
 export const createElement = (createdElement: {description: string, type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string} | undefined,
                               updatedPageId: string | undefined,

@@ -1,4 +1,5 @@
-import { LexicologerGame, BraiderGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User, BraiderSummary } from "./interfaces";
+import { BraiderGame } from "../braider/Interfaces";
+import { LexicologerGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User, BraiderSummary } from "./interfaces";
 
 export const isLocalhost = (): boolean => {
   return window.location.hostname === 'localhost';

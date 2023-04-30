@@ -1,4 +1,5 @@
-import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, BraiderGame, User } from './interfaces';
+import { BraiderGame } from '../braider/Interfaces';
+import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, User } from './interfaces';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
