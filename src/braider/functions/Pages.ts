@@ -21,7 +21,7 @@ export const createPage = (createdPage: {description: string} | undefined,
     return;
   }
 
-  if (braiderGame.pages?.filter(page => page.description?.toLowerCase() === cleanedPage.description?.toLowerCase()).length ?? 0 > 0) {
+  if ((braiderGame.pages?.filter(page => page.description?.toLowerCase() === cleanedPage.description?.toLowerCase()).length ?? 0) > 0) {
     setErrorMessage('Description Must Be Unique');
     return;
   }
@@ -54,7 +54,7 @@ export const updatePage = (updatedPage: {id: string, description: string} | unde
     return;
   }
 
-  if (braiderGame.pages?.filter(page => page.id !== cleanedPage.id && page.description?.toLowerCase() === cleanedPage.description?.toLowerCase()).length ?? 0 > 0) {
+  if ((braiderGame.pages?.filter(page => page.id !== cleanedPage.id && page.description?.toLowerCase() === cleanedPage.description?.toLowerCase()).length ?? 0) > 0) {
     setErrorMessage('Description Must Be Unique');
     return;
   }
