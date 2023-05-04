@@ -10,7 +10,7 @@ export const evaluateStringVariable = (puzzle: BraiderGame, variables: BraiderSe
     return undefined;
 
   if (variable.type === 'EVALUATED') {
-    if (variable.expression === 'SUBSTITUTE_OPTION') {
+    if (variable.expression === 'TEXT_FROM_OPTION_SUBSTITUTED') {
       var evalVar = variables.filter(v => v.variableId === variable.variableId)[0];
 
       if (evalVar !== undefined) {
@@ -45,15 +45,15 @@ export const evaluateIsVariable = (braider: BraiderGame, variables: BraiderSetVa
   if (variable === undefined)
     return undefined;
 
-    if (variable.expression === 'IS_SET' && variable.variableId !== undefined) {
+    if (variable.expression === 'IS_VARIABLE_SET' && variable.variableId !== undefined) {
       const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
 
       return isVariableSet !== undefined;
-    } else if (variable.expression === 'IS_NOT_SET' && variable.variableId !== undefined) {
+    } else if (variable.expression === 'IS_VARIABLE_NOT_SET' && variable.variableId !== undefined) {
       const isVariableSet = variables?.filter(isVariableSet => isVariableSet.variableId === variable.variableId)[0];
 
       return isVariableSet === undefined;
-    } else if (variable.expression === 'IS_OPTION' && variable.variableId !== undefined) {
+    } else if (variable.expression === 'IS_VARIABLE_OPTION_SELECTED' && variable.variableId !== undefined) {
       const setVariable = variables.filter(isVariableOption => isVariableOption.variableId === variable.variableId)[0];
 
       if (setVariable === undefined)

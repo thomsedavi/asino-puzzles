@@ -151,14 +151,14 @@ const Braider = (props: BraiderProps): JSX.Element => {
   const [ updatedPageId, setUpdatedPageId ] = React.useState<string | undefined>(undefined);
   const [ createdPage, setCreatedPage ] = React.useState<{description: string} | undefined>(undefined);
   const [ updatedPage, setUpdatedPage ] = React.useState<{id: string, description: string} | undefined>(undefined);
-  const [ addedElementId, setAddedElementId ] = React.useState<string | undefined>(undefined);
-  const [ createdVariable, setCreatedVariable ] = React.useState<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'SUBSTITUTE_OPTION', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string, variableId?: string} | undefined>(undefined);
+  const [ addedElement, setAddedElement ] = React.useState<{pageId: string, elementIndex: number, elementId?: string} | undefined>(undefined);
+  const [ createdVariable, setCreatedVariable ] = React.useState<{description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'TEXT_FROM_OPTION_SUBSTITUTED' | 'IS_DAYS_SINCE_START', options?: BraiderSelectOptionString[], defaultValue?: string, value?: string, defaultOptionId?: string, variableId?: string} | undefined>(undefined);
   const [ updatedVariable, setUpdatedVariable ] = React.useState<{id: string, description: string, format: 'TEXT' | 'NUMBER' | 'BOOLEAN', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string} | undefined>(undefined);
   const [ deletedVariableId, setDeletedVariableId ] = React.useState<string | undefined>(undefined);
   const [ createdSpan, setCreatedSpan ] = React.useState<{type?: 'GROUP' | 'TEXT' | 'VARIABLE', value?: string, targetElementId: string, targetIndex: number, variableId?: string, pageId?: string} | undefined>(undefined);
   const [ updatedSpan, setUpdatedSpan ] = React.useState<{type: 'GROUP' | 'TEXT' | 'VARIABLE', targetElementId: string, value?: string, targetIndex: number, variableId?: string, pageId?: string} | undefined>(undefined);
   const [ createdOptionSpan, setCreatedOptionSpan ] = React.useState<{type?: 'GROUP' | 'TEXT' | 'VARIABLE', targetVariableId: string, targetOptionId: string, value?: string, variableId?: string} | undefined>();
-  const [ createdElement, setCreatedElement ] = React.useState<{description: string, type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string} | undefined>(undefined);
+  const [ createdElement, setCreatedElement ] = React.useState<{description: string, type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string, pageId?: string, elementIndex?: number} | undefined>(undefined);
   const [ updatedElement, setUpdatedElement ] = React.useState<{id: string, description: string, type: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string} | undefined>(undefined);
   const [ updatedElementId, setUpdatedElementId ] = React.useState<string | undefined>(undefined);
   const [ deletedElementId, setDeletedElementId ] = React.useState<string | undefined>(undefined);
@@ -460,7 +460,7 @@ const Braider = (props: BraiderProps): JSX.Element => {
                                               setUpdatedSpan={setUpdatedSpan}
                                               setBraiderGame={setBraiderGame}
                                               setDeletedElementId={setDeletedElementId}
-                                              setAddedElementId={setAddedElementId} />}
+                                              setAddedElement={setAddedElement} />}
         {selectedTab === 'elements' && <ElementsTab braiderGame={braiderGame}
                                                     editedElementId={updatedElementId}
                                                     setCreatedElement={setCreatedElement}
@@ -494,7 +494,6 @@ const Braider = (props: BraiderProps): JSX.Element => {
         contentLabel="Create Variable"
     >
       <Heading2>Create Variable</Heading2>
-      <Input placeholder='Variable Description' width='100%' autoFocus maxLength={64} value={createdVariable?.description} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable, description: event.currentTarget.value})} />
       <Select value={createdVariable?.format ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setCreatedVariable({...createdVariable!, format: getVariableFormat(event.target.value) }); }}>
         <option value='NONE'>Select Format</option>
         <option value='TEXT'>Text</option>
@@ -511,6 +510,7 @@ const Braider = (props: BraiderProps): JSX.Element => {
         <option value='INPUT_SELECT'>Input (Select)</option>
         <option value='EVALUATED'>Evaluated</option>
       </Select>}
+      {createdVariable?.type === 'INPUT' && <Input placeholder='Variable Description' width='100%' autoFocus maxLength={64} value={createdVariable?.description} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable, description: event.currentTarget.value})} />}
       {createdVariable?.type === 'INPUT' && createdVariable?.format === 'TEXT' && createdVariable?.options === undefined && <Input placeholder={`Default ${Utils.tidyString(createdVariable?.description)}`} width='100%' maxLength={64} value={createdVariable?.defaultValue ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable, defaultValue: event.currentTarget.value})} />}
       {createdVariable?.type === 'INPUT' && createdVariable?.options !== undefined && <>
         {createdVariable.options.map(option => <Paragraph key={`option${option.id}`}>{option.spans?.map(span => span.value)}<SpanAction onClick={() => {setCreatedOptionSpan({targetVariableId: 'NONE', targetOptionId: option.id!});}}><Icon title='create span' type='pencil' /></SpanAction><SpanAction onClick={() => {setCreatedVariable({...createdVariable, defaultOptionId: option.id});}}><Icon title='set default option' type={createdVariable!.defaultOptionId === option.id ? 'selected' : 'unselected'} /></SpanAction></Paragraph>)}
@@ -519,15 +519,18 @@ const Braider = (props: BraiderProps): JSX.Element => {
       {createdVariable?.type === 'EVALUATED' && <>
         <Select value={createdVariable?.expression ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {setCreatedVariable({...createdVariable, expression: getVariableExpression(event.target.value)})}}>
           <option value='NONE'>Select Expression</option>
-          <option value='SUBSTITUTE_OPTION'>Substitute Option</option>
-          <option value='SUBSTITUTE_OPTION'>Substitute Option</option>
+          <option value='TEXT_FROM_OPTION_SUBSTITUTED'>Text From Option Substituted</option>
+          <option value='IS_DAYS_SINCE_START'>Is Days Since Start</option>
         </Select>
-        {createdVariable?.expression === 'SUBSTITUTE_OPTION' && <>
+        {createdVariable?.expression === 'TEXT_FROM_OPTION_SUBSTITUTED' && <>
           <Select value={createdVariable?.variableId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setCreatedVariable({...createdVariable, variableId: event.target.value === 'NONE' ? undefined : event.target.value, options: event.target.value === 'NONE' ? undefined : braiderGame?.variables?.filter(v => v.id === event.target.value)[0]?.options?.map(o => {return {id: o.id, spans: []}}) ?? undefined}); }}>
             <option value='NONE'>Select Variable</option>
             {braiderGame.variables?.filter(variable => variable.format === 'TEXT' && variable.options !== undefined).map((variable: BraiderVariable, index: number) => <option value={variable.id} key={`variable${index}`}>{variable.description}</option>)}
           </Select>
           {createdVariable?.options?.map((option: BraiderSelectOptionString, index: number) => <Paragraph key={`option${option.id}`}>{braiderGame?.variables?.filter(v => v.id === createdVariable.variableId)[0]?.options?.filter(o => o.id === option.id)[0]?.spans?.map(s => s.value)}</Paragraph>)}
+        </>}
+        {createdVariable?.expression === 'IS_DAYS_SINCE_START' && <>
+          <Input type='number' placeholder='Days Since Start' width='100%' autoFocus maxLength={64} value={createdVariable?.value ?? ''} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCreatedVariable({ ...createdVariable!, value: event.currentTarget.value})} />        
         </>}
       </>}
       <ButtonGroup>
@@ -668,8 +671,13 @@ const Braider = (props: BraiderProps): JSX.Element => {
         <option value='NONE'>Select Variable</option>
         {braiderGame.variables?.filter(variable => variable.type === 'INPUT').map((variable: BraiderVariable, index: number) => <option value={variable.id} key={`variable${index}`}>{variable.description}</option>)}
       </Select>}
+      <Paragraph>Show If:</Paragraph>
+      <Select value={createdElement?.isVariableId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setCreatedElement({ ...createdElement!, isVariableId: event.target.value === 'NONE' ? undefined : event.target.value }); }}>
+        <option value='NONE'>Always Show</option>
+        {braiderGame.variables?.filter(variable => variable.format === 'BOOLEAN').map((variable: BraiderVariable, index: number) => <option value={variable.id} key={`variable${index}`}>{getDescription(variable, braiderGame)}</option>)}
+      </Select>
       <ButtonGroup>
-        <Button onClick={() => createElement(createdElement, updatedPageId, braiderGame, selectedTab, setCreatedElement, setBraiderGame, setErrorMessage)} disabled={createdElement?.type === undefined}>Create</Button>
+        <Button onClick={() => createElement(createdElement, braiderGame, setCreatedElement, setBraiderGame, setErrorMessage)} disabled={createdElement?.type === undefined}>Create</Button>
         <Button onClick={() => { setErrorMessage(undefined); setCreatedElement(undefined) ;}}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
@@ -765,21 +773,21 @@ const Braider = (props: BraiderProps): JSX.Element => {
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Modal>
     <Modal
-      isOpen={addedElementId !== undefined}
-      onRequestClose={() => { setErrorMessage(undefined); setAddedElementId(undefined) ;}}
+      isOpen={addedElement !== undefined}
+      onRequestClose={() => { setErrorMessage(undefined); setAddedElement(undefined) ;}}
       className="modal"
       overlayClassName="modal-overlay"
       style={{}}
       contentLabel="Add Element"
     >
       <Heading2>Add Element</Heading2>
-      <Select value={addedElementId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setAddedElementId(event.target.value); }}>
+      <Select value={addedElement?.elementId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { setAddedElement({...addedElement!, elementId: event.target.value}); }}>
         <option value='NONE'>Select Element</option>
         {braiderGame.elements?.map((element: BraiderElement, index: number) => <option value={element.id} key={`element${index}`}>{element.description}</option>)}
       </Select>
       <ButtonGroup>
-        <Button onClick={() => addElement(addedElementId, updatedPageId, braiderGame, setAddedElementId, setBraiderGame, setErrorMessage)} disabled={addedElementId === 'NONE'}>Add</Button>
-        <Button onClick={() => { setErrorMessage(undefined); setAddedElementId(undefined) ;}}>Cancel</Button>
+        <Button onClick={() => addElement(addedElement, braiderGame, setAddedElement, setBraiderGame, setErrorMessage)} disabled={addedElement?.elementId === undefined}>Add</Button>
+        <Button onClick={() => { setErrorMessage(undefined); setAddedElement(undefined) ;}}>Cancel</Button>
       </ButtonGroup>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Modal>

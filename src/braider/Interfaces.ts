@@ -41,12 +41,13 @@ export interface BraiderVariable {
   description?: string;
   type?: 'INPUT' | 'EVALUATED' | 'SYSTEM';
   format?: 'TEXT' | 'NUMBER' | 'BOOLEAN';
-  expression?: 'SUBSTITUTE_OPTION' | 'IS_SET' | 'IS_NOT_SET' | 'IS_OPTION';
+  expression?: 'TEXT_FROM_OPTION_SUBSTITUTED' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_NOT_SET' | 'IS_VARIABLE_OPTION_SELECTED' | 'IS_DAYS_SINCE_START';
   variableId?: string;
   defaultOptionId?: string;
   defaultValue?: string;
   options?: BraiderSelectOptionString[];
   optionId?: string;
+  value?: string;
 }
 
 export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' | undefined => {
@@ -62,10 +63,12 @@ export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' 
   }
 }
 
-export const getVariableExpression = (value: string): 'SUBSTITUTE_OPTION' | undefined => {
+export const getVariableExpression = (value: string): 'TEXT_FROM_OPTION_SUBSTITUTED' | 'IS_DAYS_SINCE_START' | undefined => {
   switch (value) {
-    case 'SUBSTITUTE_OPTION':
-      return 'SUBSTITUTE_OPTION';
+    case 'TEXT_FROM_OPTION_SUBSTITUTED':
+      return 'TEXT_FROM_OPTION_SUBSTITUTED';
+    case 'IS_DAYS_SINCE_START':
+      return 'IS_DAYS_SINCE_START';
     default:
       return undefined;
   }
@@ -101,12 +104,14 @@ export const getElementType = (value: string): 'PARAGRAPH' | 'HEADING_2' | 'INPU
 
 export const getExpressionDescription = (expression: string, values: string[]): string => {
   switch (expression) {
-    case 'IS_SET':
+    case 'IS_VARIABLE_SET':
       return `Is {${values[0]}} Set`;
-    case 'IS_NOT_SET':
+    case 'IS_VARIABLE_NOT_SET':
       return `Is {${values[0]}} Not Set`;
-    case 'IS_OPTION':
+    case 'IS_VARIABLE_OPTION_SELECTED':
       return `Is {${values[0]}} Set To {${values[1]}}`; 
+    case 'IS_DAYS_SINCE_START':
+      return `Is {${values[0]}} Days Since Start`;
     default:
       return `Unknown Expression: {${expression}}`;
   }
@@ -145,7 +150,7 @@ export const ThingTest: BraiderGame = {
       description: 'Character 1 Class Lower Case',
       type: 'EVALUATED',
       format: 'TEXT',
-      expression: 'SUBSTITUTE_OPTION',
+      expression: 'TEXT_FROM_OPTION_SUBSTITUTED',
       variableId: 'char1class',
       options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'rogue' }]}]
     },
@@ -161,7 +166,7 @@ export const ThingTest: BraiderGame = {
       description: 'Bard Instgrument Lower Case',
       type: 'EVALUATED',
       format: 'TEXT',
-      expression: 'SUBSTITUTE_OPTION',
+      expression: 'TEXT_FROM_OPTION_SUBSTITUTED',
       variableId: 'bardinstrument',
       options: [{id: 'HARP', spans: [{ type: 'TEXT', value: 'harp' }]}, {id: 'LUTE', spans: [{ type: 'TEXT', value: 'lute' }]}, {id: 'KAZOO', spans: [{ type: 'TEXT', value: 'kazoo' }]}]
     },
@@ -188,7 +193,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Class Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_SET',
+      expression: 'IS_VARIABLE_SET',
       variableId: 'char1class'
     },
     {
@@ -196,7 +201,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Class Not Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_NOT_SET',
+      expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'char1class'
     },
     {
@@ -204,7 +209,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Start Location Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_SET',
+      expression: 'IS_VARIABLE_SET',
       variableId: 'startlocation'
     },
     {
@@ -212,7 +217,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Start Location Not Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_NOT_SET',
+      expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'startlocation'
     },
     {
@@ -220,7 +225,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Bard',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_OPTION',
+      expression: 'IS_VARIABLE_OPTION_SELECTED',
       variableId: 'char1class',
       optionId: 'BARD'
     },
@@ -229,7 +234,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Rogue',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_OPTION',
+      expression: 'IS_VARIABLE_OPTION_SELECTED',
       variableId: 'char1class',
       optionId: 'ROGUE'
     },
@@ -238,7 +243,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Bard Instrument Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_SET',
+      expression: 'IS_VARIABLE_SET',
       variableId: 'bardinstrument'
     },
     {
@@ -246,7 +251,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Bard Instrument Not Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_NOT_SET',
+      expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'bardinstrument'
     },
     {
@@ -254,7 +259,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Name Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_SET',
+      expression: 'IS_VARIABLE_SET',
       variableId: 'char1name'
     },
     {
@@ -262,7 +267,7 @@ export const ThingTest: BraiderGame = {
       description: 'Is Character 1 Name Not Set',
       type: 'SYSTEM',
       format: 'BOOLEAN',
-      expression: 'IS_NOT_SET',
+      expression: 'IS_VARIABLE_NOT_SET',
       variableId: 'char1name'
     }
   ],

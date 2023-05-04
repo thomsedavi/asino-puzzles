@@ -1,10 +1,12 @@
 import { createPage, deletePage, updatePage } from '../src/braider/functions/Pages';
 import { test, expect } from '@playwright/test';
-import { BraiderGame } from '../src/common/interfaces';
 import Utils from '../src/common/utils';
+import { BraiderGame } from '../src/braider/Interfaces';
 
 test('Can Create Page', () => {
-  let _createdPage: {description: string} | undefined = {description: '  Page  Description  '};
+  let _createdPage: {description: string} | undefined = {
+    description: '  Page  Description  '
+  };
   const setCreatedPage = (createdPage: {description: string} | undefined) => {
     _createdPage = createdPage;
   }
@@ -93,7 +95,7 @@ test('Can Update Page', () => {
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
-  _braiderGame && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
+  _braiderGame !== undefined && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
   expect(_updatedPage).toBeUndefined();
   expect(_braiderGame?.pages.length).toBe(3);
   expect(_braiderGame.pages?.filter(page => page.id === _braiderGame?.defaultPageId)[0]?.description).toBe('Updated Page');
@@ -123,7 +125,7 @@ test('Cannot Update Page With Existing Description', () => {
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
-  _braiderGame && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
+  _braiderGame !== undefined && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
   expect(_updatedPage?.description).toBe('  Existing  Page  2  ');
   expect(_braiderGame?.pages.length).toBe(3);
   expect(_braiderGame.pages?.filter(page => page.id === _braiderGame?.defaultPageId)[0]?.description).toBe('Existing Page 1');
@@ -152,7 +154,7 @@ test('Cannot Update Page With No Description', () => {
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
-  _braiderGame && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
+  _braiderGame !== undefined && updatePage(_updatedPage, _braiderGame, setUpdatedPage, setBraiderGame, setErrorMessage);
   expect(_updatedPage?.description).toBe('  ');
   expect(_braiderGame?.pages.length).toBe(3);
   expect(_braiderGame.pages?.filter(page => page.id === _braiderGame?.defaultPageId)[0]?.description).toBe('Existing Page 1');
@@ -181,7 +183,7 @@ test('Can Delete Page', () => {
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
-  _braiderGame && deletePage(_deletedPageId, _braiderGame, setDeletedPageId, setBraiderGame, setErrorMessage);
+  _braiderGame !== undefined && deletePage(_deletedPageId, _braiderGame, setDeletedPageId, setBraiderGame, setErrorMessage);
   expect(_deletedPageId).toBeUndefined();
   expect(_braiderGame?.pages.length).toBe(2);
   expect(_braiderGame.pages?.filter(page => page.id === '0-00')[0]).toBeDefined;
@@ -211,7 +213,7 @@ test('Cannot Delete Default Page', () => {
     {id: '2-00', description: 'Existing Page 3'}
   ];
 
-  _braiderGame && deletePage(_deletedPageId, _braiderGame, setDeletedPageId, setBraiderGame, setErrorMessage);
+  _braiderGame !== undefined && deletePage(_deletedPageId, _braiderGame, setDeletedPageId, setBraiderGame, setErrorMessage);
   expect(_deletedPageId).toBe('0-00');
   expect(_braiderGame?.pages.length).toBe(3);
   expect(_errorMessage).toBe('Cannot Delete Default Page');

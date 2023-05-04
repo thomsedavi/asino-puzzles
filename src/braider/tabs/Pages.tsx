@@ -9,12 +9,12 @@ interface PagesTabProps {
   editedPageId?: string;
   setCreatedPage: Dispatch<SetStateAction<{description: string} | undefined>>;
   setEditedPageId: Dispatch<SetStateAction<string | undefined>>;
-  setCreatedElement: Dispatch<SetStateAction<{description: string} | undefined>>;
+  setCreatedElement: Dispatch<SetStateAction<{description: string, pageId?: string, elementIndex?: number} | undefined>>;
   setUpdatedElement: Dispatch<SetStateAction<{id: string, description: string, type: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP', variableId?: string, isVariableId?: string} | undefined>>;
   setEditedElementId: Dispatch<SetStateAction<string | undefined>>;
   setCreatedSpan: Dispatch<SetStateAction<{targetElementId: string, targetIndex: number} | undefined>>;
   setUpdatedSpan: Dispatch<SetStateAction<{type: 'GROUP' | 'TEXT' | 'VARIABLE', targetElementId: string, value?: string, targetIndex: number, variableId?: string, pageId?: string} | undefined>>;
-  setAddedElementId: Dispatch<SetStateAction<string | undefined>>;
+  setAddedElement: Dispatch<SetStateAction<{pageId: string, elementIndex: number, elementId?: string} | undefined>>;
   setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>;
   setDeletedElementId: Dispatch<SetStateAction<string | undefined>>;
 }
@@ -34,7 +34,8 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
     </TableRow>;
   });
 
-  const elementElements: JSX.Element[] | undefined = props.braiderGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.elementIds?.map((elementId: string, index: number) => {
+  const elementIds: string[] | undefined = props.braiderGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.elementIds;
+  const elementElements: JSX.Element[] | undefined = elementIds?.map((elementId: string, index: number) => {
     const element = props.braiderGame?.elements?.filter(element => element.id === elementId)[0];
 
     if (element === undefined) {
@@ -52,18 +53,24 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
         }
       });
 
-      return <Paragraph key={`pageElement${index}`}>
-        <SpanAction onClick={() => props.setDeletedElementId(element.id)}>
-          <Icon title='delete element' fillSecondary='--opposite' type='delete' />
-        </SpanAction>
-        <SpanAction onClick={() => props.setUpdatedElement({id: element.id!, description: element.description!, type: element.type!, variableId: element.variableId, isVariableId: element.isVariableId})}>
-          <Icon title='update element' fillSecondary='--opposite' type='pencil' />
-        </SpanAction>
-        {spans}
-        <SpanAction onClick={() => {props.setCreatedSpan({targetElementId: elementId, targetIndex: element.spans?.length ?? 0}); props.setEditedElementId(elementId)}}>
-          <Icon title='create span' type='create' />
-        </SpanAction>
-      </Paragraph>;
+      return <>
+        <Paragraph key={`pageElement${index}`}>
+          <SpanAction onClick={() => props.setDeletedElementId(element.id)}>
+            <Icon title='delete element' fillSecondary='--opposite' type='delete' />
+          </SpanAction>
+          <SpanAction onClick={() => props.setUpdatedElement({id: element.id!, description: element.description!, type: element.type!, variableId: element.variableId, isVariableId: element.isVariableId})}>
+            <Icon title='update element' fillSecondary='--opposite' type='pencil' />
+          </SpanAction>
+          {spans}
+          <SpanAction onClick={() => {props.setCreatedSpan({targetElementId: elementId, targetIndex: element.spans?.length ?? 0}); props.setEditedElementId(elementId)}}>
+            <Icon title='create span' type='create' />
+          </SpanAction>
+        </Paragraph>
+        <ButtonGroup>
+          <Button onClick={() => props.setCreatedElement({description: '', pageId: props.editedPageId, elementIndex: index + 1})}>Create Element</Button>
+          <Button onClick={() => props.setAddedElement({pageId: props.editedPageId!, elementIndex: index + 1})}>Add Element</Button>
+        </ButtonGroup>
+      </>;
     }
   });
 
@@ -90,12 +97,14 @@ const PagesTab = (props: PagesTabProps): JSX.Element => {
       </tbody>
     </Table> : <>
       <Heading1>{props.braiderGame?.pages?.filter(page => page.id === props.editedPageId)[0]?.description}</Heading1>
-      {elementElements}
       <ButtonGroup>
-        <Button onClick={() => props.setCreatedElement({description: ''})}>Create Element</Button>
-        <Button onClick={() => props.setAddedElementId('NONE')}>Add Element</Button>
         <Button onClick={() => props.setEditedPageId(undefined)}>Close Page</Button>
       </ButtonGroup>
+      <ButtonGroup>
+        <Button onClick={() => props.setCreatedElement({description: '', pageId: props.editedPageId, elementIndex: 0})}>Create Element</Button>
+        <Button onClick={() => props.setAddedElement({pageId: props.editedPageId!, elementIndex: 0})}>Add Element</Button>
+      </ButtonGroup>
+      {elementElements}
     </>}
   </>;
 }

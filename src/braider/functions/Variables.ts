@@ -3,46 +3,71 @@ import { getRandomId } from "./Common";
 import Utils from "../../common/utils";
 import { BraiderGame, BraiderSelectOptionString, BraiderVariable } from "../Interfaces";
 
-export const createVariable = (createdVariable: {description: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'SUBSTITUTE_OPTION', options?: BraiderSelectOptionString[], defaultValue?: string, defaultOptionId?: string, variableId?: string} | undefined,
+export const createVariable = (createdVariable: {description?: string, format?: 'TEXT' | 'NUMBER' | 'BOOLEAN', type?: 'INPUT' | 'EVALUATED', expression?: 'TEXT_FROM_OPTION_SUBSTITUTED' | 'IS_DAYS_SINCE_START', options?: BraiderSelectOptionString[], defaultValue?: string, value?: string, defaultOptionId?: string, variableId?: string} | undefined,
                                braiderGame: BraiderGame,
                                setCreatedVariable: (createdVariable: undefined) => void,
-                               setBraiderGame: Dispatch<SetStateAction<BraiderGame | undefined>>,
-                               setErrorMessage: Dispatch<SetStateAction<string | undefined>>) => {
+                               setBraiderGame: (braiderGame: BraiderGame | undefined) => void,
+                               setErrorMessage: (errorMessage: string | undefined) => void) => {
   if (createdVariable === undefined)
     return;
   
   setErrorMessage(undefined);
 
   // start with just the name and id
-  const cleanedVariable: BraiderVariable = { type: createdVariable.type, description: Utils.tidyString(createdVariable.description) };
+  const cleanedVariable: BraiderVariable = { type: createdVariable.type, format: createdVariable.format };
 
-  // requires a description
-  if (cleanedVariable.description === '') {
-    setErrorMessage('Description Required');
+  // requires a format
+  if (cleanedVariable.format === undefined) {
+    setErrorMessage('Format Required');
     return;
   }
-  
+
   // requires a type
   if (cleanedVariable.type === undefined) {
     setErrorMessage('Type Required');
     return;
   }
 
-  // cannot create a new variable with an existing name, or rename an old variable to have a different existing name
-  if ((braiderGame.variables?.filter(v => v.description?.toLowerCase() === cleanedVariable.description!.toLowerCase()).length ?? [].length) > 0) {
-    setErrorMessage('Description Must Be Unique');
-    return;
-  }
-  
-  // format is required
-  if (createdVariable.format === undefined) {
-    setErrorMessage('Format Required');
-    return;
+  if (cleanedVariable.type === 'EVALUATED') {
+    cleanedVariable.expression = createdVariable.expression;
+
+    // requires an expression
+    if (cleanedVariable.expression === undefined) {
+      setErrorMessage('Expression Required');
+      return;
+    }
+
+    if (cleanedVariable.expression === 'IS_DAYS_SINCE_START') {
+      cleanedVariable.value = createdVariable.value;
+
+      if (cleanedVariable.value === undefined) {
+        setErrorMessage('Value Required');
+        return;  
+      }
+    }
+
+    // any other cleanup stuff goes here
+
+    const existingVariableIds: string[] = braiderGame.variables?.map(v => v.id ?? '') ?? [];
+    
+    cleanedVariable.id = getRandomId(existingVariableIds);
+
+    setBraiderGame({ ...braiderGame, variables: [...braiderGame.variables ?? [], cleanedVariable]});
+    setCreatedVariable(undefined);   
   } else {
-    cleanedVariable.format = createdVariable.format;
-  }
-  
-  if (cleanedVariable.type === 'INPUT') {
+    cleanedVariable.description = Utils.tidyString(createdVariable.description);
+
+    if (cleanedVariable.description === '') {
+      setErrorMessage('Description Required');
+      return;
+    }
+
+    // cannot create a new variable with an existing name, or rename an old variable to have a different existing name
+    if ((braiderGame.variables?.filter(v => v.description?.toLowerCase() === cleanedVariable.description!.toLowerCase()).length ?? [].length) > 0) {
+      setErrorMessage('Description Must Be Unique');
+      return;
+    }
+
     cleanedVariable.options = createdVariable.options;
 
     if (cleanedVariable.options === undefined) {
@@ -52,9 +77,7 @@ export const createVariable = (createdVariable: {description: string, format?: '
       } else {
         cleanedVariable.defaultValue = Utils.tidyString(createdVariable.defaultValue);
       }
-    }
-
-    if (cleanedVariable.options !== undefined) {
+    } else {
       if (createdVariable.defaultOptionId === undefined) {
         setErrorMessage('Default Option Required');
         return;  
@@ -70,18 +93,18 @@ export const createVariable = (createdVariable: {description: string, format?: '
     cleanedVariable.id = getRandomId(existingVariableIds);
     existingVariableIds.push(cleanedVariable.id);
 
-    const isVariableSet: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_SET', variableId: cleanedVariable.id };
+    const isVariableSet: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_VARIABLE_SET', variableId: cleanedVariable.id };
     isVariableSet.id = getRandomId(existingVariableIds);
     existingVariableIds.push(isVariableSet.id);
 
-    const isVariableNotSet: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_NOT_SET', variableId: cleanedVariable.id };
+    const isVariableNotSet: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_VARIABLE_NOT_SET', variableId: cleanedVariable.id };
     isVariableNotSet.id = getRandomId(existingVariableIds);
     existingVariableIds.push(isVariableNotSet.id);
 
     const isOptionVariables: BraiderVariable[] = []
 
     cleanedVariable.options?.forEach(option => {
-      const isVariableOption: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_OPTION', variableId: cleanedVariable.id, optionId: option.id };
+      const isVariableOption: BraiderVariable = { type: 'SYSTEM', format: 'BOOLEAN', expression: 'IS_VARIABLE_OPTION_SELECTED', variableId: cleanedVariable.id, optionId: option.id };
       isVariableOption.id = getRandomId(existingVariableIds);
       existingVariableIds.push(isVariableOption.id);        
       isOptionVariables.push(isVariableOption);

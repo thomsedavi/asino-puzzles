@@ -22,14 +22,16 @@ export const getRandomId = (ids: string[]): string => {
   return id;
 }
 
-export const getDescription = (variable: { description?: string, type?: string, variableId?: string, expression?: string, optionId?: string }, braiderGame: BraiderGame | undefined): string => {
-  if (variable.type !== 'SYSTEM') {
+export const getDescription = (variable: { description?: string, type?: string, variableId?: string, expression?: string, optionId?: string, value?: string }, braiderGame: BraiderGame | undefined): string => {
+  if (variable.type !== 'SYSTEM' && variable.type !== 'EVALUATED') {
     return variable.description ?? '';
   } else {
-    const nestedVariable: BraiderVariable = braiderGame?.variables?.filter(v => v.id === variable.variableId)[0] ?? {};
-    const nestedVariableDescription: string = getDescription(nestedVariable, braiderGame);
+    const nestedVariable: BraiderVariable | undefined = variable.variableId !== undefined ? braiderGame?.variables?.filter(v => v.id === variable.variableId)[0] : undefined;
+    const nestedVariableDescription: string | undefined = nestedVariable !== undefined ? getDescription(nestedVariable, braiderGame) : undefined;
 
-    if (variable.optionId === undefined) {
+    if (nestedVariableDescription === undefined) {
+      return getExpressionDescription(variable.expression ?? 'NONE', [variable.value ?? '']);
+    } else if (variable.optionId === undefined) {
       return getExpressionDescription(variable.expression ?? 'NONE', [nestedVariableDescription]);
     } else {
       const myvariable = braiderGame?.variables?.filter(thisvariable => (thisvariable.options?.filter(option => option.id === variable.optionId).length ?? 0) > 0)[0];
