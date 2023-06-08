@@ -1,20 +1,61 @@
 export interface BraiderGame {
-  id?: string;
-  userId?: string;
-  userName?: string;
-  title?: string;
-  defaultPageId?: string;
-  variables?: BraiderVariable[];
-  pages?: BraiderPage[];
-  elements?: BraiderElement[];
-  dateCreated?: string;
-  dateUpdated?: string;
+  id?: string; // id of the game
+  title?: string; // title of the game
+  userId?: string; // id of the user
+  userName?: string; // name of the user
+  pageIdDefault?: string; // home page
+  pages?: BraiderPage[]; // pages
+  blocks?: BraiderBlock[]; // headings or paragraphs
+  texts?: BraiderText[]; // parts of heading or paragraph, could be fixed or user entered
+  numbers?: BraiderNumber[]; // numberical decisions
+  booleans?: BraiderBoolean[]; // true/false decisions
+  dateCreated?: Date; // date created
+  dateUpdated?: Date; // date updated
 }
 
-export interface BraiderElement {
-  id?: string;
-  description?: string;
-  type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP';
+export interface BraiderText {
+  id?: string; // id of text, only required for variables or options
+  description?: string; // description, only required for variables
+  type?: 'FIXED' | 'INPUT_TEXT' | 'INPUT_SELECT'; // fixed or user types in text or enters from list
+  texts?: BraiderText; // list of subtexts
+  text?: string; // for fixed text
+  textId?: string; // use the text variable with this id
+  textDefault?: string; // input text default
+  textIdDefault?: string; // use the text variable with this id for input text default
+  textOptions?: BraiderText[]; // list of text options to be used for select
+  textOptionIdDefault?: string; // the text option default
+  isBooleanId?: string; //only show if this boolean is satisfied
+}
+
+export interface BraiderNumber {
+  id?: string; // id of number
+  description?: string; // description of number
+  type?: 'FIXED' | 'INPUT_NUMBER' | 'INPUT_SELECT' | 'EVALUATED'; // fixed or user types in number or enters from list
+  number?: number; // for fixed number
+  numberId?: string; // use the number with this id
+  numberDefault?: string; // input number default
+  numberIdDefault?: string; // use the number variable with this id for input number default
+  numberOptions?: BraiderNumber[]; // list of number options to be used for select
+  numberOptionIdDefault?: string; // the number option default
+  isBooleanId?: string; // only show if this boolean is satisfied
+}
+
+export interface BraiderBoolean {
+  id?: string; // id of boolean
+  description?: string; // description of boolean
+  type?: 'FIXED' | 'INPUT' | 'EVALUATED' | 'SYSTEM'; // fixed or input or evaluated or system
+  boolean?: boolean; // for fixed boolean
+  booleanDefault?: string; // input boolean default 
+  booleanIdDefault?: string; // use the boolean variable with this id for input boolean default
+  expression?: 'IS_TEXT_SET' | 'IS_TEXT_NOT_SET' | 'IS_TEXT_OPTION_SELECTED'; // for evaluated or system booleans
+  textId?: string; // for 'is text' expressions
+  textOptionId?: string; // for 'is text option selected' expressions
+}
+
+export interface BraiderBlock {
+  id?: string; // id of block, leave blank if not variable
+  description?: string; // description of block, leave blank if not variable
+  type?: 'PARAGRAPH' | 'HEADING_2' | 'INPUT' | 'GROUP'; // block type
   spans?: BraiderSpan[];
   isVariableId?: string;
   variableId?: string;
@@ -34,20 +75,6 @@ export interface BraiderSpan {
 export interface BraiderStyle {
   fontWeight?: 'normal' | 'bold';
   fontStyle?: 'italic';
-}
-
-export interface BraiderVariable {
-  id?: string;
-  description?: string;
-  type?: 'INPUT' | 'EVALUATED' | 'SYSTEM';
-  format?: 'TEXT' | 'NUMBER' | 'BOOLEAN';
-  expression?: 'TEXT_FROM_OPTION_SUBSTITUTED' | 'IS_VARIABLE_SET' | 'IS_VARIABLE_NOT_SET' | 'IS_VARIABLE_OPTION_SELECTED' | 'IS_DAYS_SINCE_START';
-  variableId?: string;
-  defaultOptionId?: string;
-  defaultValue?: string;
-  options?: BraiderSelectOptionString[];
-  optionId?: string;
-  value?: string;
 }
 
 export const getVariableFormat = (value: string): 'TEXT' | 'NUMBER' | 'BOOLEAN' | undefined => {
@@ -117,12 +144,6 @@ export const getExpressionDescription = (expression: string, values: string[]): 
   }
 }
 
-export interface BraiderSelectOptionString {
-  id?: string;
-  spans?: BraiderSpan[];
-  isVariableId?: string;
-}
-
 export interface BraiderPage {
   id?: string;
   description?: string;
@@ -133,439 +154,4 @@ export interface BraiderSetVariable {
   variableId?: string;
   optionId?: string;
   value?: string;
-}
-
-export const ThingTest: BraiderGame = {
-  defaultPageId: 'home',
-  variables: [
-    {
-      id: 'char1class',
-      description: 'Character 1 Class',
-      type: 'INPUT',
-      format: 'TEXT',
-      options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'Bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'Rogue' }]}]
-    },
-    {
-      id: 'char1classlowercase',
-      description: 'Character 1 Class Lower Case',
-      type: 'EVALUATED',
-      format: 'TEXT',
-      expression: 'TEXT_FROM_OPTION_SUBSTITUTED',
-      variableId: 'char1class',
-      options: [{id: 'BARD', spans: [{ type: 'TEXT', value: 'bard' }]}, {id: 'ROGUE', spans: [{ type: 'TEXT', value: 'rogue' }]}]
-    },
-    {
-      id: 'bardinstrument',
-      description: 'Bard Instrument',
-      type: 'INPUT',
-      format: 'TEXT',
-      options: [{id: 'HARP', spans: [{ type: 'TEXT', value: 'Harp' }]}, {id: 'LUTE', spans: [{ type: 'TEXT', value: 'Lute' }]}, {id: 'KAZOO', spans: [{ type: 'TEXT', value: 'Kazoo' }]}]
-    },
-    {
-      id: 'bardinstrumentlowercase',
-      description: 'Bard Instgrument Lower Case',
-      type: 'EVALUATED',
-      format: 'TEXT',
-      expression: 'TEXT_FROM_OPTION_SUBSTITUTED',
-      variableId: 'bardinstrument',
-      options: [{id: 'HARP', spans: [{ type: 'TEXT', value: 'harp' }]}, {id: 'LUTE', spans: [{ type: 'TEXT', value: 'lute' }]}, {id: 'KAZOO', spans: [{ type: 'TEXT', value: 'kazoo' }]}]
-    },
-    {
-      id: 'startlocation',
-      description: 'Start Location',
-      type: 'INPUT',
-      format: 'TEXT',
-      options: [
-        {id: 'BARD_HALL', spans: [{ type: 'TEXT', value: 'Bard Hall' }], isVariableId: 'ischar1classbard'},
-        {id: 'MUGGY_INN', spans: [{ type: 'TEXT', value: 'Muggy Inn' }]},
-        {id: 'ROGUE_COLLEGE', spans: [{ type: 'TEXT', value: 'Rogue College' }], isVariableId: 'ischar1classrogue'}
-      ]
-    },
-    {
-      id: 'char1name',
-      description: 'Character 1 Name',
-      type: 'INPUT',
-      format: 'TEXT',
-      defaultValue: 'Incognito'
-    },
-    {
-      id: 'ischar1classset',
-      description: 'Is Character 1 Class Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_SET',
-      variableId: 'char1class'
-    },
-    {
-      id: 'ischar1classnotset',
-      description: 'Is Character 1 Class Not Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_NOT_SET',
-      variableId: 'char1class'
-    },
-    {
-      id: 'isstartlocationset',
-      description: 'Is Start Location Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_SET',
-      variableId: 'startlocation'
-    },
-    {
-      id: 'isstartlocationnotset',
-      description: 'Is Start Location Not Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_NOT_SET',
-      variableId: 'startlocation'
-    },
-    {
-      id: 'ischar1classbard',
-      description: 'Is Character 1 Bard',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_OPTION_SELECTED',
-      variableId: 'char1class',
-      optionId: 'BARD'
-    },
-    {
-      id: 'ischar1classrogue',
-      description: 'Is Character 1 Rogue',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_OPTION_SELECTED',
-      variableId: 'char1class',
-      optionId: 'ROGUE'
-    },
-    {
-      id: 'isbardinstrumentset',
-      description: 'Is Bard Instrument Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_SET',
-      variableId: 'bardinstrument'
-    },
-    {
-      id: 'isbardinstrumentnotset',
-      description: 'Is Bard Instrument Not Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_NOT_SET',
-      variableId: 'bardinstrument'
-    },
-    {
-      id: 'ischar1nameset',
-      description: 'Is Character 1 Name Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_SET',
-      variableId: 'char1name'
-    },
-    {
-      id: 'ischar1namenotset',
-      description: 'Is Character 1 Name Not Set',
-      type: 'SYSTEM',
-      format: 'BOOLEAN',
-      expression: 'IS_VARIABLE_NOT_SET',
-      variableId: 'char1name'
-    }
-  ],
-  pages: [
-    {
-      id: 'home',
-      description: 'Home Page',
-      elementIds: [
-        'introheading',
-        'char1cselectparagraph',
-        'char1cinput',
-        'char1isrogueparagraph',
-        'char1isbardparagraph',
-        'bardinstrumentinput',
-        'char1nselectparagraph',
-        'char1ninput',
-        'char1nresult',
-        'startlocationinput',
-        'startlocationdescription',
-        'theend'
-      ]
-    },
-    {
-      id: 'info',
-      description: 'Information Page',
-      elementIds: [
-        'homelink',
-        'elementgroup'
-      ]
-    }
-  ],
-  elements: [
-    {
-      id: 'test1',
-      description: 'Test 1',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Test 1.'
-        }
-      ]
-    },
-    {
-      id: 'test2',
-      description: 'Test 1',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Test 2.'
-        }
-      ]
-    },
-    {
-      id: 'elementgroup',
-      description: 'Element Group',
-      type: 'GROUP',
-      elementIds: [
-        'test1',
-        'test2'
-      ]
-    },
-    {
-      id: 'homelink',
-      description: 'Link back home',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Go back to'
-        },
-        {
-          type: 'TEXT',
-          value: 'home',
-          pageId: 'home'
-        },
-        {
-          type: 'TEXT',
-          value: '.'
-        }
-      ]
-    },
-    {
-      id: 'introheading',
-      description: 'Introduction',
-      type: 'HEADING_2',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'You are going on an adventure!'
-        }
-      ]
-    },
-    {
-      id: 'char1cselectparagraph',
-      description: 'Character 1 Class Select Text',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'What is the class of your first adventurer?'
-        }
-      ],
-      isVariableId: 'ischar1classnotset'
-    },
-    {
-      id: 'char1nselectparagraph',
-      description: 'Character 1 Name Select Text',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'What is the name of your'
-        },
-        {
-          type: 'VARIABLE',
-          variableId: 'char1classlowercase'
-        },
-        {
-          type: 'TEXT',
-          value: '?'
-        }
-      ],
-      isVariableId: 'ischar1namenotset'
-    },
-    {
-      id: 'char1cinput',
-      description: 'Character 1 Class Select Input',
-      type: 'INPUT',
-      variableId: 'char1class'
-    },
-    {
-      id: 'char1ninput',
-      description: 'Character 1 Name Input',
-      type: 'INPUT',
-      variableId: 'char1name'
-    },
-    {
-      id: 'char1isrogueparagraph',
-      description: 'Character 1 Is Bard Paragraph',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Huzzah, your party has a rogue!'
-        }
-      ],
-      isVariableId: 'ischar1classrogue'
-    },
-    {
-      id: 'char1nresult',
-      description: 'Character 1 Name Result',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Your'
-        },
-        {
-          type: 'VARIABLE',
-          variableId: 'char1classlowercase'
-        },
-        {
-          type: 'TEXT',
-          value: 'is named'
-        },
-        {
-          type: 'VARIABLE',
-          variableId: 'char1name'
-        },
-        {
-          type: 'TEXT',
-          value: '.'
-        }
-      ]
-    },
-    {
-      id: 'char1isbardparagraph',
-      description: 'Character 1 Is Bard Paragraph',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'Hurrah, your party has a bard!'
-        },
-        {
-          type: 'TEXT',
-          value: 'What kind of instrument does your bard have?',
-          isVariableId: 'isbardinstrumentnotset'
-        },
-        {
-          type: 'TEXT',
-          value: 'And your bard has a',
-          isVariableId: 'isbardinstrumentset'
-        },
-        {
-          type: 'VARIABLE',
-          variableId: 'bardinstrumentlowercase',
-          isVariableId: 'isbardinstrumentset'
-        },
-        {
-          type: 'TEXT',
-          value: '!',
-          isVariableId: 'isbardinstrumentset'
-        }
-      ],
-      isVariableId: 'ischar1classbard'
-    },
-    {
-      id: 'bardinstrumentinput',
-      description: 'Bard Instrument Input',
-      type: 'INPUT',
-      variableId: 'bardinstrument',
-      isVariableId: 'ischar1classbard'
-    },
-    {
-      id: 'startlocationinput',
-      description: 'Start Location Input',
-      type: 'INPUT',
-      variableId: 'startlocation'
-    },
-    {
-      id: 'startlocationdescription',
-      description: 'Start Location Description',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'You are at the'
-        },
-        {
-          type: 'VARIABLE',
-          variableId: 'startlocation'
-        },
-        {
-          type: 'TEXT',
-          value: '.'
-        },
-        {
-          type: 'GROUP',
-          pageId: 'info',
-          spans: [
-            {
-              type: 'VARIABLE',
-              variableId: 'char1name'
-            },
-            {
-              type: 'TEXT',
-              value: 'is sitting in the corner practicing their lock picking.'
-            }
-          ],
-          isVariableId: 'ischar1classrogue'
-        },
-        {
-          type: 'GROUP',
-          pageId: 'info',
-          spans: [
-            {
-              type: 'VARIABLE',
-              variableId: 'char1name'
-            },
-            {
-              type: 'TEXT',
-              value: 'is sitting in the corner practicing their',
-              style: {
-                fontStyle: 'italic'
-              }
-            },
-            {
-              type: 'VARIABLE',
-              style: {
-                fontWeight: 'normal'
-              },
-              variableId: 'bardinstrumentlowercase'
-            },
-            {
-              type: 'TEXT',
-              value: '.'
-            }
-          ],
-          style: {
-            fontWeight: 'bold'
-          },
-          isVariableId: 'ischar1classbard'
-        }
-      ]
-    },
-    {
-      id: 'theend',
-      description: 'The End',
-      type: 'PARAGRAPH',
-      spans: [
-        {
-          type: 'TEXT',
-          value: 'The End'
-        }
-      ]
-    }
-  ]
 }

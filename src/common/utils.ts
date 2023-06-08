@@ -1,4 +1,3 @@
-import { BraiderGame } from '../braider/Interfaces';
 import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, User } from './interfaces';
 
 const formatDate = (dateString: string): string => {
@@ -158,24 +157,13 @@ const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
   return puzzle;
 }
 
-const createBraiderGame = (user?: User): BraiderGame => {
-  return {
-    userId: user?.id ?? '0-00',
-    userName: user?.name ?? 'User Name',
-    title: 'Braider Game',
-    pages: [{id: '0-00', description: 'Home'}],
-    defaultPageId: '0-00'
-  }
-}
-
 const Utils = {
   tidyString: tidyString,
   toTitleCase: toTitleCase,
   convertStringToDocument: convertStringToDocument,
   convertDocumentToString: convertDocumentToString,
   formatDate: formatDate,
-  generateDefaultSudoku: generateDefaultSudoku,
-  createBraiderGame: createBraiderGame
+  generateDefaultSudoku: generateDefaultSudoku
 }
 
 export default Utils;

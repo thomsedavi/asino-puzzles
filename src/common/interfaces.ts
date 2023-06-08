@@ -17,7 +17,6 @@ export interface User {
   name?: string;
   biography?: Document;
   lexicologers?: LexicologerSummary[];
-  braiders?: BraiderSummary[];
   puzzles?: PuzzleSummary[];
   dateCreated?: string;
   dateUpdated?: string;
@@ -29,13 +28,6 @@ export interface LexicologerRequiredWord {
 }
 
 export interface LexicologerSummary {
-  id?: string;
-  title?: string;
-  dateCreated?: string;
-  dateUpdated?: string;
-}
-
-export interface BraiderSummary {
   id?: string;
   title?: string;
   dateCreated?: string;

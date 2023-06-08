@@ -10,9 +10,8 @@ import './index.css';
 import { User } from './common/interfaces';
 import { Placeholder } from './common/styled';
 import Lexicologer from './pages/Lexicologer';
-import { getPuzzle, getLexicologer, getUser, isLocalhost, getBraider } from './common/fetchers';
+import { getPuzzle, getLexicologer, getUser, isLocalhost } from './common/fetchers';
 import Puzzle from './pages/Puzzle';
-import Braider from './braider/Braider';
 import Styles from './pages/Styles';
 
 interface AppState {
@@ -89,10 +88,6 @@ export default class App extends React.Component<{}, AppState> {
     return getPuzzle(params.id);
   }
 
-  braiderLoader = async({ params }: LoaderFunctionArgs) => {
-    return getBraider(params.id);
-  }
-
   render = (): JSX.Element => {
     if (this.state.user === undefined) {
       return <Placeholder>…</Placeholder>
@@ -101,20 +96,6 @@ export default class App extends React.Component<{}, AppState> {
         {
           index: true,
           element: <Home userId={this.state.user?.id} />,
-        },
-        {
-          path: "/braiders/:id/edit",
-          element: <Braider user={this.state.user} mode='update' />,
-          loader: this.braiderLoader
-        },
-        {
-          path: "/braiders/create",
-          element: <Braider user={this.state.user} mode='create' />,
-        },
-        {
-          path: "/braiders/:id",
-          element: <Braider user={this.state.user} mode='read' />,
-          loader: this.braiderLoader
         },
         {
           path: "/miscellany",

@@ -2,12 +2,12 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
 import { EditableElementDocument, EditableElementHeading1, EditToggleButton } from '../common/components';
-import { deleteBraider, deleteLexicologer, putUser } from '../common/fetchers';
+import { deleteLexicologer, putUser } from '../common/fetchers';
 import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Container, Heading1, Overlay, Placeholder, Flash, Heading2, Table, TableRow, TableHeader, ColumnGroup, Column, TableCell, TableCellAction, TextLink, TableCellLink, ButtonGroup, Button, Paragraph, Emphasis, ErrorMessage } from '../common/styled';
 import Utils from '../common/utils';
-import { LexicologerGame, LexicologerSummary, BraiderSummary, User } from '../common/interfaces';
+import { LexicologerGame, LexicologerSummary, User } from '../common/interfaces';
 import Layout from './Layout';
 
 interface UserPageProps {
@@ -24,9 +24,6 @@ const UserPage = (props: UserPageProps): JSX.Element => {
   const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   const [ user, setUser ] = React.useState<User>(useLoaderData() as User);
-  const [ braiderSortColumn, setBraiderSortColumn ] = React.useState<'title' | 'date'>('title');
-  const [ braiderSortOrder, setBraiderSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
-  const [ braiderToDelete, setBraiderToDelete ] = React.useState<string | undefined>(undefined);
   const [ lexicologerSortColumn, setLexicologerSortColumn ] = React.useState<'title' | 'date'>('title');
   const [ lexicologerSortOrder, setLexicologerSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
   const [ lexicologerToDelete, setLexicologerToDelete ] = React.useState<string | undefined>(undefined);
@@ -114,40 +111,6 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       });
   }
 
-  const confirmDeleteBraider = () => {
-    if (braiderToDelete === undefined)
-      return;
-
-    setErrorMessage(undefined);
-    setIsWorking(true);
-
-    deleteBraider(braiderToDelete)
-      .then((response: boolean) => {
-        if (response) {
-          const braiders = user.braiders ?? [];
-
-          const braider = braiders.find(braider => braider.id === braiderToDelete)!;
-          const index = braiders.indexOf(braider);
-          
-          braiders.splice(index, 1);
-
-          setUser({...user, braiders: braiders});
-          setIsWorking(false);
-          setBraiderToDelete(undefined);
-          state.showFlash('Braider Deleted!', 'opposite');
-        } else {
-          setIsWorking(false);
-          setErrorMessage('Unknown Error');
-          state.showFlash('Error!', 'failure');
-        }
-      })
-      .catch(() => {
-        setIsWorking(false);
-        setErrorMessage('Unknown Error');
-        state.showFlash('Error!', 'failure');
-      });
-  }
-
   const confirmDeleteLexicologer = () => {
     if (lexicologerToDelete === undefined)
       return;
@@ -184,40 +147,6 @@ const UserPage = (props: UserPageProps): JSX.Element => {
 
   const onClickLoader = () => {
     setIsLoading(true);
-  }
-
-  const toggleBraiderSort = (columnName: 'title' | 'date') => {
-    if (columnName === 'title') {
-      if (braiderSortColumn === 'title') {
-        setBraiderSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
-      } else {
-        setBraiderSortColumn('title');
-        setBraiderSortOrder('descending');
-      }
-    } else {
-      if (braiderSortColumn === 'date') {
-        setBraiderSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
-      } else {
-        setBraiderSortColumn('date');
-        setBraiderSortOrder('descending');
-      }
-    }
-  }
-
-  const braiderSort = (a: BraiderSummary, b: BraiderSummary): number => {
-    if (braiderSortColumn === 'title') {
-      if (braiderSortOrder === 'ascending') {
-        return (a.title ?? '') > (b.title ?? '') ? 1 : -1;
-      } else {
-        return (a.title ?? '') > (b.title ?? '') ? -1 : 1;
-      }
-    } else {
-      if (braiderSortOrder === 'ascending') {
-        return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? 1 : -1;
-      } else {
-        return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? -1 : 1;
-      }
-    }
   }
 
   const toggleLexicologerSort = (columnName: 'title' | 'date') => {
@@ -280,37 +209,6 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                                  placeholder='User Biography'
                                  errorMessage={errorMessage} />
         {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
-        {user.id === props.userId && (user.braiders?.length ?? 0) > 0 && <>
-          <Heading2>Braiders</Heading2>
-          <Table>
-          <ColumnGroup>
-              <Column smallWidth='10.2em' mediumWidth='24.2em' largeWidth='26.2em' />
-              <Column smallWidth='6.2em' mediumWidth='6.2em' largeWidth='6.2em' />
-              <Column width='4.6em' />
-            </ColumnGroup>
-            <thead>
-              <TableRow>
-                <TableHeader clickable title='Title' onClick={() => toggleBraiderSort('title')}>Title{braiderSortColumn === 'title' ? [' ', <Icon key='titleSort' title='sort' type={braiderSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='titleBlank' title='sort' />]}</TableHeader>
-                <TableHeader clickable title='Date' onClick={() => toggleBraiderSort('date')}>Date{braiderSortColumn === 'date' ? [' ', <Icon key='dateSort' title='sort' type={braiderSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='dateBlank' title='sort' />]}</TableHeader>
-                <TableHeader title='Actions'>Actions</TableHeader>
-              </TableRow>
-            </thead>
-            <tbody>
-              {user.braiders?.sort(braiderSort).map((braider: BraiderSummary, index: number) => <TableRow key={`braider${index}`}>
-                <TableCell>
-                  <TextLink href={`/braiders/${braider.id}`} onClick={onClickLoader}>{braider.title}</TextLink>
-                </TableCell>
-                  <TableCell textAlign='center'>
-                  {braider.dateCreated !== undefined ? Utils.formatDate(braider.dateCreated) : '(unknown)'}
-                </TableCell>
-                <TableCell textAlign='center'>
-                  <TableCellLink marginRight href={`/braiders/${braider.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
-                  <TableCellAction onClick={() => setBraiderToDelete(braider.id)}><Icon title='delete' fillSecondary='--opposite' type='delete'/></TableCellAction>
-                </TableCell>
-              </TableRow>)}
-            </tbody>
-          </Table>
-        </>}
         {user.id === props.userId && (user.lexicologers?.length ?? 0) > 0 && <>
           <Heading2>Lexicologers</Heading2>
           <Table>
@@ -369,22 +267,6 @@ const UserPage = (props: UserPageProps): JSX.Element => {
         </>}
       </Container>
       {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
-      <Modal
-        isOpen={braiderToDelete !== undefined}
-        onRequestClose={() => setBraiderToDelete(undefined)}
-        className="modal"
-        overlayClassName="modal-overlay"
-        style={{}}
-        contentLabel="Delete Braider"
-      >
-        <Heading2>Delete Braider</Heading2>
-        <Paragraph>Are you sure you want to delete <Emphasis>{user.braiders?.find(b => b.id === braiderToDelete)?.title}</Emphasis>?</Paragraph>
-        <ButtonGroup>
-          <Button disabled={isWorking} onClick={confirmDeleteBraider}>Delete</Button>
-          <Button disabled={isWorking} onClick={() => { setErrorMessage(undefined); setBraiderToDelete(undefined) ;}}>Cancel</Button>
-        </ButtonGroup>
-        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-      </Modal>
       <Modal
         isOpen={lexicologerToDelete !== undefined}
         onRequestClose={() => setLexicologerToDelete(undefined)}
