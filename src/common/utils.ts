@@ -1,4 +1,4 @@
-import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer, User } from './interfaces';
+import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, AsinoObject, AsinoLayer } from './interfaces';
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
