@@ -1,4 +1,5 @@
-import { LexicologerGame, AsinoPuzzle, LexicologerSummary, PuzzleSummary, User } from "./interfaces";
+import { AsinoPuzzle } from "../asino/interfaces";
+import { LexicologerGame, LexicologerSummary, AsinoSummary, User } from "./interfaces";
 
 export const isLocalhost = (): boolean => {
   return window.location.hostname === 'localhost';
@@ -95,17 +96,17 @@ export const putUser = async (user: User): Promise<User | undefined | string> =>
   }
 }
 
-export const getPuzzle = async (id: string | undefined): Promise<AsinoPuzzle | string | undefined> => {
+export const getAsino = async (id: string | undefined): Promise<AsinoPuzzle | string | undefined> => {
   if (isLocalhost()) {
-    const storedPuzzle = window.localStorage.getItem('puzzle_' + id);
+    const storedAsino = window.localStorage.getItem('asino_' + id);
 
-    if (storedPuzzle) {
-      return Promise.resolve(JSON.parse(storedPuzzle));
+    if (storedAsino) {
+      return Promise.resolve(JSON.parse(storedAsino));
     } else {
       return Promise.resolve(undefined);
     }
   } else {
-    const response: Response = await fetch(`/api/puzzles/${id}`, { method: 'GET' });
+    const response: Response = await fetch(`/api/asinoes/${id}`, { method: 'GET' });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -117,7 +118,7 @@ export const getPuzzle = async (id: string | undefined): Promise<AsinoPuzzle | s
   }
 }
 
-export const putPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | undefined | string> => {
+export const putAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | undefined | string> => {
   if (isLocalhost()) {
       const storedUserString = window.localStorage.getItem('user_0-00');
 
@@ -125,22 +126,22 @@ export const putPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | unde
         const date = getISODate();
         const storedUser: User = JSON.parse(storedUserString);
 
-        storedUser.puzzles?.forEach(userPuzzle => {
-          userPuzzle.id === puzzle.id && (userPuzzle.dateUpdated = date);
-          userPuzzle.id === puzzle.id && (userPuzzle.title = puzzle.title);
+        storedUser.asinoes?.forEach(userAsino => {
+          userAsino.id === asino.id && (userAsino.dateUpdated = date);
+          userAsino.id === asino.id && (userAsino.title = asino.title);
         });
 
-        puzzle.dateUpdated = date;
+        asino.dateUpdated = date;
 
         window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-        window.localStorage.setItem('puzzle_' + puzzle.id, JSON.stringify(puzzle));
+        window.localStorage.setItem('asino_' + asino.id, JSON.stringify(asino));
 
-        return Promise.resolve(puzzle);
+        return Promise.resolve(asino);
       } else {
         return Promise.resolve(undefined);      
       }
   } else {
-    const response: Response = await fetch(`/api/puzzles/${puzzle.id}`, { method: 'PUT', body: JSON.stringify(puzzle) });
+    const response: Response = await fetch(`/api/asinoes/${asino.id}`, { method: 'PUT', body: JSON.stringify(asino) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -156,17 +157,17 @@ export const putPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | unde
   }
 }
 
-export const postPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | string | undefined> => {
+export const postAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | string | undefined> => {
   if (isLocalhost()) {
     const storedUser = window.localStorage.getItem('user_0-00');
     const user: User = JSON.parse(storedUser!);
 
     const date = getISODate();
-    puzzle.dateCreated = date;
-    puzzle.dateUpdated = date;
+    asino.dateCreated = date;
+    asino.dateUpdated = date;
 
-    if (user.puzzles) {
-      let idSuffix = user.puzzles.length.toString();
+    if (user.asinoes) {
+      let idSuffix = user.asinoes.length.toString();
       
       if (idSuffix.length === 1) {
         idSuffix = '00' + idSuffix;
@@ -174,24 +175,24 @@ export const postPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | str
         idSuffix = '0' + idSuffix;
       }
 
-      puzzle.id = '0-00-' + idSuffix;
+      asino.id = '0-00-' + idSuffix;
 
-      user.puzzles.push({ id: puzzle.id, title: puzzle.title, dateCreated: date, dateUpdated: date});
+      user.asinoes.push({ id: asino.id, title: asino.title, dateCreated: date, dateUpdated: date});
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('puzzle_' + puzzle.id, JSON.stringify(puzzle));
+      window.localStorage.setItem('asino_' + asino.id, JSON.stringify(asino));
 
-      return Promise.resolve(puzzle);
+      return Promise.resolve(asino);
     } else {
-      puzzle.id = '0-00-000';
+      asino.id = '0-00-000';
 
-      user.puzzles = [{ id: puzzle.id, title: puzzle.title, dateCreated: date, dateUpdated: date }];
+      user.asinoes = [{ id: asino.id, title: asino.title, dateCreated: date, dateUpdated: date }];
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('puzzle_0-00-000', JSON.stringify(puzzle));
+      window.localStorage.setItem('asino_0-00-000', JSON.stringify(asino));
 
-      return Promise.resolve(puzzle);
+      return Promise.resolve(asino);
     }
   } else {
-    const response: Response = await fetch('/api/puzzles', { method: 'POST', body: JSON.stringify(puzzle) });
+    const response: Response = await fetch('/api/asinoes', { method: 'POST', body: JSON.stringify(asino) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -207,7 +208,7 @@ export const postPuzzle = async (puzzle: AsinoPuzzle): Promise<AsinoPuzzle | str
   }
 }
 
-export const deletePuzzle = async (id: string | undefined): Promise<boolean> => {
+export const deleteAsino = async (id: string | undefined): Promise<boolean> => {
   if (isLocalhost()) {
     const storedUserString = window.localStorage.getItem('user_0-00');
 
@@ -215,21 +216,21 @@ export const deletePuzzle = async (id: string | undefined): Promise<boolean> => 
       const storedUser: User = JSON.parse(storedUserString);
       let deleteIndex = -1;
 
-      storedUser.puzzles?.forEach((userPuzzle: PuzzleSummary, index: number) => {
-        userPuzzle.id === id && (deleteIndex = index);
+      storedUser.asinoes?.forEach((userAsino: AsinoSummary, index: number) => {
+        userAsino.id === id && (deleteIndex = index);
       });
 
-      storedUser.puzzles?.splice(deleteIndex, 1);
+      storedUser.asinoes?.splice(deleteIndex, 1);
 
       window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-      window.localStorage.removeItem('puzzle_' + id);
+      window.localStorage.removeItem('asino_' + id);
 
       return Promise.resolve(true);
     } else {
       return Promise.resolve(false);
     }
   } else {
-    const response: Response = await fetch(`/api/puzzles/${id}`, { method: 'DELETE' });
+    const response: Response = await fetch(`/api/asinoes/${id}`, { method: 'DELETE' });
 
     if (response.status === 200) {
       return Promise.resolve(true);

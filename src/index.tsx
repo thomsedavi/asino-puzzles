@@ -10,8 +10,8 @@ import './index.css';
 import { User } from './common/interfaces';
 import { Placeholder } from './common/styled';
 import Lexicologer from './pages/Lexicologer';
-import { getPuzzle, getLexicologer, getUser, isLocalhost } from './common/fetchers';
-import Puzzle from './pages/Puzzle';
+import { getAsino, getLexicologer, getUser, isLocalhost } from './common/fetchers';
+import Asino from './asino/Asino';
 import Styles from './pages/Styles';
 
 interface AppState {
@@ -84,8 +84,8 @@ export default class App extends React.Component<{}, AppState> {
     return getLexicologer(params.id);
   }
 
-  puzzleLoader = async({ params }: LoaderFunctionArgs) => {
-    return getPuzzle(params.id);
+  asinoLoader = async({ params }: LoaderFunctionArgs) => {
+    return getAsino(params.id);
   }
 
   render = (): JSX.Element => {
@@ -102,18 +102,18 @@ export default class App extends React.Component<{}, AppState> {
           element: <Miscellany userId={this.state.user?.id} />,
         },
         {
-          path: "/puzzles/:id/edit",
-          element: <Puzzle user={this.state.user} mode='update' />,
-          loader: this.puzzleLoader
+          path: "/asinoes/:id/edit",
+          element: <Asino user={this.state.user} mode='update' />,
+          loader: this.asinoLoader
         },
         {
-          path: "/puzzles/create",
-          element: <Puzzle user={this.state.user} mode='create' />,
+          path: "/asinoes/create",
+          element: <Asino user={this.state.user} mode='create' />,
         },
         {
-          path: "/puzzles/:id",
-          element: <Puzzle user={this.state.user} mode='read' />,
-          loader: this.puzzleLoader
+          path: "/asinoes/:id",
+          element: <Asino user={this.state.user} mode='read' />,
+          loader: this.asinoLoader
         },
         {
           path: "/lexicologers/:id/edit",

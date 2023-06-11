@@ -17,7 +17,7 @@ export interface User {
   name?: string;
   biography?: Document;
   lexicologers?: LexicologerSummary[];
-  puzzles?: PuzzleSummary[];
+  asinoes?: AsinoSummary[];
   dateCreated?: string;
   dateUpdated?: string;
 }
@@ -34,7 +34,7 @@ export interface LexicologerSummary {
   dateUpdated?: string;
 }
 
-export interface PuzzleSummary{
+export interface AsinoSummary{
   id?: string;
   title?: string;
   dateCreated?: string;
