@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { User } from '../common/interfaces';
 import { AsinoPuzzle } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
 import { EditToggleButton } from '../common/components';
+import { drawSvg } from './svg/Svg';
 
 interface AsinoProps {
   user?: User | null;
@@ -52,6 +53,9 @@ const Asino = (props: AsinoProps): JSX.Element => {
       <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
       <Container>
         {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
+        <div>
+          {drawSvg(asinoPuzzle)}
+        </div>
       </Container>
       {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;
