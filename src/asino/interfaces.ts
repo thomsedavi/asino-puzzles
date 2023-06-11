@@ -5,6 +5,7 @@ export interface AsinoPuzzle {
   userName?: string; // name of the creator of this puzzle
   layers?: AsinoLayer[]; // ids of layers
   interfaces?: AsinoInterface[]; // interfaces
+  rectangles?: AsinoRectangle[]; // rectangles
   lines?: AsinoLine[]; // shapes
   circles?: AsinoCircle[]; // circles
   numbers?: AsinoNumber[]; // numbers
@@ -19,6 +20,7 @@ export interface AsinoPuzzle {
 
 export interface AsinoLayer {
   interfaceId?: string; // draw the interface with this id
+  rectangleId?: string; // draw the rectangle with this id
   lineId?: string; // draw the shape with this id
   circleId?: string; // draw the circle with this id
 }
@@ -33,6 +35,18 @@ export interface AsinoInterface {
   xNumberId?: string; // if this exists, draw the interface at this number, or use default of 0
   yValue?: number; // if this exists, draw the interface here, or...
   yNumberId?: string; // if this exists, draw the interface at this number, or use default of 0
+}
+
+export interface AsinoRectangle {
+  id?: string; // id of this rectangle
+  widthValue?: number; // if this exists, draw the rectangle this wide, or...
+  widthNumberId?: string; // if this exists, draw the rectangle as wide as this number, or use default of 0
+  heightValue?: number; // if this exists, draw the rectangle this high, or...
+  heightNumberId?: string; // if this exists, draw the rectangle as high as this number, or use default of 0
+  xValue?: number; // if this exists, draw the rectangle here, or...
+  xNumberId?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  yValue?: number; // if this exists, draw the rectangle here, or...
+  yNumberId?: string; // if this exists, draw the rectangle at this number, or use default of 0
 }
 
 export interface AsinoLine {
