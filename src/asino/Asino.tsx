@@ -28,7 +28,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   );
   //const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   //const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
-  const state = useState();
+  //const state = useState();
 
   const onClickLoader = () => {
     setIsLoading(true);
