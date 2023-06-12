@@ -4,6 +4,7 @@ import { drawLine } from "./Line";
 import { drawInterface } from "./Interface";
 import { drawCircle } from "./Circle";
 import { drawRectangle } from "./Rectangle";
+import { drawPath } from "./Path";
 
 export const drawSvg = (puzzle: AsinoPuzzle): JSX.Element => {
   return <svg version="1.1"
@@ -35,6 +36,12 @@ export const drawSvg = (puzzle: AsinoPuzzle): JSX.Element => {
 
         if (layerRectangle !== undefined) {
           result = drawRectangle(layerRectangle, puzzle, layerIndex);
+        }
+      } else if (layer.pathId !== undefined) {
+        const layerPath = puzzle.paths?.filter(path => path.id === layer.pathId)[0];
+
+        if (layerPath !== undefined) {
+          result = drawPath(layerPath, puzzle, layerIndex);
         }
       }
 
