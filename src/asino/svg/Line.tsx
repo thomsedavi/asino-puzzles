@@ -1,30 +1,32 @@
 import React from "react"
-import { AsinoLine, AsinoPuzzle } from "../interfaces"
+import { AsinoAttribute, AsinoLine, AsinoPuzzle } from "../interfaces"
 
-export const drawLine = (line: AsinoLine, puzzle: AsinoPuzzle, index: number): JSX.Element => {
+export const drawLine = (line: AsinoLine, puzzle: AsinoPuzzle, index: number, attributes?: AsinoAttribute[]): JSX.Element => {
   let x1 =
     line.x1Value ??
-    puzzle.numbers?.filter(number => number.id === line.x1Id)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === line.x1NumberId)[0]?.value ??
     0;
 
   let x2 =
     line.x2Value ??
-    puzzle.numbers?.filter(number => number.id === line.x2Id)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === line.x2NumberId)[0]?.value ??
     0;
 
   let y1 =
     line.y1Value ??
-    puzzle.numbers?.filter(number => number.id === line.y1Id)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === line.y1NumberId)[0]?.value ??
     0;
 
   let y2 =
     line.y2Value ??
-    puzzle.numbers?.filter(number => number.id === line.y2Id)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === line.y2NumberId)[0]?.value ??
     0;
 
   let strokeWidth =
     line.strokeWidthValue ??
-    puzzle.numbers?.filter(number => number.id === line.strokeWidthId)[0]?.value ??
+    attributes?.filter(attribute => attribute.id === line.strokeWidthAttributeId)[0]?.Value ??
+    puzzle.numbers?.filter(number => number.id === attributes?.filter(attribute => attribute.id === line.strokeWidthAttributeId)[0]?.numberId)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === line.strokeWidthNumberId)[0]?.value ??
     puzzle.defaults?.strokeWidthValue ??
     24;
 

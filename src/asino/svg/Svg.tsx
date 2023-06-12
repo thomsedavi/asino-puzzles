@@ -17,7 +17,7 @@ export const drawSvg = (puzzle: AsinoPuzzle): JSX.Element => {
         const layerLine = puzzle.lines?.filter(line => line.id === layer.lineId)[0];
 
         if (layerLine !== undefined) {
-          result = drawLine(layerLine, puzzle, layerIndex);
+          result = drawLine(layerLine, puzzle, layerIndex, layer.attributes);
         }
       } else if (layer.interfaceId !== undefined) {
         const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];

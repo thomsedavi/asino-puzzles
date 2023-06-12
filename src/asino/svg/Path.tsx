@@ -6,7 +6,7 @@ export const drawPath = (path: AsinoPath, puzzle: AsinoPuzzle, index: number): J
 
   let strokeWidth =
     path.strokeWidthValue ??
-    puzzle.numbers?.filter(number => number.id === path.strokeWidthId)[0]?.value ??
+    puzzle.numbers?.filter(number => number.id === path.strokeWidthNumberId)[0]?.value ??
     puzzle.defaults?.strokeWidthValue ??
     24;
 
