@@ -10,10 +10,10 @@ export const getNumber = (array: (any | undefined)[], puzzle: AsinoPuzzle, value
   let numberResult: Number = numberDefault;
 
   array.forEach(value => {
-    const numberValue = value && puzzle.numbers?.filter(number => number.id === value[valueId])[0]?.value;
+    const numberValue = puzzle.numbers?.filter(number => number.id === value?.[valueId])[0]?.value;
     numberValue !== undefined && (numberResult = numberValue);
 
-    const valueValue = value && value[valueName];
+    const valueValue = value?.[valueName];
     valueValue !== undefined && (numberResult = valueValue);
   });
 
