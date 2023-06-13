@@ -1,34 +1,20 @@
 import React from "react"
-import { AsinoAttribute, AsinoLine, AsinoPuzzle } from "../interfaces"
+import { AsinoLine, AsinoPuzzle } from "../interfaces"
+import { getNumber, getNumberValue } from "../utils";
 
-export const drawLine = (line: AsinoLine, puzzle: AsinoPuzzle, index: number, attributes?: AsinoAttribute[]): JSX.Element => {
-  let x1 =
-    line.x1Value ??
-    puzzle.numbers?.filter(number => number.id === line.x1NumberId)[0]?.value ??
-    0;
+export const drawLine = (lines: (AsinoLine | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
+  const x1 = getNumber(lines, puzzle, 'x1Value', 'x1Id', 0);
+  const y1 = getNumber(lines, puzzle, 'y1Value', 'y1Id', 0);
+  const x2 = getNumber(lines, puzzle, 'x2Value', 'x2Id', 0);
+  const y2 = getNumber(lines, puzzle, 'y2Value', 'y2Id', 0);
+  const strokeWidth = getNumber(lines, puzzle, 'strokeWidthValue', 'strokeWidthId', puzzle.defaults?.strokeWidthValue ?? 24);
 
-  let x2 =
-    line.x2Value ??
-    puzzle.numbers?.filter(number => number.id === line.x2NumberId)[0]?.value ??
-    0;
-
-  let y1 =
-    line.y1Value ??
-    puzzle.numbers?.filter(number => number.id === line.y1NumberId)[0]?.value ??
-    0;
-
-  let y2 =
-    line.y2Value ??
-    puzzle.numbers?.filter(number => number.id === line.y2NumberId)[0]?.value ??
-    0;
-
-  let strokeWidth =
-    line.strokeWidthValue ??
-    attributes?.filter(attribute => attribute.id === line.strokeWidthAttributeId)[0]?.Value ??
-    puzzle.numbers?.filter(number => number.id === attributes?.filter(attribute => attribute.id === line.strokeWidthAttributeId)[0]?.numberId)[0]?.value ??
-    puzzle.numbers?.filter(number => number.id === line.strokeWidthNumberId)[0]?.value ??
-    puzzle.defaults?.strokeWidthValue ??
-    24;
-
-  return <line key={`layer${index}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke='red' strokeWidth={strokeWidth} />;
+  return <line key={`layer${index}`}
+    x1={getNumberValue(x1)}
+    y1={getNumberValue(y1)}
+    x2={getNumberValue(x2)}
+    y2={getNumberValue(y2)}
+    stroke='red'
+    strokeWidth={getNumberValue(strokeWidth)}
+  />;
 }

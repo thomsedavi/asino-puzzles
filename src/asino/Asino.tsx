@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '../common/interfaces';
-import { AsinoPuzzle } from './interfaces';
+import { AsinoPuzzle, Test } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
@@ -54,7 +54,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
       <Container>
         {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
         <div>
-          {drawSvg(asinoPuzzle)}
+          {drawSvg(Test)}
         </div>
       </Container>
       {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}

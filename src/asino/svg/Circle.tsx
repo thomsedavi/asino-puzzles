@@ -1,21 +1,17 @@
 import React from "react"
 import { AsinoCircle, AsinoPuzzle } from "../interfaces"
+import { getNumber, getNumberValue } from "../utils";
 
-export const drawCircle = (circle: AsinoCircle, puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  let cx =
-    circle.cxValue ??
-    puzzle.numbers?.filter(number => number.id === circle.cxNumberId)[0]?.value ??
-    0;
+export const drawCircle = (circles: (AsinoCircle | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
+  const cx = getNumber(circles, puzzle, 'cxValue', 'cxId', 0);
+  const cy = getNumber(circles, puzzle, 'cyValue', 'cyId', 0);
+  const r = getNumber(circles, puzzle, 'rValue', 'rId', 0);
 
-  let cy =
-    circle.cyValue ??
-    puzzle.numbers?.filter(number => number.id === circle.cyNumberId)[0]?.value ??
-    0;
-
-  let r =
-    circle.rValue ??
-    puzzle.numbers?.filter(number => number.id === circle.rNumberId)[0]?.value ??
-    0;
-
-  return <circle key={`layer${index}`} cx={cx} cy={cy} r={r} fill='red' />;
+  return <circle
+    key={`layer${index}`}
+    cx={getNumberValue(cx)}
+    cy={getNumberValue(cy)}
+    r={getNumberValue(r)}
+    fill='red'
+  />;
 }

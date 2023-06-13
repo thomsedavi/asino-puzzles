@@ -1,26 +1,20 @@
 import React from "react"
 import { AsinoPuzzle, AsinoRectangle } from "../interfaces"
+import { getNumber, getNumberValue } from "../utils";
 
-export const drawRectangle = (rectangle: AsinoRectangle, puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  let x =
-    rectangle.xValue ??
-    puzzle.numbers?.filter(number => number.id === rectangle.xNumberId)[0]?.value ??
-    0;
+export const drawRectangle = (rectangles: (AsinoRectangle | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
+  const x = getNumber(rectangles, puzzle, 'xValue', 'xId', 0);
+  const y = getNumber(rectangles, puzzle, 'yValue', 'yId', 0);
+  const width = getNumber(rectangles, puzzle, 'widthValue', 'widthId', 0);
+  const height = getNumber(rectangles, puzzle, 'heightValue', 'heightId', 0);
 
-  let y =
-    rectangle.yValue ??
-    puzzle.numbers?.filter(number => number.id === rectangle.yNumberId)[0]?.value ??
-    0;
-
-  let width =
-    rectangle.widthValue ??
-    puzzle.numbers?.filter(number => number.id === rectangle.widthNumberId)[0]?.value ??
-    0;
-  
-  let height =
-    rectangle.heightValue ??
-    puzzle.numbers?.filter(number => number.id === rectangle.heightNumberId)[0]?.value ??
-    0;
-
-  return <rect key={`layer${index}`} x={x} y={y} width={width} height={height} stroke='red' strokeWidth={24} />;
+  return <rect
+    key={`layer${index}`}
+    x={getNumberValue(x)}
+    y={getNumberValue(y)}
+    width={getNumberValue(width)}
+    height={getNumberValue(height)}
+    stroke='red'
+    strokeWidth={24}
+  />;
 }

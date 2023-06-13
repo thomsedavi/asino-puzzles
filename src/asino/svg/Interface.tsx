@@ -1,28 +1,20 @@
 import React from "react"
 import { AsinoInterface, AsinoPuzzle } from "../interfaces"
+import { getNumber, getNumberValue } from "../utils";
 
-export const drawInterface = (asinoInterface: AsinoInterface, puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  let x =
-    asinoInterface.xValue ??
-    puzzle.numbers?.filter(number => number.id === asinoInterface.xNumberId)[0]?.value ??
-    0;
+export const drawInterface = (interfaces: (AsinoInterface | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
+  const x = getNumber(interfaces, puzzle, 'xValue', 'xId', 0);
+  const y = getNumber(interfaces, puzzle, 'yValue', 'yId', 0);
+  const width = getNumber(interfaces, puzzle, 'widthValue', 'widthId', puzzle.defaults?.interfaceWidthValue ?? 560);
+  const height = getNumber(interfaces, puzzle, 'heightValue', 'heightId', puzzle.defaults?.interfaceWidthValue ?? 560);
 
-  let y =
-    asinoInterface.yValue ??
-    puzzle.numbers?.filter(number => number.id === asinoInterface.yNumberId)[0]?.value ??
-    0;
-
-  let width =
-    asinoInterface.widthValue ??
-    puzzle.numbers?.filter(number => number.id === asinoInterface.widthNumberId)[0]?.value ??
-    puzzle.defaults?.interfaceWidthValue ??
-    560;
-  
-  let height =
-    asinoInterface.heightValue ??
-    puzzle.numbers?.filter(number => number.id === asinoInterface.heightNumberId)[0]?.value ??
-    puzzle.defaults?.interfaceWidthValue ??
-    560;
-
-  return <rect key={`layer${index}`} x={x} y={y} width={width} height={height} stroke='red' strokeWidth={24} />;
+  return <rect
+    key={`layer${index}`}
+    x={getNumberValue(x)}
+    y={getNumberValue(y)}
+    width={getNumberValue(width)}
+    height={getNumberValue(height)}
+    stroke='red'
+    strokeWidth={24}
+  />;
 }
