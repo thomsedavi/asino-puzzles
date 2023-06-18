@@ -1,5 +1,5 @@
-import { CX, CXId, CY, CYId, Height, HeightId, Multiplication, R, RId, StrokeWidth, StrokeWidthId, Width, WidthId, X, X1, X1Id, X2, X2Id, XId, Y, Y1, Y1Id, Y2, Y2Id, YId } from "./consts";
-import { Operator, Number } from "./types";
+import { C, CX, CXId, CY, CYId, DX, DX1, DX1Id, DX2, DX2Id, DXId, DY, DY1, DY1Id, DY2, DY2Id, DYId, Height, HeightId, L, M, Multiplication, R, RId, S, StrokeWidth, StrokeWidthId, Width, WidthId, X, X1, X1Id, X2, X2Id, XId, Y, Y1, Y1Id, Y2, Y2Id, YId, Z } from "./consts";
+import { Operator, Number, Letter } from "./types";
 
 export interface AsinoPuzzle {
   id?: string; // id of this puzzle
@@ -91,8 +91,37 @@ export interface AsinoCircle {
 export interface AsinoPath {
   id?: string; // id of this path
   name?: string; // name of this path
+  commands?: AsinoCommand[]; // list of commands
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width, or...
   [StrokeWidthId]?: string; // if this exists, draw stroke the width of this number, or use default stroke width
+}
+
+export interface AsinoCommand {
+  letter?: Letter;
+  [X]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [XId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [X1]?: AsinoNumber; // if this exists, draw x1 here, or...
+  [X1Id]?: string; // if this exists, draw x1 at this number, or use default of 0
+  [X2]?: AsinoNumber; // if this exists, draw x2 here, or...
+  [X2Id]?: string; // if this exists, draw x2 at this number, or use default of 0
+  [Y]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [YId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [Y1]?: AsinoNumber; // if this exists, draw y1 here, or...
+  [Y1Id]?: string; // if this exists, draw y1 at this number, or use default of 0
+  [Y2]?: AsinoNumber; // if this exists, draw y2 here, or...
+  [Y2Id]?: string; // if this exists, draw y2 at this number, or use default of 0
+  [DX]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DXId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [DX1]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DX1Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [DX2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DX2Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [DY]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DYId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [DY1]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DY1Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [DY2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DY2Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
 }
 
 export interface AsinoNumber {
@@ -196,7 +225,8 @@ export const Test: AsinoPuzzle = {
     { lineId: '2-00' },
     { lineId: '2-01' },
     { lineId: '2-02' },
-    { lineId: '2-03' }
+    { lineId: '2-03' },
+    { pathId: '3-00' }
   ],
   interfaces: [
     {
@@ -225,6 +255,18 @@ export const Test: AsinoPuzzle = {
     { id: '2-01', name: 'Vertical Border 2', x1Id: '1-02', x2Id: '1-02', y1Id: '1-03', y2Id: '1-04', strokeWidthId: '1-05' },
     { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 5040 }, y1: { number: 1680 }, y2: { number: 1680 } },
     { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 5040 }, y1: { number: 3360 }, y2: { number: 3360 } }
+  ],
+  paths: [
+    {
+      id: '3-00', commands: [
+        { letter: M, x: { number: 100 }, y: { number: 200 } },
+        { letter: L, x: { number: 300 }, y: { number: 400 } },
+        { letter: C, x1: { number: 410 }, y1: {number: 400}, x2: {number: 500}, y2: { number: 510 }, x: { number: 500 }, y: { number: 600 } },
+        { letter: S, x2: {number: 410}, y2: { number: 800 }, x: { number: 300 }, y: { number: 800 } },
+        { letter: S, x2: {number: 100}, y2: { number: 710 }, x: { number: 100 }, y: { number: 600 } },
+        { letter: Z }
+      ]
+    }
   ],
   defaults: {
     interfaceWidthValue: { number: 560 },

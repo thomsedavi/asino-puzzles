@@ -15,7 +15,7 @@ export const drawLine = (lines: (AsinoLine | undefined)[], numbers: AsinoNumber[
     y1={getNumberValue(y1)}
     x2={getNumberValue(x2)}
     y2={getNumberValue(y2)}
-    stroke='red'
+    stroke='var(--color)'
     strokeWidth={getNumberValue(strokeWidth)}
   />;
 }

@@ -15,7 +15,8 @@ export const drawInterface = (interfaces: (AsinoInterface | undefined)[], number
     y={getNumberValue(y)}
     width={getNumberValue(width)}
     height={getNumberValue(height)}
-    stroke='red'
+    stroke='var(--color)'
+    fill='var(--background-color-input)'
     strokeWidth={24}
   />;
 }

@@ -13,6 +13,6 @@ export const drawCircle = (circles: (AsinoCircle | undefined)[], numbers: AsinoN
     cx={getNumberValue(cx)}
     cy={getNumberValue(cy)}
     r={getNumberValue(r)}
-    fill='red'
+    fill='var(--color)'
   />;
 }

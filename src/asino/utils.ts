@@ -14,7 +14,7 @@ export const getNumberValue = (value: Number): number => {
   return 0;
 }
 
-const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[]): Number => {
+export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[]): Number => {
   let numberResult: Number = 0;
 
   if (number.operator === Multiplication) {
