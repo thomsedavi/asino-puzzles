@@ -20,3 +20,29 @@ export const drawInterface = (interfaces: (AsinoInterface | undefined)[], number
     strokeWidth={24}
   />;
 }
+
+export const drawInterfaceInteractive = (interfaces: (AsinoInterface | undefined)[], objectIds: (string | undefined)[], numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number, setSelectedObject: (objectId: string) => void): JSX.Element => {
+  const x = getNumberFromLayer(interfaces, numbers, X, XId, { number: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, YId, { number: 0 });
+  const width = getNumberFromLayer(interfaces, numbers, Width, WidthId, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, numbers, Height, HeightId, defaultInterfaceHeightValue);
+
+  let interfaceObjectId: string | undefined = undefined;
+
+  objectIds.forEach((objectId: string | undefined) => {
+    objectId !== undefined && (interfaceObjectId = objectId);
+  });
+
+  return <rect
+    key={`layerInteractive${index}`}
+    x={getNumberValue(x)}
+    y={getNumberValue(y)}
+    width={getNumberValue(width)}
+    height={getNumberValue(height)}
+    stroke='none'
+    fill='transparent'
+    cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}
+    strokeWidth={24}
+    onClick={() => { interfaceObjectId !== undefined && setSelectedObject(interfaceObjectId) }}
+  />;
+}

@@ -3,7 +3,7 @@ import { User } from '../common/interfaces';
 import { AsinoPuzzle, Test } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
+import { Container, Heading1, Overlay, Paragraph, Placeholder } from '../common/styled';
 import { EditToggleButton } from '../common/components';
 import { drawSvg } from './svg/Svg';
 
@@ -19,14 +19,15 @@ const Asino = (props: AsinoProps): JSX.Element => {
     title: 'Asino Puzzle'
   } : undefined;
 
-  const [ mode, setMode ] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [ isBurgerOpen, setIsBurgerOpen ] = React.useState<boolean>(false);
-  const [ isLoading, setIsLoading ] = React.useState(false);
-  const [ asinoPuzzle ] = React.useState<AsinoPuzzle | undefined>(
+  const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
+  const [isBurgerOpen, setIsBurgerOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [asinoPuzzle] = React.useState<AsinoPuzzle | undefined>(
     useLoaderData() as AsinoPuzzle ??
     (props.mode === 'create' && defaultGame) ??
     undefined
   );
+  const [selectedObject, setSelectedObject] = React.useState<string | undefined>(undefined);
   //const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   //const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   //const state = useState();
@@ -50,14 +51,15 @@ const Asino = (props: AsinoProps): JSX.Element => {
   const toggleButtonMode: 'create' | 'read' | 'update' = mode === 'read' ? (asinoPuzzle.id === undefined ? 'create' : 'update') : 'read';
 
   return <>
-      <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
-      <Container>
-        {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
-        <div>
-          {drawSvg(Test)}
-        </div>
-      </Container>
-      {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
+    <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
+    <Container>
+      {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
+      <div>
+        {drawSvg(Test, setSelectedObject)}
+      </div>
+      <Paragraph>Selected Object Id: {selectedObject}</Paragraph>
+    </Container>
+    {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;
 }
 
