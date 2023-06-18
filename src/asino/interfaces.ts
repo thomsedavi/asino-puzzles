@@ -1,4 +1,4 @@
-import { C, CX, CXId, CY, CYId, DX, DX1, DX1Id, DX2, DX2Id, DXId, DY, DY1, DY1Id, DY2, DY2Id, DYId, Height, HeightId, L, M, Multiplication, R, RId, S, StrokeWidth, StrokeWidthId, Width, WidthId, X, X1, X1Id, X2, X2Id, XId, Y, Y1, Y1Id, Y2, Y2Id, YId, Z } from "./consts";
+import { CX, CXId, CY, CYId, DX, DX1, DX1Id, DX2, DX2Id, DXId, DY, DY1, DY1Id, DY2, DY2Id, DYId, Height, HeightId, Multiplication, R, RId, StrokeWidth, StrokeWidthId, Width, WidthId, X, X1, X1Id, X2, X2Id, XId, Y, Y1, Y1Id, Y2, Y2Id, YId } from "./consts";
 import { Operator, Number, Letter } from "./types";
 
 export interface AsinoPuzzle {
