@@ -1,13 +1,13 @@
 import React from "react"
-import { AsinoInterface, AsinoPuzzle } from "../interfaces"
-import { getNumber, getNumberValue } from "../utils";
+import { AsinoInterface, AsinoNumber } from "../interfaces"
+import { getNumberFromLayer, getNumberValue } from "../utils";
 import { Height, HeightId, Width, WidthId, X, XId, Y, YId } from "../consts";
 
-export const drawInterface = (interfaces: (AsinoInterface | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  const x = getNumber(interfaces, puzzle, X, XId, 0);
-  const y = getNumber(interfaces, puzzle, Y, YId, 0);
-  const width = getNumber(interfaces, puzzle, Width, WidthId, puzzle.defaults?.interfaceWidthValue ?? 560);
-  const height = getNumber(interfaces, puzzle, Height, HeightId, puzzle.defaults?.interfaceWidthValue ?? 560);
+export const drawInterface = (interfaces: (AsinoInterface | undefined)[], numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number): JSX.Element => {
+  const x = getNumberFromLayer(interfaces, numbers, X, XId, { number: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, YId, { number: 0 });
+  const width = getNumberFromLayer(interfaces, numbers, Width, WidthId, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, numbers, Height, HeightId, defaultInterfaceHeightValue);
 
   return <rect
     key={`layer${index}`}

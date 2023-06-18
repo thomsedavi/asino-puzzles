@@ -1,13 +1,13 @@
 import React from "react"
-import { AsinoPuzzle, AsinoRectangle } from "../interfaces"
-import { getNumber, getNumberValue } from "../utils";
+import { AsinoNumber, AsinoRectangle } from "../interfaces"
+import { getNumberFromLayer, getNumberValue } from "../utils";
 import { Height, HeightId, Width, WidthId, X, XId, Y, YId } from "../consts";
 
-export const drawRectangle = (rectangles: (AsinoRectangle | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  const x = getNumber(rectangles, puzzle, X, XId, 0);
-  const y = getNumber(rectangles, puzzle, Y, YId, 0);
-  const width = getNumber(rectangles, puzzle, Width, WidthId, 0);
-  const height = getNumber(rectangles, puzzle, Height, HeightId, 0);
+export const drawRectangle = (rectangles: (AsinoRectangle | undefined)[], numbers: AsinoNumber[], index: number): JSX.Element => {
+  const x = getNumberFromLayer(rectangles, numbers, X, XId, { number: 0 });
+  const y = getNumberFromLayer(rectangles, numbers, Y, YId, { number: 0 });
+  const width = getNumberFromLayer(rectangles, numbers, Width, WidthId, { number: 0 });
+  const height = getNumberFromLayer(rectangles, numbers, Height, HeightId, { number: 0 });
 
   return <rect
     key={`layer${index}`}

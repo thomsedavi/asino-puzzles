@@ -1,12 +1,12 @@
 import React from "react"
-import { AsinoCircle, AsinoPuzzle } from "../interfaces"
-import { getNumber, getNumberValue } from "../utils";
+import { AsinoCircle, AsinoNumber } from "../interfaces"
+import { getNumberFromLayer, getNumberValue } from "../utils";
 import { CX, CXId, CY, CYId, R, RId } from "../consts";
 
-export const drawCircle = (circles: (AsinoCircle | undefined)[], puzzle: AsinoPuzzle, index: number): JSX.Element => {
-  const cx = getNumber(circles, puzzle, CX, CXId, 0);
-  const cy = getNumber(circles, puzzle, CY, CYId, 0);
-  const r = getNumber(circles, puzzle, R, RId, 0);
+export const drawCircle = (circles: (AsinoCircle | undefined)[], numbers: AsinoNumber[], index: number): JSX.Element => {
+  const cx = getNumberFromLayer(circles, numbers, CX, CXId, { number: 0 });
+  const cy = getNumberFromLayer(circles, numbers, CY, CYId, { number: 0 });
+  const r = getNumberFromLayer(circles, numbers, R, RId, { number: 0 });
 
   return <circle
     key={`layer${index}`}

@@ -22,3 +22,6 @@ export const R = 'r';
 export const RId = 'rId';
 export const StrokeWidth = 'strokeWidth';
 export const StrokeWidthId = 'strokeWidthId';
+
+export const Multiplication = '*';
+export const Division = '/';
