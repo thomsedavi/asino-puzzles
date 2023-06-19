@@ -27,7 +27,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
     (props.mode === 'create' && defaultGame) ??
     undefined
   );
-  const [selectedObject, setSelectedObject] = React.useState<string | undefined>(undefined);
+  const [selectedObjectId, setSelectedObjectId] = React.useState<string | undefined>(undefined);
   //const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   //const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   //const state = useState();
@@ -55,9 +55,8 @@ const Asino = (props: AsinoProps): JSX.Element => {
     <Container>
       {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
       <div>
-        {drawSvg(Test, setSelectedObject)}
+        {drawSvg(Test, setSelectedObjectId, selectedObjectId)}
       </div>
-      <Paragraph>Selected Object Id: {selectedObject}</Paragraph>
     </Container>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;

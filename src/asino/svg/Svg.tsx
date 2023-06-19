@@ -7,7 +7,7 @@ import { drawRectangle } from "./Rectangle";
 import { drawPath } from "./Path";
 import { StrokeWidth } from "../consts";
 
-export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: string) => void): JSX.Element => {
+export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObjectId: (objectId: string) => void, selectedObjectId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
@@ -18,7 +18,7 @@ export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: strin
     } else if (layer.interfaceId !== undefined || layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
-      layers.push(drawInterface([layerInterface, layer.interface], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex));
+      layers.push(drawInterface([layerInterface, layer.interface], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, selectedObjectId));
     } else if (layer.circleId !== undefined || layer.circle !== undefined) {
       const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circleId)[0];
 
@@ -38,7 +38,7 @@ export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: strin
     if (layer.interfaceId !== undefined || layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
-      layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedObject));
+      layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedObjectId));
     }
   });
 
