@@ -3,7 +3,7 @@ import { User } from '../common/interfaces';
 import { AsinoPuzzle, Test } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Container, Heading1, Overlay, Paragraph, Placeholder } from '../common/styled';
+import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
 import { EditToggleButton } from '../common/components';
 import { drawSvg } from './svg/Svg';
 
