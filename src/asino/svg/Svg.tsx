@@ -14,11 +14,11 @@ export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: strin
     if (layer.lineId !== undefined || layer.line !== undefined) {
       const layerLine = puzzle.lines?.filter(line => line.id === layer.lineId)[0];
 
-      layers.push(drawLine([layerLine, layer.line], [...(puzzle.numbers ?? [])], puzzle.defaults?.[StrokeWidth] ?? {number: 24}, layerIndex));
+      layers.push(drawLine([layerLine, layer.line], [...(puzzle.numbers ?? [])], puzzle.defaults?.[StrokeWidth] ?? { number: { numerator: 1, denominator: 200 } }, layerIndex));
     } else if (layer.interfaceId !== undefined || layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
-      layers.push(drawInterface([layerInterface, layer.interface], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? {number: 560}, puzzle.defaults?.interfaceHeightValue ?? {number: 560}, layerIndex));
+      layers.push(drawInterface([layerInterface, layer.interface], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex));
     } else if (layer.circleId !== undefined || layer.circle !== undefined) {
       const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circleId)[0];
 
@@ -30,7 +30,7 @@ export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: strin
     } else if (layer.pathId !== undefined || layer.path !== undefined) {
       const layerPath = puzzle.paths?.filter(path => path.id === layer.pathId)[0];
 
-      layers.push(drawPath([layerPath, layer.path], [...(puzzle.numbers ?? [])], puzzle.defaults?.[StrokeWidth] ?? {number: 24}, layerIndex));
+      layers.push(drawPath([layerPath, layer.path], [...(puzzle.numbers ?? [])], puzzle.defaults?.[StrokeWidth] ?? { number: { numerator: 1, denominator: 200 } }, layerIndex));
     }
   });
 
@@ -38,13 +38,13 @@ export const drawSvg = (puzzle: AsinoPuzzle, setSelectedObject: (objectId: strin
     if (layer.interfaceId !== undefined || layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
-      layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? {number: 560}, puzzle.defaults?.interfaceHeightValue ?? {number: 560}, layerIndex, setSelectedObject));
+      layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedObject));
     }
   });
 
   return <svg version="1.1"
-              viewBox='0 0 5040 5040'
-              xmlns="http://www.w3.org/2000/svg">
+    viewBox='0 0 5040 5040'
+    xmlns="http://www.w3.org/2000/svg">
     {layers}
   </svg>;
 }

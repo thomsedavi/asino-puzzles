@@ -2,16 +2,57 @@ import { Multiplication } from "./consts";
 import { AsinoNumber } from "./interfaces";
 import { Number } from "./types";
 
-const GetProduct = (left: Number, right: Number): Number => {
-  if (typeof left === 'number' && typeof right === 'number') return left * right;
-
-  return 0;
+const getProduct = (left: Number, right: Number): Number => {
+  if (typeof left === 'number') {
+    if (typeof right === 'number') {
+      return left * right;
+    } else if (right === 'infinity') {
+      return 'infinity';
+    } else {
+      return { numerator: getProduct(left, right.numerator), denominator: right.denominator };
+    }
+  } else if (left === 'infinity') {
+    return 'infinity';
+  } else {
+    if (typeof right === 'number') {
+      return { numerator: getProduct(left, left.numerator), denominator: left.denominator };
+    } else if (right === 'infinity') {
+      return 'infinity';
+    } else {
+      return { numerator: getProduct(left.numerator, right.numerator), denominator: getProduct(left.denominator, right.denominator) };
+    }
+  }
 }
 
-export const getNumberValue = (value: Number): number => {
-  if (typeof value === 'number') return value;
+export const getGridValue = (value: Number, doNotMultiply?: boolean): number | 'infinity' | 'potato' => {
+  if (typeof value === 'number') {
+    return value * (doNotMultiply ? 1 : 5040);
+  } else if (value === 'infinity') {
+    return 'infinity';
+  } else {
+    const numerator = getGridValue(value.numerator, true);
+    const denominator = getGridValue(value.denominator, true);
 
-  return 0;
+    if (numerator === 'infinity') {
+      if (denominator === 'infinity') {
+        return 'potato';
+      } else if (denominator === 'potato') {
+        return 'potato';
+      } else {
+        return 'infinity';
+      }
+    } else if (numerator === 'potato') {
+      return 'potato';
+    } else {
+      if (denominator === 'infinity') {
+        return 0;
+      } else if (denominator === 'potato') {
+        return 'potato';
+      } else {
+        return (numerator * (doNotMultiply ? 1 : 5040)) / denominator;
+      }
+    }
+  }
 }
 
 export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[]): Number => {
@@ -40,7 +81,7 @@ export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[])
     number.operandLeft !== undefined && number.operandLeft.number !== undefined && (left = number.operandLeft.number);
     number.operandRight !== undefined && number.operandRight.number !== undefined && (right = number.operandRight.number);
 
-    numberResult = GetProduct(left, right);
+    numberResult = getProduct(left, right);
   }
 
   if (number.numberId !== undefined) {

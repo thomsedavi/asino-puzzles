@@ -1,6 +1,6 @@
 import React from "react"
 import { AsinoCommand, AsinoNumber, AsinoPath } from "../interfaces"
-import { getNumberFromLayer, getNumberFromNumber, getNumberValue } from "../utils";
+import { getNumberFromLayer, getNumberFromNumber, getGridValue } from "../utils";
 import { C, L, M, S, StrokeWidth, StrokeWidthId, Z } from "../consts";
 import { Number } from "../types";
 
@@ -69,6 +69,6 @@ export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[
     d={d}
     fill='none'
     stroke='var(--color)'
-    strokeWidth={getNumberValue(strokeWidth)}
+    strokeWidth={getGridValue(strokeWidth)}
   />;
 }

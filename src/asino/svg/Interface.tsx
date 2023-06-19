@@ -1,6 +1,6 @@
 import React from "react"
 import { AsinoInterface, AsinoNumber } from "../interfaces"
-import { getNumberFromLayer, getNumberValue } from "../utils";
+import { getNumberFromLayer, getGridValue } from "../utils";
 import { Height, HeightId, Width, WidthId, X, XId, Y, YId } from "../consts";
 
 export const drawInterface = (interfaces: (AsinoInterface | undefined)[], numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number): JSX.Element => {
@@ -11,13 +11,13 @@ export const drawInterface = (interfaces: (AsinoInterface | undefined)[], number
 
   return <rect
     key={`layer${index}`}
-    x={getNumberValue(x)}
-    y={getNumberValue(y)}
-    width={getNumberValue(width)}
-    height={getNumberValue(height)}
+    x={getGridValue(x)}
+    y={getGridValue(y)}
+    width={getGridValue(width)}
+    height={getGridValue(height)}
     stroke='var(--color)'
     fill='var(--background-color-input)'
-    strokeWidth={24}
+    strokeWidth={getGridValue({numerator: 1, denominator: 200})}
   />;
 }
 
@@ -35,14 +35,14 @@ export const drawInterfaceInteractive = (interfaces: (AsinoInterface | undefined
 
   return <rect
     key={`layerInteractive${index}`}
-    x={getNumberValue(x)}
-    y={getNumberValue(y)}
-    width={getNumberValue(width)}
-    height={getNumberValue(height)}
+    x={getGridValue(x)}
+    y={getGridValue(y)}
+    width={getGridValue(width)}
+    height={getGridValue(height)}
     stroke='none'
     fill='transparent'
     cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}
-    strokeWidth={24}
+    strokeWidth={getGridValue({numerator: 1, denominator: 200})}
     onClick={() => { interfaceObjectId !== undefined && setSelectedObject(interfaceObjectId) }}
   />;
 }

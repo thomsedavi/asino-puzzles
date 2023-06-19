@@ -14,9 +14,9 @@ export interface AsinoPuzzle {
   paths?: AsinoPath[]; // circle
   numbers?: AsinoNumber[]; // numbers
   defaults?: { // should this be called 'settings'?
-    interfaceWidthValue?: AsinoNumber; // default width of interface, or use default of 560 (5,040/9)
-    interfaceHeightValue?: AsinoNumber; // default height of interface, or use default of 560 (5,040/9)
-    [StrokeWidth]?: AsinoNumber; // default width of stroke, or use default of 24
+    interfaceWidthValue?: AsinoNumber; // default width of interface, or use default of 1/9
+    interfaceHeightValue?: AsinoNumber; // default height of interface, or use default of 1/9
+    [StrokeWidth]?: AsinoNumber; // default width of stroke, or use default of 1/200
   }
   dateCreated?: string;
   dateUpdated?: string;
@@ -237,29 +237,29 @@ export const Test: AsinoPuzzle = {
     }
   ],
   numbers: [
-    { id: '1-00', name: 'Interface Width', number: 560 },
-    { id: '1-01', name: 'Interface Height', number: 560 },
-    { id: '1-02', name: '3,360', number: 3360 },
+    { id: '1-00', name: 'Interface Width', number: { numerator: 1, denominator: 9 } },
+    { id: '1-01', name: 'Interface Height', number: { numerator: 1, denominator: 9 } },
+    { id: '1-02', name: '2/3', number: { numerator: 2, denominator: 3 } },
     { id: '1-03', name: '0', number: 0 },
-    { id: '1-04', name: '5,040', number: 5040 },
-    { id: '1-05', name: '32', number: 48 },
+    { id: '1-04', name: '1', number: 1 },
+    { id: '1-05', name: '1/100', number: { numerator: 1, denominator: 100 } },
     {
-      id: '1-06', name: 'Input Multiplied By 560', operator: Multiplication,
-      operandLeftId: '1-09', operandRight: { number: 560 }
+      id: '1-06', name: 'Input Multiplied By 1/9', operator: Multiplication,
+      operandLeftId: '1-09', operandRight: { number: { numerator: 1, denominator: 9 } }
     },
     { id: '1-07', name: 'X Position', number: 0 },
     { id: '1-08', name: 'Y Position', number: 0 },
-    { id: '1-09', name: 'Left Operand for Input Multiplied By 560', number: 0 }
+    { id: '1-09', name: 'Left Operand for Input Multiplied By 1/9', number: 0 }
   ],
   lines: [
-    { id: '2-00', name: 'Vertical Border 1', x1: { number: 1680 }, x2: { number: 1680 }, y1: { number: 0 }, y2: { number: 5040 }, strokeWidthId: '1-05' },
+    { id: '2-00', name: 'Vertical Border 1', x1: { number: { numerator: 1, denominator: 3 } }, x2: { number: { numerator: 1, denominator: 3 } }, y1: { number: 0 }, y2: { number: 1 }, strokeWidthId: '1-05' },
     { id: '2-01', name: 'Vertical Border 2', x1Id: '1-02', x2Id: '1-02', y1Id: '1-03', y2Id: '1-04', strokeWidthId: '1-05' },
-    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 5040 }, y1: { number: 1680 }, y2: { number: 1680 }, strokeWidthId: '1-05' },
-    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 5040 }, y1: { number: 3360 }, y2: { number: 3360 }, strokeWidthId: '1-05' }
+    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 1, denominator: 3 } }, y2: { number: { numerator: 1, denominator: 3 } }, strokeWidthId: '1-05' },
+    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 2, denominator: 3 } }, y2: { number: { numerator: 2, denominator: 3 } }, strokeWidthId: '1-05' }
   ],
   defaults: {
-    interfaceWidthValue: { number: 560 },
-    interfaceHeightValue: { number: 560 },
-    strokeWidth: { number: 24 }
+    interfaceWidthValue: { number: { numerator: 1, denominator: 9 } },
+    interfaceHeightValue: { number: { numerator: 1, denominator: 9 } },
+    strokeWidth: { number: { numerator: 1, denominator: 200 } }
   }
 }

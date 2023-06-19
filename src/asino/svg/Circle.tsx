@@ -1,6 +1,6 @@
 import React from "react"
 import { AsinoCircle, AsinoNumber } from "../interfaces"
-import { getNumberFromLayer, getNumberValue } from "../utils";
+import { getNumberFromLayer, getGridValue } from "../utils";
 import { CX, CXId, CY, CYId, R, RId } from "../consts";
 
 export const drawCircle = (circles: (AsinoCircle | undefined)[], numbers: AsinoNumber[], index: number): JSX.Element => {
@@ -10,9 +10,9 @@ export const drawCircle = (circles: (AsinoCircle | undefined)[], numbers: AsinoN
 
   return <circle
     key={`layer${index}`}
-    cx={getNumberValue(cx)}
-    cy={getNumberValue(cy)}
-    r={getNumberValue(r)}
+    cx={getGridValue(cx)}
+    cy={getGridValue(cy)}
+    r={getGridValue(r)}
     fill='var(--color)'
   />;
 }
