@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '../common/interfaces';
-import { AsinoPuzzle, Test } from './interfaces';
+import { AsinoPuzzle, Solution, Test } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
@@ -27,7 +27,9 @@ const Asino = (props: AsinoProps): JSX.Element => {
     (props.mode === 'create' && defaultGame) ??
     undefined
   );
+  const [selectedCollectionId, setSelectedCollectionId] = React.useState<string | undefined>(undefined);
   const [selectedObjectId, setSelectedObjectId] = React.useState<string | undefined>(undefined);
+  const [solution, setSolution] = React.useState<Solution>({});
   //const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   //const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   //const state = useState();
@@ -48,16 +50,46 @@ const Asino = (props: AsinoProps): JSX.Element => {
     </>
   }
 
+  const onSelectClassId = (selectedClassId: string) => {
+    const selectedClass = Test.collections
+      ?.filter(collection => collection.id === selectedCollectionId)[0]
+      ?.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
+
+
+    if (selectedClass !== undefined && selectedClass.id !== undefined) {
+      const currentSolution = {...solution};
+
+      if (currentSolution.selectedClasses === undefined) {
+        currentSolution.selectedClasses = [];
+      }
+
+      const currentObject = currentSolution.selectedClasses.filter(selectedClass => selectedClass.objectId === selectedObjectId)[0];
+
+      if (selectedObjectId !== undefined) {
+        if (currentObject === undefined) {
+          currentSolution.selectedClasses.push({ objectId: selectedObjectId, classId: selectedClass.id });
+        } else {
+          currentObject.classId = selectedClass.id;
+        }
+
+        setSolution(currentSolution);
+      }
+    }
+  }
+
   const toggleButtonMode: 'create' | 'read' | 'update' = mode === 'read' ? (asinoPuzzle.id === undefined ? 'create' : 'update') : 'read';
+
+  const selectedCollection = Test.collections?.filter(collection => collection.id === selectedCollectionId)[0];
 
   return <>
     <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
     <Container>
       {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
       <div>
-        {drawSvg(Test, setSelectedObjectId, selectedObjectId)}
+        {drawSvg(Test, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
       </div>
     </Container>
+    <div>{selectedCollection?.classes?.map((c, i) => <span key={`test${i}`} onClick={() => { c.id && (onSelectClassId(c.id)) }}>[{c.name}]</span>)}</div>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;
 }

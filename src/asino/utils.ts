@@ -1,40 +1,180 @@
-import { Multiplication } from "./consts";
+import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { AsinoNumber } from "./interfaces";
 import { Number } from "./types";
 
-const getProduct = (left: Number, right: Number): Number => {
+export const getSum = (left: Number, right: Number): Number => {
+  if (typeof left === 'number') {
+    if (typeof right === 'number') {
+      return left + right;
+    } else if (right === 'infinity') {
+      return 'infinity';
+    } else if (right === 'negativeInfinity') {
+      return 'negativeInfinity';
+    } else {
+      return { numerator: getSum(getProduct(left, right.denominator), right.numerator), denominator: right.denominator };
+    }
+  } else if (left === 'infinity') {
+    if (right === 'negativeInfinity') {
+      return 0;
+    } else {
+      return 'infinity';
+    }
+  } else if (left === 'negativeInfinity') {
+    if (right === 'infinity') {
+      return 0;
+    } else {
+      return 'negativeInfinity';
+    }
+  } else {
+    if (typeof right === 'number') {
+      return { numerator: getSum(getProduct(right, left.denominator), left.numerator), denominator: left.denominator };
+    } else if (right === 'infinity') {
+      return 'infinity';
+    } else if (right === 'negativeInfinity') {
+      return 'negativeInfinity';
+    } else {
+      return { numerator: getSum(getProduct(left.numerator, right.denominator), getProduct(right.numerator, left.denominator)), denominator: getProduct(left.denominator, right.denominator) };
+    }
+  }
+}
+
+export const getDifference = (left: Number, right: Number): Number => {
+  if (typeof left === 'number') {
+    if (typeof right === 'number') {
+      return left - right;
+    } else if (right === 'infinity') {
+      return 'negativeInfinity';
+    } else if (right === 'negativeInfinity') {
+      return 'infinity';
+    } else {
+      return { numerator: getSum(getProduct(left, right.denominator), right.numerator), denominator: right.denominator };
+    }
+  } else if (left === 'infinity') {
+    if (right === 'negativeInfinity') {
+      return 0
+    } else {
+      return 'infinity';
+    }
+  } else if (left === 'negativeInfinity') {
+    if (right === 'infinity') {
+      return 0
+    } else {
+      return 'negativeInfinity';
+    }
+  } else {
+    if (typeof right === 'number') {
+      return { numerator: getSum(getProduct(right, left.denominator), left.numerator), denominator: left.denominator };
+    } else if (right === 'infinity') {
+      return 'negativeInfinity';
+    } else if (right === 'negativeInfinity') {
+      return 'infinity';
+    } else {
+      return { numerator: getDifference(getProduct(left.numerator, right.denominator), getProduct(right.numerator, left.denominator)), denominator: getProduct(left.denominator, right.denominator) };
+    }
+  }
+}
+
+export const getProduct = (left: Number, right: Number): Number => {
   if (typeof left === 'number') {
     if (typeof right === 'number') {
       return left * right;
     } else if (right === 'infinity') {
       return 'infinity';
+    } else if (right === 'negativeInfinity') {
+      return 'negativeInfinity';
     } else {
       return { numerator: getProduct(left, right.numerator), denominator: right.denominator };
     }
   } else if (left === 'infinity') {
-    return 'infinity';
+    if (right === 'negativeInfinity') {
+      return 'negativeInfinity';
+    } else {
+      return 'infinity';
+    }
+  } else if (left === 'negativeInfinity') {
+    if (right === 'negativeInfinity') {
+      return 'infinity';
+    } else {
+      return 'negativeInfinity';
+    }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getProduct(left, left.numerator), denominator: left.denominator };
+      return { numerator: getProduct(left.denominator, right), denominator: left.denominator };
     } else if (right === 'infinity') {
       return 'infinity';
+    } else if (right === 'negativeInfinity') {
+      return 'negativeInfinity';
     } else {
       return { numerator: getProduct(left.numerator, right.numerator), denominator: getProduct(left.denominator, right.denominator) };
     }
   }
 }
 
-export const getGridValue = (value: Number, doNotMultiply?: boolean): number | 'infinity' | 'potato' => {
+export const getQuotient = (left: Number, right: Number): Number => {
+  if (typeof left === 'number') {
+    if (typeof right === 'number') {
+      return { numerator: left, denominator: right };
+    } else if (right === 'infinity') {
+      return 0;
+    } else if (right === 'negativeInfinity') {
+      return 0;
+    } else {
+      return { numerator: left, denominator: right };
+    }
+  } else if (left === 'infinity') {
+    if (right === 'infinity') {
+      return 1;
+    } else if (right === 'negativeInfinity') {
+      return -1;
+    } else {
+      return 'infinity';
+    }
+  } else if (left === 'negativeInfinity') {
+    if (right === 'infinity') {
+      return -1;
+    } else if (right === 'negativeInfinity') {
+      return 1;
+    } else {
+      return 'negativeInfinity';
+    }
+  } else {
+    if (typeof right === 'number') {
+      return { numerator: left.numerator, denominator: getProduct(left.denominator, right) };
+    } else if (right === 'infinity') {
+      return 0;
+    } else if (right === 'negativeInfinity') {
+      return 0;
+    } else {
+      return { numerator: left, denominator: right };
+    }
+  }
+}
+
+export const getGridValue = (value: Number, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' => {
   if (typeof value === 'number') {
     return value * (doNotMultiply ? 1 : 5040);
   } else if (value === 'infinity') {
     return 'infinity';
+  } else if (value === 'negativeInfinity') {
+    return 'negativeInfinity';
   } else {
     const numerator = getGridValue(value.numerator, true);
     const denominator = getGridValue(value.denominator, true);
 
     if (numerator === 'infinity') {
       if (denominator === 'infinity') {
+        return 'potato';
+      } else if (denominator === 'negativeInfinity') {
+        return 'potato';
+      } else if (denominator === 'potato') {
+        return 'potato';
+      } else {
+        return 'infinity';
+      }
+    } else if (numerator === 'negativeInfinity') {
+      if (denominator === 'infinity') {
+        return 'potato';
+      } else if (denominator === 'negativeInfinity') {
         return 'potato';
       } else if (denominator === 'potato') {
         return 'potato';
@@ -45,6 +185,8 @@ export const getGridValue = (value: Number, doNotMultiply?: boolean): number | '
       return 'potato';
     } else {
       if (denominator === 'infinity') {
+        return 0;
+      } else if (denominator === 'negativeInfinity') {
         return 0;
       } else if (denominator === 'potato') {
         return 'potato';
@@ -58,14 +200,14 @@ export const getGridValue = (value: Number, doNotMultiply?: boolean): number | '
 export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[]): Number => {
   let numberResult: Number = 0;
 
-  if (number.operator === Multiplication) {
+  if (number.operator !== undefined) {
     let left: Number = 0;
     let right: Number = 0;
 
     if (number.operandLeftId !== undefined) {
       numbers.forEach((leftNumber: AsinoNumber) => {
         if (leftNumber.id === number.operandLeftId) {
-          left = getNumberFromNumber(leftNumber, numbers);
+          left = getNumberFromNumber(leftNumber, [...numbers, ...(number.numbers ?? [])]);
         }
       });
     }
@@ -73,26 +215,45 @@ export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[])
     if (number.operandRightId !== undefined) {
       numbers.forEach((rightNumber: AsinoNumber) => {
         if (rightNumber.id === number.operandRightId) {
-          right = getNumberFromNumber(rightNumber, numbers);
+          right = getNumberFromNumber(rightNumber, [...numbers, ...(number.numbers ?? [])]);
         }
       });
     }
 
-    number.operandLeft !== undefined && number.operandLeft.number !== undefined && (left = number.operandLeft.number);
-    number.operandRight !== undefined && number.operandRight.number !== undefined && (right = number.operandRight.number);
+    number.operandLeft !== undefined && (left = getNumberFromNumber(number.operandLeft, [...numbers, ...(number.numbers ?? [])]));
+    number.operandRight !== undefined && (right = getNumberFromNumber(number.operandRight, [...numbers, ...(number.numbers ?? [])]));
 
-    numberResult = getProduct(left, right);
+    if (number.operator === Multiplication)
+      numberResult = getProduct(left, right);
+    else if (number.operator === Subtraction)
+      numberResult = getDifference(left, right);
+    else if (number.operator === Addition)
+      numberResult = getSum(left, right);
+    else if (number.operator === Division)
+      numberResult = getQuotient(left, right);
   }
 
   if (number.numberId !== undefined) {
     numbers.forEach((numberNumber: AsinoNumber) => {
       if (numberNumber.id === number.numberId) {
-        numberResult = getNumberFromNumber(numberNumber, numbers);
+        numberResult = getNumberFromNumber(numberNumber, [...numbers, ...(number.numbers ?? [])]);
       }
     });
   }
 
   number.number !== undefined && (numberResult = number.number);
+
+  return numberResult;
+}
+
+export const getNumberFromId = (numberId: string, numbers: AsinoNumber[]): Number => {
+  let numberResult: Number = 0;
+
+  numbers.forEach((number: AsinoNumber) => {
+    if (number.id === numberId) {
+      numberResult = getNumberFromNumber(number, [...numbers, ...(number.numbers ?? [])]);
+    }
+  });
 
   return numberResult;
 }

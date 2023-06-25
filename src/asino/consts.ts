@@ -32,11 +32,15 @@ export const DY2 = 'dy2';
 export const DY2Id = 'dy2Id';
 export const R = 'r';
 export const RId = 'rId';
+export const Fill = 'fill';
+export const Stroke = 'stroke';
 export const StrokeWidth = 'strokeWidth';
 export const StrokeWidthId = 'strokeWidthId';
 
 export const Multiplication = '*';
 export const Division = '/';
+export const Subtraction = '-';
+export const Addition = '+';
 export const C = 'C';
 export const L = 'L';
 export const M = 'M';
