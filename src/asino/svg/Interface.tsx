@@ -1,8 +1,7 @@
 import React from "react"
-import { AsinoInterface, AsinoLayer, AsinoNumber, AsinoPath, AsinoPuzzle, Solution } from "../interfaces"
-import { getNumberFromLayer, getGridValue, getProduct, getNumberFromId, getSum } from "../utils";
-import { Height, HeightId, L, M, Width, WidthId, X, XId, Y, YId, Z } from "../consts";
-import { drawPath } from "./Path";
+import { AsinoInterface, AsinoLayer, AsinoNumber, AsinoPuzzle, Solution } from "../interfaces"
+import { getNumberFromLayer, getGridValue } from "../utils";
+import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./Svg";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], solution: Solution, numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, selectedObjectId?: string): JSX.Element => {
@@ -17,10 +16,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
     collectionId !== undefined && (interfaceCollectionId = collectionId);
   });
 
-  const x = getNumberFromLayer(interfaces, numbers, X, XId, { number: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, YId, { number: 0 });
-  const width = getNumberFromLayer(interfaces, numbers, Width, WidthId, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, numbers, Height, HeightId, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(interfaces, numbers, X, { number: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, { number: 0 });
+  const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
 
   let fill = interfaceObjectId === selectedObjectId ? 'var(--accent-strong)' : 'var(--background-color-input)';
 
@@ -59,10 +58,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
 }
 
 export const drawInterfaceInteractive = (interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, numbers, X, XId, { number: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, YId, { number: 0 });
-  const width = getNumberFromLayer(interfaces, numbers, Width, WidthId, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, numbers, Height, HeightId, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(interfaces, numbers, X, { number: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, { number: 0 });
+  const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
 
   let interfaceObjectId: string | undefined = undefined;
   let interfaceCollectionId: string | undefined = undefined;

@@ -150,6 +150,16 @@ export const getQuotient = (left: Number, right: Number): Number => {
   }
 }
 
+export const GetNumberFromAsinoNumber = (asinoNumber: string | number | AsinoNumber, numbers: AsinoNumber[]): Number => {
+  if (typeof asinoNumber === 'number') {
+    return asinoNumber;
+  } else if (typeof asinoNumber === 'string') {
+    return getNumberFromId(asinoNumber, numbers);
+  } else {
+    return getNumberFromNumber(asinoNumber, numbers);
+  }
+}
+
 export const getGridValue = (value: Number, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' => {
   if (typeof value === 'number') {
     return value * (doNotMultiply ? 1 : 5040);
@@ -258,23 +268,35 @@ export const getNumberFromId = (numberId: string, numbers: AsinoNumber[]): Numbe
   return numberResult;
 }
 
-export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNumber[], valueName: string, valueId: string, numberDefault: AsinoNumber): Number => {
+export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNumber[], valueNameAndId: string, numberDefault: AsinoNumber): Number => {
   let numberResult: Number = 0;
 
   numberDefault.number && (numberResult = numberDefault.number);
 
   array.forEach(value => {
-    const valueNumberId: string | undefined = value?.[valueId];
+    const valueNumberValue: number | string | AsinoNumber | undefined = value?.[valueNameAndId];
 
-    if (valueNumberId !== undefined) {
-      numbers.forEach((number: AsinoNumber) => {
-        if (number.id === valueNumberId) {
-          numberResult = getNumberFromNumber(number, [...numbers, ...(value?.[valueName]?.numbers ?? [])]);
+    if (valueNumberValue !== undefined) {
+      if (typeof valueNumberValue === 'number') {
+        numberResult = valueNumberValue;
+      } else if (typeof valueNumberValue === 'string') {
+        numbers.forEach((number: AsinoNumber) => {
+          if (number.id === valueNumberValue) {
+            numberResult = getNumberFromNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
+          }
+        });
+      } else {
+        if (valueNumberValue.id !== undefined) {
+          numbers.forEach((number: AsinoNumber) => {
+            if (number.id === valueNumberValue.id) {
+              numberResult = getNumberFromNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
+            }
+          });
         }
-      });
+      }
     }
 
-    const valueNumber: AsinoNumber | undefined = value?.[valueName];
+    const valueNumber: AsinoNumber | undefined = value?.[valueNameAndId];
     valueNumber !== undefined && valueNumber.number && (numberResult = valueNumber.number);
   });
 

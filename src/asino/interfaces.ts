@@ -1,6 +1,5 @@
-import { Addition, C, CX, CXId, CY, CYId, DX, DX1, DX1Id, DX2, DX2Id, DXId, DY, DY1, DY1Id, DY2, DY2Id, DYId, Division, Fill, Height, HeightId, L, M, Multiplication, R, RId, Stroke, StrokeWidth, StrokeWidthId, Subtraction, Width, WidthId, X, X1, X1Id, X2, X2Id, XId, Y, Y1, Y1Id, Y2, Y2Id, YId, Z } from "./consts";
+import { Addition, C, CX, CY, DX, DX1, DX2, DY, DY1, DY2, Division, Fill, Height, L, M, Multiplication, R, Stroke, StrokeWidth, Subtraction, Width, X, X1, X2, Y, Y1, Y2, Z } from "./consts";
 import { Operator, Number, Letter } from "./types";
-import { getNumberFromId, getProduct, getSum } from "./utils";
 
 export interface AsinoPuzzle {
   id?: string; // id of this puzzle
@@ -62,54 +61,38 @@ export type AsinoInterface = {
   id?: string; // id of this interface
   name?: string; // name of this interface
   objectId?: string; // id of the object for this interface
-  [Width]?: AsinoNumber; // if this exists, draw the interface this wide, or...
-  [WidthId]?: string; // if this exists, draw the interface as wide as this number, or use default interface width
-  [Height]?: AsinoNumber; // if this exists, draw the interface this high, or...
-  [HeightId]?: string; // if this exists, draw the interface as high as this number, or use default interface height
-  [X]?: AsinoNumber; // if this exists, draw the interface here, or...
-  [XId]?: string; // if this exists, draw the interface at this number, or use default of 0
-  [Y]?: AsinoNumber; // if this exists, draw the interface here, or...
-  [YId]?: string; // if this exists, draw the interface at this number, or use default of 0
+  [Width]?: number | string | AsinoNumber; // if this exists, draw the interface this wide, or...
+  [Height]?: number | string | AsinoNumber; // if this exists, draw the interface this high, or...
+  [X]?: number | string | AsinoNumber; // if this exists, draw the interface here, or...
+  [Y]?: number | string | AsinoNumber; // if this exists, draw the interface here, or...
   numbers?: AsinoNumber[] // number parameters
   collectionId?: string; // id of collection of this layer
 }
 
 export interface AsinoRectangle {
   id?: string; // id of this rectangle
-  [Width]?: AsinoNumber; // if this exists, draw the rectangle this wide, or...
-  [WidthId]?: string; // if this exists, draw the rectangle as wide as this number, or use default of 0
-  [Height]?: AsinoNumber; // if this exists, draw the rectangle this high, or...
-  [HeightId]?: string; // if this exists, draw the rectangle as high as this number, or use default of 0
-  [X]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [XId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [Y]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [YId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [Width]?: number | string | AsinoNumber; // if this exists, draw the rectangle this wide, or...
+  [Height]?: number | string | AsinoNumber; // if this exists, draw the rectangle this high, or...
+  [X]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [Y]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
 }
 
 export interface AsinoLine {
   id?: string; // id of this line
   name?: string; // name of this line
-  [X1]?: AsinoNumber; // if this exists, draw x1 here, or...
-  [X1Id]?: string; // if this exists, draw x1 at this number, or use default of 0
-  [X2]?: AsinoNumber; // if this exists, draw x2 here, or...
-  [X2Id]?: string; // if this exists, draw x2 at this number, or use default of 0
-  [Y1]?: AsinoNumber; // if this exists, draw y1 here, or...
-  [Y1Id]?: string; // if this exists, draw y1 at this number, or use default of 0
-  [Y2]?: AsinoNumber; // if this exists, draw y2 here, or...
-  [Y2Id]?: string; // if this exists, draw y2 at this number, or use default of 0
-  [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width, or...
-  [StrokeWidthId]?: string; // if this exists, draw stroke the width of this number, or use default stroke width
+  [X1]?: number | string | AsinoNumber; // if this exists, draw x1 here, or...
+  [X2]?: number | string | AsinoNumber; // if this exists, draw x2 here, or...
+  [Y1]?: number | string | AsinoNumber; // if this exists, draw y1 here, or...
+  [Y2]?: number | string | AsinoNumber; // if this exists, draw y2 here, or...
+  [StrokeWidth]?: number | string | AsinoNumber; // if this exists, draw stroke with width, or...
 }
 
 export interface AsinoCircle {
   id?: string; // id of this line
   name?: string; // name of this line
-  [CX]?: AsinoNumber; // if this exists, draw cx here, or...
-  [CXId]?: string; // if this exists, draw cx at this number, or use default of 0
-  [CY]?: AsinoNumber; // if this exists, draw cy here, or...
-  [CYId]?: string; // if this exists, draw cy at this number, or use default of 0
-  [R]?: AsinoNumber; // if this exists, draw r here, or...
-  [RId]?: string; // if this exists, draw r at this number, or use default of 0
+  [CX]?: number | string | AsinoNumber; // if this exists, draw cx here, or...
+  [CY]?: number | string | AsinoNumber; // if this exists, draw cy here, or...
+  [R]?: number | string | AsinoNumber; // if this exists, draw r here, or...
 }
 
 export interface AsinoPath {
@@ -118,42 +101,31 @@ export interface AsinoPath {
   commands?: AsinoCommand[]; // list of commands
   [Fill]?: string; // the fill for this path
   [Stroke]?: string; // the stroke for this path
-  [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width, or...
-  [StrokeWidthId]?: string; // if this exists, draw stroke the width of this number, or use default stroke width
+  [StrokeWidth]?: number | string | AsinoNumber; // if this exists, draw stroke with width, or...
 }
 
 export interface AsinoCommand {
   letter?: Letter;
-  [X]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [XId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [X1]?: AsinoNumber; // if this exists, draw x1 here, or...
-  [X1Id]?: string; // if this exists, draw x1 at this number, or use default of 0
-  [X2]?: AsinoNumber; // if this exists, draw x2 here, or...
-  [X2Id]?: string; // if this exists, draw x2 at this number, or use default of 0
-  [Y]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [YId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [Y1]?: AsinoNumber; // if this exists, draw y1 here, or...
-  [Y1Id]?: string; // if this exists, draw y1 at this number, or use default of 0
-  [Y2]?: AsinoNumber; // if this exists, draw y2 here, or...
-  [Y2Id]?: string; // if this exists, draw y2 at this number, or use default of 0
-  [DX]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DXId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [DX1]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DX1Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [DX2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DX2Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [DY]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DYId]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [DY1]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DY1Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
-  [DY2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
-  [DY2Id]?: string; // if this exists, draw the rectangle at this number, or use default of 0
+  [X]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [X1]?: number | string | AsinoNumber; // if this exists, draw x1 here, or...
+  [X2]?: number | string | AsinoNumber; // if this exists, draw x2 here, or...
+  [Y]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [Y1]?: number | string | AsinoNumber; // if this exists, draw y1 here, or...
+  [Y2]?: number | string | AsinoNumber; // if this exists, draw y2 here, or...
+  [DX]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DX1]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DX2]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DY]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DY1]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
+  [DY2]?: number | string | AsinoNumber; // if this exists, draw the rectangle here, or...
 }
 
 export interface AsinoNumber {
   id?: string; // id of this number
   name?: string; // name of this number
   number?: Number; // value of this number
+  numerator?: Number; // numerator of this fraction
+  denominator?: Number; // denominator of this fraction
   numberId?: string; // find the number with this id in the list of numbers
   operator?: Operator; // formula for this number
   operandLeft?: AsinoNumber; // if this exists, use this as left operand, or...
@@ -549,18 +521,18 @@ export const Test: AsinoPuzzle = {
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYTop
+                    x: FontXMiddle,
+                    y: FontYTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontTop
+                    x: FontRight,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontBottom
+                    x: FontRight,
+                    y: FontBottom
                   },
                   {
                     letter: Z
@@ -581,38 +553,38 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    xId: FontLeft,
-                    yId: FontTop
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontTop
+                    x: FontRight,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYTop
+                    x: FontXMiddle,
+                    y: FontYTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontYBottom
+                    x: FontRight,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontBottom
+                    x: FontLeft,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYBottom
+                    x: FontXMiddle,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontYMiddle
+                    x: FontLeft,
+                    y: FontYMiddle
                   },
                   {
                     letter: Z
@@ -633,33 +605,33 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    xId: FontRight,
-                    yId: FontTop
+                    x: FontRight,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYTop
+                    x: FontXMiddle,
+                    y: FontYTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontYMiddle
+                    x: FontRight,
+                    y: FontYMiddle
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontBottom
+                    x: FontXMiddle,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontYBottom
+                    x: FontLeft,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontTop
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: Z
@@ -679,23 +651,23 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    xId: FontLeft,
-                    yId: FontTop
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontTop
+                    x: FontRight,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontBottom
+                    x: FontXMiddle,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYTop
+                    x: FontXMiddle,
+                    y: FontYTop
                   },
                   {
                     letter: Z
@@ -716,33 +688,33 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    xId: FontXMiddle,
-                    yId: FontTop
+                    x: FontXMiddle,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontYTop
+                    x: FontRight,
+                    y: FontYTop
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontYBottom
+                    x: FontLeft,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontBottom
+                    x: FontXMiddle,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontYBottom
+                    x: FontRight,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontYTop
+                    x: FontLeft,
+                    y: FontYTop
                   },
                   {
                     letter: Z
@@ -763,33 +735,33 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    xId: FontXMiddle,
-                    yId: FontTop
+                    x: FontXMiddle,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontYTop
+                    x: FontRight,
+                    y: FontYTop
                   },
                   {
                     letter: L,
-                    xId: FontRight,
-                    yId: FontBottom
+                    x: FontRight,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontBottom
+                    x: FontLeft,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    xId: FontXMiddle,
-                    yId: FontYBottom
+                    x: FontXMiddle,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    xId: FontLeft,
-                    yId: FontYMiddle
+                    x: FontLeft,
+                    y: FontYMiddle
                   },
                   {
                     letter: Z
@@ -895,16 +867,16 @@ export const Test: AsinoPuzzle = {
     {
       id: '0-00',
       name: 'Template',
-      xId: '1-06', x: { numbers: [{ id: '1-09', numberId: '1-07' }] },
-      yId: '1-06', y: { numbers: [{ id: '1-09', numberId: '1-08' }] }
+      x: { id: '1-06', numbers: [{ id: '1-09', numberId: '1-07' }] },
+      y: { id: '1-06', numbers: [{ id: '1-09', numberId: '1-08' }] }
     },
     {
       id: '0-01',
       name: 'Interface r9c8',
       collectionId: '5-00',
       objectId: '4-87',
-      xId: '1-06', x: { numbers: [{ id: '1-09', numberId: '1-07' }] },
-      yId: '1-06', y: { numbers: [{ id: '1-09', numberId: '1-08' }] }
+      x: { id: '1-06', numbers: [{ id: '1-09', numberId: '1-07' }] },
+      y: { id: '1-06', numbers: [{ id: '1-09', numberId: '1-08' }] }
     }
   ],
   numbers: [
@@ -946,10 +918,10 @@ export const Test: AsinoPuzzle = {
     }
   ],
   lines: [
-    { id: '2-00', name: 'Vertical Border 1', x1: { number: { numerator: 1, denominator: 3 } }, x2: { number: { numerator: 1, denominator: 3 } }, y1: { number: 0 }, y2: { number: 1 }, strokeWidthId: '1-05' },
-    { id: '2-01', name: 'Vertical Border 2', x1Id: '1-02', x2Id: '1-02', y1Id: '1-03', y2Id: '1-04', strokeWidthId: '1-05' },
-    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 1, denominator: 3 } }, y2: { number: { numerator: 1, denominator: 3 } }, strokeWidthId: '1-05' },
-    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 2, denominator: 3 } }, y2: { number: { numerator: 2, denominator: 3 } }, strokeWidthId: '1-05' }
+    { id: '2-00', name: 'Vertical Border 1', x1: { number: { numerator: 1, denominator: 3 } }, x2: { number: { numerator: 1, denominator: 3 } }, y1: { number: 0 }, y2: { number: 1 }, strokeWidth: '1-05' },
+    { id: '2-01', name: 'Vertical Border 2', x1: '1-02', x2: '1-02', y1: '1-03', y2: '1-04', strokeWidth: '1-05' },
+    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 1, denominator: 3 } }, y2: { number: { numerator: 1, denominator: 3 } }, strokeWidth: '1-05' },
+    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 2, denominator: 3 } }, y2: { number: { numerator: 2, denominator: 3 } }, strokeWidth: '1-05' }
   ],
   defaults: {
     interfaceWidthValue: { number: { numerator: 1, denominator: 9 } },
