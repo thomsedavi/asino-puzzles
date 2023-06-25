@@ -6,8 +6,8 @@ import { Number } from "../types";
 
 export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[], colors: AsinoColor[], defaultStrokeWidth: AsinoNumber, scale: Number, key: string): JSX.Element => {
   let d = '';
-  let fill = 'none';
-  let stroke = 'var(--color)';
+  let fill: string | undefined = undefined;
+  let stroke: string | undefined = undefined;
   let strokeWidth: Number | 'infinity' | 'potato' | undefined = getGridValue(getNumberFromLayer(paths, numbers, StrokeWidth, defaultStrokeWidth));
 
   paths.forEach((path: AsinoPath | undefined) => {
@@ -72,11 +72,13 @@ export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[
     }
 
     if (path?.stroke !== undefined) {
-      stroke = path.stroke;
+      if (typeof path.stroke === 'string') {
+        stroke = getColorFromId(path.stroke, [...colors, ...(path.colors ?? [])]);
+      }
     }
   });
 
-  if (stroke === 'none') {
+  if (stroke === undefined) {
     strokeWidth = undefined;
   }
 

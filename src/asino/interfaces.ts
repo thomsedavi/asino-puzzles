@@ -89,7 +89,9 @@ export interface AsinoLine {
   [X2]?: number | string | AsinoNumber; // if this exists, draw x2 here, or...
   [Y1]?: number | string | AsinoNumber; // if this exists, draw y1 here, or...
   [Y2]?: number | string | AsinoNumber; // if this exists, draw y2 here, or...
+  [Stroke]?: string; // the stroke for this line
   [StrokeWidth]?: number | string | AsinoNumber; // if this exists, draw stroke with width, or...
+  colors?: AsinoColor[] // number colors
 }
 
 export interface AsinoCircle {
@@ -286,8 +288,7 @@ export const Test: AsinoPuzzle = {
                   },
                   { letter: Z }
                 ],
-                fill: '6-00',
-                stroke: 'none'
+                fill: '6-00'
               }
             }
           ]
@@ -878,7 +879,7 @@ export const Test: AsinoPuzzle = {
   colors: [
     {
       id: '6-00',
-      name: 'var(--color)',
+      name: 'Color',
       color: 'var(--color)'
     }
   ],
@@ -937,10 +938,10 @@ export const Test: AsinoPuzzle = {
     }
   ],
   lines: [
-    { id: '2-00', name: 'Vertical Border 1', x1: { number: { numerator: 1, denominator: 3 } }, x2: { number: { numerator: 1, denominator: 3 } }, y1: { number: 0 }, y2: { number: 1 }, strokeWidth: '1-05' },
+    { id: '2-00', name: 'Vertical Border 1', x1: { number: { numerator: 1, denominator: 3 } }, x2: { number: { numerator: 1, denominator: 3 } }, y1: { number: 0 }, y2: { number: 1 }, stroke: '6-00', strokeWidth: '1-05' },
     { id: '2-01', name: 'Vertical Border 2', x1: '1-02', x2: '1-02', y1: '1-03', y2: '1-04', strokeWidth: '1-05' },
-    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 1, denominator: 3 } }, y2: { number: { numerator: 1, denominator: 3 } }, strokeWidth: '1-05' },
-    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 2, denominator: 3 } }, y2: { number: { numerator: 2, denominator: 3 } }, strokeWidth: '1-05' }
+    { id: '2-02', name: 'Horizontal Border 1', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 1, denominator: 3 } }, y2: { number: { numerator: 1, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' },
+    { id: '2-03', name: 'Horizontal Border 2', x1: { number: 0 }, x2: { number: 1 }, y1: { number: { numerator: 2, denominator: 3 } }, y2: { number: { numerator: 2, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' }
   ],
   defaults: {
     interfaceWidthValue: { number: { numerator: 1, denominator: 9 } },

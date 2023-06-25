@@ -12,7 +12,7 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
   if (layer.lineId !== undefined || layer.line !== undefined) {
     const layerLine = puzzle.lines?.filter(line => line.id === layer.lineId)[0];
 
-    return drawLine([layerLine, layer.line], [...(puzzle.numbers ?? [])], puzzle.defaults?.[StrokeWidth] ?? { number: { numerator: 1, denominator: 200 } }, key);
+    return drawLine([layerLine, layer.line], [...(puzzle.numbers ?? [])], [...colors, ...(layerLine?.colors ?? []), ...(layer.colors ?? [])], puzzle.defaults?.[StrokeWidth] ?? { number: { numerator: 1, denominator: 200 } }, key);
   } else if (layer.interfaceId !== undefined || layer.interface !== undefined) {
     const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
@@ -45,7 +45,7 @@ export const drawSvg = (puzzle: AsinoPuzzle, solution: Solution, setSelectedColl
     if (layer.interfaceId !== undefined || layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
 
-      layer.fixedClassId == undefined && layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.collectionId, layer.collectionId], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+      layer.fixedClassId === undefined && layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.collectionId, layer.collectionId], [layerInterface?.objectId, layer.objectId], [...(puzzle.numbers ?? []), ...(layer.numbers ?? []), ...(layer.interface?.numbers ?? [])], puzzle.defaults?.interfaceWidthValue ?? { number: { numerator: 1, denominator: 9 } }, puzzle.defaults?.interfaceHeightValue ?? { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     }
   });
 
