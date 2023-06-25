@@ -1,10 +1,10 @@
 import React from "react"
-import { AsinoCommand, AsinoNumber, AsinoPath } from "../interfaces"
-import { getNumberFromLayer, getGridValue, getProduct, GetNumberFromAsinoNumber } from "../utils";
+import { AsinoColor, AsinoCommand, AsinoNumber, AsinoPath } from "../interfaces"
+import { getNumberFromLayer, getGridValue, getProduct, GetNumberFromAsinoNumber, getColorFromId } from "../utils";
 import { C, L, M, S, StrokeWidth, Z } from "../consts";
 import { Number } from "../types";
 
-export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[], defaultStrokeWidth: AsinoNumber, scale: Number, key: string): JSX.Element => {
+export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[], colors: AsinoColor[], defaultStrokeWidth: AsinoNumber, scale: Number, key: string): JSX.Element => {
   let d = '';
   let fill = 'none';
   let stroke = 'var(--color)';
@@ -66,7 +66,9 @@ export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[
     }
 
     if (path?.fill !== undefined) {
-      fill = path.fill;
+      if (typeof path.fill === 'string') {
+        fill = getColorFromId(path.fill, [...colors, ...(path.colors ?? [])]);
+      }
     }
 
     if (path?.stroke !== undefined) {

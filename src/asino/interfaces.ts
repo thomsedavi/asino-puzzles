@@ -14,6 +14,7 @@ export interface AsinoPuzzle {
   circles?: AsinoCircle[]; // circles
   paths?: AsinoPath[]; // circle
   numbers?: AsinoNumber[]; // numbers
+  colors?: AsinoColor[]; // colors
   defaults?: { // should this be called 'settings'?
     interfaceWidthValue?: AsinoNumber; // default width of interface, or use default of 1/9
     interfaceHeightValue?: AsinoNumber; // default height of interface, or use default of 1/9
@@ -53,8 +54,10 @@ export interface AsinoLayer {
   circle?: AsinoCircle; // draw the circle with these attributes
   path?: AsinoPath; // draw the path with these attributes
   numbers?: AsinoNumber[] // number parameters
+  colors?: AsinoColor[] // color parameters
   objectId?: string; // id of the interface of this layer
   collectionId?: string; // id of collection of this layer
+  fixedClassId?: string; // object is fixed to this class
 }
 
 export type AsinoInterface = {
@@ -66,7 +69,9 @@ export type AsinoInterface = {
   [X]?: number | string | AsinoNumber; // if this exists, draw the interface here, or...
   [Y]?: number | string | AsinoNumber; // if this exists, draw the interface here, or...
   numbers?: AsinoNumber[] // number parameters
+  colors?: AsinoColor[] // number colors
   collectionId?: string; // id of collection of this layer
+  fixedClassId?: string; // object is fixed to this class
 }
 
 export interface AsinoRectangle {
@@ -102,6 +107,7 @@ export interface AsinoPath {
   [Fill]?: string; // the fill for this path
   [Stroke]?: string; // the stroke for this path
   [StrokeWidth]?: number | string | AsinoNumber; // if this exists, draw stroke with width, or...
+  colors?: AsinoColor[] // number colors
 }
 
 export interface AsinoCommand {
@@ -133,6 +139,12 @@ export interface AsinoNumber {
   operandRight?: AsinoNumber; // if this exists, use this as right operand, or...
   operandRightId?: string; // if this exists, use this as right operand, or default to 0
   numbers?: AsinoNumber[] // parameters
+}
+
+export interface AsinoColor {
+  id?: string; // id of this color
+  name?: string; // name of this color
+  color?: string; // 'red' or '#919' or 'var(--color)'
 }
 
 export interface Solution {
@@ -255,26 +267,26 @@ export const Test: AsinoPuzzle = {
                   {
                     letter: M,
                     x: { operator: Subtraction, operandLeftId: FontXMiddle, operandRight: { operator: Division, operandLeftId: FontLineWidth, operandRight: { number: 2 } } },
-                    y: { numberId: FontTop }
+                    y: FontTop
                   },
                   {
                     letter: L,
                     x: { operator: Addition, operandLeftId: FontXMiddle, operandRight: { operator: Division, operandLeftId: FontLineWidth, operandRight: { number: 2 } } },
-                    y: { numberId: FontTop }
+                    y: FontTop
                   },
                   {
                     letter: L,
                     x: { operator: Addition, operandLeftId: FontXMiddle, operandRight: { operator: Division, operandLeftId: FontLineWidth, operandRight: { number: 2 } } },
-                    y: { numberId: FontBottom }
+                    y: FontBottom
                   },
                   {
                     letter: L,
                     x: { operator: Subtraction, operandLeftId: FontXMiddle, operandRight: { operator: Division, operandLeftId: FontLineWidth, operandRight: { number: 2 } } },
-                    y: { numberId: FontBottom }
+                    y: FontBottom
                   },
                   { letter: Z }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -289,13 +301,13 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    x: { numberId: FontLeft },
-                    y: { numberId: FontTop }
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    x: { numberId: FontXMiddle },
-                    y: { numberId: FontTop }
+                    x: FontXMiddle,
+                    y: FontTop
                   },
                   {
                     letter: C,
@@ -306,8 +318,8 @@ export const Test: AsinoPuzzle = {
                         ]
                       }
                     },
-                    y1: { numberId: FontTop },
-                    x2: { numberId: FontRight },
+                    y1: FontTop,
+                    x2: FontRight,
                     y2: {
                       operator: Subtraction,
                       operandLeft: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter },
@@ -321,12 +333,12 @@ export const Test: AsinoPuzzle = {
                         ]
                       }
                     },
-                    x: { numberId: FontRight },
+                    x: FontRight,
                     y: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter }
                   },
                   {
                     letter: C,
-                    x1: { numberId: FontRight },
+                    x1: FontRight,
                     y1: {
                       operator: Addition,
                       operandLeft: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter },
@@ -358,24 +370,24 @@ export const Test: AsinoPuzzle = {
                     y2: {
                       operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf
                     },
-                    x: { numberId: FontXMiddle },
+                    x: FontXMiddle,
                     y: {
                       operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf
                     }
                   },
-                  { letter: L, x: { operator: Addition, operandLeftId: FontLeft, operandRightId: FontLineWidth }, y: { numberId: FontYBottom } },
+                  { letter: L, x: { operator: Addition, operandLeftId: FontLeft, operandRightId: FontLineWidth }, y: FontYBottom },
                   { letter: L, x: { operator: Addition, operandLeftId: FontLeft, operandRightId: FontLineWidth }, y: { operator: Subtraction, operandLeftId: FontBottom, operandRightId: FontLineHeight } },
-                  { letter: L, x: { numberId: FontRight }, y: { operator: Subtraction, operandLeftId: FontBottom, operandRightId: FontLineHeight } },
-                  { letter: L, x: { numberId: FontRight }, y: { numberId: FontBottom } },
-                  { letter: L, x: { numberId: FontLeft }, y: { numberId: FontBottom } },
-                  { letter: L, x: { numberId: FontLeft }, y: { numberId: FontYBottom } },
-                  { letter: L, x: { numberId: FontXMiddle }, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
+                  { letter: L, x: FontRight, y: { operator: Subtraction, operandLeftId: FontBottom, operandRightId: FontLineHeight } },
+                  { letter: L, x: FontRight, y: FontBottom },
+                  { letter: L, x: FontLeft, y: FontBottom },
+                  { letter: L, x: FontLeft, y: FontYBottom },
+                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
                   { letter: L, x: { operator: Subtraction, operandLeftId: FontRight, operandRightId: FontLineWidth }, y: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter } },
-                  { letter: L, x: { numberId: FontXMiddle }, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
-                  { letter: L, x: { numberId: FontLeft }, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
+                  { letter: L, x: FontXMiddle, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
                   { letter: Z }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -390,13 +402,13 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    x: { numberId: FontLeft },
-                    y: { numberId: FontTop }
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: L,
-                    x: { numberId: FontXMiddle },
-                    y: { numberId: FontTop }
+                    x: FontXMiddle,
+                    y: FontTop
                   },
                   {
                     letter: C,
@@ -407,8 +419,8 @@ export const Test: AsinoPuzzle = {
                         ]
                       }
                     },
-                    y1: { numberId: FontTop },
-                    x2: { numberId: FontRight },
+                    y1: FontTop,
+                    x2: FontRight,
                     y2: {
                       operator: Subtraction,
                       operandLeft: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter },
@@ -422,12 +434,12 @@ export const Test: AsinoPuzzle = {
                         ]
                       }
                     },
-                    x: { numberId: FontRight },
+                    x: FontRight,
                     y: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter }
                   },
                   {
                     letter: C,
-                    x1: { numberId: FontRight },
+                    x1: FontRight,
                     y1: {
                       operator: Addition,
                       operandLeft: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter },
@@ -459,20 +471,20 @@ export const Test: AsinoPuzzle = {
                     y2: {
                       operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf
                     },
-                    x: { numberId: FontXMiddle },
+                    x: FontXMiddle,
                     y: {
                       operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf
                     }
                   },
-                  { letter: L, x: { numberId: FontLeft }, y: { operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
-                  { letter: L, x: { numberId: FontLeft }, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
-                  { letter: L, x: { numberId: FontXMiddle }, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
+                  { letter: L, x: FontLeft, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
+                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, operandLeftId: FontYMiddle, operandRightId: FontLineHeightHalf } },
                   { letter: L, x: { operator: Subtraction, operandLeftId: FontRight, operandRightId: FontLineWidth }, y: { operator: Addition, operandLeftId: FontYTop, operandRightId: FontLineHeightQuarter } },
-                  { letter: L, x: { numberId: FontXMiddle }, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
-                  { letter: L, x: { numberId: FontLeft }, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
+                  { letter: L, x: FontXMiddle, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeftId: FontTop, operandRightId: FontLineHeight } },
                   { letter: Z }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             },
@@ -481,27 +493,27 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    x: { numberId: FontLeft },
-                    y: { numberId: FontYMiddle }
+                    x: FontLeft,
+                    y: FontYMiddle
                   },
                   {
                     letter: L,
-                    x: { numberId: FontRight },
-                    y: { numberId: FontYBottom }
+                    x: FontRight,
+                    y: FontYBottom
                   },
                   {
                     letter: L,
-                    x: { numberId: FontLeft },
-                    y: { numberId: FontBottom }
+                    x: FontLeft,
+                    y: FontBottom
                   },
                   {
                     letter: L,
-                    x: { numberId: FontXMiddle },
-                    y: { numberId: FontYBottom }
+                    x: FontXMiddle,
+                    y: FontYBottom
                   },
                   { letter: Z }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -516,8 +528,8 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    x: { numberId: FontLeft },
-                    y: { numberId: FontTop }
+                    x: FontLeft,
+                    y: FontTop
                   },
                   {
                     letter: L,
@@ -538,7 +550,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -590,7 +602,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -637,7 +649,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -673,7 +685,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -720,7 +732,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -767,7 +779,7 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: 'var(--color)',
+                fill: '6-00',
                 stroke: 'none'
               }
             }
@@ -843,7 +855,7 @@ export const Test: AsinoPuzzle = {
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-70', interface: { numbers: [{ id: '1-07', number: 0 }, { id: '1-08', number: 7 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-71', interface: { numbers: [{ id: '1-07', number: 1 }, { id: '1-08', number: 7 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-72', interface: { numbers: [{ id: '1-07', number: 2 }, { id: '1-08', number: 7 }] } },
-    { interfaceId: '0-00', collectionId: '5-00', objectId: '4-73', interface: { numbers: [{ id: '1-07', number: 3 }, { id: '1-08', number: 7 }] } },
+    { interfaceId: '0-00', collectionId: '5-00', fixedClassId: '3-05', objectId: '4-73', interface: { numbers: [{ id: '1-07', number: 3 }, { id: '1-08', number: 7 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-74', interface: { numbers: [{ id: '1-07', number: 4 }, { id: '1-08', number: 7 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-75', interface: { numbers: [{ id: '1-07', number: 5 }, { id: '1-08', number: 7 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-76', interface: { numbers: [{ id: '1-07', number: 6 }, { id: '1-08', number: 7 }] } },
@@ -857,11 +869,18 @@ export const Test: AsinoPuzzle = {
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-85', interface: { numbers: [{ id: '1-07', number: 5 }, { id: '1-08', number: 8 }] } },
     { interfaceId: '0-00', collectionId: '5-00', objectId: '4-86', interface: { numbers: [{ id: '1-07', number: 6 }, { id: '1-08', number: 8 }] } },
     { interfaceId: '0-01', interface: { numbers: [{ id: '1-07', number: 7 }, { id: '1-08', number: 8 }] } },
-    { interfaceId: '0-00', collectionId: '5-00', objectId: '4-88', numbers: [{ id: '1-07', number: 8 }, { id: '1-08', number: 8 }] },
+    { interfaceId: '0-00', collectionId: '5-00', fixedClassId: '3-08', objectId: '4-88', numbers: [{ id: '1-07', number: 8 }, { id: '1-08', number: 8 }] },
     { lineId: '2-00' },
     { lineId: '2-01' },
     { lineId: '2-02' },
     { lineId: '2-03' }
+  ],
+  colors: [
+    {
+      id: '6-00',
+      name: 'var(--color)',
+      color: 'var(--color)'
+    }
   ],
   interfaces: [
     {

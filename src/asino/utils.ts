@@ -1,5 +1,5 @@
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { AsinoNumber } from "./interfaces";
+import { AsinoColor, AsinoNumber } from "./interfaces";
 import { Number } from "./types";
 
 export const getSum = (left: Number, right: Number): Number => {
@@ -254,6 +254,18 @@ export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[])
   number.number !== undefined && (numberResult = number.number);
 
   return numberResult;
+}
+
+export const getColorFromId = (colorId: string, colors: AsinoColor[]): string => {
+  let colorResult: string = 'none';
+
+  colors.forEach((color: AsinoColor) => {
+    if (color.id === colorId) {
+      color.color !== undefined && (colorResult = color.color);
+    }
+  });
+
+  return colorResult;
 }
 
 export const getNumberFromId = (numberId: string, numbers: AsinoNumber[]): Number => {

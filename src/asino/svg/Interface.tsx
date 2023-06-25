@@ -1,12 +1,13 @@
 import React from "react"
-import { AsinoInterface, AsinoLayer, AsinoNumber, AsinoPuzzle, Solution } from "../interfaces"
+import { AsinoColor, AsinoInterface, AsinoLayer, AsinoNumber, AsinoPuzzle, Solution } from "../interfaces"
 import { getNumberFromLayer, getGridValue } from "../utils";
 import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./Svg";
 
-export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], solution: Solution, numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, selectedObjectId?: string): JSX.Element => {
+export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, numbers: AsinoNumber[], colors: AsinoColor[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
   let interfaceObjectId: string | undefined = undefined;
+  let interfaceClassId: string | undefined = undefined;
 
   objectIds.forEach((objectId: string | undefined) => {
     objectId !== undefined && (interfaceObjectId = objectId);
@@ -14,6 +15,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
 
   collectionIds.forEach((collectionId: string | undefined) => {
     collectionId !== undefined && (interfaceCollectionId = collectionId);
+  });
+
+  fixedClassIds.forEach((fixedClassId: string | undefined) => {
+    fixedClassId !== undefined && (interfaceClassId = fixedClassId);
   });
 
   const x = getNumberFromLayer(interfaces, numbers, X, { number: 0 });
@@ -28,14 +33,14 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
   const collection = puzzle.collections?.filter(collection => collection.id === interfaceCollectionId)[0];
 
   if (collection !== undefined) {
-    const selectedClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId;
+    interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
 
-    if (selectedClassId !== undefined) {
-      const selectedClass = collection.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
+    if (interfaceClassId !== undefined) {
+      const selectedClass = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
       if (selectedClass !== undefined) {
         selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, [...colors, ...(layer?.colors ?? [])], { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }
     }
