@@ -1,10 +1,13 @@
 import React from "react"
-import { AsinoColor, AsinoInterface, AsinoLayer, AsinoNumber, AsinoPuzzle, Solution } from "../interfaces"
-import { getNumberFromLayer, getGridValue } from "../utils";
+import { AsinoLayer, AsinoPuzzle, Solution } from "../interfaces"
+import { getNumberFromLayer, getValueFromNumber } from "../utils";
 import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./Svg";
+import { AsinoInterfaceReference } from "../types/Interface";
+import { AsinoNumberReference } from "../types/Number";
+import { AsinoColorReference } from "../types/Color";
 
-export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, numbers: AsinoNumber[], colors: AsinoColor[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, selectedObjectId?: string): JSX.Element => {
+export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
   let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
@@ -21,8 +24,8 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
     fixedClassId !== undefined && (interfaceClassId = fixedClassId);
   });
 
-  const x = getNumberFromLayer(interfaces, numbers, X, { number: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, { number: 0 });
+  const x = getNumberFromLayer(interfaces, numbers, X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, { value: 0 });
   const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
 
@@ -39,7 +42,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
       const selectedClass = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
       if (selectedClass !== undefined) {
-        selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
+        selectedClass.value?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
           innards.push(drawLayer(puzzle, solution, layer, [...colors, ...(layer?.colors ?? [])], { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }
@@ -49,22 +52,22 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterface |
   return <g
     id={`layer${key}`}
     key={`layer${key}`}
-    transform={`translate(${getGridValue(x)},${getGridValue(y)})`}
+    transform={`translate(${getValueFromNumber(x) ?? 0},${getValueFromNumber(y) ?? 0})`}
   >
     <rect
-      width={getGridValue(width)}
-      height={getGridValue(height)}
+      width={getValueFromNumber(width)}
+      height={getValueFromNumber(height)}
       stroke='var(--color)'
       fill={fill}
-      strokeWidth={getGridValue({ numerator: 1, denominator: 200 })}
+      strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 })}
     />
     {innards}
   </g>;
 }
 
-export const drawInterfaceInteractive = (interfaces: (AsinoInterface | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], numbers: AsinoNumber[], defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, numbers, X, { number: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, { number: 0 });
+export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], numbers: AsinoNumberReference[], defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
+  const x = getNumberFromLayer(interfaces, numbers, X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, numbers, Y, { value: 0 });
   const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
 
@@ -81,14 +84,14 @@ export const drawInterfaceInteractive = (interfaces: (AsinoInterface | undefined
   return <rect
     id={`layerInteractive${index}`}
     key={`layerInteractive${index}`}
-    x={getGridValue(x)}
-    y={getGridValue(y)}
-    width={getGridValue(width)}
-    height={getGridValue(height)}
+    x={getValueFromNumber(x)}
+    y={getValueFromNumber(y)}
+    width={getValueFromNumber(width)}
+    height={getValueFromNumber(height)}
     stroke='none'
     fill='transparent'
     cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}
-    strokeWidth={getGridValue({ numerator: 1, denominator: 200 })}
+    strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 })}
     onClick={() => {
       interfaceObjectId !== undefined && setSelectedObjectId(interfaceObjectId);
       interfaceCollectionId !== undefined && setSelectedCollectionId(interfaceCollectionId);

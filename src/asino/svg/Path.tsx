@@ -1,62 +1,63 @@
 import React from "react"
-import { AsinoColor, AsinoCommand, AsinoNumber, AsinoPath } from "../interfaces"
-import { getNumberFromLayer, getGridValue, getProduct, GetNumberFromAsinoNumber, getColorFromId } from "../utils";
+import { getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromAsinoColor, getValueFromNumber } from "../utils";
 import { C, L, M, S, StrokeWidth, Z } from "../consts";
-import { Number } from "../types";
+import { AsinoCommand, AsinoPathReference } from "../types/Path";
+import { AsinoNumberReference, Number } from "../types/Number";
+import { AsinoColorReference } from "../types/Color";
 
-export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[], colors: AsinoColor[], defaultStrokeWidth: AsinoNumber, scale: Number, key: string): JSX.Element => {
+export const drawPath = (paths: (AsinoPathReference | undefined)[], numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string): JSX.Element => {
   let d = '';
   let fill: string | undefined = undefined;
   let stroke: string | undefined = undefined;
-  let strokeWidth: Number | 'infinity' | 'potato' | undefined = getGridValue(getNumberFromLayer(paths, numbers, StrokeWidth, defaultStrokeWidth));
+  let strokeWidth: Number | undefined = getNumberFromLayer(paths, numbers, StrokeWidth, defaultStrokeWidth);
 
-  paths.forEach((path: AsinoPath | undefined) => {
-    if (path?.commands !== undefined) {
+  paths.forEach((path: AsinoPathReference | undefined) => {
+    if (path?.value?.commands !== undefined) {
       d = '';
 
-      path.commands.forEach((command: AsinoCommand) => {
+      path.value.commands.forEach((command: AsinoCommand) => {
         if (command.letter === M) {
-          let x: Number = 0;
-          let y: Number = 0;
+          let x: Number | undefined = undefined;
+          let y: Number | undefined = undefined;
 
-          command.x !== undefined && (x = getProduct(GetNumberFromAsinoNumber(command.x, numbers), scale));
-          command.y !== undefined && (y = getProduct(GetNumberFromAsinoNumber(command.y, numbers), scale));
+          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, numbers), scale));
+          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, numbers), scale));
 
-          d += `M${getGridValue(x)},${getGridValue(y)}`;
+          d += `M${getValueFromNumber(x)},${getValueFromNumber(y)}`;
         } else if (command.letter === L) {
-          let x: Number = 0;
-          let y: Number = 0;
+          let x: Number | undefined = undefined;
+          let y: Number | undefined = undefined;
 
-          command.x !== undefined && (x = getProduct(GetNumberFromAsinoNumber(command.x, numbers), scale));
-          command.y !== undefined && (y = getProduct(GetNumberFromAsinoNumber(command.y, numbers), scale));
+          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, numbers), scale));
+          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, numbers), scale));
 
-          d += `L${getGridValue(x)},${getGridValue(y)}`;
+          d += `L${getValueFromNumber(x)},${getValueFromNumber(y)}`;
         } else if (command.letter === C) {
-          let x: Number = 0;
-          let x1: Number = 0;
-          let x2: Number = 0;
-          let y: Number = 0;
-          let y1: Number = 0;
-          let y2: Number = 0;
+          let x: Number | undefined = undefined;
+          let x1: Number | undefined = undefined;
+          let x2: Number | undefined = undefined;
+          let y: Number | undefined = undefined;
+          let y1: Number | undefined = undefined;
+          let y2: Number | undefined = undefined;
 
-          command.x !== undefined && (x = getProduct(GetNumberFromAsinoNumber(command.x, numbers), scale));
-          command.x1 !== undefined && (x1 = getProduct(GetNumberFromAsinoNumber(command.x1, numbers), scale));
-          command.x2 !== undefined && (x2 = getProduct(GetNumberFromAsinoNumber(command.x2, numbers), scale));
-          command.y !== undefined && (y = getProduct(GetNumberFromAsinoNumber(command.y, numbers), scale));
-          command.y1 !== undefined && (y1 = getProduct(GetNumberFromAsinoNumber(command.y1, numbers), scale));
-          command.y2 !== undefined && (y2 = getProduct(GetNumberFromAsinoNumber(command.y2, numbers), scale));
+          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, numbers), scale));
+          command.x1 !== undefined && (x1 = getProduct(getNumberFromAsinoNumber(command.x1, numbers), scale));
+          command.x2 !== undefined && (x2 = getProduct(getNumberFromAsinoNumber(command.x2, numbers), scale));
+          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, numbers), scale));
+          command.y1 !== undefined && (y1 = getProduct(getNumberFromAsinoNumber(command.y1, numbers), scale));
+          command.y2 !== undefined && (y2 = getProduct(getNumberFromAsinoNumber(command.y2, numbers), scale));
 
-          d += `C${getGridValue(x1)},${getGridValue(y1)},${getGridValue(x2)},${getGridValue(y2)},${getGridValue(x)},${getGridValue(y)}`;
+          d += `C${getValueFromNumber(x1)},${getValueFromNumber(y1)},${getValueFromNumber(x2)},${getValueFromNumber(y2)},${getValueFromNumber(x)},${getValueFromNumber(y)}`;
         } else if (command.letter === S) {
-          let x: Number = 0;
-          let x2: Number = 0;
-          let y: Number = 0;
-          let y2: Number = 0;
+          let x: Number | undefined = undefined;
+          let x2: Number | undefined = undefined;
+          let y: Number | undefined = undefined;
+          let y2: Number | undefined = undefined;
 
-          command.x !== undefined && (x = getProduct(GetNumberFromAsinoNumber(command.x, numbers), scale));
-          command.x2 !== undefined && (x2 = getProduct(GetNumberFromAsinoNumber(command.x2, numbers), scale));
-          command.y !== undefined && (y = getProduct(GetNumberFromAsinoNumber(command.y, numbers), scale));
-          command.y2 !== undefined && (y2 = getProduct(GetNumberFromAsinoNumber(command.y2, numbers), scale));
+          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, numbers), scale));
+          command.x2 !== undefined && (x2 = getProduct(getNumberFromAsinoNumber(command.x2, numbers), scale));
+          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, numbers), scale));
+          command.y2 !== undefined && (y2 = getProduct(getNumberFromAsinoNumber(command.y2, numbers), scale));
 
           d += `S${x2},${y2},${x},${y}`;
         } else if (command.letter === Z) {
@@ -65,16 +66,12 @@ export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[
       });
     }
 
-    if (path?.fill !== undefined) {
-      if (typeof path.fill === 'string') {
-        fill = getColorFromId(path.fill, [...colors, ...(path.colors ?? [])]);
-      }
+    if (path?.value?.fill !== undefined) {
+      fill = getValueFromAsinoColor(path.value.fill, [...colors, ...(path.colors ?? [])]);
     }
 
-    if (path?.stroke !== undefined) {
-      if (typeof path.stroke === 'string') {
-        stroke = getColorFromId(path.stroke, [...colors, ...(path.colors ?? [])]);
-      }
+    if (path?.value?.stroke !== undefined) {
+      stroke = getValueFromAsinoColor(path.value.stroke, [...colors, ...(path.colors ?? [])]);
     }
   });
 
@@ -88,6 +85,6 @@ export const drawPath = (paths: (AsinoPath | undefined)[], numbers: AsinoNumber[
     d={d}
     fill={fill}
     stroke={stroke}
-    strokeWidth={strokeWidth}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth) : undefined}
   />;
 }

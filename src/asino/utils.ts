@@ -1,8 +1,11 @@
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { AsinoColor, AsinoNumber } from "./interfaces";
-import { Number } from "./types";
+import { AsinoColor, AsinoColorReference } from "./types/Color";
+import { AsinoNumber, AsinoNumberReference, Number, isFormula, isAsinoNumberFraction, isNumberFraction, Formula } from "./types/Number";
 
-export const getSum = (left: Number, right: Number): Number => {
+export const getSum = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+  if (left === undefined || right === undefined)
+    return undefined;
+
   if (typeof left === 'number') {
     if (typeof right === 'number') {
       return left + right;
@@ -38,7 +41,10 @@ export const getSum = (left: Number, right: Number): Number => {
   }
 }
 
-export const getDifference = (left: Number, right: Number): Number => {
+export const getDifference = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+  if (left === undefined || right === undefined)
+    return undefined;
+
   if (typeof left === 'number') {
     if (typeof right === 'number') {
       return left - right;
@@ -74,7 +80,10 @@ export const getDifference = (left: Number, right: Number): Number => {
   }
 }
 
-export const getProduct = (left: Number, right: Number): Number => {
+export const getProduct = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+  if (left === undefined || right === undefined)
+    return undefined;
+
   if (typeof left === 'number') {
     if (typeof right === 'number') {
       return left * right;
@@ -110,7 +119,10 @@ export const getProduct = (left: Number, right: Number): Number => {
   }
 }
 
-export const getQuotient = (left: Number, right: Number): Number => {
+export const getQuotient = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+  if (left === undefined || right === undefined)
+    return undefined;
+
   if (typeof left === 'number') {
     if (typeof right === 'number') {
       return { numerator: left, denominator: right };
@@ -150,167 +162,163 @@ export const getQuotient = (left: Number, right: Number): Number => {
   }
 }
 
-export const GetNumberFromAsinoNumber = (asinoNumber: string | number | AsinoNumber, numbers: AsinoNumber[]): Number => {
-  if (typeof asinoNumber === 'number') {
-    return asinoNumber;
-  } else if (typeof asinoNumber === 'string') {
-    return getNumberFromId(asinoNumber, numbers);
-  } else {
-    return getNumberFromNumber(asinoNumber, numbers);
-  }
-}
+export const getValueFromAsinoColor = (color: AsinoColor, colorReferences: AsinoColorReference[]): string | undefined => {
+  let result: string | undefined = undefined;
 
-export const getGridValue = (value: Number, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' => {
-  if (typeof value === 'number') {
-    return value * (doNotMultiply ? 1 : 5040);
-  } else if (value === 'infinity') {
-    return 'infinity';
-  } else if (value === 'negativeInfinity') {
-    return 'negativeInfinity';
-  } else {
-    const numerator = getGridValue(value.numerator, true);
-    const denominator = getGridValue(value.denominator, true);
-
-    if (numerator === 'infinity') {
-      if (denominator === 'infinity') {
-        return 'potato';
-      } else if (denominator === 'negativeInfinity') {
-        return 'potato';
-      } else if (denominator === 'potato') {
-        return 'potato';
-      } else {
-        return 'infinity';
-      }
-    } else if (numerator === 'negativeInfinity') {
-      if (denominator === 'infinity') {
-        return 'potato';
-      } else if (denominator === 'negativeInfinity') {
-        return 'potato';
-      } else if (denominator === 'potato') {
-        return 'potato';
-      } else {
-        return 'infinity';
-      }
-    } else if (numerator === 'potato') {
-      return 'potato';
-    } else {
-      if (denominator === 'infinity') {
-        return 0;
-      } else if (denominator === 'negativeInfinity') {
-        return 0;
-      } else if (denominator === 'potato') {
-        return 'potato';
-      } else {
-        return (numerator * (doNotMultiply ? 1 : 5040)) / denominator;
-      }
-    }
-  }
-}
-
-export const getNumberFromNumber = (number: AsinoNumber, numbers: AsinoNumber[]): Number => {
-  let numberResult: Number = 0;
-
-  if (number.operator !== undefined) {
-    let left: Number = 0;
-    let right: Number = 0;
-
-    if (number.operandLeftId !== undefined) {
-      numbers.forEach((leftNumber: AsinoNumber) => {
-        if (leftNumber.id === number.operandLeftId) {
-          left = getNumberFromNumber(leftNumber, [...numbers, ...(number.numbers ?? [])]);
+  if (typeof color === 'string') {
+    colorReferences.forEach(colorReference => {
+      if (colorReference.id === color) {
+        if (typeof colorReference.value === 'string') {
+          result = colorReference.value;
         }
-      });
-    }
-
-    if (number.operandRightId !== undefined) {
-      numbers.forEach((rightNumber: AsinoNumber) => {
-        if (rightNumber.id === number.operandRightId) {
-          right = getNumberFromNumber(rightNumber, [...numbers, ...(number.numbers ?? [])]);
+      }
+    });
+  } else {
+    colorReferences.forEach(colorReference => {
+      if (colorReference.id === color.id) {
+        if (typeof colorReference.value === 'string') {
+          result = colorReference.value;
         }
-      });
-    }
-
-    number.operandLeft !== undefined && (left = getNumberFromNumber(number.operandLeft, [...numbers, ...(number.numbers ?? [])]));
-    number.operandRight !== undefined && (right = getNumberFromNumber(number.operandRight, [...numbers, ...(number.numbers ?? [])]));
-
-    if (number.operator === Multiplication)
-      numberResult = getProduct(left, right);
-    else if (number.operator === Subtraction)
-      numberResult = getDifference(left, right);
-    else if (number.operator === Addition)
-      numberResult = getSum(left, right);
-    else if (number.operator === Division)
-      numberResult = getQuotient(left, right);
-  }
-
-  if (number.numberId !== undefined) {
-    numbers.forEach((numberNumber: AsinoNumber) => {
-      if (numberNumber.id === number.numberId) {
-        numberResult = getNumberFromNumber(numberNumber, [...numbers, ...(number.numbers ?? [])]);
       }
     });
   }
 
-  number.number !== undefined && (numberResult = number.number);
-
-  return numberResult;
+  return result;
 }
 
-export const getColorFromId = (colorId: string, colors: AsinoColor[]): string => {
-  let colorResult: string = 'none';
+export const getValueFromNumber = (number: Number | undefined, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
+  let result: number | 'infinity' | 'negativeInfinity' | 'potato' | undefined = undefined;
 
-  colors.forEach((color: AsinoColor) => {
-    if (color.id === colorId) {
-      color.color !== undefined && (colorResult = color.color);
+  if (number === undefined) {
+    // do nothing
+  } else if (typeof number === 'number') {
+    result = number * (doNotMultiply ? 1 : 5040);
+  } else if (number === 'infinity') {
+    result = 'infinity';
+  } else if (number === 'negativeInfinity') {
+    result = 'negativeInfinity';
+  } else {
+    const numerator = getValueFromNumber(number.numerator, true);
+    const denominator = getValueFromNumber(number.denominator, true);
+
+    if (numerator === undefined || denominator === undefined) {
+      // do nothing
+    } else if (numerator === 'infinity') {
+      if (denominator === 'infinity') {
+        result = 'potato';
+      } else if (denominator === 'negativeInfinity') {
+        result = 'potato';
+      } else if (denominator === 'potato') {
+        result = 'potato';
+      } else {
+        result = 'infinity';
+      }
+    } else if (numerator === 'negativeInfinity') {
+      if (denominator === 'infinity') {
+        result = 'potato';
+      } else if (denominator === 'negativeInfinity') {
+        result = 'potato';
+      } else if (denominator === 'potato') {
+        result = 'potato';
+      } else {
+        result = 'infinity';
+      }
+    } else if (numerator === 'potato') {
+      result = 'potato';
+    } else {
+      if (denominator === 'infinity') {
+        result = 0;
+      } else if (denominator === 'negativeInfinity') {
+        result = 0;
+      } else if (denominator === 'potato') {
+        result = 'potato';
+      } else {
+        result = (numerator * (doNotMultiply ? 1 : 5040)) / denominator;
+      }
     }
-  });
+  }
 
-  return colorResult;
+  return result;
 }
 
-export const getNumberFromId = (numberId: string, numbers: AsinoNumber[]): Number => {
-  let numberResult: Number = 0;
+export const getNumberFromFormula = (formula: Formula | undefined, numberReferences: AsinoNumberReference[]): Number | undefined => {
+  let result: Number | undefined = undefined;
 
-  numbers.forEach((number: AsinoNumber) => {
-    if (number.id === numberId) {
-      numberResult = getNumberFromNumber(number, [...numbers, ...(number.numbers ?? [])]);
+  if (formula?.operator === undefined || formula.operandLeft === undefined || formula.operandRight === undefined) {
+    // do nothing
+  } else {
+    let left = getNumberFromAsinoNumber(formula.operandLeft, numberReferences);
+    let right = getNumberFromAsinoNumber(formula.operandRight, numberReferences);
+
+    if (left === undefined || right === undefined) {
+      // do nothing
+    } else {
+      if (formula.operator === Multiplication)
+        result = getProduct(left, right);
+      else if (formula.operator === Subtraction)
+        result = getDifference(left, right);
+      else if (formula.operator === Addition)
+        result = getSum(left, right);
+      else if (formula.operator === Division)
+        result = getQuotient(left, right);
     }
-  });
+  }
 
-  return numberResult;
+  return result;
 }
 
-export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNumber[], valueNameAndId: string, numberDefault: AsinoNumber): Number => {
-  let numberResult: Number = 0;
+export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, numberReferences: AsinoNumberReference[]): Number | undefined => {
+  let result: Number | undefined = undefined;
 
-  numberDefault.number && (numberResult = numberDefault.number);
+  if (number === undefined) {
+    // do nothing
+  } else if (typeof number === 'number') {
+    result = number;
+  } else if (typeof number === 'string') {
+    numberReferences.forEach(numberReference => {
+      if (numberReference.id === number) {
+        result = getNumberFromAsinoNumber(numberReference.value, numberReferences);
+      }
+    });
+  } else if (isAsinoNumberFraction(number)) {
+    result = number;
+  } else if (isFormula(number)) {
+    result = getNumberFromFormula(number, numberReferences);
+  } else {
+    if (number.id === undefined && number.value !== undefined) {
+      result = getNumberFromAsinoNumber(number.value, [...numberReferences, ...(number.numbers ?? [])]);
+    } else {
+      result = getNumberFromAsinoNumber(number.id, [...numberReferences, ...(number.numbers ?? [])]);
+    }
+  }
+
+  return result;
+}
+
+export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNumberReference[], valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
+  let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, numbers);
 
   array.forEach(value => {
-    const valueNumberValue: number | string | AsinoNumber | undefined = value?.[valueNameAndId];
+    const valueNumberValue: number | string | AsinoNumber | undefined = value?.value?.[valueNameAndId];
 
     if (valueNumberValue !== undefined) {
       if (typeof valueNumberValue === 'number') {
-        numberResult = valueNumberValue;
+        result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
-        numbers.forEach((number: AsinoNumber) => {
+        numbers.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
-            numberResult = getNumberFromNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
+            result = getNumberFromAsinoNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
           }
         });
+      } else if (isAsinoNumberFraction(valueNumberValue)) {
+        result = valueNumberValue;
+      } else if (isFormula(valueNumberValue)) {
+        console.log('TODO');
       } else {
-        if (valueNumberValue.id !== undefined) {
-          numbers.forEach((number: AsinoNumber) => {
-            if (number.id === valueNumberValue.id) {
-              numberResult = getNumberFromNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
-            }
-          });
-        }
+        result = getNumberFromAsinoNumber(valueNumberValue, [...numbers, ...(valueNumberValue.numbers ?? [])]);
       }
     }
-
-    const valueNumber: AsinoNumber | undefined = value?.[valueNameAndId];
-    valueNumber !== undefined && valueNumber.number && (numberResult = valueNumber.number);
   });
 
-  return numberResult;
+  return result;
 }

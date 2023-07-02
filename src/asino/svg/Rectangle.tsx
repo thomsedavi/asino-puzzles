@@ -1,21 +1,42 @@
 import React from "react"
-import { AsinoNumber, AsinoRectangle } from "../interfaces"
-import { getNumberFromLayer, getGridValue } from "../utils";
-import { Height, Width, X, Y } from "../consts";
+import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";
+import { Height, StrokeWidth, Width, X, Y } from "../consts";
+import { AsinoRectangleReference } from "../types/Rectangle";
+import { AsinoNumberReference, Number } from "../types/Number";
+import { AsinoColorReference } from "../types/Color";
 
-export const drawRectangle = (rectangles: (AsinoRectangle | undefined)[], numbers: AsinoNumber[], key: string): JSX.Element => {
-  const x = getNumberFromLayer(rectangles, numbers, X, { number: 0 });
-  const y = getNumberFromLayer(rectangles, numbers, Y, { number: 0 });
-  const width = getNumberFromLayer(rectangles, numbers, Width, { number: 0 });
-  const height = getNumberFromLayer(rectangles, numbers, Height, { number: 0 });
+export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+  let fill: string | undefined = undefined;
+  let stroke: string | undefined = undefined;
+  let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, numbers, StrokeWidth, defaultStrokeWidth);
+
+  const x = getNumberFromLayer(rectangles, numbers, X, { value: 0 });
+  const y = getNumberFromLayer(rectangles, numbers, Y, { value: 0 });
+  const width = getNumberFromLayer(rectangles, numbers, Width, { value: 0 });
+  const height = getNumberFromLayer(rectangles, numbers, Height, { value: 0 });
+
+  rectangles.forEach((rectangle: AsinoRectangleReference | undefined) => {
+    if (rectangle?.value?.fill !== undefined) {
+      fill = getValueFromAsinoColor(rectangle.value.fill, [...colors, ...(rectangle.colors ?? [])]);
+    }
+
+    if (rectangle?.value?.stroke !== undefined) {
+      stroke = getValueFromAsinoColor(rectangle.value.stroke, [...colors, ...(rectangle.colors ?? [])]);
+    }
+  });
+
+  if (stroke === undefined) {
+    strokeWidth = undefined;
+  }
 
   return <rect
     key={key}
-    x={getGridValue(x)}
-    y={getGridValue(y)}
-    width={getGridValue(width)}
-    height={getGridValue(height)}
-    stroke='red'
-    strokeWidth={getGridValue({numerator: 1, denominator: 200})}
+    x={getValueFromNumber(x)}
+    y={getValueFromNumber(y)}
+    width={getValueFromNumber(width)}
+    height={getValueFromNumber(height)}
+    fill={fill}
+    stroke={stroke}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth) : undefined}
   />;
 }
