@@ -745,7 +745,15 @@ export const Test: AsinoPuzzle = {
       id: '5-00',
       name: 'numbers',
       classes: [
-        { id: '3-00' }
+        { id: '3-00' },
+        { id: '3-01' },
+        { id: '3-02' },
+        { id: '3-03' },
+        { id: '3-04' },
+        { id: '3-05' },
+        { id: '3-06' },
+        { id: '3-07' },
+        { id: '3-08' }
       ]
     }
   ],

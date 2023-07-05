@@ -36,7 +36,7 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
   }
 }
 
-export const drawSvg = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void, selectedObjectId?: string): JSX.Element => {
+export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void, selectedObjectId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {

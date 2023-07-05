@@ -1,4 +1,5 @@
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
+import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColor, AsinoColorReference } from "./types/Color";
 import { AsinoNumber, AsinoNumberReference, Number, isFormula, isAsinoNumberFraction, isNumberFraction, Formula } from "./types/Number";
 
@@ -262,6 +263,24 @@ export const getNumberFromFormula = (formula: Formula | undefined, numberReferen
       else if (formula.operator === Division)
         result = getQuotient(left, right);
     }
+  }
+
+  return result;
+}
+
+export const getClassFromClassReference = (asinoClass: AsinoClassReference | undefined, classReferences: AsinoClassReference[]): AsinoClass | undefined => {
+  let result: AsinoClass | undefined = undefined;
+
+  if (asinoClass === undefined) {
+    // do nothing
+  } else if (asinoClass.value) {
+    result = asinoClass.value;
+  } else {
+    classReferences.forEach(classReference => {
+      if (classReference.id === asinoClass.id) {
+        result = getClassFromClassReference(classReference, classReferences);
+      }
+    });
   }
 
   return result;

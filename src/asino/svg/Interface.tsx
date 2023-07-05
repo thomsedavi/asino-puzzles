@@ -1,8 +1,8 @@
 import React from "react"
 import { AsinoLayer, AsinoPuzzle, Solution } from "../interfaces"
-import { getNumberFromLayer, getValueFromNumber } from "../utils";
+import { getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
 import { Height, Width, X, Y } from "../consts";
-import { drawLayer } from "./Svg";
+import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
 import { AsinoColorReference } from "../types/Color";
@@ -39,10 +39,12 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
 
     if (interfaceClassId !== undefined) {
-      const selectedClass = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+      const selectedClassReference = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+
+      const selectedClass = getClassFromClassReference(selectedClassReference, [...(puzzle.classes ?? [])]);
 
       if (selectedClass !== undefined) {
-        selectedClass.value?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
+        selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
           innards.push(drawLayer(puzzle, solution, layer, [...colors, ...(layer?.colors ?? [])], { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }

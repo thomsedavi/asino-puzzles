@@ -5,7 +5,8 @@ import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
 import { EditToggleButton } from '../common/components';
-import { drawSvg } from './svg/Svg';
+import { drawView } from './svg/View';
+import { drawControls } from './svg/Controls';
 
 interface AsinoProps {
   user?: User | null;
@@ -86,10 +87,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
     <Container>
       {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
       <div>
-        {drawSvg(Test, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
+        {drawView(Test, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
+      </div>
+      <div>
+        {drawControls(Test, solution, onSelectClassId, selectedCollectionId)}
       </div>
     </Container>
-    <div>{selectedCollection?.classes?.map((c, i) => <span key={`test${i}`} onClick={() => { c.id && (onSelectClassId(c.id)) }}>[{c.name}]</span>)}</div>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;
 }
