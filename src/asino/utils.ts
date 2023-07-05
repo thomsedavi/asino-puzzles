@@ -1,7 +1,7 @@
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColor, AsinoColorReference } from "./types/Color";
-import { AsinoNumber, AsinoNumberReference, Number, isFormula, isAsinoNumberFraction, isNumberFraction, Formula } from "./types/Number";
+import { AsinoNumber, AsinoNumberReference, Number, isFormula, isAsinoNumberFraction, Formula } from "./types/Number";
 
 export const getSum = (left: Number | undefined, right: Number | undefined): Number | undefined => {
   if (left === undefined || right === undefined)

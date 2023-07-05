@@ -80,8 +80,6 @@ const Asino = (props: AsinoProps): JSX.Element => {
 
   const toggleButtonMode: 'create' | 'read' | 'update' = mode === 'read' ? (asinoPuzzle.id === undefined ? 'create' : 'update') : 'read';
 
-  const selectedCollection = Test.collections?.filter(collection => collection.id === selectedCollectionId)[0];
-
   return <>
     <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
     <Container>
