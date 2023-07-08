@@ -1,11 +1,12 @@
 import { DX, DX1, DX2, DY, DY1, DY2, Fill, Stroke, StrokeWidth, X, X1, X2, Y, Y1, Y2 } from "../consts";
-import { Letter } from "../types";
-import { AsinoColorReference } from "./Color";
+import { AsinoColor, AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference } from "./Number";
+
+export type Letter = 'C' | 'c' | 'H' | 'h' | 'L' | 'l' | 'M' | 'm' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'V' | 'v' | 'Z' | 'z';
 
 export type AsinoPath = {
   commands?: AsinoCommand[]; // list of commands
-  [Fill]?: string; // the fill for this path
+  [Fill]?: AsinoColor; // the fill for this path
   [Stroke]?: string; // the stroke for this path
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
 }

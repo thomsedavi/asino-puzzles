@@ -5,9 +5,9 @@ import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
-import { AsinoColorReference } from "../types/Color";
+import { References } from "../References";
 
-export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, selectedObjectId?: string): JSX.Element => {
+export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
   let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
@@ -24,10 +24,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     fixedClassId !== undefined && (interfaceClassId = fixedClassId);
   });
 
-  const x = getNumberFromLayer(interfaces, numbers, X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, { value: 0 });
-  const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(interfaces, references.clone(), X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), Y, { value: 0 });
+  const width = getNumberFromLayer(interfaces, references.clone(), Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, references.clone(), Height, defaultInterfaceHeightValue);
 
   let fill = interfaceObjectId === selectedObjectId ? 'var(--accent-strong)' : 'var(--background-color-input)';
 
@@ -45,7 +45,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 
       if (selectedClass !== undefined) {
         selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, [...colors, ...(layer?.colors ?? [])], { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }
     }
@@ -67,11 +67,11 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   </g>;
 }
 
-export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], numbers: AsinoNumberReference[], defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, numbers, X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, numbers, Y, { value: 0 });
-  const width = getNumberFromLayer(interfaces, numbers, Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, numbers, Height, defaultInterfaceHeightValue);
+export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
+  const x = getNumberFromLayer(interfaces, references.clone(), X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), Y, { value: 0 });
+  const width = getNumberFromLayer(interfaces, references.clone(), Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, references.clone(), Height, defaultInterfaceHeightValue);
 
   let interfaceObjectId: string | undefined = undefined;
   let interfaceCollectionId: string | undefined = undefined;

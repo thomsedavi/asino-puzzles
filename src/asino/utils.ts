@@ -1,7 +1,8 @@
+import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { AsinoClass, AsinoClassReference } from "./types/Class";
-import { AsinoColor, AsinoColorReference } from "./types/Color";
-import { AsinoNumber, AsinoNumberReference, Number, isFormula, isAsinoNumberFraction, Formula } from "./types/Number";
+import { AsinoColor, AsinoColorReference, ColorFormula, isColorFormula } from "./types/Color";
+import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula } from "./types/Number";
 
 export const getSum = (left: Number | undefined, right: Number | undefined): Number | undefined => {
   if (left === undefined || right === undefined)
@@ -163,11 +164,11 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined)
   }
 }
 
-export const getValueFromAsinoColor = (color: AsinoColor, colorReferences: AsinoColorReference[]): string | undefined => {
+export const getValueFromAsinoColor = (color: AsinoColor, references: References): string | undefined => {
   let result: string | undefined = undefined;
 
   if (typeof color === 'string') {
-    colorReferences.forEach(colorReference => {
+    references.colors.forEach(colorReference => {
       if (colorReference.id === color) {
         if (typeof colorReference.value === 'string') {
           result = colorReference.value;
@@ -175,13 +176,17 @@ export const getValueFromAsinoColor = (color: AsinoColor, colorReferences: Asino
       }
     });
   } else {
-    colorReferences.forEach(colorReference => {
-      if (colorReference.id === color.id) {
-        if (typeof colorReference.value === 'string') {
-          result = colorReference.value;
+    if (isColorFormula(color)) {
+      result = getColorFromFormula(color, references.clone());
+    } else {
+      references.colors.forEach(colorReference => {
+        if (colorReference.id === color.id) {
+          if (typeof colorReference.value === 'string') {
+            result = colorReference.value;
+          }
         }
-      }
-    });
+      });  
+    }
   }
 
   return result;
@@ -242,14 +247,22 @@ export const getValueFromNumber = (number: Number | undefined, doNotMultiply?: b
   return result;
 }
 
-export const getNumberFromFormula = (formula: Formula | undefined, numberReferences: AsinoNumberReference[]): Number | undefined => {
+export const getColorFromFormula = (formula: ColorFormula | undefined, references: References): undefined => {
+  let result: undefined = undefined;
+
+  console.log(formula);
+
+  return result;
+}
+
+export const getNumberFromFormula = (formula: NumberFormula | undefined, references: References): Number | undefined => {
   let result: Number | undefined = undefined;
 
-  if (formula?.operator === undefined || formula.operandLeft === undefined || formula.operandRight === undefined) {
+  if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
     // do nothing
   } else {
-    let left = getNumberFromAsinoNumber(formula.operandLeft, numberReferences);
-    let right = getNumberFromAsinoNumber(formula.operandRight, numberReferences);
+    let left = getNumberFromAsinoNumber(formula.numberInputs[0], references.clone());
+    let right = getNumberFromAsinoNumber(formula.numberInputs[1], references.clone());
 
     if (left === undefined || right === undefined) {
       // do nothing
@@ -286,7 +299,7 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
   return result;
 }
 
-export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, numberReferences: AsinoNumberReference[]): Number | undefined => {
+export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, references: References): Number | undefined => {
   let result: Number | undefined = undefined;
 
   if (number === undefined) {
@@ -294,28 +307,28 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, number
   } else if (typeof number === 'number') {
     result = number;
   } else if (typeof number === 'string') {
-    numberReferences.forEach(numberReference => {
+    references.numbers.forEach(numberReference => {
       if (numberReference.id === number) {
-        result = getNumberFromAsinoNumber(numberReference.value, numberReferences);
+        result = getNumberFromAsinoNumber(numberReference.value, references.clone());
       }
     });
   } else if (isAsinoNumberFraction(number)) {
     result = number;
-  } else if (isFormula(number)) {
-    result = getNumberFromFormula(number, numberReferences);
+  } else if (isNumberFormula(number)) {
+    result = getNumberFromFormula(number, references.clone());
   } else {
     if (number.id === undefined && number.value !== undefined) {
-      result = getNumberFromAsinoNumber(number.value, [...numberReferences, ...(number.numbers ?? [])]);
+      result = getNumberFromAsinoNumber(number.value, references.clone().addNumbers([number.numbers]));
     } else {
-      result = getNumberFromAsinoNumber(number.id, [...numberReferences, ...(number.numbers ?? [])]);
+      result = getNumberFromAsinoNumber(number.id, references.clone().addNumbers([number.numbers]));
     }
   }
 
   return result;
 }
 
-export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNumberReference[], valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
-  let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, numbers);
+export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
+  let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, references.clone());
 
   array.forEach(value => {
     const valueNumberValue: number | string | AsinoNumber | undefined = value?.value?.[valueNameAndId];
@@ -324,17 +337,17 @@ export const getNumberFromLayer = (array: (any | undefined)[], numbers: AsinoNum
       if (typeof valueNumberValue === 'number') {
         result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
-        numbers.forEach((number: AsinoNumberReference) => {
+        references.numbers.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
-            result = getNumberFromAsinoNumber(number, [...numbers, ...(value?.[valueNameAndId]?.numbers ?? [])]);
+            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }
         });
       } else if (isAsinoNumberFraction(valueNumberValue)) {
         result = valueNumberValue;
-      } else if (isFormula(valueNumberValue)) {
+      } else if (isNumberFormula(valueNumberValue)) {
         console.log('TODO');
       } else {
-        result = getNumberFromAsinoNumber(valueNumberValue, [...numbers, ...(valueNumberValue.numbers ?? [])]);
+        result = getNumberFromAsinoNumber(valueNumberValue, references.clone().addNumbers([valueNumberValue.numbers]));
       }
     }
   });

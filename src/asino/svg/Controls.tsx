@@ -3,6 +3,7 @@ import { AsinoPuzzle, Solution } from "../interfaces"
 import { AsinoClassReference } from "../types/Class";
 import { getClassFromClassReference } from "../utils";
 import { drawLayer } from "./View";
+import { References } from "../References";
 
 export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClass: (classId: string) => void, selectedCollectionId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
@@ -20,7 +21,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
           onClick={() => asinoClass.id !== undefined && selectClass(asinoClass.id)}
         >
           <rect x={0} y={0} width={560} height={560} fill="transparent" cursor='pointer' />
-          {drawLayer(puzzle, solution, layer, puzzle.colors ?? [], { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`)}
+          {drawLayer(puzzle, solution, layer, new References().addColors([puzzle.colors]), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`)}
         </g>
       );
     });

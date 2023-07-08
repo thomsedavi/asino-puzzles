@@ -1,4 +1,5 @@
 import { Addition, C, Division, L, M, Multiplication, StrokeWidth, Subtraction, Z } from "./consts";
+import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoCircleReference } from "./types/Circle";
 import { AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
@@ -8,6 +9,7 @@ import { Number, AsinoNumberReference } from "./types/Number";
 import { AsinoObjectReference } from "./types/Object";
 import { AsinoPathReference } from "./types/Path";
 import { AsinoRectangleReference } from "./types/Rectangle";
+import { AsinoSetReference } from "./types/Set";
 
 export interface AsinoPuzzle {
   id?: string; // id of this puzzle
@@ -20,11 +22,12 @@ export interface AsinoPuzzle {
   collections?: AsinoCollection[]; // collections
   objects?: AsinoObjectReference[]; // objects
   classes?: AsinoClassReference[]; // classes
-  sets?: AsinoSet[]; // sets
-  lines?: AsinoLineReference[]; // shapes
+  sets?: AsinoSetReference[]; // sets
+  lines?: AsinoLineReference[]; // lines
   circles?: AsinoCircleReference[]; // circles
-  paths?: AsinoPathReference[]; // circle
+  paths?: AsinoPathReference[]; // paths
   numbers?: AsinoNumberReference[]; // numbers
+  booleans?: AsinoBooleanReference[] // booleans
   colors?: AsinoColorReference[]; // colors
   defaults?: { // should this be called 'settings'?
     interfaceWidthValue?: Number; // default width of interface, or use default of 1/9
@@ -40,11 +43,6 @@ export interface AsinoCollection {
   name?: string; // name of this collection
   classes?: AsinoClassReference[]; // classes
   objects?: AsinoObjectReference[]; // objects
-}
-
-export interface AsinoSet {
-  id?: string; // id of this set
-  name?: string; // name of this set
 }
 
 export interface AsinoLayer {
@@ -163,7 +161,8 @@ export const Test: AsinoPuzzle = {
     { id: '4-85', name: 'Object r9c6' },
     { id: '4-86', name: 'Object r9c7' },
     { id: '4-87', name: 'Object r9c8' },
-    { id: '4-88', name: 'Object r9c9' }
+    { id: '4-88', name: 'Object r9c9' },
+    { id: '4-000', name: 'Is Each Object Input' }
   ],
   classes: [
     {
@@ -177,22 +176,22 @@ export const Test: AsinoPuzzle = {
                 commands: [
                   {
                     letter: M,
-                    x: { operator: Subtraction, operandLeft: FontXMiddle, operandRight: { operator: Division, operandLeft: FontLineWidth, operandRight: 2 } },
+                    x: { operator: Subtraction, numberInputs: [FontXMiddle, { operator: Division, numberInputs: [FontLineWidth, 2] }] },
                     y: FontTop
                   },
                   {
                     letter: L,
-                    x: { operator: Addition, operandLeft: FontXMiddle, operandRight: { operator: Division, operandLeft: FontLineWidth, operandRight: 2 } },
+                    x: { operator: Addition, numberInputs: [FontXMiddle, { operator: Division, numberInputs: [FontLineWidth, 2] }] },
                     y: FontTop
                   },
                   {
                     letter: L,
-                    x: { operator: Addition, operandLeft: FontXMiddle, operandRight: { operator: Division, operandLeft: FontLineWidth, operandRight: 2 } },
+                    x: { operator: Addition, numberInputs: [FontXMiddle, { operator: Division, numberInputs: [FontLineWidth, 2] }] },
                     y: FontBottom
                   },
                   {
                     letter: L,
-                    x: { operator: Subtraction, operandLeft: FontXMiddle, operandRight: { operator: Division, operandLeft: FontLineWidth, operandRight: 2 } },
+                    x: { operator: Subtraction, numberInputs: [FontXMiddle, { operator: Division, numberInputs: [FontLineWidth, 2] }] },
                     y: FontBottom
                   },
                   { letter: Z }
@@ -226,83 +225,83 @@ export const Test: AsinoPuzzle = {
                   {
                     letter: C,
                     x1: {
-                      operator: Addition, operandLeft: FontXMiddle, operandRight: {
+                      operator: Addition, numberInputs: [FontXMiddle, {
                         id: MultiplyBy55Percent, numbers: [
-                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, operandLeft: FontRight, operandRight: FontXMiddle } }
+                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, numberInputs: [FontRight, FontXMiddle] } }
                         ]
-                      }
+                      }]
                     },
                     y1: FontTop,
                     x2: FontRight,
                     y2: {
                       operator: Subtraction,
-                      operandLeft: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter },
-                      operandRight: {
+                      numberInputs: [{ operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] },
+                      {
                         id: MultiplyBy55Percent, numbers: [
                           {
                             id: MultiplyBy55PercentInput, value: {
-                              operator: Subtraction, operandRight: FontTop, operandLeft: {
-                                operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter
-                              }
+                              operator: Subtraction, numberInputs: [{
+                                operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter]
+                              }, FontTop]
                             }
                           }
                         ]
-                      }
+                      }]
                     },
                     x: FontRight,
-                    y: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter }
+                    y: { operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] }
                   },
                   {
                     letter: C,
                     x1: FontRight,
                     y1: {
                       operator: Addition,
-                      operandLeft: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter },
-                      operandRight: {
+                      numberInputs: [{ operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] },
+                      {
                         id: MultiplyBy55Percent, numbers: [
                           {
                             id: MultiplyBy55PercentInput, value: {
                               operator: Subtraction,
-                              operandLeft: {
+                              numberInputs: [{
                                 operator: Addition,
-                                operandLeft: FontYMiddle,
-                                operandRight: FontLineHeightHalf
+                                numberInputs: [FontYMiddle,
+                                  FontLineHeightHalf]
                               },
-                              operandRight: {
+                              {
                                 operator: Addition,
-                                operandLeft: FontYTop,
-                                operandRight: FontLineHeightQuarter
-                              }
+                                numberInputs: [FontYTop,
+                                  FontLineHeightQuarter]
+                              }]
                             }
                           }
                         ]
-                      }
+                      }]
                     },
                     x2: {
-                      operator: Addition, operandLeft: FontXMiddle, operandRight: {
+                      operator: Addition, numberInputs: [FontXMiddle, {
                         id: MultiplyBy55Percent, numbers: [
-                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, operandLeft: FontRight, operandRight: FontXMiddle } }
+                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, numberInputs: [FontRight, FontXMiddle] } }
                         ]
-                      }
+                      }]
                     },
                     y2: {
-                      operator: Addition, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf
+                      operator: Addition, numberInputs: [FontYMiddle, FontLineHeightHalf]
                     },
                     x: FontXMiddle,
                     y: {
-                      operator: Addition, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf
+                      operator: Addition, numberInputs: [FontYMiddle, FontLineHeightHalf]
                     }
                   },
-                  { letter: L, x: { operator: Addition, operandLeft: FontLeft, operandRight: FontLineWidth }, y: FontYBottom },
-                  { letter: L, x: { operator: Addition, operandLeft: FontLeft, operandRight: FontLineWidth }, y: { operator: Subtraction, operandLeft: FontBottom, operandRight: FontLineHeight } },
-                  { letter: L, x: FontRight, y: { operator: Subtraction, operandLeft: FontBottom, operandRight: FontLineHeight } },
+                  { letter: L, x: { operator: Addition, numberInputs: [FontLeft, FontLineWidth] }, y: FontYBottom },
+                  { letter: L, x: { operator: Addition, numberInputs: [FontLeft, FontLineWidth] }, y: { operator: Subtraction, numberInputs: [FontBottom, FontLineHeight] } },
+                  { letter: L, x: FontRight, y: { operator: Subtraction, numberInputs: [FontBottom, FontLineHeight] } },
                   { letter: L, x: FontRight, y: FontBottom },
                   { letter: L, x: FontLeft, y: FontBottom },
                   { letter: L, x: FontLeft, y: FontYBottom },
-                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf } },
-                  { letter: L, x: { operator: Subtraction, operandLeft: FontRight, operandRight: FontLineWidth }, y: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter } },
-                  { letter: L, x: FontXMiddle, y: { operator: Addition, operandLeft: FontTop, operandRight: FontLineHeight } },
-                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeft: FontTop, operandRight: FontLineHeight } },
+                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, numberInputs: [FontYMiddle, FontLineHeightHalf] } },
+                  { letter: L, x: { operator: Subtraction, numberInputs: [FontRight, FontLineWidth] }, y: { operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] } },
+                  { letter: L, x: FontXMiddle, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
                   { letter: Z }
                 ],
                 fill: '6-00',
@@ -335,79 +334,79 @@ export const Test: AsinoPuzzle = {
                   {
                     letter: C,
                     x1: {
-                      operator: Addition, operandLeft: FontXMiddle, operandRight: {
+                      operator: Addition, numberInputs: [FontXMiddle, {
                         id: MultiplyBy55Percent, numbers: [
-                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, operandLeft: FontRight, operandRight: FontXMiddle } }
+                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, numberInputs: [FontRight, FontXMiddle] } }
                         ]
-                      }
+                      }]
                     },
                     y1: FontTop,
                     x2: FontRight,
                     y2: {
                       operator: Subtraction,
-                      operandLeft: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter },
-                      operandRight: {
+                      numberInputs: [{ operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] },
+                      {
                         id: MultiplyBy55Percent, numbers: [
                           {
                             id: MultiplyBy55PercentInput, value: {
-                              operator: Subtraction, operandRight: FontTop, operandLeft: {
-                                operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter
-                              }
+                              operator: Subtraction, numberInputs: [{
+                                operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter]
+                              }, FontTop]
                             }
                           }
                         ]
-                      }
+                      }]
                     },
                     x: FontRight,
-                    y: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter }
+                    y: { operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] }
                   },
                   {
                     letter: C,
                     x1: FontRight,
                     y1: {
                       operator: Addition,
-                      operandLeft: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter },
-                      operandRight: {
+                      numberInputs: [{ operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] },
+                      {
                         id: MultiplyBy55Percent, numbers: [
                           {
                             id: MultiplyBy55PercentInput, value: {
                               operator: Subtraction,
-                              operandLeft: {
+                              numberInputs: [{
                                 operator: Addition,
-                                operandLeft: FontYMiddle,
-                                operandRight: FontLineHeightHalf
+                                numberInputs: [FontYMiddle,
+                                  FontLineHeightHalf]
                               },
-                              operandRight: {
+                              {
                                 operator: Addition,
-                                operandLeft: FontYTop,
-                                operandRight: FontLineHeightQuarter
-                              }
+                                numberInputs: [FontYTop,
+                                  FontLineHeightQuarter]
+                              }]
                             }
                           }
                         ]
-                      }
+                      }]
                     },
                     x2: {
-                      operator: Addition, operandLeft: FontXMiddle, operandRight: {
+                      operator: Addition, numberInputs: [FontXMiddle, {
                         id: MultiplyBy55Percent, numbers: [
-                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, operandLeft: FontRight, operandRight: FontXMiddle } }
+                          { id: MultiplyBy55PercentInput, value: { operator: Subtraction, numberInputs: [FontRight, FontXMiddle] } }
                         ]
-                      }
+                      }]
                     },
                     y2: {
-                      operator: Addition, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf
+                      operator: Addition, numberInputs: [FontYMiddle, FontLineHeightHalf]
                     },
                     x: FontXMiddle,
                     y: {
-                      operator: Addition, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf
+                      operator: Addition, numberInputs: [FontYMiddle, FontLineHeightHalf]
                     }
                   },
-                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf } },
-                  { letter: L, x: FontLeft, y: { operator: Subtraction, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf } },
-                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, operandLeft: FontYMiddle, operandRight: FontLineHeightHalf } },
-                  { letter: L, x: { operator: Subtraction, operandLeft: FontRight, operandRight: FontLineWidth }, y: { operator: Addition, operandLeft: FontYTop, operandRight: FontLineHeightQuarter } },
-                  { letter: L, x: FontXMiddle, y: { operator: Addition, operandLeft: FontTop, operandRight: FontLineHeight } },
-                  { letter: L, x: FontLeft, y: { operator: Addition, operandLeft: FontTop, operandRight: FontLineHeight } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, numberInputs: [FontYMiddle, FontLineHeightHalf] } },
+                  { letter: L, x: FontLeft, y: { operator: Subtraction, numberInputs: [FontYMiddle, FontLineHeightHalf] } },
+                  { letter: L, x: FontXMiddle, y: { operator: Subtraction, numberInputs: [FontYMiddle, FontLineHeightHalf] } },
+                  { letter: L, x: { operator: Subtraction, numberInputs: [FontRight, FontLineWidth] }, y: { operator: Addition, numberInputs: [FontYTop, FontLineHeightQuarter] } },
+                  { letter: L, x: FontXMiddle, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
+                  { letter: L, x: FontLeft, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
                   { letter: Z }
                 ],
                 fill: '6-00',
@@ -482,7 +481,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -849,6 +852,11 @@ export const Test: AsinoPuzzle = {
       id: '6-00',
       name: 'Color',
       value: 'var(--color)'
+    },
+    {
+      id: '6-01',
+      name: 'Color',
+      value: 'var(--failure)'
     }
   ],
   interfaces: [
@@ -871,6 +879,25 @@ export const Test: AsinoPuzzle = {
       }
     }
   ],
+  booleans: [
+    {
+      id: '8-00', name: 'Is each class unique in each set containing this object', value: {
+        operator: 'IS_EACH_SET',
+        setsInput: {
+          operator: 'SETS_CONTAINING_OBJECT'
+        },
+        boolean: {
+          operator: 'IS_EACH_OBJECT',
+          objectsInput: {
+            operator: '-',
+            objectsLeftInput: {
+              operator: 'OBJECTS_IN_SET'
+            }
+          }
+        }
+      }
+    }
+  ],
   numbers: [
     { id: '1-00', name: 'Interface Width', value: { numerator: 1, denominator: 9 } },
     { id: '1-01', name: 'Interface Height', value: { numerator: 1, denominator: 9 } },
@@ -881,7 +908,7 @@ export const Test: AsinoPuzzle = {
     {
       id: '1-06', name: 'Input Multiplied By 1/9', value: {
         operator: Multiplication,
-        operandLeft: '1-09', operandRight: { value: { numerator: 1, denominator: 9 } }
+        numberInputs: ['1-09', { value: { numerator: 1, denominator: 9 } }]
       }
     },
     { id: '1-07', name: 'X Position', value: 0 },
@@ -900,20 +927,20 @@ export const Test: AsinoPuzzle = {
     {
       id: MultiplyBy55Percent, name: '55% of', value: {
         operator: Multiplication,
-        operandLeft: { value: { numerator: 11, denominator: 20 } }, operandRight: MultiplyBy55PercentInput
+        numberInputs: [{ value: { numerator: 11, denominator: 20 } }, MultiplyBy55PercentInput]
       }
     },
     { id: MultiplyBy55PercentInput, name: '55% of default', value: 1 },
     {
       id: FontLineHeightHalf, name: 'Font Line Height Half', value: {
         operator: Division,
-        operandLeft: FontLineHeight, operandRight: { value: 2 }
+        numberInputs: [FontLineHeight, { value: 2 }]
       }
     },
     {
       id: FontLineHeightQuarter, name: 'Font Line Height Quarter', value: {
         operator: Division,
-        operandLeft: FontLineHeightHalf, operandRight: { value: 2 }
+        numberInputs: [FontLineHeightHalf, { value: 2 }]
       }
     }
   ],
@@ -924,7 +951,32 @@ export const Test: AsinoPuzzle = {
     { id: '2-03', name: 'Horizontal Border 2', value: { x1: { value: 0 }, x2: { value: 1 }, y1: { value: { numerator: 2, denominator: 3 } }, y2: { value: { numerator: 2, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' } }
   ],
   sets: [
-    { id: '7-00', name: '' }
+    { id: '7-00', name: 'r1', value: { objects: ['4-00', '4-01', '4-02', '4-03', '4-04', '4-05', '4-06', '4-07', '4-08'] } },
+    { id: '7-01', name: 'r2', value: { objects: ['4-10', '4-11', '4-12', '4-13', '4-14', '4-15', '4-16', '4-17', '4-18'] } },
+    { id: '7-02', name: 'r3', value: { objects: ['4-20', '4-21', '4-22', '4-23', '4-24', '4-25', '4-26', '4-27', '4-28'] } },
+    { id: '7-03', name: 'r4', value: { objects: ['4-30', '4-31', '4-32', '4-33', '4-34', '4-35', '4-36', '4-37', '4-38'] } },
+    { id: '7-04', name: 'r5', value: { objects: ['4-40', '4-41', '4-42', '4-43', '4-44', '4-45', '4-46', '4-47', '4-48'] } },
+    { id: '7-05', name: 'r6', value: { objects: ['4-50', '4-51', '4-52', '4-53', '4-54', '4-55', '4-56', '4-57', '4-58'] } },
+    { id: '7-06', name: 'r7', value: { objects: ['4-60', '4-61', '4-62', '4-63', '4-64', '4-65', '4-66', '4-67', '4-68'] } },
+    { id: '7-07', name: 'r8', value: { objects: ['4-70', '4-71', '4-72', '4-73', '4-74', '4-75', '4-76', '4-77', '4-78'] } },
+    { id: '7-08', name: 'r9', value: { objects: ['4-80', '4-81', '4-82', '4-83', '4-84', '4-85', '4-86', '4-87', '4-88'] } },
+    { id: '7-09', name: 'c1', value: { objects: ['4-00', '4-10', '4-20', '4-30', '4-40', '4-50', '4-60', '4-70', '4-80'] } },
+    { id: '7-10', name: 'c2', value: { objects: ['4-01', '4-11', '4-21', '4-31', '4-41', '4-51', '4-61', '4-71', '4-81'] } },
+    { id: '7-11', name: 'c3', value: { objects: ['4-02', '4-12', '4-22', '4-32', '4-42', '4-52', '4-62', '4-72', '4-82'] } },
+    { id: '7-12', name: 'c4', value: { objects: ['4-03', '4-13', '4-23', '4-33', '4-43', '4-53', '4-63', '4-73', '4-83'] } },
+    { id: '7-13', name: 'c5', value: { objects: ['4-04', '4-14', '4-24', '4-34', '4-44', '4-54', '4-64', '4-74', '4-84'] } },
+    { id: '7-14', name: 'c6', value: { objects: ['4-05', '4-15', '4-25', '4-35', '4-45', '4-55', '4-65', '4-75', '4-85'] } },
+    { id: '7-15', name: 'c7', value: { objects: ['4-06', '4-16', '4-26', '4-36', '4-46', '4-56', '4-66', '4-76', '4-86'] } },
+    { id: '7-16', name: 'c8', value: { objects: ['4-07', '4-17', '4-27', '4-37', '4-47', '4-57', '4-67', '4-77', '4-87'] } },
+    { id: '7-17', name: '', value: { objects: ['4-00', '4-01', '4-02', '4-10', '4-11', '4-12', '4-20', '4-21', '4-22'] } },
+    { id: '7-18', name: '', value: { objects: ['4-03', '4-04', '4-05', '4-13', '4-14', '4-15', '4-23', '4-24', '4-25'] } },
+    { id: '7-19', name: '', value: { objects: ['4-06', '4-07', '4-08', '4-16', '4-17', '4-18', '4-26', '4-27', '4-28'] } },
+    { id: '7-20', name: '', value: { objects: ['4-30', '4-31', '4-32', '4-40', '4-41', '4-42', '4-50', '4-51', '4-52'] } },
+    { id: '7-21', name: '', value: { objects: ['4-33', '4-34', '4-35', '4-43', '4-44', '4-45', '4-53', '4-54', '4-55'] } },
+    { id: '7-22', name: '', value: { objects: ['4-36', '4-37', '4-38', '4-46', '4-47', '4-48', '4-56', '4-57', '4-58'] } },
+    { id: '7-23', name: '', value: { objects: ['4-60', '4-61', '4-62', '4-70', '4-71', '4-72', '4-80', '4-81', '4-82'] } },
+    { id: '7-24', name: '', value: { objects: ['4-63', '4-64', '4-65', '4-73', '4-74', '4-75', '4-83', '4-84', '4-85'] } },
+    { id: '7-25', name: '', value: { objects: ['4-66', '4-67', '4-68', '4-76', '4-77', '4-78', '4-86', '4-87', '4-88'] } }
   ],
   defaults: {
     interfaceWidthValue: { numerator: 1, denominator: 9 },

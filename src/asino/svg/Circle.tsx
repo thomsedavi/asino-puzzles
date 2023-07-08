@@ -3,24 +3,24 @@ import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "
 import { CX, CY, R, StrokeWidth } from "../consts";
 import { AsinoCircleReference } from "../types/Circle";
 import { AsinoNumberReference, Number } from "../types/Number";
-import { AsinoColorReference } from "../types/Color";
+import { References } from "../References";
 
-export const drawCircle = (circles: (AsinoCircleReference | undefined)[], numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
   let fill: string | undefined = undefined;
   let stroke: string | undefined = undefined;
-  let strokeWidth: Number | undefined = getNumberFromLayer(circles, numbers, StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(circles, references.clone(), StrokeWidth, defaultStrokeWidth);
 
-  const cx = getNumberFromLayer(circles, numbers, CX, { value: 0 });
-  const cy = getNumberFromLayer(circles, numbers, CY, { value: 0 });
-  const r = getNumberFromLayer(circles, numbers, R, { value: 0 });
+  const cx = getNumberFromLayer(circles, references.clone(), CX, { value: 0 });
+  const cy = getNumberFromLayer(circles, references.clone(), CY, { value: 0 });
+  const r = getNumberFromLayer(circles, references.clone(), R, { value: 0 });
 
   circles.forEach((circle: AsinoCircleReference | undefined) => {
     if (circle?.value?.fill !== undefined) {
-      fill = getValueFromAsinoColor(circle.value.fill, [...colors, ...(circle.colors ?? [])]);
+      fill = getValueFromAsinoColor(circle.value.fill, references.clone().addColors([circle.colors]));
     }
 
     if (circle?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(circle.value.stroke, [...colors, ...(circle.colors ?? [])]);
+      stroke = getValueFromAsinoColor(circle.value.stroke, references.clone().addColors([circle.colors]));
     }
   });
 

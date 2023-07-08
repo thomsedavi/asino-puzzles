@@ -1,14 +1,13 @@
-import { Operator } from "../types";
+export type NumberOperator = '*' | '/' | '-' | '+';
 
 export type Fraction = { numerator?: Number, denominator?: Number };
 export type Number = number | Fraction | 'infinity' | 'negativeInfinity';
 
-export type AsinoNumber = Number | string | Formula | AsinoNumberReference;
+export type AsinoNumber = Number | string | NumberFormula | AsinoNumberReference;
 
-export type Formula = {
-  operator?: Operator; // formula for this number
-  operandLeft?: AsinoNumber; // left operand of formula
-  operandRight?: AsinoNumber; // right operand of formula
+export type NumberFormula = {
+  operator?: NumberOperator; // formula for this number
+  numberInputs?: AsinoNumber[]; // number inputs
 }
 
 export type AsinoNumberReference = {
@@ -26,6 +25,6 @@ export const isAsinoNumberFraction = (number: AsinoNumber): number is Fraction =
   return typeof number !== 'string' && typeof number !== 'number' && 'numerator' in number && 'denominator' in number;
 }
 
-export const isFormula = (number: AsinoNumber): number is Formula => {
-  return typeof number !== 'string' && typeof number !== 'number' && 'operator' in number && 'operandLeft' in number && 'operandRight' in number;
+export const isNumberFormula = (number: AsinoNumber): number is NumberFormula => {
+  return typeof number !== 'string' && typeof number !== 'number' && 'operator' in number;
 }

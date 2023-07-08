@@ -4,19 +4,20 @@ import { AsinoLineReference } from "../types/Line";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { AsinoColorReference } from "../types/Color";
 import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";
+import { References } from "../References";
 
-export const drawLine = (lines: (AsinoLineReference | undefined)[], numbers: AsinoNumberReference[], colors: AsinoColorReference[], defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
   let stroke: string | undefined = undefined;
-  let strokeWidth: Number | undefined = getNumberFromLayer(lines, numbers, StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), StrokeWidth, defaultStrokeWidth);
 
-  const x1 = getNumberFromLayer(lines, numbers, X1, { value: 0 });
-  const y1 = getNumberFromLayer(lines, numbers, Y1, { value: 0 });
-  const x2 = getNumberFromLayer(lines, numbers, X2, { value: 0 });
-  const y2 = getNumberFromLayer(lines, numbers, Y2, { value: 0 });
+  const x1 = getNumberFromLayer(lines, references.clone(), X1, { value: 0 });
+  const y1 = getNumberFromLayer(lines, references.clone(), Y1, { value: 0 });
+  const x2 = getNumberFromLayer(lines, references.clone(), X2, { value: 0 });
+  const y2 = getNumberFromLayer(lines, references.clone(), Y2, { value: 0 });
 
   lines.forEach((line: AsinoLineReference | undefined) => {
     if (line?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(line.value.stroke, [...colors, ...(line.colors ?? [])]);
+      stroke = getValueFromAsinoColor(line.value.stroke, references.clone().addColors([line.colors]));
     }
   });
 
