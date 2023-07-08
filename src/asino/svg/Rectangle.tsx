@@ -3,7 +3,6 @@ import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "
 import { Height, StrokeWidth, Width, X, Y } from "../consts";
 import { AsinoRectangleReference } from "../types/Rectangle";
 import { AsinoNumberReference, Number } from "../types/Number";
-import { AsinoColorReference } from "../types/Color";
 import { References } from "../References";
 
 export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {

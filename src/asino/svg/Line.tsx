@@ -2,7 +2,6 @@ import React from "react"
 import { StrokeWidth, X1, X2, Y1, Y2 } from "../consts";
 import { AsinoLineReference } from "../types/Line";
 import { AsinoNumberReference, Number } from "../types/Number";
-import { AsinoColorReference } from "../types/Color";
 import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";
 import { References } from "../References";
 

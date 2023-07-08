@@ -11,7 +11,7 @@ export class References {
   }
 
   clone = (): References => {
-    const refClone: References = new References;
+    const refClone: References = new References();
 
     refClone.colors = [...this.colors];
     refClone.numbers = [...this.numbers];

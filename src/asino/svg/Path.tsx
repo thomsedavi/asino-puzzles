@@ -3,7 +3,6 @@ import { getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromA
 import { C, L, M, S, StrokeWidth, Z } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
-import { AsinoColorReference } from "../types/Color";
 import { References } from "../References";
 
 export const drawPath = (paths: (AsinoPathReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string): JSX.Element => {
