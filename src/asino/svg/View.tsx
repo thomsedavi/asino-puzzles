@@ -40,7 +40,7 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
   const layers: JSX.Element[] = [];
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
-    layers.push(drawLayer(puzzle, solution, layer, new References().addColors([puzzle.colors]), 1, `layer${layerIndex}`, selectedObjectId));
+    layers.push(drawLayer(puzzle, solution, layer, new References().addBooleans([puzzle.booleans]).addColors([puzzle.colors]).addSets([puzzle.sets]), 1, `layer${layerIndex}`, selectedObjectId));
   });
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {

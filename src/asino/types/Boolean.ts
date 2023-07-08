@@ -19,3 +19,7 @@ export type AsinoBooleanReference = {
   value?: AsinoBoolean; // value of this boolean
   numbers?: AsinoBooleanReference[]; // parameters to use when overriding
 }
+
+export const isBooleanFormula = (boolean: AsinoBoolean): boolean is BooleanFormula => {
+  return typeof boolean !== 'string' && typeof boolean !== 'boolean' && 'operator' in boolean;
+}

@@ -11,7 +11,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   const selectedCollection = puzzle.collections?.filter(collection => collection.id === selectedCollectionId)[0];
 
   selectedCollection?.classes?.forEach((asinoClass: AsinoClassReference, classIndex: number) => {
-    var result = getClassFromClassReference(asinoClass, [...(puzzle.classes ?? [])]);
+    var result = getClassFromClassReference(asinoClass, new References().addClasses([puzzle.classes]));
 
     result?.layers?.forEach((layer, layerIndex) => {
       layers.push(

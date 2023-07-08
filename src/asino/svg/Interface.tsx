@@ -41,11 +41,11 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     if (interfaceClassId !== undefined) {
       const selectedClassReference = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
-      const selectedClass = getClassFromClassReference(selectedClassReference, [...(puzzle.classes ?? [])]);
+      const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 
       if (selectedClass !== undefined) {
         selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]).setObjectId(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }
     }

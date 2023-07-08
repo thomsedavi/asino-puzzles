@@ -6,9 +6,9 @@ export type Set = { objects: AsinoObjects };
 
 export type AsinoSet = Set | string | AsinoSetReference;
 
-export type AsinoSets = AsinoSet[] | string | AsinoSetsFormula | AsinoSetsReference;
+export type AsinoSets = AsinoSet[] | string | SetsFormula | AsinoSetsReference;
 
-export type AsinoSetsFormula = {
+export type SetsFormula = {
   operator?: SetsOperator;
 }
 
