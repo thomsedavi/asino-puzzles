@@ -4,8 +4,9 @@ import { C, L, M, S, StrokeWidth, Z } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
+import { Solution } from "../interfaces";
 
-export const drawPath = (paths: (AsinoPathReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string): JSX.Element => {
+export const drawPath = (paths: (AsinoPathReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string): JSX.Element => {
   let d = '';
   let fill: string | undefined = undefined;
   let stroke: string | undefined = undefined;
@@ -67,11 +68,11 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
     }
 
     if (path?.value?.fill !== undefined) {
-      fill = getValueFromAsinoColor(path.value.fill, references.clone().addColors([path.colors]));
+      fill = getValueFromAsinoColor(path.value.fill, references.clone().addColors([path.colors]), solution);
     }
 
     if (path?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(path.value.stroke, references.clone().addColors([path.colors]));
+      stroke = getValueFromAsinoColor(path.value.stroke, references.clone().addColors([path.colors]), solution);
     }
   });
 

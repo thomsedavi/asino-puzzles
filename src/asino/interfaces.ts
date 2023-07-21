@@ -741,6 +741,10 @@ export const Test: AsinoPuzzle = {
           }
         ]
       }
+    },
+    {
+      id: '3-09',
+      name: 'Object class'
     }
   ],
   collections: [
@@ -882,16 +886,33 @@ export const Test: AsinoPuzzle = {
   booleans: [
     {
       id: '8-00', name: 'Is each class unique in each set containing this object', value: {
-        operator: 'IS_EACH_SET',
-        setsInput: {
-          operator: 'SETS_CONTAINING_OBJECT'
-        },
+        operator: 'IS_OBJECT',
+        objectOutput: '4-000',
         boolean: {
-          operator: 'IS_EACH_OBJECT',
-          objectsInput: {
-            operator: '-',
-            objectsLeftInput: {
-              operator: 'OBJECTS_IN_SET'
+          operator: 'IS_EACH_SET',
+          setsInput: {
+            operator: 'SETS_CONTAINING_OBJECT'
+          },
+          boolean: {
+            operator: 'IS_EACH_OBJECT',
+            objectsInput: {
+              operator: '-',
+              objectsLeftInput: {
+                operator: 'OBJECTS_IN_SET'
+              },
+              objectsRightInput: [
+                '4-000'
+              ]
+            },
+            boolean: {
+              operator: 'IS_OBJECT_CLASS',
+              classOutput: '3-09',
+              boolean: {
+                operator: 'IS_EACH_CLASS_DIFFERENT',
+                classesInput: [
+                  '3-09'
+                ]
+              }
             }
           }
         }

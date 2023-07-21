@@ -15,3 +15,7 @@ export interface AsinoObjectReference {
   name?: string; // name of this object
   value?: AsinoObject; // value of this object
 }
+
+export const isObjectsFormula = (objects: AsinoObjects): objects is AsinoObjectsFormula => {
+  return typeof objects !== 'string' && 'operator' in objects;
+}

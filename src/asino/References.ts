@@ -1,23 +1,28 @@
 import { AsinoBooleanReference } from "./types/Boolean";
-import { AsinoClassReference } from "./types/Class";
+import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoNumberReference } from "./types/Number";
-import { AsinoSetReference } from "./types/Set";
+import { AsinoObject, AsinoObjectReference } from "./types/Object";
+import { AsinoSet, AsinoSetReference } from "./types/Set";
 
 export class References {
   booleans: AsinoBooleanReference[];
   classes: AsinoClassReference[];
   colors: AsinoColorReference[];
   numbers: AsinoNumberReference[];
+  objects: AsinoObjectReference[];
   sets: AsinoSetReference[];
 
-  objectId: string | undefined;
+  class: AsinoClass | undefined;
+  object: AsinoObject | undefined;
+  set: AsinoSet | undefined;
 
   constructor() {
     this.booleans = [];
     this.classes = [];
     this.colors = [];
     this.numbers = [];
+    this.objects = [];
     this.sets = [];
   }
 
@@ -28,9 +33,12 @@ export class References {
     refClone.classes = [...this.classes];
     refClone.colors = [...this.colors];
     refClone.numbers = [...this.numbers];
+    refClone.objects = [...this.objects];
     refClone.sets = [...this.sets];
 
-    refClone.objectId = this.objectId;
+    refClone.class = this.class;
+    refClone.object = this.object;
+    refClone.set = this.set;
 
     return refClone;
   }
@@ -67,6 +75,14 @@ export class References {
     return this;
   }
 
+  addObjects = (objectLists: (AsinoObjectReference[] | undefined)[]): References => {
+    objectLists.forEach(objects => {
+      objects !== undefined && (this.objects = [...this.objects, ...objects]);
+    });
+
+    return this;
+  }
+
   addSets = (setLists: (AsinoSetReference[] | undefined)[]): References => {
     setLists.forEach(sets => {
       sets !== undefined && (this.sets = [...this.sets, ...sets]);
@@ -75,8 +91,20 @@ export class References {
     return this;
   }
 
-  setObjectId = (objectId: string | undefined): References => {
-    objectId !== undefined && (this.objectId = objectId);
+  setClass = (asinoClass: AsinoClass | undefined): References => {
+    asinoClass !== undefined && (this.class = asinoClass);
+
+    return this;
+  }
+
+  setObject = (object: AsinoObject | undefined): References => {
+    object !== undefined && (this.object = object);
+
+    return this;
+  }
+
+  setSet = (set: AsinoSet | undefined): References => {
+    set !== undefined && (this.set = set);
 
     return this;
   }

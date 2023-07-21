@@ -1,6 +1,6 @@
 import React from "react"
 import { AsinoLayer, AsinoPuzzle, Solution } from "../interfaces"
-import { getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
+import { getClassFromAsinoClass, getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
 import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
@@ -44,8 +44,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
       const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 
       if (selectedClass !== undefined) {
-        selectedClass.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]).setObjectId(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
+        const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]));
+
+        asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
         });
       }
     }

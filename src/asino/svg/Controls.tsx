@@ -1,7 +1,7 @@
 import React from "react"
 import { AsinoPuzzle, Solution } from "../interfaces"
 import { AsinoClassReference } from "../types/Class";
-import { getClassFromClassReference } from "../utils";
+import { getClassFromAsinoClass, getClassFromClassReference } from "../utils";
 import { drawLayer } from "./View";
 import { References } from "../References";
 
@@ -11,9 +11,11 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   const selectedCollection = puzzle.collections?.filter(collection => collection.id === selectedCollectionId)[0];
 
   selectedCollection?.classes?.forEach((asinoClass: AsinoClassReference, classIndex: number) => {
-    var result = getClassFromClassReference(asinoClass, new References().addClasses([puzzle.classes]));
+    const result = getClassFromClassReference(asinoClass, new References().addClasses([puzzle.classes]));
 
-    result?.layers?.forEach((layer, layerIndex) => {
+    const classResult = getClassFromAsinoClass(result, new References().addClasses([puzzle.classes]));
+
+    classResult?.layers?.forEach((layer, layerIndex) => {
       layers.push(
         <g
           key={`class${classIndex}layer${layerIndex}`}

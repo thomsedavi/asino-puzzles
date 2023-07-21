@@ -4,8 +4,9 @@ import { AsinoLineReference } from "../types/Line";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";
 import { References } from "../References";
+import { Solution } from "../interfaces";
 
-export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
   let stroke: string | undefined = undefined;
   let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), StrokeWidth, defaultStrokeWidth);
 
@@ -16,7 +17,7 @@ export const drawLine = (lines: (AsinoLineReference | undefined)[], references: 
 
   lines.forEach((line: AsinoLineReference | undefined) => {
     if (line?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(line.value.stroke, references.clone().addColors([line.colors]));
+      stroke = getValueFromAsinoColor(line.value.stroke, references.clone().addColors([line.colors]), solution);
     }
   });
 

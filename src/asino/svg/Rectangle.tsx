@@ -4,8 +4,9 @@ import { Height, StrokeWidth, Width, X, Y } from "../consts";
 import { AsinoRectangleReference } from "../types/Rectangle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
+import { Solution } from "../interfaces";
 
-export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
   let fill: string | undefined = undefined;
   let stroke: string | undefined = undefined;
   let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), StrokeWidth, defaultStrokeWidth);
@@ -17,11 +18,11 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
 
   rectangles.forEach((rectangle: AsinoRectangleReference | undefined) => {
     if (rectangle?.value?.fill !== undefined) {
-      fill = getValueFromAsinoColor(rectangle.value.fill, references.clone().addColors([rectangle.colors]));
+      fill = getValueFromAsinoColor(rectangle.value.fill, references.clone().addColors([rectangle.colors]), solution);
     }
 
     if (rectangle?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(rectangle.value.stroke, references.clone().addColors([rectangle.colors]));
+      stroke = getValueFromAsinoColor(rectangle.value.stroke, references.clone().addColors([rectangle.colors]), solution);
     }
   });
 

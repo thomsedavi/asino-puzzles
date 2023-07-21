@@ -4,8 +4,9 @@ import { CX, CY, R, StrokeWidth } from "../consts";
 import { AsinoCircleReference } from "../types/Circle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
+import { Solution } from "../interfaces";
 
-export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
+export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
   let fill: string | undefined = undefined;
   let stroke: string | undefined = undefined;
   let strokeWidth: Number | undefined = getNumberFromLayer(circles, references.clone(), StrokeWidth, defaultStrokeWidth);
@@ -16,11 +17,11 @@ export const drawCircle = (circles: (AsinoCircleReference | undefined)[], refere
 
   circles.forEach((circle: AsinoCircleReference | undefined) => {
     if (circle?.value?.fill !== undefined) {
-      fill = getValueFromAsinoColor(circle.value.fill, references.clone().addColors([circle.colors]));
+      fill = getValueFromAsinoColor(circle.value.fill, references.clone().addColors([circle.colors]), solution);
     }
 
     if (circle?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(circle.value.stroke, references.clone().addColors([circle.colors]));
+      stroke = getValueFromAsinoColor(circle.value.stroke, references.clone().addColors([circle.colors]), solution);
     }
   });
 
