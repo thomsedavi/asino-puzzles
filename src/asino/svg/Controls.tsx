@@ -13,7 +13,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   selectedCollection?.classes?.forEach((asinoClass: AsinoClassReference, classIndex: number) => {
     const result = getClassFromClassReference(asinoClass, new References().addClasses([puzzle.classes]));
 
-    const classResult = getClassFromAsinoClass(result, new References().addClasses([puzzle.classes]));
+    const classResult = getClassFromAsinoClass(result, new References().addClasses([puzzle.classes]), solution);
 
     classResult?.layers?.forEach((layer, layerIndex) => {
       layers.push(

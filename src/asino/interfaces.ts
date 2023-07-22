@@ -4,6 +4,7 @@ import { AsinoCircleReference } from "./types/Circle";
 import { AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoInterfaceReference } from "./types/Interface";
+import { AsinoLayer } from "./types/Layer";
 import { AsinoLineReference } from "./types/Line";
 import { Number, AsinoNumberReference } from "./types/Number";
 import { AsinoObjectReference } from "./types/Object";
@@ -43,19 +44,6 @@ export interface AsinoCollection {
   name?: string; // name of this collection
   classes?: AsinoClassReference[]; // classes
   objects?: AsinoObjectReference[]; // objects
-}
-
-export interface AsinoLayer {
-  interface?: AsinoInterfaceReference; // draw the interface with these attributes
-  rectangle?: AsinoRectangleReference; // draw the rectangle with these attributes
-  line?: AsinoLineReference; // draw the layer with these attributes
-  circle?: AsinoCircleReference; // draw the circle with these attributes
-  path?: AsinoPathReference; // draw the path with these attributes
-  numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // color parameters
-  objectId?: string; // id of the interface of this layer
-  collectionId?: string; // id of collection of this layer
-  fixedClassId?: string; // object is fixed to this class
 }
 
 export interface Solution {
@@ -147,7 +135,7 @@ export const Test: AsinoPuzzle = {
     { id: '4-70', name: 'Object r8c1' },
     { id: '4-71', name: 'Object r8c2' },
     { id: '4-72', name: 'Object r8c3' },
-    { id: '4-73', name: 'Object r8c4' },
+    { id: '4-73', name: 'Object r8c4', value: { class: '3-05' } },
     { id: '4-74', name: 'Object r8c5' },
     { id: '4-75', name: 'Object r8c6' },
     { id: '4-76', name: 'Object r8c7' },
@@ -161,7 +149,7 @@ export const Test: AsinoPuzzle = {
     { id: '4-85', name: 'Object r9c6' },
     { id: '4-86', name: 'Object r9c7' },
     { id: '4-87', name: 'Object r9c8' },
-    { id: '4-88', name: 'Object r9c9' },
+    { id: '4-88', name: 'Object r9c9', value: { class: '3-08' } },
     { id: '4-000', name: 'Is Each Object Input' }
   ],
   classes: [
@@ -196,7 +184,11 @@ export const Test: AsinoPuzzle = {
                   },
                   { letter: Z }
                 ],
-                fill: '6-00'
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                }
               }
             }
           }
@@ -304,7 +296,11 @@ export const Test: AsinoPuzzle = {
                   { letter: L, x: FontLeft, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
                   { letter: Z }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -409,7 +405,11 @@ export const Test: AsinoPuzzle = {
                   { letter: L, x: FontLeft, y: { operator: Addition, numberInputs: [FontTop, FontLineHeight] } },
                   { letter: Z }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -440,7 +440,11 @@ export const Test: AsinoPuzzle = {
                   },
                   { letter: Z }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -541,7 +545,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -592,7 +600,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -632,7 +644,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -683,7 +699,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -734,7 +754,11 @@ export const Test: AsinoPuzzle = {
                     letter: Z
                   }
                 ],
-                fill: '6-00',
+                fill: {
+                  operator: 'IF_ELSE',
+                  booleanInputs: ['8-00'],
+                  colorInputs: ['6-00', '6-01']
+                },
                 stroke: 'none'
               }
             }
@@ -831,7 +855,7 @@ export const Test: AsinoPuzzle = {
     { collectionId: '5-00', objectId: '4-70', interface: { id: '0-00', numbers: [{ id: '1-07', value: 0 }, { id: '1-08', value: 7 }] } },
     { collectionId: '5-00', objectId: '4-71', interface: { id: '0-00', numbers: [{ id: '1-07', value: 1 }, { id: '1-08', value: 7 }] } },
     { collectionId: '5-00', objectId: '4-72', interface: { id: '0-00', numbers: [{ id: '1-07', value: 2 }, { id: '1-08', value: 7 }] } },
-    { collectionId: '5-00', fixedClassId: '3-05', objectId: '4-73', interface: { id: '0-00', numbers: [{ id: '1-07', value: 3 }, { id: '1-08', value: 7 }] } },
+    { collectionId: '5-00', objectId: '4-73', interface: { id: '0-00', numbers: [{ id: '1-07', value: 3 }, { id: '1-08', value: 7 }] } },
     { collectionId: '5-00', objectId: '4-74', interface: { id: '0-00', numbers: [{ id: '1-07', value: 4 }, { id: '1-08', value: 7 }] } },
     { collectionId: '5-00', objectId: '4-75', interface: { id: '0-00', numbers: [{ id: '1-07', value: 5 }, { id: '1-08', value: 7 }] } },
     { collectionId: '5-00', objectId: '4-76', interface: { id: '0-00', numbers: [{ id: '1-07', value: 6 }, { id: '1-08', value: 7 }] } },
@@ -845,7 +869,7 @@ export const Test: AsinoPuzzle = {
     { collectionId: '5-00', objectId: '4-85', interface: { id: '0-00', numbers: [{ id: '1-07', value: 5 }, { id: '1-08', value: 8 }] } },
     { collectionId: '5-00', objectId: '4-86', interface: { id: '0-00', numbers: [{ id: '1-07', value: 6 }, { id: '1-08', value: 8 }] } },
     { interface: { id: '0-01', numbers: [{ id: '1-07', value: 7 }, { id: '1-08', value: 8 }] } },
-    { collectionId: '5-00', fixedClassId: '3-08', objectId: '4-88', interface: { id: '0-00' }, numbers: [{ id: '1-07', value: 8 }, { id: '1-08', value: 8 }] },
+    { collectionId: '5-00', objectId: '4-88', interface: { id: '0-00' }, numbers: [{ id: '1-07', value: 8 }, { id: '1-08', value: 8 }] },
     { line: { id: '2-00' } },
     { line: { id: '2-01', value: { stroke: '6-00' } } },
     { line: { id: '2-02' } },
@@ -910,7 +934,11 @@ export const Test: AsinoPuzzle = {
               boolean: {
                 operator: 'IS_EACH_CLASS_DIFFERENT',
                 classesInput: [
-                  '3-09'
+                  '3-09',
+                  {
+                    operator: 'CLASS_OF_OBJECT',
+                    objectInput: '4-000'
+                  }
                 ]
               }
             }

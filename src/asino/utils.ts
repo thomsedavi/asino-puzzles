@@ -2,10 +2,10 @@ import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
-import { AsinoClass, AsinoClassReference, AsinoClasses, Class, isClassClass } from "./types/Class";
+import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoColor, ColorFormula, isColorFormula } from "./types/Color";
 import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula } from "./types/Number";
-import { AsinoObject, AsinoObjects, isObjectsFormula } from "./types/Object";
+import { AsinoObject, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
 import { AsinoSet, AsinoSetReference, AsinoSets, Set, SetsFormula, isSetSet, isSetsFormula } from "./types/Set";
 
 export const getSum = (left: Number | undefined, right: Number | undefined): Number | undefined => {
@@ -279,7 +279,7 @@ export const getColorFromFormula = (formula: ColorFormula | undefined, reference
   return result;
 }
 
-export const getObjectFromAsinoObject = (object: AsinoObject | undefined, references: References): string | undefined => {
+export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, references: References): string | undefined => {
   let result: string | undefined = undefined;
 
   if (object === undefined) {
@@ -288,7 +288,7 @@ export const getObjectFromAsinoObject = (object: AsinoObject | undefined, refere
     result = object;
 
     references.objects.forEach(referenceObject => {
-      referenceObject.id === object && (result = getObjectFromAsinoObject(referenceObject.value, references.clone()));
+      referenceObject.id === object && typeof referenceObject.value === 'string' && (result = getObjectIdFromAsinoObject(referenceObject.value, references.clone()));
     });
   } else {
     console.log('object', object);
@@ -297,7 +297,29 @@ export const getObjectFromAsinoObject = (object: AsinoObject | undefined, refere
   return result;
 }
 
-export const getObjectsFromAsinoSet = (set: AsinoSet | undefined, references: References): string[] | undefined => {
+export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | undefined, references: References, solution: Solution): string | undefined => {
+  let result: string | undefined = undefined;
+
+  if (asinoClass === undefined) {
+    // do nothing
+  } else if (typeof asinoClass === 'string') {
+    result = asinoClass;
+
+    references.classes.forEach(referenceClass => {
+      if (referenceClass.id === asinoClass) {
+        referenceClass.value !== undefined && typeof referenceClass.value === 'string' && (result = getClassIdFromAsinoClass(referenceClass.value, references.clone(), solution));
+      }
+    });
+  } else if (isClassFormula(asinoClass)) {
+    result = getClassIdFromFormula(asinoClass, references.clone(), solution);
+  } else {
+    console.log('asinoClass', asinoClass);
+  }
+
+  return result;
+}
+
+export const getObjectIdsFromAsinoSet = (set: AsinoSet | undefined, references: References): string[] | undefined => {
   let result: string[] | undefined = undefined;
 
   if (set === undefined) {
@@ -305,7 +327,7 @@ export const getObjectsFromAsinoSet = (set: AsinoSet | undefined, references: Re
   } else if (typeof set === 'string') {
     console.log('set', set);
   } else if (isSetSet(set)) {
-    result = getObjectsFromAsinoObjects(set.objects, references.clone());
+    result = getObjectIdsFromAsinoObjects(set.objects, references.clone());
   } else {
     console.log('set', set);
   }
@@ -327,7 +349,7 @@ export const getClassesFromAsinoClasses = (classes: AsinoClasses | undefined, re
   return result;
 }
 
-export const getObjectsFromAsinoObjects = (objects: AsinoObjects | undefined, references: References): string[] | undefined => {
+export const getObjectIdsFromAsinoObjects = (objects: AsinoObjects | undefined, references: References): string[] | undefined => {
   let result: string[] | undefined = undefined;
 
   if (objects === undefined) {
@@ -336,8 +358,8 @@ export const getObjectsFromAsinoObjects = (objects: AsinoObjects | undefined, re
     console.log('objects', objects);
   } else if (isObjectsFormula(objects)) {
     if (objects.operator === '-') {
-      result = getObjectsFromAsinoObjects(objects.objectsLeftInput, references.clone());
-      const rightObjects = getObjectsFromAsinoObjects(objects.objectsRightInput, references.clone());
+      result = getObjectIdsFromAsinoObjects(objects.objectsLeftInput, references.clone());
+      const rightObjects = getObjectIdsFromAsinoObjects(objects.objectsRightInput, references.clone());
 
       rightObjects?.forEach((rightObject: string) => {
         const index = result?.indexOf(rightObject);
@@ -345,7 +367,7 @@ export const getObjectsFromAsinoObjects = (objects: AsinoObjects | undefined, re
         index !== undefined && index !== -1 && (result?.splice(index, 1));
       });
     } else if (objects.operator === 'OBJECTS_IN_SET') {
-      result = getObjectsFromAsinoSet(references.set, references.clone());
+      result = getObjectIdsFromAsinoSet(references.set, references.clone());
     } else {
       console.log('objects', objects);
     }
@@ -353,7 +375,7 @@ export const getObjectsFromAsinoObjects = (objects: AsinoObjects | undefined, re
     result = [];
 
     objects.forEach(asinoObject => {
-      const object = getObjectFromAsinoObject(asinoObject, references.clone());
+      const object = getObjectIdFromAsinoObject(asinoObject, references.clone());
 
       object !== undefined && (result?.push(object));
     });
@@ -376,9 +398,9 @@ export const getSetsFromFormula = (formula: SetsFormula | undefined, references:
         const set = getSetFromAsinoSet(asinoSet, references.clone());
 
         if (references.object) {
-          const object = getObjectFromAsinoObject(references.object, references.clone());
+          const object = getObjectIdFromAsinoObject(references.object, references.clone());
 
-          if (object !== undefined && getObjectsFromAsinoObjects(set?.objects, references.clone())?.indexOf(object) !== -1) {
+          if (object !== undefined && getObjectIdsFromAsinoObjects(set?.objects, references.clone())?.indexOf(object) !== -1) {
             set !== undefined && (result!.push(set));
           }
         }
@@ -389,7 +411,27 @@ export const getSetsFromFormula = (formula: SetsFormula | undefined, references:
   return result;
 }
 
-export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, references: References): Class | undefined => {
+export const getObjectFromAsinoObject = (asinoObject: AsinoObject | undefined, references: References): Object | undefined => {
+  let result: Object | undefined = undefined;
+
+  if (asinoObject === undefined) {
+    // do nothing
+  } else if (typeof asinoObject === 'string') {
+    references.objects.forEach(objectReference => {
+      if (objectReference.id === asinoObject) {
+        result = getObjectFromAsinoObject(objectReference.value, references.clone());
+      }
+    });
+  } else if (isObjectObject(asinoObject)) {
+    result = asinoObject;
+  } else {
+    console.log('asinoObject', asinoObject);
+  }
+
+  return result;
+}
+
+export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, references: References, solution: Solution): Class | undefined => {
   let result: Class | undefined = undefined;
 
   if (asinoClass === undefined) {
@@ -397,15 +439,17 @@ export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, refer
   } else if (typeof asinoClass === 'string') {
     references.classes.forEach(classReference => {
       if (classReference.id === asinoClass) {
-        result = getClassFromAsinoClass(classReference.value, references.clone());
+        result = getClassFromAsinoClass(classReference.value, references.clone(), solution);
       }
     });
   } else if (isClassClass(asinoClass)) {
     result = asinoClass;
+  } else if (isClassFormula(asinoClass)) {
+    result = getClassFromFormula(asinoClass, references.clone(), solution);
   } else {
     const newAsinoClass = getClassFromClassReference(asinoClass, references.clone());
 
-    result = getClassFromAsinoClass(newAsinoClass, references.clone());
+    result = getClassFromAsinoClass(newAsinoClass, references.clone(), solution);
   }
 
   return result;
@@ -439,6 +483,42 @@ export const getSetsFromAsinoSets = (sets: AsinoSets | undefined, references: Re
   return result;
 }
 
+export const getClassIdFromFormula = (formula: ClassFormula | undefined, references: References, solution: Solution): string | undefined => {
+  let result: string | undefined = undefined;
+
+  if (formula?.operator === undefined) {
+    // do nothing
+  } else {
+    if (formula.operator === 'CLASS_OF_OBJECT') {
+      const object = getObjectIdFromAsinoObject(formula.objectInput, references.clone());
+      const solutionClass = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === object)[0];
+      result = getClassIdFromAsinoClass(solutionClass?.classId, references.clone(), solution);
+    } else {
+      console.log('formula', formula);
+    }
+  }
+
+  return result;
+}
+
+export const getClassFromFormula = (formula: ClassFormula | undefined, references: References, solution: Solution): Class | undefined => {
+  let result: Class | undefined = undefined;
+
+  if (formula?.operator === undefined) {
+    // do nothing
+  } else {
+    if (formula.operator === 'CLASS_OF_OBJECT') {
+      const object = getObjectIdFromAsinoObject(formula.objectInput, references.clone());
+      const solutionClass = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === object)[0];
+      result = getClassFromAsinoClass(solutionClass?.classId, references.clone(), solution);
+    } else {
+      console.log('formula', formula);
+    }
+  }
+
+  return result;
+}
+
 export const getBooleanFromFormula = (formula: BooleanFormula | undefined, references: References, solution: Solution): boolean | undefined => {
   let result: boolean | undefined = undefined;
 
@@ -456,7 +536,7 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
         setResult !== true && (result = false);
       });
     } else if (formula.operator === 'IS_EACH_OBJECT') {
-      const objects = getObjectsFromAsinoObjects(formula.objectsInput, references.clone());
+      const objects = getObjectIdsFromAsinoObjects(formula.objectsInput, references.clone());
 
       result = true;
 
@@ -466,26 +546,42 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
         objectResult !== true && (result = false);
       });
     } else if (formula.operator === 'IS_OBJECT') {
-      const newRefs = references.clone().addObjects([[{ id: getObjectFromAsinoObject(formula.objectOutput, references.clone()), value: references.object }]]);
+      const newRefs = references.clone().addObjects([[{ id: getObjectIdFromAsinoObject(formula.objectOutput, references.clone()), value: references.object }]]);
 
       result = getBooleanFromAsinoBoolean(formula.boolean, newRefs, solution);
     } else if (formula.operator === 'IS_OBJECT_CLASS') {
-      const solutionClass = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === getObjectFromAsinoObject(references.object, references.clone()))[0];
-      const asinoClass = getClassFromAsinoClass(solutionClass?.classId, references.clone());
+      const fixedObject = getObjectFromAsinoObject(references.object, references.clone());
+      const solutionObject = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === getObjectIdFromAsinoObject(references.object, references.clone()))[0];
+
+      const asinoClass = getClassIdFromAsinoClass(fixedObject?.class ?? solutionObject?.classId, references.clone(), solution);
       const newReferences = references.clone().setClass(asinoClass);
       typeof formula.classOutput === 'string' && newReferences.addClasses([[{ id: formula.classOutput, value: asinoClass }]]);
 
       result = getBooleanFromAsinoBoolean(formula.boolean, newReferences, solution);
     } else if (formula.operator === 'IS_EACH_CLASS_DIFFERENT') {
-      const classes: (Class | undefined)[] = [];
+      let classes: (string | undefined)[] = [];
 
       const asinoClasses = getClassesFromAsinoClasses(formula.classesInput, references.clone());
 
       asinoClasses?.forEach((asinoClass: AsinoClass) => {
-        classes.push(getClassFromAsinoClass(asinoClass, references.clone()));
+        classes.push(getClassIdFromAsinoClass(asinoClass, references.clone(), solution));
       });
 
-      console.log('classes', classes);
+      classes.push(references.fixedClassId);
+
+      classes = classes.filter(asinoClass => asinoClass !== undefined);
+
+      result = true;
+      let index = 0;
+
+      while (result && index < classes.length - 1) {
+        const class1 = classes[index]!;
+        const class2 = classes[index + 1]!;
+
+        class1 === class2 && (result = false);
+
+        index++;
+      }
     } else {
       console.log('formula', formula);
     }

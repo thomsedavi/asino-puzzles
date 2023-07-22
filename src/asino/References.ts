@@ -17,6 +17,8 @@ export class References {
   object: AsinoObject | undefined;
   set: AsinoSet | undefined;
 
+  fixedClassId: string | undefined;
+
   constructor() {
     this.booleans = [];
     this.classes = [];
@@ -39,6 +41,8 @@ export class References {
     refClone.class = this.class;
     refClone.object = this.object;
     refClone.set = this.set;
+
+    refClone.fixedClassId = this.fixedClassId;
 
     return refClone;
   }
@@ -105,6 +109,12 @@ export class References {
 
   setSet = (set: AsinoSet | undefined): References => {
     set !== undefined && (this.set = set);
+
+    return this;
+  }
+
+  setFixedClassId = (fixedClassId: string | undefined): References => {
+    fixedClassId !== undefined && (this.fixedClassId = fixedClassId);
 
     return this;
   }

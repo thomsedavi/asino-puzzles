@@ -1,5 +1,5 @@
 import React from "react"
-import { AsinoLayer, AsinoPuzzle, Solution } from "../interfaces";
+import { AsinoPuzzle, Solution } from "../interfaces";
 import { drawLine } from "./Line";
 import { drawInterface, drawInterfaceInteractive } from "./Interface";
 import { drawCircle } from "./Circle";
@@ -8,7 +8,8 @@ import { drawPath } from "./Path";
 import { StrokeWidth } from "../consts";
 import { Number } from "../types/Number";
 import { References } from "../References";
-
+import { AsinoLayer } from "../types/Layer";
+import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, selectedObjectId?: string): JSX.Element => {
   if (layer.line !== undefined) {
@@ -17,8 +18,12 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     return drawLine([layerLine, layer.line], references.clone().addNumbers([puzzle.numbers]).addColors([layerLine?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: puzzle.defaults?.[StrokeWidth] ?? { numerator: 1, denominator: 200 } }, key);
   } else if (layer.interface !== undefined) {
     const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interface?.id)[0];
+    const object1 = getObjectFromAsinoObject(layerInterface?.value?.objectId, new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addObjects([puzzle.objects]));
+    const object2 = getObjectFromAsinoObject(layer.objectId, new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addObjects([puzzle.objects]));
+    const class1 = getClassIdFromAsinoClass(object1?.class, new References().addClasses([puzzle.classes]), solution);
+    const class2 = getClassIdFromAsinoClass(object2?.class, new References().addClasses([puzzle.classes]), solution);
 
-    return drawInterface(puzzle, [layerInterface, layer.interface], [layerInterface?.value?.collectionId, layer.collectionId], [layerInterface?.value?.objectId, layer.objectId], [layerInterface?.value?.fixedClassId, layer.fixedClassId], solution, references.clone().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addColors([layer?.colors, layer.interface?.colors]).addClasses([puzzle.classes]), { value: puzzle.defaults?.interfaceWidthValue ?? { numerator: 1, denominator: 9 } }, { value: puzzle.defaults?.interfaceHeightValue ?? { numerator: 1, denominator: 9 } }, key, selectedObjectId);
+    return drawInterface(puzzle, [layerInterface, layer.interface], [layerInterface?.value?.collectionId, layer.collectionId], [layerInterface?.value?.objectId, layer.objectId], [class1, class2], solution, references.clone().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addColors([layer?.colors, layer.interface?.colors]).addClasses([puzzle.classes]).addObjects([puzzle.objects]), { value: puzzle.defaults?.interfaceWidthValue ?? { numerator: 1, denominator: 9 } }, { value: puzzle.defaults?.interfaceHeightValue ?? { numerator: 1, denominator: 9 } }, key, selectedObjectId);
   } else if (layer.circle !== undefined) {
     const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circle?.id)[0];
 
@@ -46,8 +51,10 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
     if (layer.interface !== undefined) {
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interface?.id)[0];
+      const object1 = getObjectFromAsinoObject(layerInterface?.value?.objectId, new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addObjects([puzzle.objects]));
+      const object2 = getObjectFromAsinoObject(layer.objectId, new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]).addObjects([puzzle.objects]));
 
-      layer.fixedClassId === undefined && layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.value?.collectionId, layer.collectionId], [layerInterface?.value?.objectId, layer.objectId], new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]), { value: puzzle.defaults?.interfaceWidthValue ?? { numerator: 1, denominator: 9 } }, { value: puzzle.defaults?.interfaceHeightValue ?? { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+      object1 === undefined && object2 === undefined && layers.push(drawInterfaceInteractive([layerInterface, layer.interface], [layerInterface?.value?.collectionId, layer.collectionId], [layerInterface?.value?.objectId, layer.objectId], new References().addNumbers([puzzle.numbers, layer.numbers, layer.interface?.numbers]), { value: puzzle.defaults?.interfaceWidthValue ?? { numerator: 1, denominator: 9 } }, { value: puzzle.defaults?.interfaceHeightValue ?? { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     }
   });
 

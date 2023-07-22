@@ -1,11 +1,12 @@
 import React from "react"
-import { AsinoLayer, AsinoPuzzle, Solution } from "../interfaces"
+import { AsinoPuzzle, Solution } from "../interfaces"
 import { getClassFromAsinoClass, getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
 import { Height, Width, X, Y } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
 import { References } from "../References";
+import { AsinoLayer } from "../types/Layer";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
@@ -22,6 +23,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 
   fixedClassIds.forEach((fixedClassId: string | undefined) => {
     fixedClassId !== undefined && (interfaceClassId = fixedClassId);
+    references.setFixedClassId(fixedClassId);
   });
 
   const x = getNumberFromLayer(interfaces, references.clone(), X, { value: 0 });
@@ -44,7 +46,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
       const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 
       if (selectedClass !== undefined) {
-        const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]));
+        const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
 
         asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
           innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, selectedObjectId));
