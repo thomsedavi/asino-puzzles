@@ -1,12 +1,15 @@
 import React from 'react';
 import { User } from '../common/interfaces';
-import { AsinoPuzzle, Solution, Test } from './interfaces';
+import { AsinoPuzzle, Solution } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Container, Heading1, Overlay, Placeholder } from '../common/styled';
-import { EditToggleButton } from '../common/components';
+import { Button, ButtonGroup, Code, Container, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder } from '../common/styled';
+import { EditToggleButton, EditableElementHeading1 } from '../common/components';
 import { drawView } from './svg/View';
 import { drawControls } from './svg/Controls';
+import Utils from '../common/utils';
+import { useState } from '../common/saveState';
+import { postAsino, putAsino } from '../common/fetchers';
 
 interface AsinoProps {
   user?: User | null;
@@ -21,19 +24,21 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
+  const [inputValue, setInputValue] = React.useState<string | undefined>();
+  const [solution, setSolution] = React.useState<Solution>({});
+  const [editingValue, setEditingValue] = React.useState<string | undefined>();
   const [isBurgerOpen, setIsBurgerOpen] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [asinoPuzzle] = React.useState<AsinoPuzzle | undefined>(
+  const [asinoPuzzle, setAsinoPuzzle] = React.useState<AsinoPuzzle | undefined>(
     useLoaderData() as AsinoPuzzle ??
     (props.mode === 'create' && defaultGame) ??
     undefined
   );
   const [selectedCollectionId, setSelectedCollectionId] = React.useState<string | undefined>(undefined);
   const [selectedObjectId, setSelectedObjectId] = React.useState<string | undefined>(undefined);
-  const [solution, setSolution] = React.useState<Solution>({});
-  //const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
-  //const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
-  //const state = useState();
+  const [isWorking, setIsWorking] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
+  const state = useState();
 
   const onClickLoader = () => {
     setIsLoading(true);
@@ -51,14 +56,20 @@ const Asino = (props: AsinoProps): JSX.Element => {
     </>
   }
 
+  const saveName = () => {
+    setAsinoPuzzle({ ...asinoPuzzle, title: Utils.tidyString(inputValue) });
+    setInputValue(undefined);
+    setEditingValue(undefined);
+  }
+
   const onSelectClassId = (selectedClassId: string) => {
-    const selectedClass = Test.collections
+    const selectedClass = asinoPuzzle.collections
       ?.filter(collection => collection.id === selectedCollectionId)[0]
       ?.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
 
 
     if (selectedClass !== undefined && selectedClass.id !== undefined) {
-      const currentSolution = {...solution};
+      const currentSolution = { ...solution };
 
       if (currentSolution.selectedClasses === undefined) {
         currentSolution.selectedClasses = [];
@@ -78,18 +89,115 @@ const Asino = (props: AsinoProps): JSX.Element => {
     }
   }
 
+  const create = () => {
+    if (isWorking) {
+      return;
+    }
+
+    setErrorMessage(undefined);
+    setIsWorking(true);
+
+    postAsino(asinoPuzzle)
+      .then((response: AsinoPuzzle | string | undefined) => {
+        if (response && typeof response !== 'string') {
+          setAsinoPuzzle(response);
+          setIsWorking(false);
+          setMode('update');
+          state.showFlash('Game created!', 'opposite');
+        } else if (response && typeof response === 'string') {
+          setIsWorking(false);
+          setErrorMessage(response);
+          state.showFlash('Error!', 'failure');
+        } else {
+          setIsWorking(false);
+          setErrorMessage('Unknown Error');
+          state.showFlash('Error!', 'failure');
+        }
+      })
+      .catch(() => {
+        setIsWorking(false);
+        setErrorMessage('Unknown Error');
+        state.showFlash('Error!', 'failure');
+      });
+  }
+
+  const update = () => {
+    if (isWorking) {
+      return;
+    }
+
+    setErrorMessage(undefined);
+    setIsWorking(true);
+
+    putAsino(asinoPuzzle)
+      .then((response: AsinoPuzzle | undefined | string) => {
+        if (response && typeof response !== 'string') {
+          setAsinoPuzzle(response);
+          setIsWorking(false);
+          state.showFlash('Game Updated!', 'opposite');
+        } else if (response && typeof response === 'string') {
+          setIsWorking(false);
+          setErrorMessage(response);
+          state.showFlash('Error!', 'failure');
+        } else {
+          setIsWorking(false);
+          setErrorMessage('Unknown Error');
+          state.showFlash('Error!', 'failure');
+        }
+      })
+      .catch(() => {
+        setIsWorking(false);
+        setErrorMessage('Unknown Error');
+        state.showFlash('Error!', 'failure');
+      });
+  }
+
+  const isEditable = mode !== 'read' && props.user !== undefined && props.user !== null && asinoPuzzle.userId === props.user?.id;
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(`${window.location.origin}/asinoes/${asinoPuzzle.id}`);
+    state.showFlash('Link copied!', 'accent');
+  }
+
   const toggleButtonMode: 'create' | 'read' | 'update' = mode === 'read' ? (asinoPuzzle.id === undefined ? 'create' : 'update') : 'read';
 
   return <>
     <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
     <Container>
       {(mode === 'create' || props.user?.id === asinoPuzzle.userId) && <EditToggleButton mode={mode} onClick={() => setMode(toggleButtonMode)} />}
+      <EditableElementHeading1
+        editState={mode !== 'read' && isEditable ? (editingValue === 'TITLE' ? 'editing' : 'editable') : 'disabled'}
+        value={asinoPuzzle.title ?? 'Asino Puzzle'}
+        inputValue={inputValue}
+        onClickEdit={() => { setEditingValue('TITLE'); setInputValue(asinoPuzzle.title ?? 'Asino Puzzle'); }}
+        onChange={(value: string) => setInputValue(value)}
+        onClickSave={saveName}
+        onClickCancel={() => { setInputValue(undefined); setEditingValue(undefined) }}
+        placeholder='Asino Puzzle Title'
+        isWorking={isWorking}
+      />
       <div>
-        {drawView(Test, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
+        {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
       </div>
       <div>
-        {drawControls(Test, solution, onSelectClassId, selectedCollectionId)}
+        {drawControls(asinoPuzzle, solution, onSelectClassId, selectedCollectionId)}
       </div>
+      {mode !== 'read' && isEditable && <>
+        <ButtonGroup>
+          {mode === 'create' && <Button disabled={isWorking} onClick={create}>Create</Button>}
+          {mode === 'update' && <Button disabled={isWorking} onClick={update}>Update</Button>}
+        </ButtonGroup>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </>}
+      {mode === 'update' && <>
+        <Paragraph>Link for this game:<br />
+          <Code>{window.location.origin}/asinoes/{asinoPuzzle.id}</Code>
+        </Paragraph>
+        <ButtonGroup>
+          <Button onClick={copyLink}>Copy Link to Clipboard</Button>
+        </ButtonGroup>
+      </>}
+      {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
     </Container>
     {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
   </>;

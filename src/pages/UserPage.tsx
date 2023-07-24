@@ -2,12 +2,12 @@ import React from 'react';
 import Modal from 'react-modal';
 import { useLoaderData } from 'react-router-dom';
 import { EditableElementDocument, EditableElementHeading1, EditToggleButton } from '../common/components';
-import { deleteLexicologer, putUser } from '../common/fetchers';
+import { deleteAsino, deleteLexicologer, putUser } from '../common/fetchers';
 import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Container, Heading1, Overlay, Placeholder, Flash, Heading2, Table, TableRow, TableHeader, ColumnGroup, Column, TableCell, TableCellAction, TextLink, TableCellLink, ButtonGroup, Button, Paragraph, Emphasis, ErrorMessage } from '../common/styled';
 import Utils from '../common/utils';
-import { LexicologerGame, LexicologerSummary, User } from '../common/interfaces';
+import { AsinoPuzzle, AsinoSummary, LexicologerGame, LexicologerSummary, User } from '../common/interfaces';
 import Layout from './Layout';
 
 interface UserPageProps {
@@ -24,6 +24,9 @@ const UserPage = (props: UserPageProps): JSX.Element => {
   const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
   const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
   const [ user, setUser ] = React.useState<User>(useLoaderData() as User);
+  const [ asinoSortColumn, setAsinoSortColumn ] = React.useState<'title' | 'date'>('title');
+  const [ asinoSortOrder, setAsinoSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
+  const [ asinoToDelete, setAsinoToDelete ] = React.useState<string | undefined>(undefined);
   const [ lexicologerSortColumn, setLexicologerSortColumn ] = React.useState<'title' | 'date'>('title');
   const [ lexicologerSortOrder, setLexicologerSortOrder ] = React.useState<'descending' | 'ascending'>('descending');
   const [ lexicologerToDelete, setLexicologerToDelete ] = React.useState<string | undefined>(undefined);
@@ -111,6 +114,40 @@ const UserPage = (props: UserPageProps): JSX.Element => {
       });
   }
 
+  const confirmDeleteAsino = () => {
+    if (asinoToDelete === undefined)
+      return;
+
+    setErrorMessage(undefined);
+    setIsWorking(true);
+
+    deleteAsino(asinoToDelete)
+      .then((response: boolean) => {
+        if (response) {
+          const asinoes = user.asinoes ?? [];
+
+          const asino = asinoes.find(asino => asino.id === asinoToDelete)!;
+          const index = asinoes.indexOf(asino);
+          
+          asinoes.splice(index, 1);
+
+          setUser({...user, asinoes: asinoes});
+          setIsWorking(false);
+          setAsinoToDelete(undefined);
+          state.showFlash('Asino Deleted!', 'opposite');
+        } else {
+          setIsWorking(false);
+          setErrorMessage('Unknown Error');
+          state.showFlash('Error!', 'failure');
+        }
+      })
+      .catch(() => {
+        setIsWorking(false);
+        setErrorMessage('Unknown Error');
+        state.showFlash('Error!', 'failure');
+      });
+  }
+
   const confirmDeleteLexicologer = () => {
     if (lexicologerToDelete === undefined)
       return;
@@ -147,6 +184,40 @@ const UserPage = (props: UserPageProps): JSX.Element => {
 
   const onClickLoader = () => {
     setIsLoading(true);
+  }
+
+  const toggleAsinoSort = (columnName: 'title' | 'date') => {
+    if (columnName === 'title') {
+      if (asinoSortColumn === 'title') {
+        setAsinoSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
+      } else {
+        setAsinoSortColumn('title');
+        setAsinoSortOrder('descending');
+      }
+    } else {
+      if (asinoSortColumn === 'date') {
+        setAsinoSortOrder(value => value === 'ascending' ? 'descending' : 'ascending');
+      } else {
+        setAsinoSortColumn('date');
+        setAsinoSortOrder('descending');
+      }
+    }
+  }
+
+  const asinoSort = (a: AsinoPuzzle, b: AsinoPuzzle): number => {
+    if (asinoSortColumn === 'title') {
+      if (asinoSortOrder === 'ascending') {
+        return (a.title ?? '') > (b.title ?? '') ? 1 : -1;
+      } else {
+        return (a.title ?? '') > (b.title ?? '') ? -1 : 1;
+      }
+    } else {
+      if (asinoSortOrder === 'ascending') {
+        return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? 1 : -1;
+      } else {
+        return (a.dateCreated ?? '') > (b.dateCreated ?? '') ? -1 : 1;
+      }
+    }
   }
 
   const toggleLexicologerSort = (columnName: 'title' | 'date') => {
@@ -209,6 +280,62 @@ const UserPage = (props: UserPageProps): JSX.Element => {
                                  placeholder='User Biography'
                                  errorMessage={errorMessage} />
         {state.flash.state !== 'hide' && <Flash color={state.flash.color} isFading={state.flash.state === 'fade'}>{state.flash.message}</Flash>}
+        {user.id === props.userId && (user.asinoes?.length ?? 0) > 0 && <>
+          <Heading2>Asino Puzzles</Heading2>
+          <Table>
+            <ColumnGroup>
+              <Column smallWidth='10.2em' mediumWidth='24.2em' largeWidth='26.2em' />
+              <Column smallWidth='6.2em' mediumWidth='6.2em' largeWidth='6.2em' />
+              <Column width='4.6em' />
+            </ColumnGroup>
+            <thead>
+              <TableRow>
+                <TableHeader clickable title='Title' onClick={() => toggleAsinoSort('title')}>Title{asinoSortColumn === 'title' ? [' ', <Icon key='titleSort' title='sort' type={asinoSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='titleBlank' title='sort' />]}</TableHeader>
+                <TableHeader clickable title='Date' onClick={() => toggleAsinoSort('date')}>Date{asinoSortColumn === 'date' ? [' ', <Icon key='dateSort' title='sort' type={asinoSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='dateBlank' title='sort' />]}</TableHeader>
+                <TableHeader title='Actions'>Actions</TableHeader>
+              </TableRow>
+            </thead>
+            <tbody>
+              {user.asinoes?.sort(asinoSort).map((asino: AsinoSummary, index: number) => <TableRow key={`asino${index}`}>
+                <TableCell>
+                  <TextLink href={`/asinoes/${asino.id}`} onClick={onClickLoader}>{asino.title}</TextLink>
+                </TableCell>
+                  <TableCell textAlign='center'>
+                  {asino.dateCreated !== undefined ? Utils.formatDate(asino.dateCreated) : '(unknown)'}
+                </TableCell>
+                <TableCell textAlign='center'>
+                  <TableCellLink marginRight href={`/asinoes/${asino.id}/edit`} onClick={onClickLoader}><Icon title='edit' type='pencil' fillSecondary='--accent' /></TableCellLink>
+                  <TableCellAction onClick={() => setAsinoToDelete(asino.id)}><Icon title='delete' fillSecondary='--opposite' type='delete'/></TableCellAction>
+                </TableCell>
+              </TableRow>)}
+            </tbody>
+          </Table>
+        </>}
+        {user.id !== props.userId && (user.asinoes?.length ?? 0) > 0 && <>
+          <Heading2>Asinoes</Heading2>
+          <Table>
+            <ColumnGroup>
+              <Column smallWidth='14.8em' mediumWidth='28.8em' largeWidth='30.8em' />
+              <Column smallWidth='6.2em' mediumWidth='6.2em' largeWidth='6.2em' />
+            </ColumnGroup>
+            <thead>
+              <TableRow>
+                <TableHeader clickable title='Title' onClick={() => toggleAsinoSort('title')}>Title{asinoSortColumn === 'title' ? [' ', <Icon key='titleSort' title='sort' type={asinoSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='titleBlank' title='sort' />]}</TableHeader>
+                <TableHeader clickable title='Date' onClick={() => toggleAsinoSort('date')}>Date{asinoSortColumn === 'date' ? [' ', <Icon key='dateSort' title='sort' type={asinoSortOrder === 'ascending' ? 'up' : 'down'} />] : [' ', <Icon key='dateBlank' title='sort' />]}</TableHeader>
+              </TableRow>
+            </thead>
+            <tbody>
+              {user.asinoes?.sort(asinoSort).map((asino: AsinoSummary, index: number) => <TableRow key={`asino${index}`}>
+                <TableCell>
+                  <TextLink href={`/asinoes/${asino.id}`} onClick={onClickLoader}>{asino.title}</TextLink>
+                </TableCell>
+                <TableCell>
+                  {asino.dateCreated !== undefined ? Utils.formatDate(asino.dateCreated) : '(unknown)'}
+                </TableCell>
+              </TableRow>)}
+            </tbody>
+          </Table>
+        </>}
         {user.id === props.userId && (user.lexicologers?.length ?? 0) > 0 && <>
           <Heading2>Lexicologers</Heading2>
           <Table>
@@ -267,6 +394,22 @@ const UserPage = (props: UserPageProps): JSX.Element => {
         </>}
       </Container>
       {isLoading && <Overlay><Placeholder>…</Placeholder></Overlay>}
+      <Modal
+        isOpen={asinoToDelete !== undefined}
+        onRequestClose={() => setAsinoToDelete(undefined)}
+        className="modal"
+        overlayClassName="modal-overlay"
+        style={{}}
+        contentLabel="Delete Asino"
+      >
+        <Heading2>Delete Asino</Heading2>
+        <Paragraph>Are you sure you want to delete <Emphasis>{user.asinoes?.find(l => l.id === asinoToDelete)?.title}</Emphasis>?</Paragraph>
+        <ButtonGroup>
+          <Button disabled={isWorking} onClick={confirmDeleteAsino}>Delete</Button>
+          <Button disabled={isWorking} onClick={() => { setErrorMessage(undefined); setAsinoToDelete(undefined) ;}}>Cancel</Button>
+        </ButtonGroup>
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+      </Modal>
       <Modal
         isOpen={lexicologerToDelete !== undefined}
         onRequestClose={() => setLexicologerToDelete(undefined)}

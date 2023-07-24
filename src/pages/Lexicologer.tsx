@@ -21,23 +21,23 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
     userName: props.user.name,
     title: 'Lexicologer Game',
     characterLimit: 140,
-    details: { sections: [ { type: 'PARAGRAPH', element: { text: 'Try to write something within the character limit that makes use of all the words listed below' } } ] },
-    requiredWords: []    
+    details: { sections: [{ type: 'PARAGRAPH', element: { text: 'Try to write something within the character limit that makes use of all the words listed below' } }] },
+    requiredWords: []
   } : undefined;
 
-  const [ mode, setMode ] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [ inputValue, setInputValue ] = React.useState<string | undefined>();
-  const [ solutionValue, setSolutionValue ] = React.useState<string>('');
-  const [ editingValue, setEditingValue ] = React.useState<string | undefined>();
-  const [ isBurgerOpen, setIsBurgerOpen ] = React.useState<boolean>(false);
-  const [ isLoading, setIsLoading ] = React.useState(false);
-  const [ lexicologerGame, setLexicologerGame ] = React.useState<LexicologerGame | undefined>(
+  const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
+  const [inputValue, setInputValue] = React.useState<string | undefined>();
+  const [solutionValue, setSolutionValue] = React.useState<string>('');
+  const [editingValue, setEditingValue] = React.useState<string | undefined>();
+  const [isBurgerOpen, setIsBurgerOpen] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [lexicologerGame, setLexicologerGame] = React.useState<LexicologerGame | undefined>(
     useLoaderData() as LexicologerGame ??
     (props.mode === 'create' && defaultGame) ??
     undefined
   );
-  const [ isWorking, setIsWorking ] = React.useState<boolean>(false);
-  const [ errorMessage, setErrorMessage ] = React.useState<string | undefined>();
+  const [isWorking, setIsWorking] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | undefined>();
   const state = useState();
 
   const onClickLoader = () => {
@@ -144,7 +144,7 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
         } else {
           setIsWorking(false);
           setErrorMessage('Unknown Error');
-          state.showFlash('Error!', 'failure');  
+          state.showFlash('Error!', 'failure');
         }
       })
       .catch(() => {
@@ -163,26 +163,26 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
     setIsWorking(true);
 
     putLexicologer(lexicologerGame)
-    .then((response: LexicologerGame | undefined | string) => {
-      if (response && typeof response !== 'string') {
-        setLexicologerGame(response);
-        setIsWorking(false);
-        state.showFlash('Game Updated!', 'opposite');
-      } else if (response && typeof response === 'string') {
-        setIsWorking(false);
-        setErrorMessage(response);
-        state.showFlash('Error!', 'failure');
-      } else {
+      .then((response: LexicologerGame | undefined | string) => {
+        if (response && typeof response !== 'string') {
+          setLexicologerGame(response);
+          setIsWorking(false);
+          state.showFlash('Game Updated!', 'opposite');
+        } else if (response && typeof response === 'string') {
+          setIsWorking(false);
+          setErrorMessage(response);
+          state.showFlash('Error!', 'failure');
+        } else {
+          setIsWorking(false);
+          setErrorMessage('Unknown Error');
+          state.showFlash('Error!', 'failure');
+        }
+      })
+      .catch(() => {
         setIsWorking(false);
         setErrorMessage('Unknown Error');
         state.showFlash('Error!', 'failure');
-      }
-    })
-    .catch(() => {
-      setIsWorking(false);
-      setErrorMessage('Unknown Error');
-      state.showFlash('Error!', 'failure');
-    });
+      });
   }
 
   const isEditable = mode !== 'read' && props.user !== undefined && props.user !== null && lexicologerGame.userId === props.user?.id;
@@ -213,7 +213,7 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
       />
       <TableCell textAlign='center'>
         <TableCellAction marginRight onClick={() => !isWorking && randomiseWord(index)}><Icon title='random' type='switch' fillPrimary='--color' /></TableCellAction>
-        <TableCellAction onClick={() => !isWorking && deleteRequiredWord(index)}><Icon title='delete' fillSecondary='--opposite' type='delete'/></TableCellAction>
+        <TableCellAction onClick={() => !isWorking && deleteRequiredWord(index)}><Icon title='delete' fillSecondary='--opposite' type='delete' /></TableCellAction>
       </TableCell>
     </TableRow>;
   });
@@ -338,10 +338,10 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
       {mode !== 'read' && isEditable && <>
         <InputGroup>
           <SingleNumberInput id='CharacterLimit'
-                             label='Character Limit'
-                             value={lexicologerGame.characterLimit ?? 140}
-                             onChange={(value: string) => setCharacterLimit(value)}
-                             isWorking={isWorking} />
+            label='Character Limit'
+            value={lexicologerGame.characterLimit ?? 140}
+            onChange={(value: string) => setCharacterLimit(value)}
+            isWorking={isWorking} />
         </InputGroup>
         <Information>
           The Primary Word will display in the list of Required Words (for example, "love")<br />
@@ -416,14 +416,14 @@ const Lexicologer = (props: LexicologerProps): JSX.Element => {
 export default Lexicologer;
 
 const exampleRequiredWords: LexicologerRequiredWord[] = [
-  {primaryWord: 'love', secondaryWords: ['lov*', '*love*']},
-  {primaryWord: 'loss', secondaryWords: ['lose', '*less', 'lost']},
-  {primaryWord: 'hope', secondaryWords: ['hope*', 'hoping']},
-  {primaryWord: 'magic', secondaryWords: ['magic*']},
-  {primaryWord: 'cold', secondaryWords: ['cold*']},
-  {primaryWord: 'hot', secondaryWords: ['hot*', 'heat*']},
-  {primaryWord: 'summer', secondaryWords: ['summer*']},
-  {primaryWord: 'winter', secondaryWords: ['winter*']},
+  { primaryWord: 'love', secondaryWords: ['lov*', '*love*'] },
+  { primaryWord: 'loss', secondaryWords: ['lose', '*less', 'lost'] },
+  { primaryWord: 'hope', secondaryWords: ['hope*', 'hoping'] },
+  { primaryWord: 'magic', secondaryWords: ['magic*'] },
+  { primaryWord: 'cold', secondaryWords: ['cold*'] },
+  { primaryWord: 'hot', secondaryWords: ['hot*', 'heat*'] },
+  { primaryWord: 'summer', secondaryWords: ['summer*'] },
+  { primaryWord: 'winter', secondaryWords: ['winter*'] },
 ];
 
 // everything below here is borrowed directly from my old Lotographia website, which is why it doesn't match other stuff on this website
