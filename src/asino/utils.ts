@@ -1,6 +1,6 @@
 import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { Solution } from "./interfaces";
+import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoColor, ColorFormula, isColorFormula } from "./types/Color";
@@ -736,6 +736,32 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
       }
     }
   });
+
+  return result;
+}
+
+export const minifyAsino = (asino: AsinoPuzzle): any => {
+  const result: any = {};
+
+  asino.userId !== undefined && (result.a = asino.userId);
+  asino.userName !== undefined && (result.b = asino.userName);
+  asino.title !== undefined && (result.c = asino.title);
+  asino.dateCreated !== undefined && (result.d = asino.dateCreated);
+  asino.dateUpdated !== undefined && (result.e = asino.dateUpdated);
+  asino.id !== undefined && (result.f = asino.id);
+
+  return result;
+}
+
+export const unminifyAsino = (asino: any): AsinoPuzzle => {
+  const result: AsinoPuzzle = {};
+
+  asino.a !== undefined && (result.userId = asino.a);
+  asino.b !== undefined && (result.userName = asino.b);
+  asino.c !== undefined && (result.title = asino.c);
+  asino.d !== undefined && (result.dateCreated = asino.d);
+  asino.e !== undefined && (result.dateUpdated = asino.e);
+  asino.f !== undefined && (result.id = asino.f);
 
   return result;
 }

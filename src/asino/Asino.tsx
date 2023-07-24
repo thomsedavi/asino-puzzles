@@ -3,7 +3,7 @@ import { User } from '../common/interfaces';
 import { AsinoPuzzle, Solution } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Button, ButtonGroup, Code, Container, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder } from '../common/styled';
+import { Button, ButtonGroup, Code, Container, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Tab, TabGroup } from '../common/styled';
 import { EditToggleButton, EditableElementHeading1 } from '../common/components';
 import { drawView } from './svg/View';
 import { drawControls } from './svg/Controls';
@@ -24,6 +24,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
+  const [selectedTab, setSelectedTab] = React.useState<'booleans' | 'numbers' | undefined>('booleans');
   const [inputValue, setInputValue] = React.useState<string | undefined>();
   const [solution, setSolution] = React.useState<Solution>({});
   const [editingValue, setEditingValue] = React.useState<string | undefined>();
@@ -176,6 +177,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
         placeholder='Asino Puzzle Title'
         isWorking={isWorking}
       />
+      {mode !== 'read' && isEditable && <>
+        <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
+          <Tab selected={selectedTab === 'booleans'} onClick={() => setSelectedTab('booleans')}>Booleans</Tab>
+          <Tab selected={selectedTab === 'numbers'} onClick={() => setSelectedTab('numbers')}>Numbers</Tab>
+        </TabGroup>
+      </>}
       <div>
         {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
       </div>

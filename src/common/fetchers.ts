@@ -1,4 +1,5 @@
 import { AsinoPuzzle } from "../asino/interfaces";
+import { minifyAsino, unminifyAsino } from "../asino/utils";
 import { LexicologerGame, LexicologerSummary, AsinoSummary, User } from "./interfaces";
 
 export const isLocalhost = (): boolean => {
@@ -74,7 +75,7 @@ export const putUser = async (user: User): Promise<User | undefined | string> =>
 
         return Promise.resolve(storedUser);
       } else {
-        return Promise.resolve(undefined);      
+        return Promise.resolve(undefined);
       }
     } else {
       return Promise.resolve(undefined);
@@ -101,7 +102,7 @@ export const getAsino = async (id: string | undefined): Promise<AsinoPuzzle | st
     const storedAsino = window.localStorage.getItem('asino_' + id);
 
     if (storedAsino) {
-      return Promise.resolve(JSON.parse(storedAsino));
+      return Promise.resolve(unminifyAsino(JSON.parse(storedAsino)));
     } else {
       return Promise.resolve(undefined);
     }
@@ -111,7 +112,7 @@ export const getAsino = async (id: string | undefined): Promise<AsinoPuzzle | st
     if (response.status === 200) {
       const json = await response.json();
 
-      return Promise.resolve(json);
+      return Promise.resolve(unminifyAsino(json));
     } else {
       return Promise.resolve(undefined);
     }
@@ -120,28 +121,28 @@ export const getAsino = async (id: string | undefined): Promise<AsinoPuzzle | st
 
 export const putAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | undefined | string> => {
   if (isLocalhost()) {
-      const storedUserString = window.localStorage.getItem('user_0-00');
+    const storedUserString = window.localStorage.getItem('user_0-00');
 
-      if (storedUserString) {
-        const date = getISODate();
-        const storedUser: User = JSON.parse(storedUserString);
+    if (storedUserString) {
+      const date = getISODate();
+      const storedUser: User = JSON.parse(storedUserString);
 
-        storedUser.asinoes?.forEach(userAsino => {
-          userAsino.id === asino.id && (userAsino.dateUpdated = date);
-          userAsino.id === asino.id && (userAsino.title = asino.title);
-        });
+      storedUser.asinoes?.forEach(userAsino => {
+        userAsino.id === asino.id && (userAsino.dateUpdated = date);
+        userAsino.id === asino.id && (userAsino.title = asino.title);
+      });
 
-        asino.dateUpdated = date;
+      asino.dateUpdated = date;
 
-        window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-        window.localStorage.setItem('asino_' + asino.id, JSON.stringify(asino));
+      window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
+      window.localStorage.setItem('asino_' + asino.id, JSON.stringify(minifyAsino(asino)));
 
-        return Promise.resolve(asino);
-      } else {
-        return Promise.resolve(undefined);      
-      }
+      return Promise.resolve(asino);
+    } else {
+      return Promise.resolve(undefined);
+    }
   } else {
-    const response: Response = await fetch(`/api/asinoes/${asino.id}`, { method: 'PUT', body: JSON.stringify(asino) });
+    const response: Response = await fetch(`/api/asinoes/${asino.id}`, { method: 'PUT', body: JSON.stringify(minifyAsino(asino)) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -168,7 +169,7 @@ export const postAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | strin
 
     if (user.asinoes) {
       let idSuffix = user.asinoes.length.toString();
-      
+
       if (idSuffix.length === 1) {
         idSuffix = '00' + idSuffix;
       } else if (idSuffix.length === 2) {
@@ -177,9 +178,9 @@ export const postAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | strin
 
       asino.id = '0-00-' + idSuffix;
 
-      user.asinoes.push({ id: asino.id, title: asino.title, dateCreated: date, dateUpdated: date});
+      user.asinoes.push({ id: asino.id, title: asino.title, dateCreated: date, dateUpdated: date });
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('asino_' + asino.id, JSON.stringify(asino));
+      window.localStorage.setItem('asino_' + asino.id, JSON.stringify(minifyAsino(asino)));
 
       return Promise.resolve(asino);
     } else {
@@ -187,12 +188,12 @@ export const postAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | strin
 
       user.asinoes = [{ id: asino.id, title: asino.title, dateCreated: date, dateUpdated: date }];
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
-      window.localStorage.setItem('asino_0-00-000', JSON.stringify(asino));
+      window.localStorage.setItem('asino_0-00-000', JSON.stringify(minifyAsino(asino)));
 
       return Promise.resolve(asino);
     }
   } else {
-    const response: Response = await fetch('/api/asinoes', { method: 'POST', body: JSON.stringify(asino) });
+    const response: Response = await fetch('/api/asinoes', { method: 'POST', body: JSON.stringify(minifyAsino(asino)) });
 
     if (response.status === 200) {
       const json = await response.json();
@@ -264,26 +265,26 @@ export const getLexicologer = async (id: string | undefined): Promise<Lexicologe
 
 export const putLexicologer = async (lexicologer: LexicologerGame): Promise<LexicologerGame | undefined | string> => {
   if (isLocalhost()) {
-      const storedUserString = window.localStorage.getItem('user_0-00');
+    const storedUserString = window.localStorage.getItem('user_0-00');
 
-      if (storedUserString) {
-        const date = getISODate();
-        const storedUser: User = JSON.parse(storedUserString);
+    if (storedUserString) {
+      const date = getISODate();
+      const storedUser: User = JSON.parse(storedUserString);
 
-        storedUser.lexicologers?.forEach(userLexicologer => {
-          userLexicologer.id === lexicologer.id && (userLexicologer.dateUpdated = date);
-          userLexicologer.id === lexicologer.id && (userLexicologer.title = lexicologer.title);
-        });
+      storedUser.lexicologers?.forEach(userLexicologer => {
+        userLexicologer.id === lexicologer.id && (userLexicologer.dateUpdated = date);
+        userLexicologer.id === lexicologer.id && (userLexicologer.title = lexicologer.title);
+      });
 
-        lexicologer.dateUpdated = date;
+      lexicologer.dateUpdated = date;
 
-        window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
-        window.localStorage.setItem('lexicologer_' + lexicologer.id, JSON.stringify(lexicologer));
+      window.localStorage.setItem('user_0-00', JSON.stringify(storedUser));
+      window.localStorage.setItem('lexicologer_' + lexicologer.id, JSON.stringify(lexicologer));
 
-        return Promise.resolve(lexicologer);
-      } else {
-        return Promise.resolve(undefined);      
-      }
+      return Promise.resolve(lexicologer);
+    } else {
+      return Promise.resolve(undefined);
+    }
   } else {
     const response: Response = await fetch(`/api/lexicologers/${lexicologer.id}`, { method: 'PUT', body: JSON.stringify(lexicologer) });
 
@@ -312,7 +313,7 @@ export const postLexicologer = async (lexicologer: LexicologerGame): Promise<Lex
 
     if (user.lexicologers) {
       let idSuffix = user.lexicologers.length.toString();
-      
+
       if (idSuffix.length === 1) {
         idSuffix = '00' + idSuffix;
       } else if (idSuffix.length === 2) {
@@ -321,7 +322,7 @@ export const postLexicologer = async (lexicologer: LexicologerGame): Promise<Lex
 
       lexicologer.id = '0-00-' + idSuffix;
 
-      user.lexicologers.push({ id: lexicologer.id, title: lexicologer.title, dateCreated: date, dateUpdated: date});
+      user.lexicologers.push({ id: lexicologer.id, title: lexicologer.title, dateCreated: date, dateUpdated: date });
       window.localStorage.setItem('user_0-00', JSON.stringify(user));
       window.localStorage.setItem('lexicologer_' + lexicologer.id, JSON.stringify(lexicologer));
 
