@@ -30,7 +30,7 @@ export const isBooleanFormula = (boolean: AsinoBoolean): boolean is BooleanFormu
   return typeof boolean !== 'string' && typeof boolean !== 'boolean' && 'operator' in boolean;
 }
 
-export const getBooleanRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBooleanReference, key: string, layer: number, update: (value: AsinoBooleanReference) => void): JSX.Element => {
+export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBooleanReference, key: string, layer: number, update: (value: AsinoBooleanReference) => void): JSX.Element => {
   const rowKey = `boolean${key}`;
   let selectValue = 'NONE';
 
@@ -64,7 +64,7 @@ export const getBooleanRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBoolea
     }
   }
 
-  return <div key={rowKey} style={{ backgroundColor: Utils.getRowColor(layer) }}>
+  return <div key={rowKey} style={{ backgroundColor: Utils.getRowColor(layer), marginBottom: '1em' }}>
     <div>{booleanReference.name}</div>
     <select name={`Boolean {${rowKey}} Type`} id={`Boolean {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
@@ -78,18 +78,20 @@ export const getBooleanRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBoolea
       <input type='radio' id={`${rowKey} False`} name={`${rowKey} False`} checked={typeof booleanReference.value === 'boolean' && !booleanReference.value} onChange={() => update({ ...booleanReference, value: false })} />
       <label htmlFor={`${rowKey} False`}>False</label>
     </>}
-    {typeof booleanReference.value === 'string' && <select name={`Boolean {${rowKey}} Id`} id={`Boolean {${rowKey}} Id`} value={booleanReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { update({ ...booleanReference, value: event.target.value }) }}>
+    {typeof booleanReference.value === 'string' && <select name={`Boolean {${rowKey}} Id`} id={`Boolean {${rowKey}} Id`} value={booleanReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: event.target.value })}>
       <option value='NONE'>Select Boolean</option>
       {puzzle.booleans?.filter(b => b.id !== booleanReference.id).map((b, index) => <option key={`${rowKey} Id ${index}`} value={b.id}>{b.name}</option>)}
     </select>}
-    {booleanReference.value !== undefined && isBooleanFormula(booleanReference.value) && <select name={`Boolean {${rowKey}} Formula`} id={`Boolean {${rowKey}} Forumla`} value={booleanReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => { update({ ...booleanReference, value: { operator: getBooleanOperator(event.target.value) } }) }}>
-      <option value='NONE'>Select Formula</option>
-      <option value='IS_OBJECT'>Is Object ...</option>
-      <option value='IS_EACH_OBJECT'>Is Each Object ...</option>
-      <option value='IS_EACH_SET'>Is Each Set ...</option>
-      <option value='IS_OBJECT_CLASS'>Is Object Class ...</option>
-      <option value='IS_EACH_CLASS_DIFFERENT'>Is Each Class Different</option>
-    </select>}
+    {booleanReference.value !== undefined && isBooleanFormula(booleanReference.value) && <>
+      <select name={`Boolean {${rowKey}} Formula`} id={`Boolean {${rowKey}} Forumla`} value={booleanReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: { operator: getBooleanOperator(event.target.value) } })}>
+        <option value='NONE'>Select Formula</option>
+        <option value='IS_OBJECT'>Is Object ...</option>
+        <option value='IS_EACH_OBJECT'>Is Each Object ...</option>
+        <option value='IS_EACH_SET'>Is Each Set ...</option>
+        <option value='IS_OBJECT_CLASS'>Is Object Class ...</option>
+        <option value='IS_EACH_CLASS_DIFFERENT'>Is Each Class Different</option>
+      </select>
+    </>}
   </div>;
 }
 
