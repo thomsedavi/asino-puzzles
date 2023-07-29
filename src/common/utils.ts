@@ -2,7 +2,7 @@ import { Document, Section, Element, AsinoPuzzle, AsinoNumber, AsinoClass, Asino
 
 const numbers = '1234567890';
 
-export const getRandomId = (ids: string[]): string => {
+const getRandomId = (ids: string[]): string => {
   let template = [
     ['#', '-', '#', '#'],
     ['#', '-', '#', '#', '#'],
@@ -37,7 +37,7 @@ const formatDate = (dateString: string): string => {
 // TODO split by words and stuff, this is v basic right now
 const toTitleCase = (value: string | undefined): string | undefined => {
   if (value === undefined)
-     return undefined;
+    return undefined;
 
   const lower = value.toLowerCase();
 
@@ -82,7 +82,7 @@ const convertStringToDocument = (text?: string): Document => {
   const document: Document = {};
 
   if (text) {
-    const sections: Section [] = [];
+    const sections: Section[] = [];
 
     const split: string[] = text.split('\n');
 
@@ -125,7 +125,7 @@ const convertStringToDocument = (text?: string): Document => {
 
         section.elements = bits;
       }
-      
+
       sections.push(section);
     });
 
@@ -139,9 +139,9 @@ const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
   const objects: AsinoObject[] = [];
   const classes: AsinoClass[] = [];
   const numbers: AsinoNumber[] = [
-    { name: 'Cell Size', description: 'Width and Height of Cells', value: 560},
+    { name: 'Cell Size', description: 'Width and Height of Cells', value: 560 },
     { name: 'Size', description: 'View of all Cells', operation: 'PRODUCT', numbers: ['9', 'Cell Size'] },
-    { name: '0', description: '0', value: 0}
+    { name: '0', description: '0', value: 0 }
   ];
   const layers: AsinoLayer[] = [
     { type: 'GROUP', name: 'Layout', description: 'Layout', layers: ['Interfaces', 'Divisions'] }
@@ -179,13 +179,46 @@ const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
   return puzzle;
 }
 
+const getRowColor = (layer: number): string => {
+  const modulus = layer % 12;
+
+  switch (modulus) {
+    case 0:
+      return 'var(--row-0)';
+    case 1:
+      return 'var(--row-1)';
+    case 2:
+      return 'var(--row-2)';
+    case 3:
+      return 'var(--row-3)';
+    case 4:
+      return 'var(--row-4)';
+    case 5:
+      return 'var(--row-5)';
+    case 6:
+      return 'var(--row-6)';
+    case 7:
+      return 'var(--row-7)';
+    case 8:
+      return 'var(--row-8)';
+    case 9:
+      return 'var(--row-9)';
+    case 10:
+      return 'var(--row-10)';
+    default:
+      return 'var(--row-11)';
+  }
+}
+
 const Utils = {
+  getRandomId: getRandomId,
   tidyString: tidyString,
   toTitleCase: toTitleCase,
   convertStringToDocument: convertStringToDocument,
   convertDocumentToString: convertDocumentToString,
   formatDate: formatDate,
-  generateDefaultSudoku: generateDefaultSudoku
+  generateDefaultSudoku: generateDefaultSudoku,
+  getRowColor: getRowColor
 }
 
 export default Utils;

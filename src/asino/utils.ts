@@ -749,6 +749,26 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
   asino.dateCreated !== undefined && (result.d = asino.dateCreated);
   asino.dateUpdated !== undefined && (result.e = asino.dateUpdated);
   asino.id !== undefined && (result.f = asino.id);
+  asino.booleans !== undefined && (result.g = asino.booleans.map((b: AsinoBooleanReference) => minifyBoolean(b)));
+  asino.numbers !== undefined && (result.j = asino.numbers.map((n: AsinoNumberReference) => minifyNumber(n)));
+
+  return result;
+}
+
+const minifyBoolean = (boolean: AsinoBooleanReference): any => {
+  const result: any = {};
+
+  boolean.id !== undefined && (result.h = boolean.id);
+  boolean.name !== undefined && (result.i = boolean.name);
+
+  return result;
+}
+
+const minifyNumber = (number: AsinoNumberReference): any => {
+  const result: any = {};
+
+  number.id !== undefined && (result.k = number.id);
+  number.name !== undefined && (result.l = number.name);
 
   return result;
 }
@@ -762,6 +782,26 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
   asino.d !== undefined && (result.dateCreated = asino.d);
   asino.e !== undefined && (result.dateUpdated = asino.e);
   asino.f !== undefined && (result.id = asino.f);
+  asino.g !== undefined && (result.booleans = asino.g.map((b: any) => unminifyBoolean(b)));
+  asino.j !== undefined && (result.numbers = asino.j.map((n: any) => unminifyNumber(n)));
+
+  return result;
+}
+
+const unminifyBoolean = (boolean: any): AsinoBooleanReference => {
+  const result: AsinoBooleanReference = {};
+
+  boolean.h !== undefined && (result.id = boolean.h);
+  boolean.i !== undefined && (result.name = boolean.i);
+
+  return result;
+}
+
+const unminifyNumber = (number: any): AsinoNumberReference => {
+  const result: AsinoNumberReference = {};
+
+  number.k !== undefined && (result.id = number.k);
+  number.l !== undefined && (result.name = number.l);
 
   return result;
 }

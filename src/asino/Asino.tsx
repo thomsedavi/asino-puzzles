@@ -10,6 +10,8 @@ import { drawControls } from './svg/Controls';
 import Utils from '../common/utils';
 import { useState } from '../common/saveState';
 import { postAsino, putAsino } from '../common/fetchers';
+import { AsinoBooleanReference, getBooleanRow } from './types/Boolean';
+import { AsinoNumberReference, getNumberRow } from './types/Number';
 
 interface AsinoProps {
   user?: User | null;
@@ -183,6 +185,14 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Tab selected={selectedTab === 'numbers'} onClick={() => setSelectedTab('numbers')}>Numbers</Tab>
         </TabGroup>
       </>}
+      {mode !== 'read' && isEditable && selectedTab === 'booleans' && <div>
+        {asinoPuzzle.booleans?.map((booleanReference: AsinoBooleanReference, index: number) => getBooleanRow(asinoPuzzle, booleanReference, `${index}`, 0, (value: AsinoBooleanReference) => { setAsinoPuzzle({ ...asinoPuzzle, booleans: [...asinoPuzzle.booleans!.slice(0, index), value, ...asinoPuzzle.booleans!.slice(index + 1)] }) }))}
+        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, booleans: [...(asinoPuzzle.booleans ?? []), { id: Utils.getRandomId(asinoPuzzle.booleans?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: `Boolean ${(asinoPuzzle.booleans?.length ?? 0) + 1}` }] })}>Add</div>
+      </div>}
+      {mode !== 'read' && isEditable && selectedTab === 'numbers' && <div>
+        {asinoPuzzle.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberRow(asinoPuzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { setAsinoPuzzle({ ...asinoPuzzle, numbers: [...asinoPuzzle.numbers!.slice(0, index), value, ...asinoPuzzle.numbers!.slice(index + 1)] }) }))}
+        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` }] })}>Add</div>
+      </div>}
       <div>
         {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
       </div>
