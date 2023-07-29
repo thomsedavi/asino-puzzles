@@ -4,7 +4,7 @@ import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoColor, ColorFormula, isColorFormula } from "./types/Color";
-import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula } from "./types/Number";
+import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberFraction } from "./types/Number";
 import { AsinoObject, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
 import { AsinoSet, AsinoSetReference, AsinoSets, Set, SetsFormula, isSetSet, isSetsFormula } from "./types/Set";
 
@@ -749,13 +749,13 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
   asino.dateCreated !== undefined && (result.d = asino.dateCreated);
   asino.dateUpdated !== undefined && (result.e = asino.dateUpdated);
   asino.id !== undefined && (result.f = asino.id);
-  asino.booleans !== undefined && (result.g = asino.booleans.map((b: AsinoBooleanReference) => minifyBoolean(b)));
-  asino.numbers !== undefined && (result.j = asino.numbers.map((n: AsinoNumberReference) => minifyNumber(n)));
+  asino.booleans !== undefined && (result.g = asino.booleans.map((b: AsinoBooleanReference) => minifyBooleanReference(b)));
+  asino.numbers !== undefined && (result.j = asino.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
 
   return result;
 }
 
-const minifyBoolean = (boolean: AsinoBooleanReference): any => {
+const minifyBooleanReference = (boolean: AsinoBooleanReference): any => {
   const result: any = {};
 
   boolean.id !== undefined && (result.h = boolean.id);
@@ -764,11 +764,36 @@ const minifyBoolean = (boolean: AsinoBooleanReference): any => {
   return result;
 }
 
-const minifyNumber = (number: AsinoNumberReference): any => {
+const minifyNumber = (number: AsinoNumber): any => {
+  if (typeof number === 'string') {
+    return number;
+  } else if (typeof number === 'number') {
+    return number;
+  } else if (isNumberFormula(number)) {
+    const result: any = {};
+
+    number.operator !== undefined && number.operator !== 'NONE' && (result.n = number.operator);
+    number.numberInputs !== undefined && (result.o = number.numberInputs.map(n => n !== undefined ? minifyNumber(n) : undefined));
+
+    return result;
+  } else if (isAsinoNumberFraction(number)) {
+    const result: any = {};
+
+    number.denominator !== undefined && (result.p = minifyNumber(number.denominator));
+    number.numerator !== undefined && (result.q = minifyNumber(number.numerator));
+
+    return result;
+  } else {
+    return minifyNumberReference(number);
+  }
+}
+
+const minifyNumberReference = (number: AsinoNumberReference): any => {
   const result: any = {};
 
   number.id !== undefined && (result.k = number.id);
   number.name !== undefined && (result.l = number.name);
+  number.value !== undefined && (result.m = minifyNumber(number.value))
 
   return result;
 }
@@ -782,13 +807,13 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
   asino.d !== undefined && (result.dateCreated = asino.d);
   asino.e !== undefined && (result.dateUpdated = asino.e);
   asino.f !== undefined && (result.id = asino.f);
-  asino.g !== undefined && (result.booleans = asino.g.map((b: any) => unminifyBoolean(b)));
-  asino.j !== undefined && (result.numbers = asino.j.map((n: any) => unminifyNumber(n)));
+  asino.g !== undefined && (result.booleans = asino.g.map((b: any) => unminifyBooleanReference(b)));
+  asino.j !== undefined && (result.numbers = asino.j.map((n: any) => unminifyNumberReference(n)));
 
   return result;
 }
 
-const unminifyBoolean = (boolean: any): AsinoBooleanReference => {
+const unminifyBooleanReference = (boolean: any): AsinoBooleanReference => {
   const result: AsinoBooleanReference = {};
 
   boolean.h !== undefined && (result.id = boolean.h);
@@ -797,11 +822,30 @@ const unminifyBoolean = (boolean: any): AsinoBooleanReference => {
   return result;
 }
 
-const unminifyNumber = (number: any): AsinoNumberReference => {
+const unminifyNumber = (number: any): AsinoNumber => {
+  if (typeof number === 'string') {
+    return number;
+  } else if (typeof number === 'number') {
+    return number;
+  } else if ('n' in number) {
+    const result: NumberFormula = {};
+
+    number.n !== undefined && number.n !== 'NONE' && (result.operator = number.n);
+    number.o !== undefined && (result.numberInputs = number.o.map((n: any) => n !== undefined ? unminifyNumber(n) : undefined));
+
+    return result;
+  } else {
+    console.log('TODO unminify fraction, reference', number);
+    return {};
+  }
+}
+
+const unminifyNumberReference = (number: any): AsinoNumberReference => {
   const result: AsinoNumberReference = {};
 
   number.k !== undefined && (result.id = number.k);
   number.l !== undefined && (result.name = number.l);
+  number.m !== undefined && (result.value = unminifyNumber(number.m))
 
   return result;
 }
