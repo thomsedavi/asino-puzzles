@@ -4,11 +4,11 @@ import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoColor, ColorFormula, isColorFormula } from "./types/Color";
-import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberFraction } from "./types/Number";
+import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber } from "./types/Number";
 import { AsinoObject, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
 import { AsinoSet, AsinoSetReference, AsinoSets, Set, SetsFormula, isSetSet, isSetsFormula } from "./types/Set";
 
-export const getSum = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
     return undefined;
 
@@ -20,7 +20,7 @@ export const getSum = (left: Number | undefined, right: Number | undefined): Num
     } else if (right === 'negativeInfinity') {
       return 'negativeInfinity';
     } else {
-      return { numerator: getSum(getProduct(left, right.denominator), right.numerator), denominator: right.denominator };
+      return { numerator: getSum(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
@@ -36,18 +36,18 @@ export const getSum = (left: Number | undefined, right: Number | undefined): Num
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getSum(getProduct(right, left.denominator), left.numerator), denominator: left.denominator };
+      return { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(left.numerator, references.clone()), references.clone()), denominator: left.denominator };
     } else if (right === 'infinity') {
       return 'infinity';
     } else if (right === 'negativeInfinity') {
       return 'negativeInfinity';
     } else {
-      return { numerator: getSum(getProduct(left.numerator, right.denominator), getProduct(right.numerator, left.denominator)), denominator: getProduct(left.denominator, right.denominator) };
+      return { numerator: getSum(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()), getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
     }
   }
 }
 
-export const getDifference = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+export const getDifference = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
     return undefined;
 
@@ -59,7 +59,7 @@ export const getDifference = (left: Number | undefined, right: Number | undefine
     } else if (right === 'negativeInfinity') {
       return 'infinity';
     } else {
-      return { numerator: getSum(getProduct(left, right.denominator), right.numerator), denominator: right.denominator };
+      return { numerator: getSum(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
@@ -75,18 +75,18 @@ export const getDifference = (left: Number | undefined, right: Number | undefine
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getSum(getProduct(right, left.denominator), left.numerator), denominator: left.denominator };
+      return { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(left.numerator, references.clone()), references.clone()), denominator: left.denominator };
     } else if (right === 'infinity') {
       return 'negativeInfinity';
     } else if (right === 'negativeInfinity') {
       return 'infinity';
     } else {
-      return { numerator: getDifference(getProduct(left.numerator, right.denominator), getProduct(right.numerator, left.denominator)), denominator: getProduct(left.denominator, right.denominator) };
+      return { numerator: getDifference(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()), getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
     }
   }
 }
 
-export const getProduct = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+export const getProduct = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
     return undefined;
 
@@ -98,7 +98,7 @@ export const getProduct = (left: Number | undefined, right: Number | undefined):
     } else if (right === 'negativeInfinity') {
       return 'negativeInfinity';
     } else {
-      return { numerator: getProduct(left, right.numerator), denominator: right.denominator };
+      return { numerator: getProduct(left, getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
@@ -114,18 +114,18 @@ export const getProduct = (left: Number | undefined, right: Number | undefined):
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getProduct(left.denominator, right), denominator: left.denominator };
+      return { numerator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), right, references.clone()), denominator: left.denominator };
     } else if (right === 'infinity') {
       return 'infinity';
     } else if (right === 'negativeInfinity') {
       return 'negativeInfinity';
     } else {
-      return { numerator: getProduct(left.numerator, right.numerator), denominator: getProduct(left.denominator, right.denominator) };
+      return { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
     }
   }
 }
 
-export const getQuotient = (left: Number | undefined, right: Number | undefined): Number | undefined => {
+export const getQuotient = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
     return undefined;
 
@@ -157,7 +157,7 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined)
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: left.numerator, denominator: getProduct(left.denominator, right) };
+      return { numerator: left.numerator, denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), right, references.clone()) };
     } else if (right === 'infinity') {
       return 0;
     } else if (right === 'negativeInfinity') {
@@ -198,7 +198,7 @@ export const getValueFromAsinoColor = (color: AsinoColor | undefined, references
   return result;
 }
 
-export const getValueFromNumber = (number: Number | undefined, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
+export const getValueFromNumber = (number: Number | undefined, references: References, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
   let result: number | 'infinity' | 'negativeInfinity' | 'potato' | undefined = undefined;
 
   if (number === undefined) {
@@ -210,8 +210,8 @@ export const getValueFromNumber = (number: Number | undefined, doNotMultiply?: b
   } else if (number === 'negativeInfinity') {
     result = 'negativeInfinity';
   } else {
-    const numerator = getValueFromNumber(number.numerator, true);
-    const denominator = getValueFromNumber(number.denominator, true);
+    const numerator = getValueFromNumber(getNumberFromAsinoNumber(number.numerator, references.clone()), references.clone(), true);
+    const denominator = getValueFromNumber(getNumberFromAsinoNumber(number.denominator, references.clone()), references.clone(), true);
 
     if (numerator === undefined || denominator === undefined) {
       // do nothing
@@ -603,13 +603,13 @@ export const getNumberFromFormula = (formula: NumberFormula | undefined, referen
       // do nothing
     } else {
       if (formula.operator === Multiplication)
-        result = getProduct(left, right);
+        result = getProduct(left, right, references.clone());
       else if (formula.operator === Subtraction)
-        result = getDifference(left, right);
+        result = getDifference(left, right, references.clone());
       else if (formula.operator === Addition)
-        result = getSum(left, right);
+        result = getSum(left, right, references.clone());
       else if (formula.operator === Division)
-        result = getQuotient(left, right);
+        result = getQuotient(left, right, references.clone());
     }
   }
 
@@ -701,6 +701,8 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
     result = number;
   } else if (isNumberFormula(number)) {
     result = getNumberFromFormula(number, references.clone());
+  } else if (isNumberEditedNumber(number)) {
+    result = number.originalValue;
   } else {
     if (number.id === undefined && number.value !== undefined) {
       result = getNumberFromAsinoNumber(number.value, references.clone().addNumbers([number.numbers]));
@@ -731,6 +733,8 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
         result = valueNumberValue;
       } else if (isNumberFormula(valueNumberValue)) {
         console.log('TODO');
+      } else if (isNumberEditedNumber(valueNumberValue)) {
+        result = valueNumberValue.originalValue;
       } else {
         result = getNumberFromAsinoNumber(valueNumberValue, references.clone().addNumbers([valueNumberValue.numbers]));
       }
@@ -783,6 +787,8 @@ const minifyNumber = (number: AsinoNumber): any => {
     number.numerator !== undefined && (result.q = minifyNumber(number.numerator));
 
     return result;
+  } else if (isNumberEditedNumber(number)) {
+    return number.originalValue;
   } else {
     return minifyNumberReference(number);
   }

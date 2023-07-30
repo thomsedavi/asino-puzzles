@@ -26,11 +26,11 @@ export const drawLine = (lines: (AsinoLineReference | undefined)[], references: 
   }
 
   return <line key={key}
-    x1={getValueFromNumber(x1)}
-    y1={getValueFromNumber(y1)}
-    x2={getValueFromNumber(x2)}
-    y2={getValueFromNumber(y2)}
+    x1={getValueFromNumber(x1, references.clone())}
+    y1={getValueFromNumber(y1, references.clone())}
+    x2={getValueFromNumber(x2, references.clone())}
+    y2={getValueFromNumber(y2, references.clone())}
     stroke={stroke}
-    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth) : undefined}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;
 }

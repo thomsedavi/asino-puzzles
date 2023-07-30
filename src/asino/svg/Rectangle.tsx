@@ -32,12 +32,12 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
 
   return <rect
     key={key}
-    x={getValueFromNumber(x)}
-    y={getValueFromNumber(y)}
-    width={getValueFromNumber(width)}
-    height={getValueFromNumber(height)}
+    x={getValueFromNumber(x, references.clone())}
+    y={getValueFromNumber(y, references.clone())}
+    width={getValueFromNumber(width, references.clone())}
+    height={getValueFromNumber(height, references.clone())}
     fill={fill}
     stroke={stroke}
-    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth) : undefined}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;
 }

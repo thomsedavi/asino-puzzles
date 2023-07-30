@@ -31,11 +31,11 @@ export const drawCircle = (circles: (AsinoCircleReference | undefined)[], refere
 
   return <circle
     key={key}
-    cx={getValueFromNumber(cx)}
-    cy={getValueFromNumber(cy)}
-    r={getValueFromNumber(r)}
+    cx={getValueFromNumber(cx, references.clone())}
+    cy={getValueFromNumber(cy, references.clone())}
+    r={getValueFromNumber(r, references.clone())}
     fill={fill}
     stroke={stroke}
-    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth) : undefined}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;
 }

@@ -58,14 +58,14 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   return <g
     id={`layer${key}`}
     key={`layer${key}`}
-    transform={`translate(${getValueFromNumber(x) ?? 0},${getValueFromNumber(y) ?? 0})`}
+    transform={`translate(${getValueFromNumber(x, references.clone()) ?? 0},${getValueFromNumber(y, references.clone()) ?? 0})`}
   >
     <rect
-      width={getValueFromNumber(width)}
-      height={getValueFromNumber(height)}
+      width={getValueFromNumber(width, references.clone())}
+      height={getValueFromNumber(height, references.clone())}
       stroke='var(--color)'
       fill={fill}
-      strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 })}
+      strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 }, references.clone())}
     />
     {innards}
   </g>;
@@ -90,14 +90,14 @@ export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | 
   return <rect
     id={`layerInteractive${index}`}
     key={`layerInteractive${index}`}
-    x={getValueFromNumber(x)}
-    y={getValueFromNumber(y)}
-    width={getValueFromNumber(width)}
-    height={getValueFromNumber(height)}
+    x={getValueFromNumber(x, references.clone())}
+    y={getValueFromNumber(y, references.clone())}
+    width={getValueFromNumber(width, references.clone())}
+    height={getValueFromNumber(height, references.clone())}
     stroke='none'
     fill='transparent'
     cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}
-    strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 })}
+    strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 }, references.clone())}
     onClick={() => {
       interfaceObjectId !== undefined && setSelectedObjectId(interfaceObjectId);
       interfaceCollectionId !== undefined && setSelectedCollectionId(interfaceCollectionId);
