@@ -2,6 +2,7 @@ import React from 'react';
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
+import { SelectInline } from '../../common/styled';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+';
 
@@ -14,6 +15,7 @@ export type AsinoNumber = Number | EditedNumber | string | NumberFormula | Asino
 export type NumberFormula = {
   operator?: NumberOperator; // formula for this number
   numberInputs?: (AsinoNumber | undefined)[]; // number inputs
+  collapsed?: boolean; // collapse in editor
 }
 
 export type AsinoNumberReference = {
@@ -118,39 +120,48 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
     }
   }
 
-  return <div key={rowKey} style={{ backgroundColor: Utils.getRowColor(layer), marginBottom: '1em' }}>
+  return <div key={rowKey} style={{ marginBottom: '1em' }}>
     <div>{numberReference.name}</div>
-    <select name={`Number {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
+    <SelectInline name={`Number {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
       <option value='NUMBER'>Number</option>
       <option value='ID'>Id</option>
       <option value='FRACTION'>Fraction</option>
       <option value='FORMULA'>Formula</option>
-    </select>
+    </SelectInline>
     {typeof numberReference.value === 'number' && <span style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, value: { originalValue: Number(numberReference.value), editedValue: Number(numberReference.value) } })}>{numberReference.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></span>}
     {numberReference.value !== undefined && isNumberEditedNumber(numberReference.value) && <input type='number' value={numberReference.value.editedValue} onBlur={updateNumber} onKeyDown={onKeyDownNumber} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, value: { editedValue: Number(event.target.value), originalValue: numberReference.value !== undefined && isNumberEditedNumber(numberReference.value) ? numberReference.value.originalValue : 0 } })} />}
-    {typeof numberReference.value === 'string' && <select name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={numberReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: event.target.value })}>
+    {typeof numberReference.value === 'string' && <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={numberReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: event.target.value })}>
       <option value='NONE'>Select Number</option>
       {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name}</option>)}
-    </select>}
+    </SelectInline>}
     {numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) && <>
+      {getTopBracket(layer)}
       {getNumberRow(puzzle, numberReference.value.numerator, `${rowKey}numerator`, layer + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { numerator: value ?? 1, denominator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.denominator : 1 } }))}
-      <div>/</div>
+      {getBottomBracket(layer)}
+      <div style={{ textAlign: 'center' }}>/</div>
+      {getTopBracket(layer)}
       {getNumberRow(puzzle, numberReference.value.denominator, `${rowKey}denominator`, layer + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { denominator: value ?? 1, numerator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.numerator : 1 } }))}
-      <div style={{ height: '1em' }}></div>
+      {getBottomBracket(layer)}
     </>}
     {numberReference.value !== undefined && isNumberFormula(numberReference.value) && <>
-      <select name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={numberReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: { operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] } })}>
+      <SelectInline name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={numberReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: { operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] } })}>
         <option value='NONE'>Select Formula</option>
         <option value='*'>Number * Number</option>
         <option value='-'>Number - Number</option>
         <option value='+'>Number + Number</option>
         <option value='/'>Number / Number</option>
-      </select>
-      {getNumberRow(puzzle, numberReference.value.numberInputs?.[0], `${rowKey}input0`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
-      <div>{numberReference.value.operator === 'NONE' ? '?' : numberReference.value.operator}</div>
-      {getNumberRow(puzzle, numberReference.value.numberInputs?.[1], `${rowKey}input1`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
-      <div style={{ height: '1em' }}></div>
+      </SelectInline>
+      <span onClick={() => numberReference.value !== undefined && isNumberFormula(numberReference.value) && update({ ...numberReference, value: { ...numberReference.value, collapsed: !numberReference.value.collapsed ?? undefined } })} style={{ cursor: 'pointer' }}>{numberReference.value.collapsed ? '>' : 'v'}</span>
+      {!numberReference.value.collapsed && <>
+        {getTopBracket(layer)}
+        {getNumberRow(puzzle, numberReference.value.numberInputs?.[0], `${rowKey}input0`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
+        {getBottomBracket(layer)}
+        <div style={{ textAlign: 'center' }}>{numberReference.value.operator === 'NONE' ? '?' : numberReference.value.operator}</div>
+        {getTopBracket(layer)}
+        {getNumberRow(puzzle, numberReference.value.numberInputs?.[1], `${rowKey}input1`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
+        {getBottomBracket(layer)}
+      </>}
     </>}
   </div>;
 }
@@ -221,40 +232,48 @@ export const getNumberRow = (puzzle: AsinoPuzzle, number: AsinoNumber | undefine
     }
   }
 
-  return <div key={rowKey} style={{ backgroundColor: Utils.getRowColor(layer) }}>
-    <select name={`Number {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
+  return <div key={rowKey}>
+    <SelectInline name={`Number {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
       <option value='NUMBER'>Number</option>
       <option value='ID'>Id</option>
       <option value='FRACTION'>Fraction</option>
       <option value='FORMULA'>Formula</option>
-    </select>
+    </SelectInline>
     {typeof number === 'number' && <span style={{ cursor: 'pointer' }} onClick={() => update({ originalValue: number, editedValue: number })}>{number}<Icon title='edit' type='pencil' fillSecondary='--accent' /></span>}
     {number !== undefined && isNumberEditedNumber(number) && <input type='number' value={number.editedValue} onBlur={updateNumber} onKeyDown={onKeyDownNumber} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ editedValue: Number(event.target.value), originalValue: number !== undefined && isNumberEditedNumber(number) ? number.originalValue : 0 })} />}
-    {typeof number === 'string' && <select name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={number ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
+    {typeof number === 'string' && <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={number ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
       <option value='NONE'>Select Number</option>
       {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name}</option>)}
-    </select>}
+    </SelectInline>}
     {number !== undefined && isAsinoNumberFraction(number) && <>
+      {getTopBracket(layer)}
       {getNumberRow(puzzle, number.numerator, `${rowKey}numerator`, layer + 1, (value: AsinoNumber | undefined) => update({ numerator: value ?? 1, denominator: number !== undefined && isAsinoNumberFraction(number) ? number.denominator : 1 }))}
-      <div>/</div>
+      {getBottomBracket(layer)}
+      <div style={{ textAlign: 'center' }}>/</div>
+      {getTopBracket(layer)}
       {getNumberRow(puzzle, number.denominator, `${rowKey}denominator`, layer + 1, (value: AsinoNumber | undefined) => update({ denominator: value ?? 1, numerator: number !== undefined && isAsinoNumberFraction(number) ? number.numerator : 1 }))}
-      <div style={{ height: '1em' }}></div>
+      {getBottomBracket(layer)}
     </>}
     {number !== undefined && isNumberFormula(number) && <>
-      <select name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={number.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] })}>
+      <SelectInline name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={number.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] })}>
         <option value='NONE'>Select Formula</option>
         <option value='*'>Number * Number</option>
         <option value='-'>Number - Number</option>
         <option value='+'>Number + Number</option>
         <option value='/'>Number / Number</option>
-      </select>
-      {getNumberRow(puzzle, number.numberInputs?.[0], `${rowKey}input${0}`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
-      <div>{number.operator === 'NONE' ? '?' : number.operator}</div>
-      {getNumberRow(puzzle, number.numberInputs?.[1], `${rowKey}input${1}`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
-      <div style={{ height: '1em' }}></div>
+      </SelectInline>
+      <span onClick={() => update({ ...number, collapsed: !number.collapsed })} style={{ cursor: 'pointer' }}>{number.collapsed ? '>' : 'v'}</span>
+      {!number.collapsed && <>
+        {getTopBracket(layer)}
+        {getNumberRow(puzzle, number.numberInputs?.[0], `${rowKey}input${0}`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
+        {getBottomBracket(layer)}
+        <div>{number.operator === 'NONE' ? '?' : number.operator}</div>
+        {getTopBracket(layer)}
+        {getNumberRow(puzzle, number.numberInputs?.[1], `${rowKey}input${1}`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
+        {getBottomBracket(layer)}
+      </>}
     </>}
-
   </div>;
 }
 
@@ -271,4 +290,24 @@ const getNumberOperator = (value: string): NumberOperator => {
     default:
       return 'NONE';
   }
+}
+
+const getTopBracket = (layer: number): JSX.Element => {
+  return <div>
+    <svg version="1.1"
+      viewBox='0 0 1 0.02'
+      xmlns="http://www.w3.org/2000/svg">
+      <path d='M0,0.02C0,0,0,0,0.5,0C1,0,1,0,1,0.02' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
+    </svg>
+  </div>;
+}
+
+const getBottomBracket = (layer: number): JSX.Element => {
+  return <div>
+    <svg version="1.1"
+      viewBox='0 0 1 0.02'
+      xmlns="http://www.w3.org/2000/svg">
+      <path d='M0,0C0.0.02,0,0.02,0.5,0.02C1,0.02,1,0.02,1,0' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
+    </svg>
+  </div>;
 }

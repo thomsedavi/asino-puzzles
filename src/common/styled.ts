@@ -119,6 +119,12 @@ export const Button = styled.button`
   }
 `;
 
+export const SelectInline = styled.select`
+  background-color: var(--background-color);
+  color: var(--color);
+  border-color: var(--color);
+`;
+
 export const Select = styled.select`
   display: block;
   margin: 0.5em auto;
