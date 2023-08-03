@@ -33,7 +33,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 
   let fill = interfaceObjectId === selectedObjectId ? 'var(--accent-strong)' : 'var(--background-color-input)';
 
-  const innards: JSX.Element[] = [];
+  const innards: (JSX.Element | undefined)[] = [];
 
   const collection = puzzle.collections?.filter(collection => collection.id === interfaceCollectionId)[0];
 

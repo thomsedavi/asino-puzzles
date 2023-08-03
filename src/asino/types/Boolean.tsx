@@ -33,7 +33,7 @@ export const isBooleanFormula = (boolean: AsinoBoolean): boolean is BooleanFormu
   return typeof boolean !== 'string' && typeof boolean !== 'boolean' && 'operator' in boolean;
 }
 
-export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBooleanReference, key: string, layer: number, update: (value: AsinoBooleanReference) => void): JSX.Element => {
+export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBooleanReference, key: string, depth: number, update: (value: AsinoBooleanReference) => void): JSX.Element => {
   const rowKey = `boolean${key}`;
   let selectValue = 'NONE';
 

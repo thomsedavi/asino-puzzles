@@ -11,7 +11,7 @@ import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
 
-export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, selectedObjectId?: string): JSX.Element => {
+export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
     const layerLine = puzzle.lines?.filter(line => line.id === layer.line?.id)[0];
 
@@ -37,12 +37,12 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
 
     return drawPath([layerPath, layer.path], references.clone().addNumbers([puzzle.numbers]).addColors([layerPath?.colors,layer.colors]).addClasses([puzzle.classes]), solution, { value: puzzle.defaults?.[StrokeWidth] ?? { numerator: 1, denominator: 200 } }, scale, key);
   } else {
-    return <text>Error!</text>;
+    return undefined;
   }
 }
 
 export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void, selectedObjectId?: string): JSX.Element => {
-  const layers: JSX.Element[] = [];
+  const layers: (JSX.Element | undefined)[] = [];
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
     layers.push(drawLayer(puzzle, solution, layer, new References().addBooleans([puzzle.booleans]).addColors([puzzle.colors]).addSets([puzzle.sets]).addClasses([puzzle.classes]), 1, `layer${layerIndex}`, selectedObjectId));

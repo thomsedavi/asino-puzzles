@@ -41,7 +41,7 @@ export const isNumberEditedNumber = (number: AsinoNumber): number is EditedNumbe
   return typeof number !== 'string' && typeof number !== 'number' && 'originalValue' in number && 'editedValue' in number;
 }
 
-export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: AsinoNumberReference, key: string, layer: number, update: (value: AsinoNumberReference) => void): JSX.Element => {
+export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: AsinoNumberReference, key: string, depth: number, update: (value: AsinoNumberReference) => void): JSX.Element => {
   const rowKey = `numberReference${key}`;
   let selectValue = 'NONE';
 
@@ -90,17 +90,7 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
     const numberReferenceUpdate: AsinoNumberReference = { ...numberReference };
 
     if (numberReference.value !== undefined && isNumberEditedNumber(numberReference.value)) {
-      if (numberReference.value.editedValue % 1 === 0) {
-        numberReferenceUpdate.value = numberReference.value.editedValue;
-      } else {
-        let denominator = 10;
-
-        while (numberReference.value.editedValue * denominator % 1 !== 0) {
-          denominator *= 10;
-        }
-
-        numberReferenceUpdate.value = { numerator: numberReference.value.editedValue * denominator, denominator: denominator };
-      }
+      numberReferenceUpdate.value = toNumberOrFraction(numberReference.value.editedValue);
     }
 
     update(numberReferenceUpdate);
@@ -153,13 +143,13 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
       {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? ''}</option>)}
     </SelectInline>}
     {numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) && <>
-      {getTopBracket(layer)}
-      {getNumberRow(puzzle, numberReference.value.numerator, `${rowKey}numerator`, layer + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { numerator: value ?? 1, denominator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.denominator : 1 } }))}
-      {getBottomBracket(layer)}
+      {getTopBracket(depth)}
+      {getNumberRow(puzzle, numberReference.value.numerator, `${rowKey}numerator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { numerator: value ?? 1, denominator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.denominator : 1 } }))}
+      {getBottomBracket(depth)}
       <div style={{ textAlign: 'center' }}>/</div>
-      {getTopBracket(layer)}
-      {getNumberRow(puzzle, numberReference.value.denominator, `${rowKey}denominator`, layer + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { denominator: value ?? 1, numerator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.numerator : 1 } }))}
-      {getBottomBracket(layer)}
+      {getTopBracket(depth)}
+      {getNumberRow(puzzle, numberReference.value.denominator, `${rowKey}denominator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { denominator: value ?? 1, numerator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.numerator : 1 } }))}
+      {getBottomBracket(depth)}
     </>}
     {numberReference.value !== undefined && isNumberFormula(numberReference.value) && <>
       <SelectInline name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={numberReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: { operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] } })}>
@@ -171,13 +161,13 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
       </SelectInline>
       <span onClick={() => numberReference.value !== undefined && isNumberFormula(numberReference.value) && update({ ...numberReference, value: { ...numberReference.value, collapsed: !numberReference.value.collapsed ?? undefined } })} style={{ cursor: 'pointer' }}>{numberReference.value.collapsed ? '>' : 'v'}</span>
       {!numberReference.value.collapsed && <>
-        {getTopBracket(layer)}
-        {getNumberRow(puzzle, numberReference.value.numberInputs?.[0], `${rowKey}input0`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
-        {getBottomBracket(layer)}
+        {getTopBracket(depth)}
+        {getNumberRow(puzzle, numberReference.value.numberInputs?.[0], `${rowKey}input0`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
+        {getBottomBracket(depth)}
         <div style={{ textAlign: 'center' }}>{numberReference.value.operator === 'NONE' ? '?' : numberReference.value.operator}</div>
-        {getTopBracket(layer)}
-        {getNumberRow(puzzle, numberReference.value.numberInputs?.[1], `${rowKey}input1`, layer + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
-        {getBottomBracket(layer)}
+        {getTopBracket(depth)}
+        {getNumberRow(puzzle, numberReference.value.numberInputs?.[1], `${rowKey}input1`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
+        {getBottomBracket(depth)}
       </>}
     </>}
   </div>;
@@ -223,17 +213,7 @@ export const getNumberRow = (puzzle: AsinoPuzzle, number: AsinoNumber | undefine
 
   const updateNumber = () => {
     if (number !== undefined && isNumberEditedNumber(number)) {
-      if (number.editedValue % 1 === 0) {
-        update(number.editedValue);
-      } else {
-        let denominator = 10;
-
-        while (number.editedValue * denominator % 1 !== 0) {
-          denominator *= 10;
-        }
-
-        update({ numerator: number.editedValue * denominator, denominator: denominator });
-      }
+      update(toNumberOrFraction(number.editedValue));
     }
   }
 
@@ -327,4 +307,30 @@ const getBottomBracket = (layer: number): JSX.Element => {
       <path d='M0,0C0.0.02,0,0.02,0.5,0.02C1,0.02,1,0.02,1,0' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
     </svg>
   </div>;
+}
+
+const toNumberOrFraction = (value: number): AsinoNumber => {
+  if (value % 1 === 0) {
+    return value;
+  } else {
+    let denominator = 10;
+
+    while (value * denominator % 1 !== 0) {
+      denominator *= 10;
+    }
+
+    let fraction = { numerator: value * denominator, denominator: denominator };
+
+    let quarfle = 2;
+
+    while (quarfle < fraction.denominator) {
+      while (((fraction.numerator / quarfle) % 1 === 0) && ((fraction.denominator / quarfle) % 1 === 0)) {
+        fraction = { numerator: fraction.numerator / quarfle, denominator: denominator / quarfle };
+      }
+
+      quarfle++;
+    }
+
+    return fraction;
+  }
 }
