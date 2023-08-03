@@ -909,7 +909,7 @@ export const Test: AsinoPuzzle = {
   ],
   booleans: [
     {
-      id: '8-00', name: 'Is each class unique in each set containing this object', value: {
+      id: '8-00', name: { value: 'Is each class unique in each set containing this object' }, value: {
         operator: 'IS_OBJECT',
         objectOutput: '4-000',
         boolean: {
@@ -948,46 +948,46 @@ export const Test: AsinoPuzzle = {
     }
   ],
   numbers: [
-    { id: '1-00', name: 'Interface Width', value: { numerator: 1, denominator: 9 } },
-    { id: '1-01', name: 'Interface Height', value: { numerator: 1, denominator: 9 } },
-    { id: '1-02', name: '2/3', value: { numerator: 2, denominator: 3 } },
-    { id: '1-03', name: '0', value: 0 },
-    { id: '1-04', name: '1', value: 1 },
-    { id: '1-05', name: '1/100', value: { numerator: 1, denominator: 100 } },
+    { id: '1-00', name: { value: 'Interface Width' }, value: { numerator: 1, denominator: 9 } },
+    { id: '1-01', name: { value: 'Interface Height' }, value: { numerator: 1, denominator: 9 } },
+    { id: '1-02', name: { value: '2/3' }, value: { numerator: 2, denominator: 3 } },
+    { id: '1-03', name: { value: '0' }, value: 0 },
+    { id: '1-04', name: { value: '1' }, value: 1 },
+    { id: '1-05', name: { value: '1/100' }, value: { numerator: 1, denominator: 100 } },
     {
-      id: '1-06', name: 'Input Multiplied By 1/9', value: {
+      id: '1-06', name: { value: 'Input Multiplied By 1/9' }, value: {
         operator: Multiplication,
         numberInputs: ['1-09', { value: { numerator: 1, denominator: 9 } }]
       }
     },
-    { id: '1-07', name: 'X Position', value: 0 },
-    { id: '1-08', name: 'Y Position', value: 0 },
-    { id: '1-09', name: 'Left Operand for Input Multiplied By 1/9', value: 0 },
-    { id: FontTop, name: 'Font Top', value: { numerator: 2, denominator: 9 } },
-    { id: FontBottom, name: 'Font Bottom', value: { numerator: 7, denominator: 9 } },
-    { id: FontLineHeight, name: 'Font Line Height', value: { numerator: 2, denominator: 27 } },
-    { id: FontLeft, name: 'Font Left', value: { numerator: 3, denominator: 9 } },
-    { id: FontRight, name: 'Font Right', value: { numerator: 6, denominator: 9 } },
-    { id: FontXMiddle, name: 'Font X Middle', value: { numerator: 1, denominator: 2 } },
-    { id: FontLineWidth, name: 'Font Line Width', value: { numerator: 2, denominator: 27 } },
-    { id: FontYTop, name: 'Font Y Top', value: { numerator: 13, denominator: 36 } },
-    { id: FontYMiddle, name: 'Font Y Middle', value: { numerator: 1, denominator: 2 } },
-    { id: FontYBottom, name: 'Font Y Bottom', value: { numerator: 23, denominator: 36 } },
+    { id: '1-07', name: { value: 'X Position' }, value: 0 },
+    { id: '1-08', name: { value: 'Y Position' }, value: 0 },
+    { id: '1-09', name: { value: 'Left Operand for Input Multiplied By 1/9' }, value: 0 },
+    { id: FontTop, name: { value: 'Font Top' }, value: { numerator: 2, denominator: 9 } },
+    { id: FontBottom, name: { value: 'Font Bottom' }, value: { numerator: 7, denominator: 9 } },
+    { id: FontLineHeight, name: { value: 'Font Line Height' }, value: { numerator: 2, denominator: 27 } },
+    { id: FontLeft, name: { value: 'Font Left' }, value: { numerator: 3, denominator: 9 } },
+    { id: FontRight, name: { value: 'Font Right' }, value: { numerator: 6, denominator: 9 } },
+    { id: FontXMiddle, name: { value: 'Font X Middle' }, value: { numerator: 1, denominator: 2 } },
+    { id: FontLineWidth, name: { value: 'Font Line Width' }, value: { numerator: 2, denominator: 27 } },
+    { id: FontYTop, name: { value: 'Font Y Top' }, value: { numerator: 13, denominator: 36 } },
+    { id: FontYMiddle, name: { value: 'Font Y Middle' }, value: { numerator: 1, denominator: 2 } },
+    { id: FontYBottom, name: { value: 'Font Y Bottom' }, value: { numerator: 23, denominator: 36 } },
     {
-      id: MultiplyBy55Percent, name: '55% of', value: {
+      id: MultiplyBy55Percent, name: { value: '55% of' }, value: {
         operator: Multiplication,
         numberInputs: [{ value: { numerator: 11, denominator: 20 } }, MultiplyBy55PercentInput]
       }
     },
-    { id: MultiplyBy55PercentInput, name: '55% of default', value: 1 },
+    { id: MultiplyBy55PercentInput, name: { value: '55% of default' }, value: 1 },
     {
-      id: FontLineHeightHalf, name: 'Font Line Height Half', value: {
+      id: FontLineHeightHalf, name: { value: 'Font Line Height Half' }, value: {
         operator: Division,
         numberInputs: [FontLineHeight, { value: 2 }]
       }
     },
     {
-      id: FontLineHeightQuarter, name: 'Font Line Height Quarter', value: {
+      id: FontLineHeightQuarter, name: { value: 'Font Line Height Quarter' }, value: {
         operator: Division,
         numberInputs: [FontLineHeightHalf, { value: 2 }]
       }

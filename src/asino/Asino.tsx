@@ -187,11 +187,11 @@ const Asino = (props: AsinoProps): JSX.Element => {
       </>}
       {mode !== 'read' && isEditable && selectedTab === 'booleans' && <div>
         {asinoPuzzle.booleans?.map((booleanReference: AsinoBooleanReference, index: number) => getBooleanReferenceRow(asinoPuzzle, booleanReference, `${index}`, 0, (value: AsinoBooleanReference) => { setAsinoPuzzle({ ...asinoPuzzle, booleans: [...asinoPuzzle.booleans!.slice(0, index), value, ...asinoPuzzle.booleans!.slice(index + 1)] }) }))}
-        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, booleans: [...(asinoPuzzle.booleans ?? []), { id: Utils.getRandomId(asinoPuzzle.booleans?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: `Boolean ${(asinoPuzzle.booleans?.length ?? 0) + 1}` }] })}>Add</div>
+        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, booleans: [...(asinoPuzzle.booleans ?? []), { id: Utils.getRandomId(asinoPuzzle.booleans?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Boolean ${(asinoPuzzle.booleans?.length ?? 0) + 1}` } }] })}>Add</div>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'numbers' && <div>
         {asinoPuzzle.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberReferenceRow(asinoPuzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { setAsinoPuzzle({ ...asinoPuzzle, numbers: [...asinoPuzzle.numbers!.slice(0, index), value, ...asinoPuzzle.numbers!.slice(index + 1)] }) }))}
-        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` }] })}>Add</div>
+        <div onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` } }] })}>Add</div>
       </div>}
       <div>
         {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}

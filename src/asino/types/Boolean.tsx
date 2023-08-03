@@ -3,8 +3,9 @@ import { AsinoClass, AsinoClasses } from './Class';
 import { AsinoObject, AsinoObjects } from './Object';
 import { AsinoSets } from './Set';
 import { AsinoPuzzle } from '../interfaces';
+import { SelectInline, InputInline } from '../../common/styled';
+import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
-import { SelectInline } from '../../common/styled';
 
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' | 'IS_EACH_CLASS_DIFFERENT';
 
@@ -23,7 +24,7 @@ export type BooleanFormula = {
 
 export type AsinoBooleanReference = {
   id?: string; // id of this boolean
-  name?: string; // name of this boolean
+  name?: { value?: string, editedValue?: string }; // name of this boolean
   value?: AsinoBoolean; // value of this boolean
   numbers?: AsinoBooleanReference[]; // parameters to use when overriding
 }
@@ -66,8 +67,25 @@ export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: As
     }
   }
 
+  const updateName = () => {
+    const updatedName = Utils.tidyString(booleanReference.name?.editedValue);
+
+    update({ ...booleanReference, name: { value: updatedName !== '' ? updatedName : booleanReference.name?.value } });
+  }
+
+  const onKeyDownName = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      updateName();
+    } else if (event.keyCode === 27) {
+      event.preventDefault();
+      update({ ...booleanReference, name: { value: booleanReference.name?.value } });
+    }
+  }
+
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
-    <div>{booleanReference.name}</div>
+    {booleanReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...booleanReference, name: { ...booleanReference.name, editedValue: booleanReference.name?.value } })}>{booleanReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
+    {booleanReference.name?.editedValue !== undefined && <InputInline block autoFocus value={booleanReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...booleanReference, name: { ...booleanReference.name, editedValue: event.target.value } })} />}
     <SelectInline name={`Boolean {${rowKey}} Type`} id={`Boolean {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
       <option value='BOOLEAN'>Boolean</option>
@@ -82,7 +100,7 @@ export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: As
     </>}
     {typeof booleanReference.value === 'string' && <SelectInline name={`Boolean {${rowKey}} Id`} id={`Boolean {${rowKey}} Id`} value={booleanReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: event.target.value })}>
       <option value='NONE'>Select Boolean</option>
-      {puzzle.booleans?.filter(b => b.id !== booleanReference.id).map((b, index) => <option key={`${rowKey} Id ${index}`} value={b.id}>{b.name}</option>)}
+      {puzzle.booleans?.filter(b => b.id !== booleanReference.id).map((b, index) => <option key={`${rowKey} Id ${index}`} value={b.id}>{b.name?.value ?? ''}</option>)}
     </SelectInline>}
     {booleanReference.value !== undefined && isBooleanFormula(booleanReference.value) && <>
       <SelectInline name={`Boolean {${rowKey}} Formula`} id={`Boolean {${rowKey}} Forumla`} value={booleanReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: { operator: getBooleanOperator(event.target.value) } })}>

@@ -763,7 +763,7 @@ const minifyBooleanReference = (boolean: AsinoBooleanReference): any => {
   const result: any = {};
 
   boolean.id !== undefined && (result.h = boolean.id);
-  boolean.name !== undefined && (result.i = boolean.name);
+  boolean.name !== undefined && boolean.name.value !== undefined && (result.i = boolean.name.value);
 
   return result;
 }
@@ -798,7 +798,7 @@ const minifyNumberReference = (number: AsinoNumberReference): any => {
   const result: any = {};
 
   number.id !== undefined && (result.k = number.id);
-  number.name !== undefined && (result.l = number.name);
+  number.name !== undefined && number.name.value !== undefined && (result.l = number.name.value);
   number.value !== undefined && (result.m = minifyNumber(number.value))
 
   return result;
@@ -823,7 +823,7 @@ const unminifyBooleanReference = (boolean: any): AsinoBooleanReference => {
   const result: AsinoBooleanReference = {};
 
   boolean.h !== undefined && (result.id = boolean.h);
-  boolean.i !== undefined && (result.name = boolean.i);
+  boolean.i !== undefined && (result.name = { value: boolean.i });
 
   return result;
 }
@@ -850,7 +850,7 @@ const unminifyNumberReference = (number: any): AsinoNumberReference => {
   const result: AsinoNumberReference = {};
 
   number.k !== undefined && (result.id = number.k);
-  number.l !== undefined && (result.name = number.l);
+  number.l !== undefined && (result.name = { value: number.l });
   number.m !== undefined && (result.value = unminifyNumber(number.m))
 
   return result;
