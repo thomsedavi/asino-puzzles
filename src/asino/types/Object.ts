@@ -18,7 +18,7 @@ export type AsinoObjectsFormula = {
 
 export interface AsinoObjectReference {
   id?: string; // id of this object
-  name?: string; // name of this object
+  name?: { value?: string, editedValue?: string }; // name of this object
   value?: AsinoObject; // value of this object
 }
 

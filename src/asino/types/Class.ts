@@ -18,7 +18,7 @@ export type ClassFormula = {
 
 export type AsinoClassReference = {
   id?: string; // id of this class
-  name?: string; // name of this class
+  name?: { value?: string, editedValue?: string }; // name of this class
   value?: AsinoClass; // value of this class
 }
 

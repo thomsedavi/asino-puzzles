@@ -1,11 +1,17 @@
 import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { AsinoPuzzle, Solution } from "./interfaces";
+import { AsinoCollection, AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
+import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
-import { AsinoColor, ColorFormula, isColorFormula } from "./types/Color";
+import { AsinoColor, AsinoColorReference, ColorFormula, isColorFormula } from "./types/Color";
+import { AsinoInterfaceReference } from "./types/Interface";
+import { AsinoLayer } from "./types/Layer";
+import { AsinoLineReference } from "./types/Line";
 import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber } from "./types/Number";
-import { AsinoObject, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
+import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
+import { AsinoPathReference } from "./types/Path";
+import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, Set, SetsFormula, isSetSet, isSetsFormula } from "./types/Set";
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
@@ -747,14 +753,25 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
 export const minifyAsino = (asino: AsinoPuzzle): any => {
   const result: any = {};
 
-  asino.userId !== undefined && (result.a = asino.userId);
-  asino.userName !== undefined && (result.b = asino.userName);
-  asino.title !== undefined && (result.c = asino.title);
-  asino.dateCreated !== undefined && (result.d = asino.dateCreated);
-  asino.dateUpdated !== undefined && (result.e = asino.dateUpdated);
-  asino.id !== undefined && (result.f = asino.id);
-  asino.booleans !== undefined && (result.g = asino.booleans.map((b: AsinoBooleanReference) => minifyBooleanReference(b)));
-  asino.numbers !== undefined && (result.j = asino.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
+  asino.userId !== undefined && (result[UserId] = asino.userId);
+  asino.userName !== undefined && (result[UserName] = asino.userName);
+  asino.title !== undefined && (result[Name] = asino.title);
+  asino.dateCreated !== undefined && (result[DateCreated] = asino.dateCreated);
+  asino.dateUpdated !== undefined && (result[DateUpdated] = asino.dateUpdated);
+  asino.id !== undefined && (result[Id] = asino.id);
+  asino.classes !== undefined && (result[Classes] = asino.classes.map((c: AsinoClassReference) => minifyClassReference(c)));
+  asino.objects !== undefined && (result[Objects] = asino.objects.map((o: AsinoObjectReference) => minifyObjectReference(o)));
+  asino.booleans !== undefined && (result[Booleans] = asino.booleans.map((b: AsinoBooleanReference) => minifyBooleanReference(b)));
+  asino.numbers !== undefined && (result[Numbers] = asino.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
+  asino.interfaces !== undefined && (result[Interfaces] = asino.interfaces.map((i: AsinoInterfaceReference) => minifyInterfaceReference(i)));
+  asino.rectangles !== undefined && (result[Rectangles] = asino.rectangles.map((r: AsinoRectangleReference) => minifyRectangleReference(r)));
+  asino.circles !== undefined && (result[Circles] = asino.circles.map((c: AsinoCircleReference) => minifyCircleReference(c)));
+  asino.collections !== undefined && (result[Collections] = asino.collections.map((c: AsinoCollection) => minifyCollection(c)));
+  asino.colors !== undefined && (result[Colors] = asino.colors.map((c: AsinoColorReference) => minifyColorReference(c)));
+  asino.layers !== undefined && (result[Layers] = asino.layers.map((l: AsinoLayer) => minifyLayer(l)));
+  asino.lines !== undefined && (result[Lines] = asino.lines.map((l: AsinoLineReference) => minifyLineReference(l)));
+  asino.paths !== undefined && (result[Paths] = asino.paths.map((p: AsinoPathReference) => minifyPathReference(p)));
+  asino.sets !== undefined && (result[Sets] = asino.sets.map(((s: AsinoSetReference) => minifySetReference(s))));
 
   return result;
 }
@@ -762,10 +779,84 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
 const minifyBooleanReference = (boolean: AsinoBooleanReference): any => {
   const result: any = {};
 
-  boolean.id !== undefined && (result.h = boolean.id);
-  boolean.name !== undefined && boolean.name.value !== undefined && (result.i = boolean.name.value);
+  boolean.id !== undefined && (result[Id] = boolean.id);
+  boolean.name !== undefined && boolean.name.value !== undefined && (result[Name] = boolean.name.value);
+  boolean.value !== undefined && (result[Value] = minifyBoolean(boolean.value));
+  boolean.numbers !== undefined && (result[Numbers] = boolean.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)))
 
   return result;
+}
+
+const minifyClassReference = (asinoClass: AsinoClassReference): any => {
+  const result: any = {};
+
+  asinoClass.id !== undefined && (result[Id] = asinoClass.id);
+  asinoClass.name !== undefined && asinoClass.name.value !== undefined && (result[Name] = asinoClass.name.value);
+  asinoClass.value !== undefined && (result[Value] = minifyClass(asinoClass));
+
+  return result;
+}
+
+const minifyObjectReference = (object: AsinoObjectReference): any => {
+  const result: any = {};
+
+  object.id !== undefined && (result[Id] = object.id);
+  object.name !== undefined && object.name.value !== undefined && (result[Name] = object.name.value);
+  object.value !== undefined && (result[Value] = minifyObject(object.value));
+
+  return result;
+}
+
+const minifyObject = (object: AsinoObject): any => {
+  if (typeof object === 'string') {
+    return object;
+  } else if (isObjectObject(object)) {
+    const result: any = {};
+
+    object.class !== undefined && (result[Classs] = minifyClass(object.class));
+
+    return result;
+  } else {
+    return minifyObjectReference(object);
+  }
+}
+
+const minifyCollection = (collection: AsinoCollection): any => {
+  const result: any = {};
+
+  collection.id !== undefined && (result[Id] = collection.id);
+  collection.name !== undefined && collection.name.value !== undefined && (result[Name] = collection.name.value);
+  collection.classes !== undefined && (result[Classes] = collection.classes.map((c: AsinoClassReference) => minifyClassReference(c)));
+  collection.objects !== undefined && (result[Objects] = collection.objects.map((o: AsinoObjectReference) => minifyObjectReference(o)));
+
+  return result;
+}
+
+const minifyLayer = (layer: AsinoLayer): any => {
+  const result: any = {};
+
+  layer.circle !== undefined && (result[Circle] = minifyCircleReference(layer.circle));
+  layer.collectionId !== undefined && (result[CollectionId] = layer.collectionId);
+  layer.colors !== undefined && (result[Colors] = layer.colors.map((c: AsinoColorReference) => minifyColorReference(c)));
+  layer.interface !== undefined && (result[Interface] = minifyInterfaceReference(layer.interface));
+  layer.line !== undefined && (result[Line] = minifyLineReference(layer.line));
+  layer.name !== undefined && layer.name.value !== undefined && (result[Name] = layer.name.value);
+  layer.numbers !== undefined && (result[Numbers] && layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
+  layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
+  layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
+  layer.rectangle !== undefined && (result[Rectangle] = minifyRectangleReference(layer.rectangle));
+
+  return result;
+}
+
+// here
+
+const minifyBoolean = (boolean: AsinoBoolean): any => {
+
+}
+
+const minifyClass = (asinoClass: AsinoClass): any => {
+
 }
 
 const minifyNumber = (number: AsinoNumber): any => {
@@ -794,27 +885,110 @@ const minifyNumber = (number: AsinoNumber): any => {
   }
 }
 
-const minifyNumberReference = (number: AsinoNumberReference): any => {
+const minifyRectangle = (rectangle: AsinoRectangle): any => {
   const result: any = {};
 
-  number.id !== undefined && (result.k = number.id);
-  number.name !== undefined && number.name.value !== undefined && (result.l = number.name.value);
-  number.value !== undefined && (result.m = minifyNumber(number.value))
+  rectangle.x !== undefined && (result[X] = minifyNumber(rectangle.x));
+  rectangle.y !== undefined && (result[Y] = minifyNumber(rectangle.y));
+  rectangle.width !== undefined && (result[Width] = minifyNumber(rectangle.width));
+  rectangle.height !== undefined && (result[Height] = minifyNumber(rectangle.height));
 
   return result;
 }
 
+const minifyCircle = (circle: AsinoCircle): any => {
+  const result: any = {};
+
+  circle.cx !== undefined && (result[X] = minifyNumber(circle.cx));
+  circle.cy !== undefined && (result[Y] = minifyNumber(circle.cy));
+  circle.r !== undefined && (result[R] = minifyNumber(circle.r));
+
+  return result;
+}
+
+const minifyColor = (color: AsinoColor): any => {
+  const result: any = {};
+
+  return result;
+}
+
+const minifyNumberReference = (number: AsinoNumberReference): any => {
+  const result: any = {};
+
+  number.id !== undefined && (result[Id] = number.id);
+  number.name !== undefined && number.name.value !== undefined && (result[Name] = number.name.value);
+  number.value !== undefined && (result[Value] = minifyNumber(number.value))
+
+  return result;
+}
+
+const minifyRectangleReference = (rectangle: AsinoRectangleReference): any => {
+  const result: any = {};
+
+  rectangle.id !== undefined && (result[Id] = rectangle.id);
+  rectangle.name !== undefined && rectangle.name.value !== undefined && (result[Name] = rectangle.name.value);
+  rectangle.value !== undefined && (result[Value] = minifyRectangle(rectangle.value))
+
+  return result;
+}
+
+const minifyCircleReference = (circle: AsinoCircleReference): any => {
+  const result: any = {};
+
+  circle.id !== undefined && (result[Id] = circle.id);
+  circle.name !== undefined && circle.name.value !== undefined && (result[Name] = circle.name.value);
+  circle.value !== undefined && (result[Value] = minifyCircle(circle.value))
+
+  return result;
+}
+
+const minifyColorReference = (color: AsinoColorReference): any => {
+  const result: any = {};
+
+  color.id !== undefined && (result[Id] = color.id);
+  color.name !== undefined && color.name.value !== undefined && (result[Name] = color.name.value);
+  color.value !== undefined && (result[Value] = minifyColor(color.value))
+
+  return result;
+}
+
+const minifyLineReference = (line: AsinoLineReference): any => {
+  const result: any = {};
+
+  return result;
+}
+
+const minifyPathReference = (path: AsinoPathReference): any => {
+  const result: any = {};
+
+  return result;
+}
+
+const minifySetReference = (set: AsinoSetReference): any => {
+  const result: any = {};
+
+  return result;
+}
+
+const minifyInterfaceReference = (asinoInterface: AsinoInterfaceReference): any => {
+  const result: any = {};
+
+  return result;
+}
+
+
 export const unminifyAsino = (asino: any): AsinoPuzzle => {
   const result: AsinoPuzzle = {};
 
-  asino.a !== undefined && (result.userId = asino.a);
-  asino.b !== undefined && (result.userName = asino.b);
-  asino.c !== undefined && (result.title = asino.c);
-  asino.d !== undefined && (result.dateCreated = asino.d);
-  asino.e !== undefined && (result.dateUpdated = asino.e);
-  asino.f !== undefined && (result.id = asino.f);
-  asino.g !== undefined && (result.booleans = asino.g.map((b: any) => unminifyBooleanReference(b)));
-  asino.j !== undefined && (result.numbers = asino.j.map((n: any) => unminifyNumberReference(n)));
+  asino[UserId] !== undefined && (result.userId = asino[UserId]);
+  asino[UserName] !== undefined && (result.userName = asino[UserName]);
+  asino[Name] !== undefined && (result.title = asino[Name]);
+  asino[DateCreated] !== undefined && (result.dateCreated = asino[DateCreated]);
+  asino[DateUpdated] !== undefined && (result.dateUpdated = asino[DateUpdated]);
+  asino[Id] !== undefined && (result.id = asino[Id]);
+  asino[Booleans] !== undefined && (result.booleans = asino[Booleans].map((b: any) => unminifyBooleanReference(b)));
+  asino[Numbers] !== undefined && (result.numbers = asino[Numbers].map((n: any) => unminifyNumberReference(n)));
+  asino[Rectangles] !== undefined && (result.rectangles = asino[Rectangles].map((r: any) => unminifyRectangleReference(r)));
 
   return result;
 }
@@ -822,8 +996,8 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
 const unminifyBooleanReference = (boolean: any): AsinoBooleanReference => {
   const result: AsinoBooleanReference = {};
 
-  boolean.h !== undefined && (result.id = boolean.h);
-  boolean.i !== undefined && (result.name = { value: boolean.i });
+  boolean[Id] !== undefined && (result.id = boolean[Id]);
+  boolean[Name] !== undefined && (result.name = { value: boolean[Name] });
 
   return result;
 }
@@ -836,7 +1010,7 @@ const unminifyNumber = (number: any): AsinoNumber => {
   } else if ('n' in number) {
     const result: NumberFormula = {};
 
-    number.n !== undefined && number.n !== 'NONE' && (result.operator = number.n);
+    number[Operator] !== undefined && number[Operator] !== 'NONE' && (result.operator = number[Operator]);
     number.o !== undefined && (result.numberInputs = number.o.map((n: any) => n !== undefined ? unminifyNumber(n) : undefined));
 
     return result;
@@ -849,9 +1023,52 @@ const unminifyNumber = (number: any): AsinoNumber => {
 const unminifyNumberReference = (number: any): AsinoNumberReference => {
   const result: AsinoNumberReference = {};
 
-  number.k !== undefined && (result.id = number.k);
-  number.l !== undefined && (result.name = { value: number.l });
-  number.m !== undefined && (result.value = unminifyNumber(number.m))
+  number[Id] !== undefined && (result.id = number[Id]);
+  number[Name] !== undefined && (result.name = { value: number[Name] });
+  number[Value] !== undefined && (result.value = unminifyNumber(number[Value]))
 
   return result;
 }
+
+const unminifyRectangleReference = (rectangle: any): AsinoRectangleReference => {
+  const result: AsinoRectangleReference = {};
+
+  return result;
+}
+
+const Booleans = 'bos';
+const Circle = 'ci';
+const Circles = 'cis';
+const Classs = 'c';
+const Classes = 'cls';
+const CollectionId = 'coi';
+const Collections = 'cos';
+const Colors = 'cos';
+const CX = 'cx';
+const CY = 'cy';
+const DateCreated = 'dac';
+const DateUpdated = 'dau';
+const Height = 'he';
+const Id = 'id';
+const Interface = 'in';
+const Interfaces = 'ins';
+const Layers = 'las';
+const Line = 'li';
+const Lines = 'lis';
+const Name = 'na';
+const Numbers = 'nus';
+const ObjectId = 'oi';
+const Objects = 'obs';
+const Operator = 'op';
+const Path = 'pa';
+const Paths = 'pas';
+const R = 'r';
+const Rectangle = 're';
+const Rectangles = 'res';
+const Sets = 'ses';
+const UserId = 'usi';
+const UserName = 'usn';
+const Value = 'va';
+const Width = 'wi';
+const X = 'x';
+const Y = 'y';

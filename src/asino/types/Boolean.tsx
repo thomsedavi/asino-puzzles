@@ -6,6 +6,7 @@ import { AsinoPuzzle } from '../interfaces';
 import { SelectInline, InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
+import { AsinoNumberReference } from './Number';
 
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' | 'IS_EACH_CLASS_DIFFERENT';
 
@@ -26,7 +27,7 @@ export type AsinoBooleanReference = {
   id?: string; // id of this boolean
   name?: { value?: string, editedValue?: string }; // name of this boolean
   value?: AsinoBoolean; // value of this boolean
-  numbers?: AsinoBooleanReference[]; // parameters to use when overriding
+  numbers?: AsinoNumberReference[]; // parameters to use when overriding
 }
 
 export const isBooleanFormula = (boolean: AsinoBoolean): boolean is BooleanFormula => {

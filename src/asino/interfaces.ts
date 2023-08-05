@@ -1,4 +1,4 @@
-import { Addition, C, Division, L, M, Multiplication, StrokeWidth, Subtraction, Z } from "./consts";
+import { Addition, C, Division, L, M, Multiplication, Subtraction, Z } from "./consts";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoCircleReference } from "./types/Circle";
 import { AsinoClassReference } from "./types/Class";
@@ -30,18 +30,13 @@ export interface AsinoPuzzle {
   numbers?: AsinoNumberReference[]; // numbers
   booleans?: AsinoBooleanReference[] // booleans
   colors?: AsinoColorReference[]; // colors
-  defaults?: { // should this be called 'settings'?
-    interfaceWidthValue?: Number; // default width of interface, or use default of 1/9
-    interfaceHeightValue?: Number; // default height of interface, or use default of 1/9
-    [StrokeWidth]?: Number; // default width of stroke, or use default of 1/200
-  }
   dateCreated?: string;
   dateUpdated?: string;
 }
 
 export interface AsinoCollection {
   id?: string; // id of this collection
-  name?: string; // name of this collection
+  name?: { value?: string, editedValue?: string }; // name of this collection
   classes?: AsinoClassReference[]; // classes
   objects?: AsinoObjectReference[]; // objects
 }
@@ -69,93 +64,93 @@ export const Test: AsinoPuzzle = {
   title: 'My Test',
   userName: 'Lotographia',
   objects: [
-    { id: '4-00', name: 'Object r1c1' },
-    { id: '4-01', name: 'Object r1c2' },
-    { id: '4-02', name: 'Object r1c3' },
-    { id: '4-03', name: 'Object r1c4' },
-    { id: '4-04', name: 'Object r1c5' },
-    { id: '4-05', name: 'Object r1c6' },
-    { id: '4-06', name: 'Object r1c7' },
-    { id: '4-07', name: 'Object r1c8' },
-    { id: '4-08', name: 'Object r1c9' },
-    { id: '4-10', name: 'Object r2c1' },
-    { id: '4-11', name: 'Object r2c2' },
-    { id: '4-12', name: 'Object r2c3' },
-    { id: '4-13', name: 'Object r2c4' },
-    { id: '4-14', name: 'Object r2c5' },
-    { id: '4-15', name: 'Object r2c6' },
-    { id: '4-16', name: 'Object r2c7' },
-    { id: '4-17', name: 'Object r2c8' },
-    { id: '4-18', name: 'Object r2c9' },
-    { id: '4-20', name: 'Object r3c1' },
-    { id: '4-21', name: 'Object r3c2' },
-    { id: '4-22', name: 'Object r3c3' },
-    { id: '4-23', name: 'Object r3c4' },
-    { id: '4-24', name: 'Object r3c5' },
-    { id: '4-25', name: 'Object r3c6' },
-    { id: '4-26', name: 'Object r3c7' },
-    { id: '4-27', name: 'Object r3c8' },
-    { id: '4-28', name: 'Object r3c9' },
-    { id: '4-30', name: 'Object r4c1' },
-    { id: '4-31', name: 'Object r4c2' },
-    { id: '4-32', name: 'Object r4c3' },
-    { id: '4-33', name: 'Object r4c4' },
-    { id: '4-34', name: 'Object r4c5' },
-    { id: '4-35', name: 'Object r4c6' },
-    { id: '4-36', name: 'Object r4c7' },
-    { id: '4-37', name: 'Object r4c8' },
-    { id: '4-38', name: 'Object r4c9' },
-    { id: '4-40', name: 'Object r5c1' },
-    { id: '4-41', name: 'Object r5c2' },
-    { id: '4-42', name: 'Object r5c3' },
-    { id: '4-43', name: 'Object r5c4' },
-    { id: '4-44', name: 'Object r5c5' },
-    { id: '4-45', name: 'Object r5c6' },
-    { id: '4-46', name: 'Object r5c7' },
-    { id: '4-47', name: 'Object r5c8' },
-    { id: '4-48', name: 'Object r5c9' },
-    { id: '4-50', name: 'Object r6c1' },
-    { id: '4-51', name: 'Object r6c2' },
-    { id: '4-52', name: 'Object r6c3' },
-    { id: '4-53', name: 'Object r6c4' },
-    { id: '4-54', name: 'Object r6c5' },
-    { id: '4-55', name: 'Object r6c6' },
-    { id: '4-56', name: 'Object r6c7' },
-    { id: '4-57', name: 'Object r6c8' },
-    { id: '4-58', name: 'Object r6c9' },
-    { id: '4-60', name: 'Object r7c1' },
-    { id: '4-61', name: 'Object r7c2' },
-    { id: '4-62', name: 'Object r7c3' },
-    { id: '4-63', name: 'Object r7c4' },
-    { id: '4-64', name: 'Object r7c5' },
-    { id: '4-65', name: 'Object r7c6' },
-    { id: '4-66', name: 'Object r7c7' },
-    { id: '4-67', name: 'Object r7c8' },
-    { id: '4-68', name: 'Object r7c9' },
-    { id: '4-70', name: 'Object r8c1' },
-    { id: '4-71', name: 'Object r8c2' },
-    { id: '4-72', name: 'Object r8c3' },
-    { id: '4-73', name: 'Object r8c4', value: { class: '3-05' } },
-    { id: '4-74', name: 'Object r8c5' },
-    { id: '4-75', name: 'Object r8c6' },
-    { id: '4-76', name: 'Object r8c7' },
-    { id: '4-77', name: 'Object r8c8' },
-    { id: '4-78', name: 'Object r8c9' },
-    { id: '4-80', name: 'Object r9c1' },
-    { id: '4-81', name: 'Object r9c2' },
-    { id: '4-82', name: 'Object r9c3' },
-    { id: '4-83', name: 'Object r9c4' },
-    { id: '4-84', name: 'Object r9c5' },
-    { id: '4-85', name: 'Object r9c6' },
-    { id: '4-86', name: 'Object r9c7' },
-    { id: '4-87', name: 'Object r9c8' },
-    { id: '4-88', name: 'Object r9c9', value: { class: '3-08' } },
-    { id: '4-000', name: 'Is Each Object Input' }
+    { id: '4-00', name: { value: 'Object r1c1' } },
+    { id: '4-01', name: { value: 'Object r1c2' } },
+    { id: '4-02', name: { value: 'Object r1c3' } },
+    { id: '4-03', name: { value: 'Object r1c4' } },
+    { id: '4-04', name: { value: 'Object r1c5' } },
+    { id: '4-05', name: { value: 'Object r1c6' } },
+    { id: '4-06', name: { value: 'Object r1c7' } },
+    { id: '4-07', name: { value: 'Object r1c8' } },
+    { id: '4-08', name: { value: 'Object r1c9' } },
+    { id: '4-10', name: { value: 'Object r2c1' } },
+    { id: '4-11', name: { value: 'Object r2c2' } },
+    { id: '4-12', name: { value: 'Object r2c3' } },
+    { id: '4-13', name: { value: 'Object r2c4' } },
+    { id: '4-14', name: { value: 'Object r2c5' } },
+    { id: '4-15', name: { value: 'Object r2c6' } },
+    { id: '4-16', name: { value: 'Object r2c7' } },
+    { id: '4-17', name: { value: 'Object r2c8' } },
+    { id: '4-18', name: { value: 'Object r2c9' } },
+    { id: '4-20', name: { value: 'Object r3c1' } },
+    { id: '4-21', name: { value: 'Object r3c2' } },
+    { id: '4-22', name: { value: 'Object r3c3' } },
+    { id: '4-23', name: { value: 'Object r3c4' } },
+    { id: '4-24', name: { value: 'Object r3c5' } },
+    { id: '4-25', name: { value: 'Object r3c6' } },
+    { id: '4-26', name: { value: 'Object r3c7' } },
+    { id: '4-27', name: { value: 'Object r3c8' } },
+    { id: '4-28', name: { value: 'Object r3c9' } },
+    { id: '4-30', name: { value: 'Object r4c1' } },
+    { id: '4-31', name: { value: 'Object r4c2' } },
+    { id: '4-32', name: { value: 'Object r4c3' } },
+    { id: '4-33', name: { value: 'Object r4c4' } },
+    { id: '4-34', name: { value: 'Object r4c5' } },
+    { id: '4-35', name: { value: 'Object r4c6' } },
+    { id: '4-36', name: { value: 'Object r4c7' } },
+    { id: '4-37', name: { value: 'Object r4c8' } },
+    { id: '4-38', name: { value: 'Object r4c9' } },
+    { id: '4-40', name: { value: 'Object r5c1' } },
+    { id: '4-41', name: { value: 'Object r5c2' } },
+    { id: '4-42', name: { value: 'Object r5c3' } },
+    { id: '4-43', name: { value: 'Object r5c4' } },
+    { id: '4-44', name: { value: 'Object r5c5' } },
+    { id: '4-45', name: { value: 'Object r5c6' } },
+    { id: '4-46', name: { value: 'Object r5c7' } },
+    { id: '4-47', name: { value: 'Object r5c8' } },
+    { id: '4-48', name: { value: 'Object r5c9' } },
+    { id: '4-50', name: { value: 'Object r6c1' } },
+    { id: '4-51', name: { value: 'Object r6c2' } },
+    { id: '4-52', name: { value: 'Object r6c3' } },
+    { id: '4-53', name: { value: 'Object r6c4' } },
+    { id: '4-54', name: { value: 'Object r6c5' } },
+    { id: '4-55', name: { value: 'Object r6c6' } },
+    { id: '4-56', name: { value: 'Object r6c7' } },
+    { id: '4-57', name: { value: 'Object r6c8' } },
+    { id: '4-58', name: { value: 'Object r6c9' } },
+    { id: '4-60', name: { value: 'Object r7c1' } },
+    { id: '4-61', name: { value: 'Object r7c2' } },
+    { id: '4-62', name: { value: 'Object r7c3' } },
+    { id: '4-63', name: { value: 'Object r7c4' } },
+    { id: '4-64', name: { value: 'Object r7c5' } },
+    { id: '4-65', name: { value: 'Object r7c6' } },
+    { id: '4-66', name: { value: 'Object r7c7' } },
+    { id: '4-67', name: { value: 'Object r7c8' } },
+    { id: '4-68', name: { value: 'Object r7c9' } },
+    { id: '4-70', name: { value: 'Object r8c1' } },
+    { id: '4-71', name: { value: 'Object r8c2' } },
+    { id: '4-72', name: { value: 'Object r8c3' } },
+    { id: '4-73', name: { value: 'Object r8c4' }, value: { class: '3-05' } },
+    { id: '4-74', name: { value: 'Object r8c5' } },
+    { id: '4-75', name: { value: 'Object r8c6' } },
+    { id: '4-76', name: { value: 'Object r8c7' } },
+    { id: '4-77', name: { value: 'Object r8c8' } },
+    { id: '4-78', name: { value: 'Object r8c9' } },
+    { id: '4-80', name: { value: 'Object r9c1' } },
+    { id: '4-81', name: { value: 'Object r9c2' } },
+    { id: '4-82', name: { value: 'Object r9c3' } },
+    { id: '4-83', name: { value: 'Object r9c4' } },
+    { id: '4-84', name: { value: 'Object r9c5' } },
+    { id: '4-85', name: { value: 'Object r9c6' } },
+    { id: '4-86', name: { value: 'Object r9c7' } },
+    { id: '4-87', name: { value: 'Object r9c8' } },
+    { id: '4-88', name: { value: 'Object r9c9' }, value: { class: '3-08' } },
+    { id: '4-000', name: { value: 'Is Each Object Input' } }
   ],
   classes: [
     {
       id: '3-00',
-      name: '1',
+      name: { value: '1' },
       value: {
         layers: [
           {
@@ -197,7 +192,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-01',
-      name: '2',
+      name: { value: '2' },
       value: {
         layers: [
           {
@@ -310,7 +305,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-02',
-      name: '3',
+      name: { value: '3' },
       value: {
         layers: [
           {
@@ -454,7 +449,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-03',
-      name: '4',
+      name: { value: '4' },
       value: {
         layers: [
           {
@@ -499,7 +494,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-04',
-      name: '5',
+      name: { value: '5' },
       value: {
         layers: [
           {
@@ -559,7 +554,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-05',
-      name: '6',
+      name: { value: '6' },
       value: {
         layers: [
           {
@@ -613,7 +608,8 @@ export const Test: AsinoPuzzle = {
       }
     },
     {
-      id: '3-06', name: '7',
+      id: '3-06',
+      name: { value: '7' },
       value: {
         layers: [
           {
@@ -658,7 +654,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-07',
-      name: '8',
+      name: { value: '8' },
       value: {
         layers: [
           {
@@ -713,7 +709,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-08',
-      name: '9',
+      name: { value: '9' },
       value: {
         layers: [
           {
@@ -768,13 +764,13 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '3-09',
-      name: 'Object class'
+      name: { value: 'Object class' }
     }
   ],
   collections: [
     {
       id: '5-00',
-      name: 'numbers',
+      name: { value: 'numbers' },
       classes: [
         { id: '3-00' },
         { id: '3-01' },
@@ -878,12 +874,12 @@ export const Test: AsinoPuzzle = {
   colors: [
     {
       id: '6-00',
-      name: 'Color',
+      name: { value: 'Color' },
       value: 'var(--color)'
     },
     {
       id: '6-01',
-      name: 'Color',
+      name: { value: 'Color' },
       value: 'var(--failure)'
     }
   ],
@@ -1027,9 +1023,4 @@ export const Test: AsinoPuzzle = {
     { id: '7-24', name: '', value: { objects: ['4-63', '4-64', '4-65', '4-73', '4-74', '4-75', '4-83', '4-84', '4-85'] } },
     { id: '7-25', name: '', value: { objects: ['4-66', '4-67', '4-68', '4-76', '4-77', '4-78', '4-86', '4-87', '4-88'] } }
   ],
-  defaults: {
-    interfaceWidthValue: { numerator: 1, denominator: 9 },
-    interfaceHeightValue: { numerator: 1, denominator: 9 },
-    strokeWidth: { numerator: 1, denominator: 200 }
-  }
 }
