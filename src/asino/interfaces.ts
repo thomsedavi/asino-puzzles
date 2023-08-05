@@ -6,9 +6,9 @@ import { AsinoColorReference } from "./types/Color";
 import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
 import { AsinoLineReference } from "./types/Line";
-import { Number, AsinoNumberReference } from "./types/Number";
+import { AsinoNumberReference } from "./types/Number";
 import { AsinoObjectReference } from "./types/Object";
-import { AsinoPathReference } from "./types/Path";
+import { AsinoCommandReference, AsinoPathReference } from "./types/Path";
 import { AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSetReference } from "./types/Set";
 
@@ -30,6 +30,7 @@ export interface AsinoPuzzle {
   numbers?: AsinoNumberReference[]; // numbers
   booleans?: AsinoBooleanReference[] // booleans
   colors?: AsinoColorReference[]; // colors
+  commands?: AsinoCommandReference[]; // commands
   dateCreated?: string;
   dateUpdated?: string;
 }
@@ -886,7 +887,7 @@ export const Test: AsinoPuzzle = {
   interfaces: [
     {
       id: '0-00',
-      name: 'Template',
+      name: { value: 'Template' },
       value: {
         x: { id: '1-06', numbers: [{ id: '1-09', value: '1-07' }] },
         y: { id: '1-06', numbers: [{ id: '1-09', value: '1-08' }] }
@@ -894,7 +895,7 @@ export const Test: AsinoPuzzle = {
     },
     {
       id: '0-01',
-      name: 'Interface r9c8',
+      name: { value: 'Interface r9c8' },
       value: {
         collectionId: '5-00',
         objectId: '4-87',
@@ -910,31 +911,39 @@ export const Test: AsinoPuzzle = {
         objectOutput: '4-000',
         boolean: {
           operator: 'IS_EACH_SET',
-          setsInput: {
-            operator: 'SETS_CONTAINING_OBJECT'
-          },
+          setsInputs: [
+            {
+              operator: 'SETS_CONTAINING_OBJECT'
+            }
+          ],
           boolean: {
             operator: 'IS_EACH_OBJECT',
-            objectsInput: {
-              operator: '-',
-              objectsLeftInput: {
-                operator: 'OBJECTS_IN_SET'
-              },
-              objectsRightInput: [
-                '4-000'
-              ]
-            },
+            objectsInputs: [
+              {
+                operator: '-',
+                objectsInputs: [
+                  {
+                    operator: 'OBJECTS_IN_SET'
+                  },
+                  [
+                    '4-000'
+                  ]
+                ]
+              }
+            ],
             boolean: {
               operator: 'IS_OBJECT_CLASS',
               classOutput: '3-09',
               boolean: {
                 operator: 'IS_EACH_CLASS_DIFFERENT',
-                classesInput: [
-                  '3-09',
-                  {
-                    operator: 'CLASS_OF_OBJECT',
-                    objectInput: '4-000'
-                  }
+                classesInputs: [
+                  [
+                    '3-09',
+                    {
+                      operator: 'CLASS_OF_OBJECT',
+                      objectInputs: ['4-000']
+                    }
+                  ]
                 ]
               }
             }
@@ -990,37 +999,37 @@ export const Test: AsinoPuzzle = {
     }
   ],
   lines: [
-    { id: '2-00', name: 'Vertical Border 1', value: { x1: { value: { numerator: 1, denominator: 3 } }, x2: { value: { numerator: 1, denominator: 3 } }, y1: { value: 0 }, y2: { value: 1 }, stroke: { id: '6-00' }, strokeWidth: '1-05' } },
-    { id: '2-01', name: 'Vertical Border 2', value: { x1: '1-02', x2: '1-02', y1: '1-03', y2: '1-04', strokeWidth: '1-05' } },
-    { id: '2-02', name: 'Horizontal Border 1', value: { x1: { value: 0 }, x2: { value: 1 }, y1: { value: { numerator: 1, denominator: 3 } }, y2: { value: { numerator: 1, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' } },
-    { id: '2-03', name: 'Horizontal Border 2', value: { x1: { value: 0 }, x2: { value: 1 }, y1: { value: { numerator: 2, denominator: 3 } }, y2: { value: { numerator: 2, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' } }
+    { id: '2-00', name: { value: 'Vertical Border 1' }, value: { x1: { value: { numerator: 1, denominator: 3 } }, x2: { value: { numerator: 1, denominator: 3 } }, y1: { value: 0 }, y2: { value: 1 }, stroke: { id: '6-00' }, strokeWidth: '1-05' } },
+    { id: '2-01', name: { value: 'Vertical Border 2' }, value: { x1: '1-02', x2: '1-02', y1: '1-03', y2: '1-04', strokeWidth: '1-05' } },
+    { id: '2-02', name: { value: 'Horizontal Border 1' }, value: { x1: { value: 0 }, x2: { value: 1 }, y1: { value: { numerator: 1, denominator: 3 } }, y2: { value: { numerator: 1, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' } },
+    { id: '2-03', name: { value: 'Horizontal Border 2' }, value: { x1: { value: 0 }, x2: { value: 1 }, y1: { value: { numerator: 2, denominator: 3 } }, y2: { value: { numerator: 2, denominator: 3 } }, stroke: '6-00', strokeWidth: '1-05' } }
   ],
   sets: [
-    { id: '7-00', name: 'r1', value: { objects: ['4-00', '4-01', '4-02', '4-03', '4-04', '4-05', '4-06', '4-07', '4-08'] } },
-    { id: '7-01', name: 'r2', value: { objects: ['4-10', '4-11', '4-12', '4-13', '4-14', '4-15', '4-16', '4-17', '4-18'] } },
-    { id: '7-02', name: 'r3', value: { objects: ['4-20', '4-21', '4-22', '4-23', '4-24', '4-25', '4-26', '4-27', '4-28'] } },
-    { id: '7-03', name: 'r4', value: { objects: ['4-30', '4-31', '4-32', '4-33', '4-34', '4-35', '4-36', '4-37', '4-38'] } },
-    { id: '7-04', name: 'r5', value: { objects: ['4-40', '4-41', '4-42', '4-43', '4-44', '4-45', '4-46', '4-47', '4-48'] } },
-    { id: '7-05', name: 'r6', value: { objects: ['4-50', '4-51', '4-52', '4-53', '4-54', '4-55', '4-56', '4-57', '4-58'] } },
-    { id: '7-06', name: 'r7', value: { objects: ['4-60', '4-61', '4-62', '4-63', '4-64', '4-65', '4-66', '4-67', '4-68'] } },
-    { id: '7-07', name: 'r8', value: { objects: ['4-70', '4-71', '4-72', '4-73', '4-74', '4-75', '4-76', '4-77', '4-78'] } },
-    { id: '7-08', name: 'r9', value: { objects: ['4-80', '4-81', '4-82', '4-83', '4-84', '4-85', '4-86', '4-87', '4-88'] } },
-    { id: '7-09', name: 'c1', value: { objects: ['4-00', '4-10', '4-20', '4-30', '4-40', '4-50', '4-60', '4-70', '4-80'] } },
-    { id: '7-10', name: 'c2', value: { objects: ['4-01', '4-11', '4-21', '4-31', '4-41', '4-51', '4-61', '4-71', '4-81'] } },
-    { id: '7-11', name: 'c3', value: { objects: ['4-02', '4-12', '4-22', '4-32', '4-42', '4-52', '4-62', '4-72', '4-82'] } },
-    { id: '7-12', name: 'c4', value: { objects: ['4-03', '4-13', '4-23', '4-33', '4-43', '4-53', '4-63', '4-73', '4-83'] } },
-    { id: '7-13', name: 'c5', value: { objects: ['4-04', '4-14', '4-24', '4-34', '4-44', '4-54', '4-64', '4-74', '4-84'] } },
-    { id: '7-14', name: 'c6', value: { objects: ['4-05', '4-15', '4-25', '4-35', '4-45', '4-55', '4-65', '4-75', '4-85'] } },
-    { id: '7-15', name: 'c7', value: { objects: ['4-06', '4-16', '4-26', '4-36', '4-46', '4-56', '4-66', '4-76', '4-86'] } },
-    { id: '7-16', name: 'c8', value: { objects: ['4-07', '4-17', '4-27', '4-37', '4-47', '4-57', '4-67', '4-77', '4-87'] } },
-    { id: '7-17', name: '', value: { objects: ['4-00', '4-01', '4-02', '4-10', '4-11', '4-12', '4-20', '4-21', '4-22'] } },
-    { id: '7-18', name: '', value: { objects: ['4-03', '4-04', '4-05', '4-13', '4-14', '4-15', '4-23', '4-24', '4-25'] } },
-    { id: '7-19', name: '', value: { objects: ['4-06', '4-07', '4-08', '4-16', '4-17', '4-18', '4-26', '4-27', '4-28'] } },
-    { id: '7-20', name: '', value: { objects: ['4-30', '4-31', '4-32', '4-40', '4-41', '4-42', '4-50', '4-51', '4-52'] } },
-    { id: '7-21', name: '', value: { objects: ['4-33', '4-34', '4-35', '4-43', '4-44', '4-45', '4-53', '4-54', '4-55'] } },
-    { id: '7-22', name: '', value: { objects: ['4-36', '4-37', '4-38', '4-46', '4-47', '4-48', '4-56', '4-57', '4-58'] } },
-    { id: '7-23', name: '', value: { objects: ['4-60', '4-61', '4-62', '4-70', '4-71', '4-72', '4-80', '4-81', '4-82'] } },
-    { id: '7-24', name: '', value: { objects: ['4-63', '4-64', '4-65', '4-73', '4-74', '4-75', '4-83', '4-84', '4-85'] } },
-    { id: '7-25', name: '', value: { objects: ['4-66', '4-67', '4-68', '4-76', '4-77', '4-78', '4-86', '4-87', '4-88'] } }
+    { id: '7-00', name: { value: 'r1' }, value: { objects: ['4-00', '4-01', '4-02', '4-03', '4-04', '4-05', '4-06', '4-07', '4-08'] } },
+    { id: '7-01', name: { value: 'r2' }, value: { objects: ['4-10', '4-11', '4-12', '4-13', '4-14', '4-15', '4-16', '4-17', '4-18'] } },
+    { id: '7-02', name: { value: 'r3' }, value: { objects: ['4-20', '4-21', '4-22', '4-23', '4-24', '4-25', '4-26', '4-27', '4-28'] } },
+    { id: '7-03', name: { value: 'r4' }, value: { objects: ['4-30', '4-31', '4-32', '4-33', '4-34', '4-35', '4-36', '4-37', '4-38'] } },
+    { id: '7-04', name: { value: 'r5' }, value: { objects: ['4-40', '4-41', '4-42', '4-43', '4-44', '4-45', '4-46', '4-47', '4-48'] } },
+    { id: '7-05', name: { value: 'r6' }, value: { objects: ['4-50', '4-51', '4-52', '4-53', '4-54', '4-55', '4-56', '4-57', '4-58'] } },
+    { id: '7-06', name: { value: 'r7' }, value: { objects: ['4-60', '4-61', '4-62', '4-63', '4-64', '4-65', '4-66', '4-67', '4-68'] } },
+    { id: '7-07', name: { value: 'r8' }, value: { objects: ['4-70', '4-71', '4-72', '4-73', '4-74', '4-75', '4-76', '4-77', '4-78'] } },
+    { id: '7-08', name: { value: 'r9' }, value: { objects: ['4-80', '4-81', '4-82', '4-83', '4-84', '4-85', '4-86', '4-87', '4-88'] } },
+    { id: '7-09', name: { value: 'c1' }, value: { objects: ['4-00', '4-10', '4-20', '4-30', '4-40', '4-50', '4-60', '4-70', '4-80'] } },
+    { id: '7-10', name: { value: 'c2' }, value: { objects: ['4-01', '4-11', '4-21', '4-31', '4-41', '4-51', '4-61', '4-71', '4-81'] } },
+    { id: '7-11', name: { value: 'c3' }, value: { objects: ['4-02', '4-12', '4-22', '4-32', '4-42', '4-52', '4-62', '4-72', '4-82'] } },
+    { id: '7-12', name: { value: 'c4' }, value: { objects: ['4-03', '4-13', '4-23', '4-33', '4-43', '4-53', '4-63', '4-73', '4-83'] } },
+    { id: '7-13', name: { value: 'c5' }, value: { objects: ['4-04', '4-14', '4-24', '4-34', '4-44', '4-54', '4-64', '4-74', '4-84'] } },
+    { id: '7-14', name: { value: 'c6' }, value: { objects: ['4-05', '4-15', '4-25', '4-35', '4-45', '4-55', '4-65', '4-75', '4-85'] } },
+    { id: '7-15', name: { value: 'c7' }, value: { objects: ['4-06', '4-16', '4-26', '4-36', '4-46', '4-56', '4-66', '4-76', '4-86'] } },
+    { id: '7-16', name: { value: 'c8' }, value: { objects: ['4-07', '4-17', '4-27', '4-37', '4-47', '4-57', '4-67', '4-77', '4-87'] } },
+    { id: '7-17', name: { value: '' }, value: { objects: ['4-00', '4-01', '4-02', '4-10', '4-11', '4-12', '4-20', '4-21', '4-22'] } },
+    { id: '7-18', name: { value: '' }, value: { objects: ['4-03', '4-04', '4-05', '4-13', '4-14', '4-15', '4-23', '4-24', '4-25'] } },
+    { id: '7-19', name: { value: '' }, value: { objects: ['4-06', '4-07', '4-08', '4-16', '4-17', '4-18', '4-26', '4-27', '4-28'] } },
+    { id: '7-20', name: { value: '' }, value: { objects: ['4-30', '4-31', '4-32', '4-40', '4-41', '4-42', '4-50', '4-51', '4-52'] } },
+    { id: '7-21', name: { value: '' }, value: { objects: ['4-33', '4-34', '4-35', '4-43', '4-44', '4-45', '4-53', '4-54', '4-55'] } },
+    { id: '7-22', name: { value: '' }, value: { objects: ['4-36', '4-37', '4-38', '4-46', '4-47', '4-48', '4-56', '4-57', '4-58'] } },
+    { id: '7-23', name: { value: '' }, value: { objects: ['4-60', '4-61', '4-62', '4-70', '4-71', '4-72', '4-80', '4-81', '4-82'] } },
+    { id: '7-24', name: { value: '' }, value: { objects: ['4-63', '4-64', '4-65', '4-73', '4-74', '4-75', '4-83', '4-84', '4-85'] } },
+    { id: '7-25', name: { value: '' }, value: { objects: ['4-66', '4-67', '4-68', '4-76', '4-77', '4-78', '4-86', '4-87', '4-88'] } }
   ],
 }

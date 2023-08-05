@@ -5,7 +5,6 @@ import { drawInterface, drawInterfaceInteractive } from "./Interface";
 import { drawCircle } from "./Circle";
 import { drawRectangle } from "./Rectangle";
 import { drawPath } from "./Path";
-import { StrokeWidth } from "../consts";
 import { Number } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";

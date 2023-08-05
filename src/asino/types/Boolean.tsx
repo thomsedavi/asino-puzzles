@@ -15,9 +15,9 @@ export type AsinoBoolean = boolean | string | BooleanFormula | AsinoBooleanRefer
 export type BooleanFormula = {
   operator?: BooleanOperator;
   classOutput?: AsinoClass;
-  classesInput?: AsinoClasses;
-  setsInput?: AsinoSets;
-  objectsInput?: AsinoObjects;
+  classesInputs?: (AsinoClasses | undefined)[];
+  setsInputs?: (AsinoSets | undefined)[];
+  objectsInputs?: (AsinoObjects | undefined)[];
   objectOutput?: AsinoObject;
   boolean?: AsinoBoolean;
   collapsed?: boolean; // collapse in editor

@@ -1,5 +1,5 @@
 import React from "react"
-import { getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromAsinoColor, getValueFromNumber } from "../utils";
+import { getCommandFromAsinoCommand, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromAsinoColor, getValueFromNumber } from "../utils";
 import { C, L, M, S, StrokeWidth, Z } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
@@ -16,8 +16,12 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
     if (path?.value?.commands !== undefined) {
       d = '';
 
-      path.value.commands.forEach((command: AsinoCommand) => {
-        if (command.letter === M) {
+      path.value.commands.forEach((asinoCommand: AsinoCommand) => {
+        const command = getCommandFromAsinoCommand(asinoCommand, references.clone(), solution);
+
+        if (command === undefined) {
+          // do nothing
+        } else if (command.letter === M) {
           let x: Number | undefined = undefined;
           let y: Number | undefined = undefined;
 

@@ -1,7 +1,7 @@
 import { AsinoLayer } from "./Layer";
 import { AsinoObject } from "./Object";
 
-export type ClassOperator = 'CLASS_OF_OBJECT';
+export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 
 export type Class = {
   layers?: AsinoLayer[]; // layers to draw this class
@@ -13,7 +13,7 @@ export type AsinoClasses = AsinoClass[] | string;
 
 export type ClassFormula = {
   operator?: ClassOperator; // formula for this class
-  objectInput?: AsinoObject; // object of formula
+  objectInputs?: (AsinoObject | undefined)[]; // object of formula
 }
 
 export type AsinoClassReference = {

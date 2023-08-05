@@ -13,7 +13,7 @@ export type AsinoLine = {
 
 export type AsinoLineReference = {
   id?: string; // id of this line
-  name?: string; // name of this line
+  name?: { value?: string, editedValue?: string }; // name of this line
   value?: AsinoLine; // value of this line
   numbers?: AsinoNumberReference[] // number parameters
   colors?: AsinoColorReference[] // number colors

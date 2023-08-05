@@ -3,6 +3,7 @@ import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoNumberReference } from "./types/Number";
 import { AsinoObject, AsinoObjectReference } from "./types/Object";
+import { AsinoCommandReference } from "./types/Path";
 import { AsinoSet, AsinoSetReference } from "./types/Set";
 
 export class References {
@@ -12,6 +13,7 @@ export class References {
   numbers: AsinoNumberReference[];
   objects: AsinoObjectReference[];
   sets: AsinoSetReference[];
+  commands: AsinoCommandReference[];
 
   class: AsinoClass | undefined;
   object: AsinoObject | undefined;
@@ -26,6 +28,7 @@ export class References {
     this.numbers = [];
     this.objects = [];
     this.sets = [];
+    this.commands = [];
   }
 
   clone = (): References => {
@@ -37,6 +40,7 @@ export class References {
     refClone.numbers = [...this.numbers];
     refClone.objects = [...this.objects];
     refClone.sets = [...this.sets];
+    refClone.commands = [...this.commands];
 
     refClone.class = this.class;
     refClone.object = this.object;
@@ -82,6 +86,14 @@ export class References {
   addObjects = (objectLists: (AsinoObjectReference[] | undefined)[]): References => {
     objectLists.forEach(objects => {
       objects !== undefined && (this.objects = [...this.objects, ...objects]);
+    });
+
+    return this;
+  }
+
+  addCommands = (commandLists: (AsinoCommandReference[] | undefined)[]): References => {
+    commandLists.forEach(commands => {
+      commands !== undefined && (this.commands = [...this.commands, ...commands]);
     });
 
     return this;

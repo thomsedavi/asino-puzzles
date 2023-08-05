@@ -14,7 +14,7 @@ export type AsinoInterface = {
 
 export type AsinoInterfaceReference = {
   id?: string; // id of this interface
-  name?: string; // name of this interface
+  name?: { value?: string, editedValue?: string }; // name of this interface
   value?: AsinoInterface; // value of this interface
   numbers?: AsinoNumberReference[] // number parameters
   colors?: AsinoColorReference[] // number colors

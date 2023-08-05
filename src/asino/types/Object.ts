@@ -1,6 +1,6 @@
 import { AsinoClass } from "./Class";
 
-export type ObjectsOperator = '-' | 'OBJECTS_IN_SET';
+export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 
 export type Object = {
   class?: AsinoClass; // class of this object
@@ -12,8 +12,8 @@ export type AsinoObjects = AsinoObject[] | string | AsinoObjectsFormula;
 
 export type AsinoObjectsFormula = {
   operator?: ObjectsOperator;
-  objectsLeftInput?: AsinoObjects; // left object of formula
-  objectsRightInput?: AsinoObjects; // right object of formula
+  objectsInputs?: (AsinoObjects | undefined)[]; // objects inputs
+  collapsed?: boolean; // collapse in editor
 }
 
 export interface AsinoObjectReference {

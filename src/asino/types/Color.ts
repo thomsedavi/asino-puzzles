@@ -1,13 +1,13 @@
 import { AsinoBoolean } from "./Boolean";
 
-export type ColorOperator = 'IF_ELSE';
+export type ColorOperator = 'NONE' | 'IF_ELSE';
 
 export type AsinoColor = string | ColorFormula | AsinoColorReference;
 
 export type ColorFormula = {
   operator?: ColorOperator;
-  booleanInputs?: AsinoBoolean[]; // boolean inputs
-  colorInputs?: AsinoColor[]; // color inputs
+  booleanInputs?: (AsinoBoolean | undefined)[]; // boolean inputs
+  colorInputs?: (AsinoColor | undefined)[]; // color inputs
 }
 
 export type AsinoColorReference = {
