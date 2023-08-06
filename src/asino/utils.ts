@@ -8,7 +8,7 @@ import { AsinoColor, AsinoColorReference, ColorFormula, isColorFormula } from ".
 import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
 import { AsinoLine, AsinoLineReference } from "./types/Line";
-import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber } from "./types/Number";
+import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber, Fraction } from "./types/Number";
 import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
@@ -1268,14 +1268,13 @@ const unminifyBooleanReference = (boolean: any): AsinoBooleanReference => {
   return result;
 }
 
-// have got up to here, this is exhausting
-
 const unminifyCollection = (collection: any): AsinoCollection => {
   const result: AsinoCollection = {};
 
   collection[Id] !== undefined && (result.id = collection[Id]);
   collection[Name] !== undefined && (result.name = { value: collection[Name] });
-  console.log('TODO');
+  collection[Classes] !== undefined && (result.classes = collection[Classes].map((c: any) => unminifyClassReference(c)));
+  collection[Objects] !== undefined && (result.objects = collection[Objects].map((o: any) => unminifyObjectReference(o)));
 
   return result;
 }
@@ -1284,10 +1283,20 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   const result: AsinoLayer = {};
 
   layer[Name] !== undefined && (result.name = { value: layer[Name] });
-  console.log('TODO');
+  layer[CollectionId] !== undefined && (result.collectionId = layer[CollectionId]);
+  layer[Colors] !== undefined && (result.colors = layer[Colors].map((c: any) => unminifyColor(c)));
+  layer[Circle] !== undefined && (result.circle = unminifyCircleReference(layer[Circle]));
+  layer[Interface] !== undefined && (result.interface = unminifyInterfaceReference(layer[Interface]));
+  layer[Line] !== undefined && (result.line = unminifyLineReference(layer[Line]));
+  layer[Numbers] !== undefined && (result.numbers = layer[Numbers].map((n: any) => unminifyNumberReference(n)));
+  layer[ObjectId] != undefined && (result.objectId = layer[ObjectId]);
+  layer[Path] !== undefined && (result.path = unminifyPathReference(layer[Path]));
+  layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangleReference(layer[Rectangle]));
 
   return result;
 }
+
+// have got up to here, this is exhausting
 
 const unminifyBoolean = (boolean: any): AsinoBoolean => {
   if (typeof boolean === 'string') {
@@ -1318,9 +1327,15 @@ const unminifyNumber = (number: any): AsinoNumber => {
     number[NumberInputs] !== undefined && (result.numberInputs = number[NumberInputs].map((n: any) => n !== undefined ? unminifyNumber(n) : undefined));
 
     return result;
+  } else if (Denominator in number && Numerator in number) {
+    const result: Fraction = {};
+
+    number[Numerator] !== undefined && (result.numerator = unminifyNumber(number[Numerator]));
+    number[Denominator] !== undefined && (result.denominator = unminifyNumber(number[Denominator]));
+
+    return result;
   } else {
-    console.log('TODO');
-    return {};
+    return unminifyNumberReference(number);
   }
 }
 
@@ -1394,6 +1409,29 @@ const unminifyInterfaceReference = (asinoInterface: any): AsinoInterfaceReferenc
   asinoInterface[Id] !== undefined && (result.id = asinoInterface[Id]);
   asinoInterface[Name] !== undefined && (result.name = { value: asinoInterface[Name] });
   asinoInterface[Numbers] !== undefined && (result.numbers = asinoInterface[Numbers].map((n: any) => unminifyNumberReference(n)));
+  asinoInterface[Value] !== undefined && (result.value = unminifyInterface(asinoInterface[Value]));
+  asinoInterface[Colors] !== undefined && (result.colors = asinoInterface[Colors].map((c: any) => unminifyColor(c)));
+
+  return result;
+}
+
+const unminifyInterface = (asinoInterface: any): AsinoInterface => {
+  const result: AsinoInterface = {};
+
+  asinoInterface[CollectionId] !== undefined && (result.collectionId = asinoInterface[CollectionId]);
+  asinoInterface[FixedClassId] !== undefined && (result.fixedClassId = asinoInterface[FixedClassId]);
+  asinoInterface[Height] !== undefined && (result.height = unminifyNumber(asinoInterface[Height]));
+  asinoInterface[Width] !== undefined && (result.width = unminifyNumber(asinoInterface[Width]));
+  asinoInterface[X] !== undefined && (result.x = unminifyNumber(asinoInterface[X]));
+  asinoInterface[Y] !== undefined && (result.y = unminifyNumber(asinoInterface[Y]));
+  asinoInterface[ObjectId] !== undefined && (result.objectId = asinoInterface[ObjectId]);
+
+  return result;
+}
+
+const unminifyColor = (color: any): AsinoColorReference => {
+  const result: AsinoColorReference = {};
+
   console.log('TODO');
 
   return result;
