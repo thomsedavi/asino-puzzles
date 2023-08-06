@@ -10,6 +10,7 @@ import { AsinoRectangleReference } from "./Rectangle";
 import Utils from '../../common/utils';
 import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
+import { AsinoCollection } from './Collection';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -93,6 +94,14 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     {layer.circle !== undefined && <SelectInline name={`Circle {${rowKey}} Id`} id={`Circle {${rowKey}} Id`} value={layer.circle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, circle: { ...layer.circle, id: event.target.value } })}>
       <option value='NONE'>Select Circle</option>
       {puzzle.circles!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+    </SelectInline>}
+    {layer.interface !== undefined && <SelectInline value={layer.collectionId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, collectionId: event.target.value !== 'NONE' ? event.target.value : undefined, objectId: undefined })}>
+      <option value='NONE'>Select Collection</option>
+      {puzzle.collections?.map((c, index) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
+    </SelectInline>}
+    {layer.collectionId !== undefined && <SelectInline value={layer.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, objectId: event.target.value !== 'NONE' ? event.target.value : undefined })}>
+      <option value='NONE'>Select Object</option>
+      {puzzle.collections?.filter(c => c.id === layer.collectionId)[0].objects?.map((o, index) => <option key={`${rowKey} Collection ${index}`} value={o.id}>{o.name?.value}</option>)}
     </SelectInline>}
   </div>;
 }

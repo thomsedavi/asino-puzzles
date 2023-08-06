@@ -1496,7 +1496,7 @@ const unminifyObjectReference = (object: any): AsinoObjectReference => {
 
   object[Id] !== undefined && (result.id = object[Id]);
   object[Name] !== undefined && (result.name = { value: object[Name] });
-  console.log('TODO');
+  object[Value] !== undefined && (result.value = unminifyObject(object[Value]));
 
   return result;
 }
