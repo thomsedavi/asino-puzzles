@@ -812,7 +812,7 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
   asino.lines !== undefined && (result[Lines] = asino.lines.map((l: AsinoLineReference) => minifyLineReference(l)));
   asino.paths !== undefined && (result[Paths] = asino.paths.map((p: AsinoPathReference) => minifyPathReference(p)));
   asino.sets !== undefined && (result[Sets] = asino.sets.map(((s: AsinoSetReference) => minifySetReference(s))));
-  asino.commands != undefined && (result[Commands] = asino.commands.map((c: AsinoCommandReference) => minifyCommandReference(c)));
+  asino.commands !== undefined && (result[Commands] = asino.commands.map((c: AsinoCommandReference) => minifyCommandReference(c)));
 
   return result;
 }
