@@ -30,6 +30,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
 
   if (layer.interface !== undefined) {
     selectValue = 'INTERFACE';
+  } else if (layer.line !== undefined) {
+    selectValue = 'LINE';
   } else if (layer.rectangle !== undefined) {
     selectValue = 'RECTANGLE';
   } else if (layer.circle !== undefined) {
@@ -41,6 +43,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       update({ name: layer.name });
     } else if (event.target.value === 'INTERFACE') {
       update({ name: layer.name, interface: {} });
+    } else if (event.target.value === 'LINE') {
+      update({ name: layer.name, line: {} });
     } else if (event.target.value === 'RECTANGLE') {
       update({ name: layer.name, rectangle: {} });
     } else if (event.target.value === 'CIRCLE') {
@@ -70,12 +74,17 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     <SelectInline name={`Layer {${rowKey}} Type`} id={`Layer {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
       <option value='INTERFACE'>Interface</option>
+      <option value='LINE'>Line</option>
       <option value='RECTANGLE'>Rectangle</option>
       <option value='CIRCLE'>Circle</option>
     </SelectInline>
     {layer.interface !== undefined && <SelectInline name={`Interface {${rowKey}} Id`} id={`Interface {${rowKey}} Id`} value={layer.interface.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, interface: { ...layer.interface, id: event.target.value } })}>
       <option value='NONE'>Select Interface</option>
       {puzzle.interfaces!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+    </SelectInline>}
+    {layer.line !== undefined && <SelectInline name={`Line {${rowKey}} Id`} id={`Line {${rowKey}} Id`} value={layer.line.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, line: { ...layer.line, id: event.target.value } })}>
+      <option value='NONE'>Select Line</option>
+      {puzzle.lines!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.rectangle !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangle: { ...layer.rectangle, id: event.target.value } })}>
       <option value='NONE'>Select Rectangle</option>

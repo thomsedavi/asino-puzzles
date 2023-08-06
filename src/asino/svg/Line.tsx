@@ -7,7 +7,7 @@ import { References } from "../References";
 import { Solution } from "../interfaces";
 
 export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string): JSX.Element => {
-  let stroke: string | undefined = undefined;
+  let stroke: string | undefined = 'var(--color)';
   let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), StrokeWidth, defaultStrokeWidth);
 
   const x1 = getNumberFromLayer(lines, references.clone(), X1, { value: 0 });

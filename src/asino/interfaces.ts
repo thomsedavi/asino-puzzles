@@ -2,6 +2,7 @@ import { Addition, C, Division, L, M, Multiplication, Subtraction, Z } from "./c
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoCircleReference } from "./types/Circle";
 import { AsinoClassReference } from "./types/Class";
+import { AsinoCollection } from "./types/Collection";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
@@ -33,13 +34,6 @@ export interface AsinoPuzzle {
   commands?: AsinoCommandReference[]; // commands
   dateCreated?: string;
   dateUpdated?: string;
-}
-
-export interface AsinoCollection {
-  id?: string; // id of this collection
-  name?: { value?: string, editedValue?: string }; // name of this collection
-  classes?: AsinoClassReference[]; // classes
-  objects?: AsinoObjectReference[]; // objects
 }
 
 export interface Solution {

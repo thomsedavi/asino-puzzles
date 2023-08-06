@@ -1,6 +1,11 @@
+import React from 'react';
 import { DX, DX1, DX2, DY, DY1, DY2, Fill, Stroke, StrokeWidth, X, X1, X2, Y, Y1, Y2 } from "../consts";
 import { AsinoColor, AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference } from "./Number";
+import { AsinoPuzzle } from '../interfaces';
+import Utils from '../../common/utils';
+import { InputInline } from '../../common/styled';
+import { Icon } from '../../common/icons';
 
 export type Letter = 'NONE' | 'C' | 'c' | 'H' | 'h' | 'L' | 'l' | 'M' | 'm' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'V' | 'v' | 'Z' | 'z';
 
@@ -41,6 +46,31 @@ export interface AsinoCommandReference {
   id?: string; // id of this command
   name?: { value?: string, editedValue?: string }; // name of this command
   value?: AsinoCommand; // value of this command
+}
+
+export const getPathReferenceRow = (puzzle: AsinoPuzzle, pathReference: AsinoPathReference, key: string, depth: number, update: (value: AsinoPathReference) => void): JSX.Element => {
+  const rowKey = `path${key}`;
+
+  const updateName = () => {
+    const updatedName = Utils.tidyString(pathReference.name?.editedValue);
+
+    update({ ...pathReference, name: { value: updatedName !== '' ? updatedName : pathReference.name?.value } });
+  }
+
+  const onKeyDownName = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      updateName();
+    } else if (event.keyCode === 27) {
+      event.preventDefault();
+      update({ ...pathReference, name: { value: pathReference.name?.value } });
+    }
+  }
+
+  return <div key={rowKey} style={{ marginBottom: '1em' }}>
+    {pathReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...pathReference, name: { ...pathReference.name, editedValue: pathReference.name?.value } })}>{pathReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
+    {pathReference.name?.editedValue !== undefined && <InputInline block autoFocus value={pathReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...pathReference, name: { ...pathReference.name, editedValue: event.target.value } })} />}
+  </div>;
 }
 
 export const isCommandCommand = (command: AsinoCommand): command is Command => {
