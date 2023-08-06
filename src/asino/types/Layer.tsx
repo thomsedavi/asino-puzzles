@@ -10,7 +10,6 @@ import { AsinoRectangleReference } from "./Rectangle";
 import Utils from '../../common/utils';
 import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
-import { AsinoCollection } from './Collection';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
