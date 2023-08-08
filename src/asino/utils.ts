@@ -1382,7 +1382,12 @@ const unminifyBoolean = (boolean: any): AsinoBoolean => {
     const result: BooleanFormula = {};
 
     boolean[Operator] !== undefined && boolean[Operator] !== 'NONE' && (result.operator = boolean[Operator]);
-    console.log('TODO');
+    boolean[Booleann] !== undefined && (result.boolean = unminifyBoolean(boolean[Booleann]));
+    boolean[ClassOutput] !== undefined && (result.classOutput = unminifyClass(boolean[ClassOutput]));
+    boolean[ClassesInputs] !== undefined && (result.classesInputs = boolean[ClassesInputs].map((c: any) => unminifyClass(c)));
+    boolean[ObjectOutput] !== undefined && (result.objectOutput = unminifyObject(boolean[ObjectOutput]));
+    boolean[ObjectsInputs] !== undefined && (result.objectsInputs = boolean[ObjectsInputs].map((o: any) => unminifyObject(o)));
+    boolean[SetsInputs] !== undefined && (result.setsInputs = boolean[SetsInputs].map((s: any) => unminifySet(s)));
 
     return result;
   } else {
@@ -1476,6 +1481,14 @@ const unminifyClass = (asinoClass: any): AsinoClass => {
   } else {
     return unminifyClassReference(asinoClass);
   }
+}
+
+const unminifySet = (asinoSet: any): AsinoSet => {
+  const result: AsinoSet = {};
+
+  console.log('TODO');
+
+  return result;  
 }
 
 const unminifyObject = (asinoClass: any): AsinoObject => {
