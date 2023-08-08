@@ -1,11 +1,11 @@
 import React from 'react';
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
-import { InputInline } from '../../common/styled';
+import { Button, ButtonGroup, InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoNumberReference } from './Number';
 import { AsinoColorReference } from './Color';
-import { AsinoLayer } from './Layer';
+import { AsinoLayer, getLayerRow } from './Layer';
 import { AsinoTransform, getTransformRow } from './Transform';
 
 export type AsinoGroup = {
@@ -43,6 +43,10 @@ export const getGroupReferenceRow = (puzzle: AsinoPuzzle, groupReference: AsinoG
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {groupReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...groupReference, name: { ...groupReference.name, editedValue: groupReference.name?.value } })}>{groupReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {groupReference.name?.editedValue !== undefined && <InputInline block autoFocus value={groupReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...groupReference, name: { ...groupReference.name, editedValue: event.target.value } })} />}
+    {groupReference.value?.layers?.map((layer: AsinoLayer, index: number) => getLayerRow(puzzle, layer, `${index}`, 0, (value: AsinoLayer) => { update({ ...groupReference, value: { layers: [...(groupReference.value?.layers!.slice(0, index) ?? []), value, ...(groupReference.value?.layers!.slice(index + 1) ?? [])] } }) }))}
+    <ButtonGroup>
+      <Button onClick={() => update({ ...groupReference, value: { ...groupReference.value, layers: [...(groupReference.value?.layers ?? []), { name: { value: `Layer ${(groupReference.value?.layers?.length ?? 0) + 1}` } }] } })}>Add Layer</Button>
+    </ButtonGroup>
     {getTransformRow(puzzle, groupReference.value?.transform, `${rowKey}transform`, depth + 1, (value: AsinoTransform | undefined) => update({ ...groupReference, value: { ...groupReference.value, transform: value ?? {} } }))}
   </div>;
 }

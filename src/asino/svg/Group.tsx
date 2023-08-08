@@ -4,8 +4,11 @@ import { References } from "../References"
 import { AsinoGroupReference } from "../types/Group";
 import { getNumberFromAsinoNumber, getValueFromNumber } from "../utils";
 import { a as A, b as B, c as C, d as D, e as E, f as F, x as X, y as Y } from "../consts";
+import { AsinoLayer } from "../types/Layer";
 
 export const drawGroup = (groups: (AsinoGroupReference | undefined)[], references: References, solution: Solution, key: string): JSX.Element => {
+  let layers: (AsinoLayer | undefined)[] = [];
+
   let transform: string | undefined = undefined;
   let aMatrix: number | string | undefined = undefined;
   let bMatrix: number | string | undefined = undefined;
@@ -51,11 +54,15 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
       rotate[X] !== undefined && (xRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[X], references.clone()), references.clone(), true) ?? 0);
       rotate[Y] !== undefined && (yRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[Y], references.clone()), references.clone(), true) ?? 0);
     }
+
+    if (group?.value?.layers !== undefined) {
+      layers = group.value.layers;
+    }
   });
 
   // TODO tidy these up so that for example translate is (translate(x)) rather than (translate (x, x)) when y does not exist
   // purely because it is neat
-  if (aMatrix !== undefined  || bMatrix !== undefined || cMatrix !== undefined || dMatrix !== undefined || eMatrix !== undefined || fMatrix !== undefined) {
+  if (aMatrix !== undefined || bMatrix !== undefined || cMatrix !== undefined || dMatrix !== undefined || eMatrix !== undefined || fMatrix !== undefined) {
     transform = `matrix(${aMatrix ?? 1} ${bMatrix ?? 0} ${cMatrix ?? 0} ${dMatrix ?? 0} ${eMatrix ?? 0} ${fMatrix ?? 0})`;
   }
 
@@ -72,6 +79,6 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
   }
 
   return <g key={key} transform={transform}>
-    <rect x={100} y={100} width={100} height={100} fill='red' />
+    {layers.map((l, i) => <div key={`${key}-${i}`}>TODO {l?.name?.value}</div>)}
   </g>;
 }

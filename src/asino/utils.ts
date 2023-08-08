@@ -15,7 +15,7 @@ import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
-import { AsinoTransform } from "./types/Transform";
+import { AsinoMatrix, AsinoTransform } from "./types/Transform";
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
@@ -1605,6 +1605,37 @@ const unminifyGroupReference = (group: any): AsinoGroupReference => {
   group[Id] !== undefined && (result.id = group[Id]);
   group[Name] !== undefined && (result.name = { value: group[Name] });
   group[Numbers] !== undefined && (result.numbers = group[Numbers].map((n: any) => unminifyGroupReference(n)));
+  group[Colors] !== undefined && (result.colors = group[Colors].map((c: any) => unminifyColorReference(c)));
+  group[Value] !== undefined && (result.value = unminifyGroup(group[Value]));
+
+  return result;
+}
+
+const unminifyGroup = (group: any): AsinoGroup => {
+  const result: AsinoGroup = {};
+
+  group[Layers] !== undefined && (result.layers = group[Layers].map((l: any) => unminifyLayer(l)));
+  group[Transform] !== undefined && (result.transform = unminifyTransform(group[Transform]));
+
+  return result;
+}
+
+const unminifyTransform = (transform: any): AsinoTransform => {
+  const result: AsinoTransform = {};
+
+  if (transform[TransformMatrix] !== undefined) {
+    const matrix: AsinoMatrix = {};
+
+    transform[TransformMatrix][A] !== undefined && (matrix.a = minifyNumber(transform[TransformMatrix][A]));
+    transform[TransformMatrix][B] !== undefined && (matrix.b = minifyNumber(transform[TransformMatrix][B]));
+    transform[TransformMatrix][C] !== undefined && (matrix.c = minifyNumber(transform[TransformMatrix][C]));
+    transform[TransformMatrix][D] !== undefined && (matrix.d = minifyNumber(transform[TransformMatrix][D]));
+    transform[TransformMatrix][E] !== undefined && (matrix.e = minifyNumber(transform[TransformMatrix][E]));
+    transform[TransformMatrix][F] !== undefined && (matrix.f = minifyNumber(transform[TransformMatrix][F]));
+
+    result.matrix = matrix;
+  }
+
   console.log('TODO');
 
   return result;
