@@ -6,6 +6,7 @@ import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoCollection } from "./types/Collection";
 import { AsinoColor, AsinoColorReference, ColorFormula, isColorFormula } from "./types/Color";
+import { AsinoGroup, AsinoGroupReference } from "./types/Group";
 import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
 import { AsinoLine, AsinoLineReference } from "./types/Line";
@@ -812,6 +813,7 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
   asino.layers !== undefined && (result[Layers] = asino.layers.map((l: AsinoLayer) => minifyLayer(l)));
   asino.lines !== undefined && (result[Lines] = asino.lines.map((l: AsinoLineReference) => minifyLineReference(l)));
   asino.paths !== undefined && (result[Paths] = asino.paths.map((p: AsinoPathReference) => minifyPathReference(p)));
+  asino.groups !== undefined && (result[Groups] = asino.groups.map((g: AsinoGroupReference) => minifyGroupReference(g)));
   asino.sets !== undefined && (result[Sets] = asino.sets.map(((s: AsinoSetReference) => minifySetReference(s))));
   asino.commands !== undefined && (result[Commands] = asino.commands.map((c: AsinoCommandReference) => minifyCommandReference(c)));
 
@@ -886,6 +888,7 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.numbers !== undefined && (result[Numbers] && layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
   layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
+  layer.group !== undefined && (result[Group] = minifyGroupReference(layer.group));
   layer.rectangle !== undefined && (result[Rectangle] = minifyRectangleReference(layer.rectangle));
 
   return result;
@@ -1148,6 +1151,18 @@ const minifyPathReference = (path: AsinoPathReference): any => {
   return result;
 }
 
+const minifyGroupReference = (group: AsinoGroupReference): any => {
+  const result: any = {};
+
+  group.id !== undefined && (result[Id] = group.id);
+  group.name !== undefined && group.name.value !== undefined && (result[Name] = group.name.value);
+  group.value !== undefined && (result[Value] = minifyGroup(group.value))
+  group.numbers !== undefined && (result[Numbers] = group.numbers.map(n => minifyNumberReference(n)));
+  group.colors !== undefined && (result[Colors] = group.colors.map(c => minifyColorReference(c)));
+
+  return result;
+}
+
 const minifyPath = (path: AsinoPath): any => {
   const result: any = {};
 
@@ -1155,6 +1170,12 @@ const minifyPath = (path: AsinoPath): any => {
   path.fill !== undefined && (result[Fill] = minifyColor(path.fill));
   path.stroke !== undefined && (result[Stroke] = minifyColor(path.stroke));
   path.strokeWidth !== undefined && (result[StrokeWidth] = minifyNumber(path.strokeWidth));
+
+  return result;
+}
+
+const minifyGroup = (group: AsinoGroup): any => {
+  const result: any = {};
 
   return result;
 }
@@ -1253,6 +1274,7 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
   asino[Lines] !== undefined && (result.lines = asino[Lines].map((l: any) => unminifyLineReference(l)));
   asino[Objects] !== undefined && (result.objects = asino[Objects].map((o: any) => unminifyObjectReference(o)));
   asino[Paths] !== undefined && (result.paths = asino[Paths].map((p: any) => unminifyPathReference(p)));
+  asino[Groups] !== undefined && (result.groups = asino[Groups].map((g: any) => unminifyGroupReference(g)));
   asino[Sets] !== undefined && (result.sets = asino[Sets].map((s: any) => unminifySetReference(s)));
 
   return result;
@@ -1292,6 +1314,7 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   layer[Numbers] !== undefined && (result.numbers = layer[Numbers].map((n: any) => unminifyNumberReference(n)));
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
   layer[Path] !== undefined && (result.path = unminifyPathReference(layer[Path]));
+  layer[Group] !== undefined && (result.group = unminifyGroupReference(layer[Group]));
   layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangleReference(layer[Rectangle]));
 
   return result;
@@ -1512,6 +1535,17 @@ const unminifyPathReference = (path: any): AsinoPathReference => {
   return result;
 }
 
+const unminifyGroupReference = (group: any): AsinoGroupReference => {
+  const result: AsinoPathReference = {};
+
+  group[Id] !== undefined && (result.id = group[Id]);
+  group[Name] !== undefined && (result.name = { value: group[Name] });
+  group[Numbers] !== undefined && (result.numbers = group[Numbers].map((n: any) => unminifyGroupReference(n)));
+  console.log('TODO');
+
+  return result;
+}
+
 const unminifySetReference = (set: any): AsinoSetReference => {
   const result: AsinoSetReference = {};
 
@@ -1553,6 +1587,9 @@ const DateUpdated = 'du';
 
 const Fill = 'f';
 const FixedClassId = 'fci';
+
+const Group = 'g';
+const Groups = 'gs';
 
 const Height = 'h';
 

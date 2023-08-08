@@ -21,6 +21,7 @@ import { AsinoPathReference, getPathReferenceRow } from './types/Path';
 import { AsinoCollection, getCollectionRow } from './types/Collection';
 import { AsinoClassReference, getClassReferenceRow } from './types/Class';
 import { AsinoObjectReference, getObjectReferenceRow } from './types/Object';
+import { AsinoGroupReference, getGroupReferenceRow } from './types/Group';
 
 interface AsinoProps {
   user?: User | null;
@@ -35,7 +36,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'booleans' | 'numbers' | undefined>('layers');
+  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | undefined>('layers');
   const [inputValue, setInputValue] = React.useState<string | undefined>();
   const [solution, setSolution] = React.useState<Solution>({});
   const [editingValue, setEditingValue] = React.useState<string | undefined>();
@@ -201,6 +202,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Tab selected={selectedTab === 'rectangles'} onClick={() => setSelectedTab('rectangles')}>Rectangles</Tab>
           <Tab selected={selectedTab === 'circles'} onClick={() => setSelectedTab('circles')}>Circles</Tab>
           <Tab selected={selectedTab === 'paths'} onClick={() => setSelectedTab('paths')}>Paths</Tab>
+          <Tab selected={selectedTab === 'groups'} onClick={() => setSelectedTab('groups')}>Groups</Tab>
         </TabGroup>
         <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
           <Tab selected={selectedTab === 'booleans'} onClick={() => setSelectedTab('booleans')}>Booleans</Tab>
@@ -259,6 +261,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
         {asinoPuzzle.paths?.map((pathReference: AsinoPathReference, index: number) => getPathReferenceRow(asinoPuzzle, pathReference, `${index}`, 0, (value: AsinoPathReference) => { setAsinoPuzzle({ ...asinoPuzzle, paths: [...asinoPuzzle.paths!.slice(0, index), value, ...asinoPuzzle.paths!.slice(index + 1)] }) }))}
         <ButtonGroup>
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, paths: [...(asinoPuzzle.paths ?? []), { id: Utils.getRandomId(asinoPuzzle.paths?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Path ${(asinoPuzzle.paths?.length ?? 0) + 1}` } }] })}>Add Path</Button>
+        </ButtonGroup>
+      </div>}
+      {mode !== 'read' && isEditable && selectedTab === 'groups' && <div>
+        {asinoPuzzle.groups?.map((groupReference: AsinoGroupReference, index: number) => getGroupReferenceRow(asinoPuzzle, groupReference, `${index}`, 0, (value: AsinoGroupReference) => { setAsinoPuzzle({ ...asinoPuzzle, groups: [...asinoPuzzle.groups!.slice(0, index), value, ...asinoPuzzle.groups!.slice(index + 1)] }) }))}
+        <ButtonGroup>
+          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, groups: [...(asinoPuzzle.groups ?? []), { id: Utils.getRandomId(asinoPuzzle.groups?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Group ${(asinoPuzzle.groups?.length ?? 0) + 1}` } }] })}>Add Group</Button>
         </ButtonGroup>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'booleans' && <div>

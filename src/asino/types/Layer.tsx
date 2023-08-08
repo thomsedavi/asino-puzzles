@@ -10,6 +10,7 @@ import { AsinoRectangleReference } from "./Rectangle";
 import Utils from '../../common/utils';
 import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
+import { AsinoGroupReference } from './Group';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -18,6 +19,7 @@ export interface AsinoLayer {
   line?: AsinoLineReference; // draw the layer with these attributes
   circle?: AsinoCircleReference; // draw the circle with these attributes
   path?: AsinoPathReference; // draw the path with these attributes
+  group?: AsinoGroupReference; // draw the group with these attributes
   numbers?: AsinoNumberReference[] // number parameters
   colors?: AsinoColorReference[] // color parameters
   objectId?: string; // id of the interface of this layer
@@ -36,6 +38,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     selectValue = 'RECTANGLE';
   } else if (layer.circle !== undefined) {
     selectValue = 'CIRCLE';
+  } else if (layer.group !== undefined) {
+    selectValue = 'GROUP';
   }
 
   const onChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,6 +53,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       update({ name: layer.name, rectangle: {} });
     } else if (event.target.value === 'CIRCLE') {
       update({ name: layer.name, circle: {} });
+    } else if (event.target.value === 'GROUP') {
+      update({ name: layer.name, group: {} });
     }
   }
 
@@ -77,22 +83,27 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='LINE'>Line</option>
       <option value='RECTANGLE'>Rectangle</option>
       <option value='CIRCLE'>Circle</option>
+      <option value='GROUP'>Group</option>
     </SelectInline>
     {layer.interface !== undefined && <SelectInline name={`Interface {${rowKey}} Id`} id={`Interface {${rowKey}} Id`} value={layer.interface.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, interface: { ...layer.interface, id: event.target.value } })}>
       <option value='NONE'>Select Interface</option>
-      {puzzle.interfaces!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {puzzle.interfaces?.map((i, index) => <option key={`${rowKey} Id ${index}`} value={i.id}>{i.name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.line !== undefined && <SelectInline name={`Line {${rowKey}} Id`} id={`Line {${rowKey}} Id`} value={layer.line.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, line: { ...layer.line, id: event.target.value } })}>
       <option value='NONE'>Select Line</option>
-      {puzzle.lines!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {puzzle.lines?.map((l, index) => <option key={`${rowKey} Id ${index}`} value={l.id}>{l.name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.rectangle !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangle: { ...layer.rectangle, id: event.target.value } })}>
       <option value='NONE'>Select Rectangle</option>
-      {puzzle.rectangles!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.circle !== undefined && <SelectInline name={`Circle {${rowKey}} Id`} id={`Circle {${rowKey}} Id`} value={layer.circle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, circle: { ...layer.circle, id: event.target.value } })}>
       <option value='NONE'>Select Circle</option>
-      {puzzle.circles!.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {puzzle.circles?.map((c, index) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
+    </SelectInline>}
+    {layer.group !== undefined && <SelectInline name={`Group {${rowKey}} Id`} id={`Group {${rowKey}} Id`} value={layer.group.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, group: { ...layer.group, id: event.target.value } })}>
+      <option value='NONE'>Select Group</option>
+      {puzzle.groups?.map((g, index) => <option key={`${rowKey} Id ${index}`} value={g.id}>{g.name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.interface !== undefined && <SelectInline value={layer.collectionId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, collectionId: event.target.value !== 'NONE' ? event.target.value : undefined, objectId: undefined })}>
       <option value='NONE'>Select Collection</option>

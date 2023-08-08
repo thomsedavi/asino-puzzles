@@ -4,6 +4,7 @@ import { AsinoCircleReference } from "./types/Circle";
 import { AsinoClassReference } from "./types/Class";
 import { AsinoCollection } from "./types/Collection";
 import { AsinoColorReference } from "./types/Color";
+import { AsinoGroupReference } from "./types/Group";
 import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
 import { AsinoLineReference } from "./types/Line";
@@ -28,6 +29,7 @@ export interface AsinoPuzzle {
   lines?: AsinoLineReference[]; // lines
   circles?: AsinoCircleReference[]; // circles
   paths?: AsinoPathReference[]; // paths
+  groups?: AsinoGroupReference[]; // groups
   numbers?: AsinoNumberReference[]; // numbers
   booleans?: AsinoBooleanReference[] // booleans
   colors?: AsinoColorReference[]; // colors

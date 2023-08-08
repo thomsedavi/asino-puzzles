@@ -9,6 +9,7 @@ import { Number } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
+import { drawGroup } from "./Group";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
@@ -35,6 +36,10 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];
 
     return drawPath([layerPath, layer.path], references.clone().addNumbers([puzzle.numbers]).addColors([layerPath?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, scale, key);
+  } else if (layer.group !== undefined) {
+    const layerGroup = puzzle.groups?.filter(group => group.id === layer.group?.id)[0];
+
+    return drawGroup([layerGroup, layer.group], references.clone().addNumbers([puzzle.numbers]).addColors([layerGroup?.colors, layer.colors]).addClasses([puzzle.classes]), solution, key);
   } else {
     return undefined;
   }
