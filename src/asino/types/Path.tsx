@@ -1,5 +1,5 @@
 import React from 'react';
-import { DX, DX1, DX2, DY, DY1, DY2, Fill, Stroke, StrokeWidth, X, X1, X2, Y, Y1, Y2 } from "../consts";
+import { dx as DX, dx1 as DX1, dx2 as DX2, dy as DY, dy1 as DY1, dy2 as DY2, fill as Fill, stroke as Stroke, strokeWidth as StrokeWidth, x as X, x1 as X1, x2 as X2, y as Y, y1 as Y1, y2 as Y2 } from "../consts";
 import { AsinoColor, AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference } from "./Number";
 import { AsinoPuzzle } from '../interfaces';

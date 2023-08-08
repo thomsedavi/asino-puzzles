@@ -15,6 +15,7 @@ import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
+import { AsinoTransform } from "./types/Transform";
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
@@ -1177,6 +1178,56 @@ const minifyPath = (path: AsinoPath): any => {
 const minifyGroup = (group: AsinoGroup): any => {
   const result: any = {};
 
+  group.layers !== undefined && (result[Layers] = group.layers.map(l => minifyLayer(l)));
+  group.transform !== undefined && (result[Transform] = minifyTransform(group.transform));
+
+  return result;
+}
+
+const minifyTransform = (transform: AsinoTransform): any => {
+  const result: any = {};
+
+  if (transform.matrix !== undefined) {
+    const matrix: any = {};
+
+    transform.matrix.a !== undefined && (matrix[A] = minifyNumber(transform.matrix.a));
+    transform.matrix.b !== undefined && (matrix[B] = minifyNumber(transform.matrix.b));
+    transform.matrix.c !== undefined && (matrix[C] = minifyNumber(transform.matrix.c));
+    transform.matrix.d !== undefined && (matrix[D] = minifyNumber(transform.matrix.d));
+    transform.matrix.e !== undefined && (matrix[E] = minifyNumber(transform.matrix.e));
+    transform.matrix.f !== undefined && (matrix[F] = minifyNumber(transform.matrix.f));
+
+    result[TransformMatrix] = matrix;
+  }
+
+  if (transform.rotate !== undefined) {
+    const rotate: any = {};
+
+    transform.rotate.a !== undefined && (rotate[A] = minifyNumber(transform.rotate.a));
+    transform.rotate.x !== undefined && (rotate[X] = minifyNumber(transform.rotate.x));
+    transform.rotate.y !== undefined && (rotate[Y] = minifyNumber(transform.rotate.y));
+
+    result[TransformRotate] = rotate;
+  }
+
+  if (transform.scale !== undefined) {
+    const scale: any = {};
+
+    transform.scale.x !== undefined && (scale[X] = minifyNumber(transform.scale.x));
+    transform.scale.y !== undefined && (scale[Y] = minifyNumber(transform.scale.y));
+
+    result[TransformScale] = scale;
+  }
+
+  if (transform.translate !== undefined) {
+    const translate: any = {};
+
+    transform.translate.x !== undefined && (translate[X] = minifyNumber(transform.translate.x));
+    transform.translate.y !== undefined && (translate[Y] = minifyNumber(transform.translate.y));
+
+    result[TransformTranslate] = translate;
+  }
+
   return result;
 }
 
@@ -1536,7 +1587,7 @@ const unminifyPathReference = (path: any): AsinoPathReference => {
 }
 
 const unminifyGroupReference = (group: any): AsinoGroupReference => {
-  const result: AsinoPathReference = {};
+  const result: AsinoGroupReference = {};
 
   group[Id] !== undefined && (result.id = group[Id]);
   group[Name] !== undefined && (result.name = { value: group[Name] });
@@ -1556,25 +1607,30 @@ const unminifySetReference = (set: any): AsinoSetReference => {
   return result;
 }
 
-const Booleann = 'b';
-const Booleans = 'bs';
-const BooleanInputs = 'bis';
+const A = 'a';
 
+const B = 'b';
+const Booleann = 'bn';
+const Booleans = 'bns';
+const BooleanInputs = 'bnits';
+
+const C = 'c';
 const Circle = 'ce';
 const Circles = 'ces';
-const ClassOutput = 'cso';
+const ClassOutput = 'csot';
 const Classs = 'cs';
-const ClassesInputs = 'csis';
+const ClassesInputs = 'cssits';
 const Classes = 'css';
 const Commandd = 'cd';
 const Commands = 'cds';
-const CollectionId = 'cni';
+const CollectionId = 'cnid';
 const Collections = 'cns';
-const ColorInputs = 'cris';
+const ColorInputs = 'crits';
 const Colors = 'crs';
 const CX = 'cx';
 const CY = 'cy';
 
+const D = 'd';
 const DX = 'dx';
 const DX1 = 'dx1';
 const DX2 = 'dx2';
@@ -1582,56 +1638,65 @@ const DY = 'dy';
 const DY1 = 'dy1';
 const DY2 = 'dy2';
 const Denominator = 'dr';
-const DateCreated = 'dc';
-const DateUpdated = 'du';
+const DateCreated = 'decd';
+const DateUpdated = 'deud';
 
-const Fill = 'f';
-const FixedClassId = 'fci';
+const E = 'e';
 
-const Group = 'g';
-const Groups = 'gs';
+const F = 'f';
+const Fill = 'fl';
+const FixedClassId = 'fdcsid';
 
-const Height = 'h';
+const Group = 'gp';
+const Groups = 'gps';
 
-const Id = 'i';
+const Height = 'ht';
+
+const Id = 'id';
 const Interface = 'ie';
 const Interfaces = 'ies';
 
 const Layers = 'lrs';
-const Line = 'l';
-const Lines = 'ls';
+const Line = 'le';
+const Lines = 'les';
 
-const Name = 'n';
-const Numbers = 'ns';
-const NumberInputs = 'nis';
+const Name = 'ne';
+const Numbers = 'nrs';
+const NumberInputs = 'nrits';
 const Numerator = 'nr';
 
-const ObjectOutput = 'oo';
-const ObjectInputs = 'ois';
-const ObjectsInputs = 'osis';
-const ObjectId = 'oi';
-const Objects = 'os';
-const Operator = 'o';
+const ObjectOutput = 'otot';
+const ObjectInputs = 'otits';
+const ObjectsInputs = 'otsits';
+const ObjectId = 'otid';
+const Objects = 'ots';
+const Operator = 'or';
 
-const Path = 'p';
-const Paths = 'ps';
+const Path = 'ph';
+const Paths = 'phs';
 
 const R = 'r';
 
-const Rectangle = 'r';
-const Rectangles = 'rs';
+const Rectangle = 're';
+const Rectangles = 'res';
 
-const SetsInputs = 'sis';
-const Sets = 'ss';
-const Stroke = 's';
-const StrokeWidth = 'sw';
+const SetsInputs = 'stsits';
+const Sets = 'sts';
+const Stroke = 'se';
+const StrokeWidth = 'sewh';
 
-const UserId = 'ui';
-const UserName = 'un';
+const Transform = 'tm';
+const TransformMatrix = 'tmmx';
+const TransformRotate = 'tmre';
+const TransformScale = 'tmse';
+const TransformTranslate = 'tmte';
 
-const Value = 'v';
+const UserId = 'urid';
+const UserName = 'urne';
 
-const Width = 'w';
+const Value = 've';
+
+const Width = 'wh';
 
 const X = 'x';
 const X1 = 'x1';

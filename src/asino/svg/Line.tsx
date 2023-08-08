@@ -1,5 +1,5 @@
 import React from "react"
-import { StrokeWidth, X1, X2, Y1, Y2 } from "../consts";
+import { strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2 } from "../consts";
 import { AsinoLineReference } from "../types/Line";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";

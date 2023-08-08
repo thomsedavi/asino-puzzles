@@ -1,6 +1,6 @@
 import React from "react"
 import { getCommandFromAsinoCommand, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromAsinoColor, getValueFromNumber } from "../utils";
-import { C, L, M, S, StrokeWidth, Z } from "../consts";
+import { C, L, M, S, strokeWidth as StrokeWidth, Z } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";

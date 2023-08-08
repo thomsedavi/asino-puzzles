@@ -1,7 +1,7 @@
 import React from "react"
 import { AsinoPuzzle, Solution } from "../interfaces"
 import { getClassFromAsinoClass, getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
-import { Height, Width, X, Y } from "../consts";
+import { height as Height, width as Width, x as X, y as Y } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";

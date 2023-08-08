@@ -1,6 +1,6 @@
 import React from "react"
 import { getNumberFromLayer, getValueFromAsinoColor, getValueFromNumber } from "../utils";
-import { Height, StrokeWidth, Width, X, Y } from "../consts";
+import { height as Height, strokeWidth as StrokeWidth, width as Width, x as X, y as Y } from "../consts";
 import { AsinoRectangleReference } from "../types/Rectangle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";

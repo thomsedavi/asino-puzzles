@@ -1,5 +1,5 @@
 import React from 'react';
-import { Height, Width, X, Y } from "../consts";
+import { height as Height, width as Width, x as X, y as Y } from "../consts";
 import { AsinoPuzzle } from "../interfaces";
 import { AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";

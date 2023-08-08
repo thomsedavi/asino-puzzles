@@ -1,5 +1,5 @@
 import React from 'react';
-import { CX, CY, Fill, R, Stroke, StrokeWidth } from "../consts";
+import { cx as CX, cy as CY, fill as Fill, r as R, stroke as Stroke, strokeWidth as StrokeWidth } from "../consts";
 import { AsinoColor, AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
 import { AsinoPuzzle } from '../interfaces';

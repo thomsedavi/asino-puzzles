@@ -5,9 +5,12 @@ import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoNumberReference } from './Number';
 import { AsinoColorReference } from './Color';
+import { AsinoLayer } from './Layer';
+import { AsinoTransform, getTransformRow } from './Transform';
 
 export type AsinoGroup = {
-
+  layers?: AsinoLayer[]; // ids of layers
+  transform?: AsinoTransform; // transform for this group
 }
 
 export type AsinoGroupReference = {
@@ -40,5 +43,6 @@ export const getGroupReferenceRow = (puzzle: AsinoPuzzle, groupReference: AsinoG
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {groupReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...groupReference, name: { ...groupReference.name, editedValue: groupReference.name?.value } })}>{groupReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {groupReference.name?.editedValue !== undefined && <InputInline block autoFocus value={groupReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...groupReference, name: { ...groupReference.name, editedValue: event.target.value } })} />}
+    {getTransformRow(puzzle, groupReference.value?.transform, `${rowKey}transform`, depth + 1, (value: AsinoTransform | undefined) => update({ ...groupReference, value: { ...groupReference.value, transform: value ?? {} } }))}
   </div>;
 }
