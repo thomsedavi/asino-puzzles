@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, defaultNumbers } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -15,7 +15,7 @@ import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
-import { AsinoMatrix, AsinoTransform } from "./types/Transform";
+import { AsinoMatrix, AsinoRotate, AsinoScale, AsinoTransform, AsinoTranslate } from "./types/Transform";
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
@@ -741,6 +741,12 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   } else if (typeof number === 'number') {
     result = number;
   } else if (typeof number === 'string') {
+    defaultNumbers.forEach((number: AsinoNumberReference) => {
+      if (number.id === number) {
+        result = getNumberFromAsinoNumber(number, references.clone());
+      }
+    });
+
     references.numbers.forEach(numberReference => {
       if (numberReference.id === number) {
         result = getNumberFromAsinoNumber(numberReference.value, references.clone());
@@ -773,6 +779,12 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
       if (typeof valueNumberValue === 'number') {
         result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
+        defaultNumbers.forEach((number: AsinoNumberReference) => {
+          if (number.id === valueNumberValue) {
+            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
+          }
+        });
+
         references.numbers.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
             result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
@@ -1436,7 +1448,22 @@ const unminifyRectangleReference = (rectangle: any): AsinoRectangleReference => 
   rectangle[Id] !== undefined && (result.id = rectangle[Id]);
   rectangle[Name] !== undefined && (result.name = { value: rectangle[Name] });
   rectangle[Numbers] !== undefined && (result.numbers = rectangle[Numbers].map((n: any) => unminifyNumberReference(n)));
-  console.log('TODO');
+  rectangle[Colors] !== undefined && (result.colors = rectangle[Colors].map((c: any) => unminifyColor(c)));
+  rectangle[Value] !== undefined && (result.value = unminifyRectangle(rectangle[Value]));
+
+  return result;
+}
+
+const unminifyRectangle = (rectangle: any): AsinoRectangle => {
+  const result: AsinoRectangle = {};
+
+  rectangle[X] !== undefined && (result.x = unminifyNumber(rectangle[X]));
+  rectangle[Y] !== undefined && (result.y = unminifyNumber(rectangle[Y]));
+  rectangle[Width] !== undefined && (result.width = unminifyNumber(rectangle[Width]));
+  rectangle[Height] !== undefined && (result.height = unminifyNumber(rectangle[Height]));
+  rectangle[Fill] !== undefined && (result.fill = unminifyColor(rectangle[Fill]));
+  rectangle[Stroke] !== undefined && (result.stroke = unminifyColor(rectangle[Stroke]));
+  rectangle[StrokeWidth] !== undefined && (result.strokeWidth = unminifyNumber(rectangle[StrokeWidth]));
 
   return result;
 }
@@ -1470,7 +1497,7 @@ const unminifyClass = (asinoClass: any): AsinoClass => {
 
     asinoClass[Operator] !== undefined && asinoClass[Operator] !== 'NONE' && (result.operator = asinoClass[Operator]);
     asinoClass[ObjectInputs] !== undefined && (result.objectInputs = asinoClass[ObjectInputs].map((o: any) => o !== undefined ? unminifyObject(o) : undefined));
-    
+
     return result;
   } else if (Layers in asinoClass) {
     const result: Class = {};
@@ -1488,7 +1515,7 @@ const unminifySet = (asinoSet: any): AsinoSet => {
 
   console.log('TODO');
 
-  return result;  
+  return result;
 }
 
 const unminifyObject = (asinoClass: any): AsinoObject => {
@@ -1636,7 +1663,33 @@ const unminifyTransform = (transform: any): AsinoTransform => {
     result.matrix = matrix;
   }
 
-  console.log('TODO');
+  if (transform[TransformRotate] !== undefined) {
+    const rotate: AsinoRotate = {};
+
+    transform[TransformRotate][A] !== undefined && (rotate.a = minifyNumber(transform[TransformRotate][A]));
+    transform[TransformRotate][X] !== undefined && (rotate.x = minifyNumber(transform[TransformRotate][X]));
+    transform[TransformRotate][Y] !== undefined && (rotate.y = minifyNumber(transform[TransformRotate][Y]));
+
+    result.rotate = rotate;
+  }
+
+  if (transform[TransformScale] !== undefined) {
+    const scale: AsinoScale = {};
+
+    transform[TransformScale][X] !== undefined && (scale.x = minifyNumber(transform[TransformScale][X]));
+    transform[TransformScale][Y] !== undefined && (scale.y = minifyNumber(transform[TransformScale][Y]));
+
+    result.scale = scale;
+  }
+
+  if (transform[TransformTranslate] !== undefined) {
+    const translate: AsinoTranslate = {};
+
+    transform[TransformTranslate][X] !== undefined && (translate.x = minifyNumber(transform[TransformTranslate][X]));
+    transform[TransformTranslate][Y] !== undefined && (translate.y = minifyNumber(transform[TransformTranslate][Y]));
+
+    result.translate = translate;
+  }
 
   return result;
 }

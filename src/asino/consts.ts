@@ -1,3 +1,5 @@
+import { AsinoNumberReference } from "./types/Number";
+
 export const a = 'a';
 export const b = 'b';
 export const c = 'c';
@@ -35,3 +37,16 @@ export const L = 'L';
 export const M = 'M';
 export const S = 'S';
 export const Z = 'Z';
+
+export const defaultNumbers: AsinoNumberReference[] = [
+  {
+    id: 'd-fc',
+    name: { value: 'View Box Width' },
+    value: 1
+  },
+  {
+    id: 'd-db',
+    name: { value: 'View Box Height' },
+    value: 1
+  }
+];
