@@ -3,7 +3,7 @@ import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
-import { defaultNumbers } from '../consts';
+import { systemDefaults } from '../consts';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+';
 
@@ -128,8 +128,16 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
   }
 
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
-    {numberReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, name: { ...numberReference.name, editedValue: numberReference.name?.value } })}>{numberReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
-    {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
+    {numberReference.name !== undefined && <>
+      {numberReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, name: { ...numberReference.name, editedValue: numberReference.name?.value } })}>{numberReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
+      {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
+    </>}
+    {numberReference.name === undefined && <>
+      <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, value: systemDefaults.find(d => d.id === event.target.value)?.value })}>
+        <option value='NONE'>Select Number To Override</option>
+        {systemDefaults.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
+      </SelectInline>
+    </>}
     <SelectInline name={`Number {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
       <option value='NONE'>Select Type</option>
       <option value='NUMBER'>Number</option>
@@ -143,11 +151,11 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
       <option value='NONE'>Select Number</option>
       {puzzle.numbers !== undefined && puzzle.numbers.length !== 0 &&
         <optgroup label="Custom Numbers">
-          {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? ''}</option>)}
+          {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
         </optgroup>
       }
-      <optgroup label="Default Numbers">
-        {defaultNumbers.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
+      <optgroup label="System Defaults">
+        {systemDefaults.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
     {numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) && <>
@@ -254,8 +262,8 @@ export const getNumberRow = (puzzle: AsinoPuzzle, number: AsinoNumber | undefine
           {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
         </optgroup>
       }
-      <optgroup label="Default Numbers">
-        {defaultNumbers.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
+      <optgroup label="System Defaults">
+        {systemDefaults.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
     {number !== undefined && isAsinoNumberFraction(number) && <>

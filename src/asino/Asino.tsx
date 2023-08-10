@@ -279,6 +279,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
         {asinoPuzzle.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberReferenceRow(asinoPuzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { setAsinoPuzzle({ ...asinoPuzzle, numbers: [...asinoPuzzle.numbers!.slice(0, index), value, ...asinoPuzzle.numbers!.slice(index + 1)] }) }))}
         <ButtonGroup>
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` } }] })}>Add Number</Button>
+          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), {}] })}>Add Number Override</Button>
         </ButtonGroup>
       </div>}
       <div>

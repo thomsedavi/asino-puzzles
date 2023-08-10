@@ -38,7 +38,7 @@ export const M = 'M';
 export const S = 'S';
 export const Z = 'Z';
 
-export const defaultNumbers: AsinoNumberReference[] = [
+export const systemDefaults: AsinoNumberReference[] = [
   {
     id: 'd-fc',
     name: { value: 'View Box Width' },
@@ -48,5 +48,10 @@ export const defaultNumbers: AsinoNumberReference[] = [
     id: 'd-db',
     name: { value: 'View Box Height' },
     value: 1
+  },
+  {
+    id: 'c-bd',
+    name: { value: 'Border Width' },
+    value: { numerator: 1, denominator: 200 }
   }
 ];
