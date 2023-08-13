@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemDefaults } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -68,7 +68,7 @@ export const getDifference = (left: Number | undefined, right: Number | undefine
     } else if (right === 'negativeInfinity') {
       return 'infinity';
     } else {
-      return { numerator: getSum(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
+      return { numerator: getDifference(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
@@ -741,7 +741,7 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   } else if (typeof number === 'number') {
     result = number;
   } else if (typeof number === 'string') {
-    systemDefaults.forEach((number: AsinoNumberReference) => {
+    systemNumberDefaults.forEach((number: AsinoNumberReference) => {
       if (number.id === number) {
         result = getNumberFromAsinoNumber(number, references.clone());
       }
@@ -779,7 +779,7 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
       if (typeof valueNumberValue === 'number') {
         result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
-        systemDefaults.forEach((number: AsinoNumberReference) => {
+        systemNumberDefaults.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
             result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }
@@ -793,7 +793,7 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
       } else if (isAsinoNumberFraction(valueNumberValue)) {
         result = valueNumberValue;
       } else if (isNumberFormula(valueNumberValue)) {
-        console.log('TODO');
+        result = getNumberFromFormula(valueNumberValue, references.clone());
       } else if (isNumberEditedNumber(valueNumberValue)) {
         result = valueNumberValue.originalValue;
       } else {

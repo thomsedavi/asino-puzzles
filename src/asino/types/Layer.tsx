@@ -11,6 +11,7 @@ import Utils from '../../common/utils';
 import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoGroupReference } from './Group';
+import { systemRectangleDefaults } from '../consts';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -95,7 +96,12 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     </SelectInline>}
     {layer.rectangle !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangle: { ...layer.rectangle, id: event.target.value } })}>
       <option value='NONE'>Select Rectangle</option>
-      {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {puzzle.rectangles !== undefined && puzzle.rectangles.length !== 0 && <optgroup label="Custom Numbers">
+        {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      </optgroup>}
+      <optgroup label="System Defaults">
+        {systemRectangleDefaults.map((r, index) => <option key={`${rowKey} Default Id ${index}`} value={r.id}>{r.name?.value ?? 'undefined'}</option>)}
+      </optgroup>
     </SelectInline>}
     {layer.circle !== undefined && <SelectInline name={`Circle {${rowKey}} Id`} id={`Circle {${rowKey}} Id`} value={layer.circle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, circle: { ...layer.circle, id: event.target.value } })}>
       <option value='NONE'>Select Circle</option>

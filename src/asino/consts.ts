@@ -1,4 +1,5 @@
 import { AsinoNumberReference } from "./types/Number";
+import { AsinoRectangleReference } from "./types/Rectangle";
 
 export const a = 'a';
 export const b = 'b';
@@ -38,7 +39,17 @@ export const M = 'M';
 export const S = 'S';
 export const Z = 'Z';
 
-export const systemDefaults: AsinoNumberReference[] = [
+export const systemNumberDefaults: AsinoNumberReference[] = [
+  {
+    id: 'f-dc',
+    name: { value: 'View Box Minimum X' },
+    value: 0
+  },
+  {
+    id: 'b-cc',
+    name: { value: 'View Box Minimum Y' },
+    value: 0
+  },
   {
     id: 'd-fc',
     name: { value: 'View Box Width' },
@@ -51,7 +62,88 @@ export const systemDefaults: AsinoNumberReference[] = [
   },
   {
     id: 'c-bd',
-    name: { value: 'Border Width' },
+    name: { value: 'Horizontal Border Width' },
     value: { numerator: 1, denominator: 200 }
+  },
+  {
+    id: 'd-ad',
+    name: { value: 'Vertical Border Height' },
+    value: { numerator: 1, denominator: 200 }
+  },
+  {
+    id: 'c-ae',
+    name: { value: 'Outer Horizontal Division Count' },
+    value: 3
+  },
+  {
+    id: 'b-dc',
+    name: { value: 'Inner Horizontal Division Count' },
+    value: 3
+  },
+  {
+    id: 'f-bf',
+    name: { value: 'Outer Vertical Division Count' },
+    value: 3
+  },
+  {
+    id: 'a-fb',
+    name: { value: 'Inner Vertical Division Count' },
+    value: 3
   }
 ];
+
+export const systemNumberParameters: AsinoNumberReference[] = [
+  {
+    id: 'c-ba',
+    name: { value: 'Outer Horizontal Division Border Index' }
+  }
+];
+
+export const systemRectangleDefaults: AsinoRectangleReference[] = [
+  {
+    id: 'a-db',
+    name: { value: 'Outer Horizontal Division Border' },
+    value: {
+      x: {
+        operator: '-',
+        numberInputs: [
+          {
+            operator: '*',
+            numberInputs: [
+              'c-ba',
+              {
+                operator: '+',
+                numberInputs: [
+                  'f-dc',
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      'd-fc',
+                      'c-ae'
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '/',
+            numberInputs: [
+              'c-bd',
+              2
+            ]
+          }
+        ]
+      },
+      y: 'b-cc',
+      width: 'c-bd',
+      height: 'd-db'
+    },
+    numbers: [
+      {
+        id: 'c-ba',
+        value: 1
+      }
+    ]
+  }
+]

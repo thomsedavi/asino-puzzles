@@ -10,6 +10,7 @@ import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
 import { drawGroup } from "./Group";
+import { systemRectangleDefaults } from "../consts";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
@@ -29,9 +30,10 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
 
     return drawCircle([layerCircle, layer.circle], references.clone().addNumbers([puzzle.numbers]).addColors([layerCircle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key);
   } else if (layer.rectangle !== undefined) {
+    const defaultLayerRectangle = systemRectangleDefaults.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
     const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
 
-    return drawRectangle([layerRectangle, layer.rectangle], references.clone().addNumbers([puzzle.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key);
+    return drawRectangle([defaultLayerRectangle, layerRectangle, layer.rectangle], references.clone().addNumbers([defaultLayerRectangle?.numbers, puzzle.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key);
   } else if (layer.path !== undefined) {
     const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];
 
