@@ -4,11 +4,11 @@ import { AsinoCircleReference } from "./Circle";
 import { AsinoColorReference } from "./Color";
 import { AsinoInterfaceReference } from "./Interface";
 import { AsinoLineReference } from "./Line";
-import { AsinoNumberReference } from "./Number";
+import { AsinoNumberReference, getNumberReferenceRow } from "./Number";
 import { AsinoPathReference } from "./Path";
 import { AsinoRectangleReference } from "./Rectangle";
 import Utils from '../../common/utils';
-import { InputInline, SelectInline } from '../../common/styled';
+import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoGroupReference } from './Group';
 import { systemRectangleDefaults } from '../consts';
@@ -119,5 +119,9 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Object</option>
       {puzzle.collections?.filter(c => c.id === layer.collectionId)[0].objects?.map((o, index) => <option key={`${rowKey} Collection ${index}`} value={o.id}>{o.name?.value}</option>)}
     </SelectInline>}
+    {layer.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberReferenceRow(puzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { update({ ...layer, numbers: [...layer.numbers!.slice(0, index), value, ...layer.numbers!.slice(index + 1)] }) }))}
+    <ButtonGroup>
+      <Button onClick={() => update({ ...layer, numbers: [...(layer.numbers ?? []), {}] })}>Add Number Override</Button>
+    </ButtonGroup>
   </div>;
 }

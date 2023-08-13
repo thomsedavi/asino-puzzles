@@ -95,7 +95,13 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
 export const systemNumberParameters: AsinoNumberReference[] = [
   {
     id: 'c-ba',
-    name: { value: 'Outer Horizontal Division Border Index' }
+    name: { value: 'Outer Horizontal Division Border Index' },
+    value: 1
+  },
+  {
+    id: 'd-da',
+    name: { value: 'Outer Vertical Division Border Index' },
+    value: 1
   }
 ];
 
@@ -138,12 +144,46 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
       y: 'b-cc',
       width: 'c-bd',
       height: 'd-db'
-    },
-    numbers: [
-      {
-        id: 'c-ba',
-        value: 1
-      }
-    ]
+    }
+  },
+  {
+    id: 'e-cb',
+    name: { value: 'Outer Vertical Division Border' },
+    value: {
+      y: {
+        operator: '-',
+        numberInputs: [
+          {
+            operator: '*',
+            numberInputs: [
+              'd-da',
+              {
+                operator: '+',
+                numberInputs: [
+                  'b-cc',
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      'd-db',
+                      'f-bf'
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '/',
+            numberInputs: [
+              'd-ad',
+              2
+            ]
+          }
+        ]
+      },
+      x: 'f-dc',
+      height: 'd-ad',
+      width: 'd-fc'
+    }
   }
 ]

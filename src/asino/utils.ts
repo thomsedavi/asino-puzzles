@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults, systemNumberParameters } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -747,6 +747,12 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
       }
     });
 
+    systemNumberParameters.forEach((number: AsinoNumberReference) => {
+      if (number.id === number) {
+        result = getNumberFromAsinoNumber(number, references.clone());
+      }
+    });
+
     references.numbers.forEach(numberReference => {
       if (numberReference.id === number) {
         result = getNumberFromAsinoNumber(numberReference.value, references.clone());
@@ -780,6 +786,12 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
         result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
         systemNumberDefaults.forEach((number: AsinoNumberReference) => {
+          if (number.id === valueNumberValue) {
+            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
+          }
+        });
+
+        systemNumberParameters.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
             result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }
@@ -898,7 +910,7 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.interface !== undefined && (result[Interface] = minifyInterfaceReference(layer.interface));
   layer.line !== undefined && (result[Line] = minifyLineReference(layer.line));
   layer.name !== undefined && layer.name.value !== undefined && (result[Name] = layer.name.value);
-  layer.numbers !== undefined && (result[Numbers] && layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
+  layer.numbers !== undefined && (result[Numbers] = layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
   layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
   layer.group !== undefined && (result[Group] = minifyGroupReference(layer.group));

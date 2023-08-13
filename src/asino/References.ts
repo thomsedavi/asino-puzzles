@@ -1,4 +1,4 @@
-import { systemNumberDefaults } from "./consts";
+import { systemNumberDefaults, systemNumberParameters } from "./consts";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
@@ -26,7 +26,7 @@ export class References {
     this.booleans = [];
     this.classes = [];
     this.colors = [];
-    this.numbers = [...systemNumberDefaults];
+    this.numbers = [...systemNumberDefaults, ...systemNumberParameters];
     this.objects = [];
     this.sets = [];
     this.commands = [];
