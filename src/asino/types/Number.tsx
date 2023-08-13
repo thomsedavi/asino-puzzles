@@ -5,7 +5,7 @@ import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
 import { systemNumberDefaults, systemNumberParameters } from '../consts';
 
-export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+';
+export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
 
 export type Fraction = { numerator?: AsinoNumber, denominator?: AsinoNumber };
 export type EditedNumber = { originalValue: number, editedValue: string };

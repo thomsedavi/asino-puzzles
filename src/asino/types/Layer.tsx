@@ -11,7 +11,7 @@ import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoGroupReference } from './Group';
-import { systemRectangleDefaults } from '../consts';
+import { systemInterfaceDefaults, systemRectangleDefaults } from '../consts';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -88,7 +88,12 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     </SelectInline>
     {layer.interface !== undefined && <SelectInline name={`Interface {${rowKey}} Id`} id={`Interface {${rowKey}} Id`} value={layer.interface.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, interface: { ...layer.interface, id: event.target.value } })}>
       <option value='NONE'>Select Interface</option>
-      {puzzle.interfaces?.map((i, index) => <option key={`${rowKey} Id ${index}`} value={i.id}>{i.name?.value ?? ''}</option>)}
+      {puzzle.interfaces !== undefined && puzzle.interfaces.length !== 0 && <optgroup label="Custom Interfaces">
+        {puzzle.interfaces?.map((i, index) => <option key={`${rowKey} Id ${index}`} value={i.id}>{i.name?.value ?? ''}</option>)}
+      </optgroup>}
+      <optgroup label="System Defaults">
+        {systemInterfaceDefaults.map((i, index) => <option key={`${rowKey} Default Id ${index}`} value={i.id}>{i.name?.value ?? 'undefined'}</option>)}
+      </optgroup>
     </SelectInline>}
     {layer.line !== undefined && <SelectInline name={`Line {${rowKey}} Id`} id={`Line {${rowKey}} Id`} value={layer.line.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, line: { ...layer.line, id: event.target.value } })}>
       <option value='NONE'>Select Line</option>
@@ -96,7 +101,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     </SelectInline>}
     {layer.rectangle !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangle: { ...layer.rectangle, id: event.target.value } })}>
       <option value='NONE'>Select Rectangle</option>
-      {puzzle.rectangles !== undefined && puzzle.rectangles.length !== 0 && <optgroup label="Custom Numbers">
+      {puzzle.rectangles !== undefined && puzzle.rectangles.length !== 0 && <optgroup label="Custom Rectangles">
         {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
       </optgroup>}
       <optgroup label="System Defaults">

@@ -1,3 +1,4 @@
+import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoNumberReference } from "./types/Number";
 import { AsinoRectangleReference } from "./types/Rectangle";
 
@@ -102,6 +103,89 @@ export const systemNumberParameters: AsinoNumberReference[] = [
     id: 'd-da',
     name: { value: 'Outer Vertical Division Border Index' },
     value: 1
+  },
+  {
+    id: 'd-eb',
+    name: { value: 'Interface Row Index' },
+    value: 1
+  },
+  {
+    id: 'd-cc',
+    name: { value: 'Interface Column Index' },
+    value: 1
+  }
+];
+
+export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
+  {
+    id: 'c-fe',
+    name: { value: 'Interface' },
+    value: {
+      x: 0,
+      y: 0,
+      width: {
+        operator: '/',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              'd-fc',
+              {
+                operator: '*',
+                numberInputs: [
+                  'c-bd',
+                  {
+                    operator: '-',
+                    numberInputs: [
+                      'c-ae',
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              'c-ae',
+              'b-dc'
+            ]
+          }
+        ]
+      },
+      height: {
+        operator: '/',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              'd-db',
+              {
+                operator: '*',
+                numberInputs: [
+                  'd-ad',
+                  {
+                    operator: '-',
+                    numberInputs: [
+                      'f-bf',
+                      1
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              'f-bf',
+              'a-fb'
+            ]
+          }
+        ]
+      }
+    }
   }
 ];
 

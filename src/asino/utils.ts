@@ -123,7 +123,7 @@ export const getProduct = (left: Number | undefined, right: Number | undefined, 
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), right, references.clone()), denominator: left.denominator };
+      return { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), right, references.clone()), denominator: left.denominator };
     } else if (right === 'infinity') {
       return 'infinity';
     } else if (right === 'negativeInfinity') {
