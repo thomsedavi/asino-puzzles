@@ -121,8 +121,150 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
     id: 'c-fe',
     name: { value: 'Interface' },
     value: {
-      x: 0,
-      y: 0,
+      x: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '*',
+            numberInputs: [
+              {
+                operator: '-',
+                numberInputs: [
+                  'd-eb',
+                  1
+                ]
+              },
+              {
+                operator: '/',
+                numberInputs: [
+                  {
+                    operator: '-',
+                    numberInputs: [
+                      'd-fc',
+                      {
+                        operator: '*',
+                        numberInputs: [
+                          'c-bd',
+                          {
+                            operator: '-',
+                            numberInputs: [
+                              'c-ae',
+                              1
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    operator: '*',
+                    numberInputs: [
+                      'c-ae',
+                      'b-dc'
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              {
+                operator: 'FLOOR',
+                numberInputs: [
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      {
+                        operator: '-',
+                        numberInputs: [
+                          'd-eb',
+                          1
+                        ]
+                      },
+                      'b-dc'
+                    ]
+                  }
+                ]
+              },
+              'c-bd'
+            ]
+          }
+        ]
+      },
+      y: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '*',
+            numberInputs: [
+              {
+                operator: '-',
+                numberInputs: [
+                  'd-cc',
+                  1
+                ]
+              },
+              {
+                operator: '/',
+                numberInputs: [
+                  {
+                    operator: '-',
+                    numberInputs: [
+                      'd-db',
+                      {
+                        operator: '*',
+                        numberInputs: [
+                          'd-ad',
+                          {
+                            operator: '-',
+                            numberInputs: [
+                              'f-bf',
+                              1
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    operator: '*',
+                    numberInputs: [
+                      'f-bf',
+                      'a-fb'
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              {
+                operator: 'FLOOR',
+                numberInputs: [
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      {
+                        operator: '-',
+                        numberInputs: [
+                          'd-cc',
+                          1
+                        ]
+                      },
+                      'a-fb'
+                    ]
+                  }
+                ]
+              },
+              'd-ad'
+            ]
+          }
+        ]
+      },
       width: {
         operator: '/',
         numberInputs: [
@@ -195,32 +337,62 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
     name: { value: 'Outer Horizontal Division Border' },
     value: {
       x: {
-        operator: '-',
+        operator: '+',
         numberInputs: [
           {
             operator: '*',
             numberInputs: [
-              'c-ba',
+              'b-dc',
               {
-                operator: '+',
+                operator: '*',
                 numberInputs: [
-                  'f-dc',
                   {
                     operator: '/',
                     numberInputs: [
-                      'd-fc',
-                      'c-ae'
+                      {
+                        operator: '-',
+                        numberInputs: [
+                          'd-fc',
+                          {
+                            operator: '*',
+                            numberInputs: [
+                              'c-bd',
+                              {
+                                operator: '-',
+                                numberInputs: [
+                                  'c-ae',
+                                  1
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        operator: '*',
+                        numberInputs: [
+                          'c-ae',
+                          'b-dc'
+                        ]
+                      }
                     ]
-                  }
+                  },
+                  'c-ba'
                 ]
               }
             ]
           },
           {
-            operator: '/',
+            operator: '*',
             numberInputs: [
               'c-bd',
-              2
+              {
+                operator: '-',
+                numberInputs: [
+                  'c-ba',
+                  1
+                ]
+              }
             ]
           }
         ]
@@ -235,32 +407,62 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
     name: { value: 'Outer Vertical Division Border' },
     value: {
       y: {
-        operator: '-',
+        operator: '+',
         numberInputs: [
           {
             operator: '*',
             numberInputs: [
-              'd-da',
+              'a-fb',
               {
-                operator: '+',
+                operator: '*',
                 numberInputs: [
-                  'b-cc',
                   {
                     operator: '/',
                     numberInputs: [
-                      'd-db',
-                      'f-bf'
+                      {
+                        operator: '-',
+                        numberInputs: [
+                          'd-db',
+                          {
+                            operator: '*',
+                            numberInputs: [
+                              'd-ad',
+                              {
+                                operator: '-',
+                                numberInputs: [
+                                  'f-bf',
+                                  1
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        operator: '*',
+                        numberInputs: [
+                          'f-bf',
+                          'a-fb'
+                        ]
+                      }
                     ]
-                  }
+                  },
+                  'd-da'
                 ]
               }
             ]
           },
           {
-            operator: '/',
+            operator: '*',
             numberInputs: [
               'd-ad',
-              2
+              {
+                operator: '-',
+                numberInputs: [
+                  'd-da',
+                  1
+                ]
+              }
             ]
           }
         ]

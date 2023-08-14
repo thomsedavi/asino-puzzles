@@ -603,7 +603,17 @@ export const getNumberFromFormula = (formula: NumberFormula | undefined, referen
   let result: Number | undefined = undefined;
 
   if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
-    // do nothing
+    // david, what are you doing, rewrite this better please
+
+    if (formula?.operator !== undefined && formula.numberInputs?.[0] !== undefined) {
+      let left = getNumberFromAsinoNumber(formula.numberInputs[0], references.clone());
+
+      let evall = getValueFromNumber(left, references.clone(), true);
+
+      if (formula.operator === 'FLOOR' && typeof evall === 'number') {
+        result = Math.floor(evall);
+      }
+    }
   } else {
     let left = getNumberFromAsinoNumber(formula.numberInputs[0], references.clone());
     let right = getNumberFromAsinoNumber(formula.numberInputs[1], references.clone());
