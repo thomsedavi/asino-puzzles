@@ -63,9 +63,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     <rect
       width={getValueFromNumber(width, references.clone())}
       height={getValueFromNumber(height, references.clone())}
-      stroke='var(--color)'
       fill={fill}
-      strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 }, references.clone())}
     />
     {innards}
   </g>;

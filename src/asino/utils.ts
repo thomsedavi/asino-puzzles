@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults, systemNumberParameters } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults, systemNumberFormulas, systemNumberParameters } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -757,6 +757,12 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
       }
     });
 
+    systemNumberFormulas.forEach((number: AsinoNumberReference) => {
+      if (number.id === number) {
+        result = getNumberFromAsinoNumber(number, references.clone());
+      }
+    });
+
     systemNumberParameters.forEach((number: AsinoNumberReference) => {
       if (number.id === number) {
         result = getNumberFromAsinoNumber(number, references.clone());
@@ -796,6 +802,12 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
         result = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
         systemNumberDefaults.forEach((number: AsinoNumberReference) => {
+          if (number.id === valueNumberValue) {
+            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
+          }
+        });
+
+        systemNumberFormulas.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
             result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }

@@ -3,7 +3,7 @@ import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
-import { systemNumberDefaults, systemNumberParameters } from '../consts';
+import { systemNumberDefaults, systemNumberFormulas, systemNumberParameters } from '../consts';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
 
@@ -133,9 +133,10 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
       {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
     </>}
     {numberReference.name === undefined && <>
-      <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, value: [...systemNumberDefaults, ...systemNumberParameters].find(d => d.id === event.target.value)?.value })}>
+      <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, value: [...systemNumberDefaults, ...systemNumberParameters, ...systemNumberFormulas].find(d => d.id === event.target.value)?.value })}>
         <option value='NONE'>Select Number To Override</option>
         {systemNumberDefaults.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
+        {systemNumberFormulas.map((n, index) => <option key={`${rowKey} Formula Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
         {systemNumberParameters.map((n, index) => <option key={`${rowKey} ParameterId ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
       </SelectInline>
     </>}
