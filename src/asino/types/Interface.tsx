@@ -1,5 +1,5 @@
 import React from 'react';
-import { height as Height, width as Width, x as X, y as Y } from "../consts";
+import { BorderBottomHeight, BorderLeftWidth, BorderRightWidth, BorderTopHeight, height as Height, width as Width, x as X, y as Y } from "../consts";
 import { AsinoPuzzle } from "../interfaces";
 import { AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
@@ -15,6 +15,10 @@ export type AsinoInterface = {
   [Y]?: AsinoNumber; // if this exists, draw the interface here
   collectionId?: string; // id of collection of this layer
   fixedClassId?: string; // object is fixed to this class
+  [BorderTopHeight]?: AsinoNumber;
+  [BorderRightWidth]?: AsinoNumber;
+  [BorderBottomHeight]?: AsinoNumber;
+  [BorderLeftWidth]?: AsinoNumber;
 }
 
 export type AsinoInterfaceReference = {

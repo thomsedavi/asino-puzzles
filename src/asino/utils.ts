@@ -1345,6 +1345,10 @@ const minifyInterface = (asinoInterface: AsinoInterface): any => {
   asinoInterface.collectionId !== undefined && (result[CollectionId] = asinoInterface.collectionId);
   asinoInterface.fixedClassId !== undefined && (result[FixedClassId] = asinoInterface.fixedClassId);
   asinoInterface.objectId !== undefined && (result[ObjectId] = asinoInterface.objectId);
+  asinoInterface.borderTopHeight !== undefined && (result[BorderTopHeight] = minifyNumber(asinoInterface.borderTopHeight));
+  asinoInterface.borderRightWidth !== undefined && (result[BorderRightWidth] = minifyNumber(asinoInterface.borderRightWidth));
+  asinoInterface.borderBottomHeight !== undefined && (result[BorderBottomHeight] = minifyNumber(asinoInterface.borderBottomHeight));
+  asinoInterface.borderLeftWidth !== undefined && (result[BorderLeftWidth] = minifyNumber(asinoInterface.borderLeftWidth));
 
   return result;
 }
@@ -1602,6 +1606,10 @@ const unminifyInterface = (asinoInterface: any): AsinoInterface => {
   asinoInterface[X] !== undefined && (result.x = unminifyNumber(asinoInterface[X]));
   asinoInterface[Y] !== undefined && (result.y = unminifyNumber(asinoInterface[Y]));
   asinoInterface[ObjectId] !== undefined && (result.objectId = asinoInterface[ObjectId]);
+  asinoInterface[BorderTopHeight] !== undefined && (result.borderTopHeight = unminifyNumber(asinoInterface[BorderTopHeight]));
+  asinoInterface[BorderRightWidth] !== undefined && (result.borderRightWidth = unminifyNumber(asinoInterface[BorderRightWidth]));
+  asinoInterface[BorderBottomHeight] !== undefined && (result.borderBottomHeight = unminifyNumber(asinoInterface[BorderBottomHeight]));
+  asinoInterface[BorderLeftWidth] !== undefined && (result.borderLeftWidth = unminifyNumber(asinoInterface[BorderLeftWidth]));
 
   return result;
 }
@@ -1744,6 +1752,10 @@ const B = 'b';
 const Booleann = 'bn';
 const Booleans = 'bns';
 const BooleanInputs = 'bnits';
+const BorderTopHeight = 'brtpht';
+const BorderRightWidth = 'brrtwh';
+const BorderBottomHeight = 'brbmht';
+const BorderLeftWidth = 'brltwh';
 
 const C = 'c';
 const Circle = 'ce';

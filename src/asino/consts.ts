@@ -16,6 +16,10 @@ export const y1 = 'y1';
 export const y2 = 'y2';
 export const width = 'width';
 export const height = 'height';
+export const BorderTopHeight = 'borderTopHeight';
+export const BorderRightWidth = 'borderRightWidth';
+export const BorderBottomHeight = 'borderBottomHeight';
+export const BorderLeftWidth = 'borderLeftWidth';
 export const cx = 'cx';
 export const cy = 'cy';
 export const dx = 'dx';
@@ -60,6 +64,13 @@ const InterfaceWidth = 'b-ed';
 const InterfaceHeight = 'b-db';
 const OuterHorizontalDivisionBorderX = 'd-ac';
 const OuterVerticalDivisionBorderY = 'e-bd';
+const InterfaceBorderTopColor = 'a-aa';
+const InterfaceBorderTopStyle = 'c-ec';
+const InterfaceBorderSize = 'c-de';
+const InterfaceBorderTopHeight = 'e-dc';
+const InterfaceBorderRightWidth = 'e-de';
+const InterfaceBorderBottomHeight = 'e-cc';
+const InterfaceBorderLeftWidth = 'd-ee';
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
   {
@@ -111,6 +122,31 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     id: InnerVerticalDivisionCount,
     name: { value: 'Inner Vertical Division Count' },
     value: 3
+  },
+  {
+    id: InterfaceBorderSize,
+    name: { value: 'Interface Border Size' },
+    value: { numerator: 1, denominator: 25 }
+  },
+  {
+    id: InterfaceBorderTopHeight,
+    name: { value: 'Interface Border Top Height' },
+    value: InterfaceBorderSize
+  },
+  {
+    id: InterfaceBorderRightWidth,
+    name: { value: 'Interface Border Right Width' },
+    value: InterfaceBorderSize
+  },
+  {
+    id: InterfaceBorderBottomHeight,
+    name: { value: 'Interface Border Bottom Height' },
+    value: InterfaceBorderSize
+  },
+  {
+    id: InterfaceBorderLeftWidth,
+    name: { value: 'Interface Border Left Width' },
+    value: InterfaceBorderSize
   }
 ];
 
@@ -380,7 +416,11 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
       x: InterfaceX,
       y: InterfaceY,
       width: InterfaceWidth,
-      height: InterfaceHeight
+      height: InterfaceHeight,
+      borderTopHeight: InterfaceBorderTopHeight,
+      borderRightWidth: InterfaceBorderRightWidth,
+      borderBottomHeight: InterfaceBorderBottomHeight,
+      borderLeftWidth: InterfaceBorderLeftWidth
     }
   }
 ];

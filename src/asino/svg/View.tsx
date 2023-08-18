@@ -71,7 +71,8 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
 
   return <svg version="1.1"
     viewBox='0 0 5040 5040'
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+    shapeRendering='crispEdges'>
     {layers}
   </svg>;
 }

@@ -1,7 +1,7 @@
 import React from "react"
 import { AsinoPuzzle, Solution } from "../interfaces"
-import { getClassFromAsinoClass, getClassFromClassReference, getNumberFromLayer, getValueFromNumber } from "../utils";
-import { height as Height, width as Width, x as X, y as Y } from "../consts";
+import { getClassFromAsinoClass, getClassFromClassReference, getDifference, getNumberFromLayer, getProduct, getValueFromNumber } from "../utils";
+import { BorderBottomHeight, BorderLeftWidth, BorderRightWidth, BorderTopHeight, height as Height, width as Width, x as X, y as Y } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
@@ -31,6 +31,11 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const width = getNumberFromLayer(interfaces, references.clone(), Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(interfaces, references.clone(), Height, defaultInterfaceHeightValue);
 
+  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), BorderTopHeight, { value: 0 });
+  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), BorderRightWidth, { value: 0 });
+  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), BorderBottomHeight, { value: 0 });
+  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), BorderLeftWidth, { value: 0 });
+
   let fill = interfaceObjectId === selectedObjectId ? 'var(--accent-strong)' : 'var(--background-color-input)';
 
   const innards: (JSX.Element | undefined)[] = [];
@@ -55,6 +60,16 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     }
   }
 
+  const outerTop = `0`;
+  const outerRight = `${getValueFromNumber(width, references.clone())}`;
+  const outerBottom = `${getValueFromNumber(height, references.clone())}`;
+  const outerLeft = `0`;
+
+  const innerTop = `${getValueFromNumber(getProduct(borderTopHeight, height, references.clone()), references.clone())}`;
+  const innerRight = `${getValueFromNumber(getDifference(width, getProduct(borderRightWidth, width, references.clone()), references.clone()), references.clone())}`;
+  const innerBottom = `${getValueFromNumber(getDifference(height, getProduct(borderBottomHeight, height, references.clone()), references.clone()), references.clone())}`;
+  const innerLeft = `${getValueFromNumber(getProduct(borderLeftWidth, width, references.clone()), references.clone())}`;
+
   return <g
     id={`layer${key}`}
     key={`layer${key}`}
@@ -63,6 +78,22 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     <rect
       width={getValueFromNumber(width, references.clone())}
       height={getValueFromNumber(height, references.clone())}
+      fill='red'
+    />
+    <path
+      d={`M${outerLeft},${outerTop}L${outerRight},${outerTop}L${innerRight},${innerTop}L${innerLeft},${innerTop}Z`}
+      fill={fill}
+    />
+    <path
+      d={`M${outerRight},${outerTop}L${outerRight},${outerBottom}L${innerRight},${innerBottom}L${innerRight},${innerTop}Z`}
+      fill={fill}
+    />
+    <path
+      d={`M${outerRight},${outerBottom}L${outerLeft},${outerBottom}L${innerLeft},${innerBottom}L${innerRight},${innerBottom}Z`}
+      fill={fill}
+    />
+    <path
+      d={`M${outerLeft},${outerBottom}L${outerLeft},${outerTop}L${innerLeft},${innerTop}L${innerLeft},${innerBottom}Z`}
       fill={fill}
     />
     {innards}
