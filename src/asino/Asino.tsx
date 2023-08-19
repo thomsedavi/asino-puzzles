@@ -22,6 +22,7 @@ import { AsinoCollection, getCollectionRow } from './types/Collection';
 import { AsinoClassReference, getClassReferenceRow } from './types/Class';
 import { AsinoObjectReference, getObjectReferenceRow } from './types/Object';
 import { AsinoGroupReference, getGroupReferenceRow } from './types/Group';
+import { AsinoSetReference, getSetReferenceRow } from './types/Set';
 
 interface AsinoProps {
   user?: User | null;
@@ -36,7 +37,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | undefined>('layers');
+  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | undefined>('layers');
   const [inputValue, setInputValue] = React.useState<string | undefined>();
   const [solution, setSolution] = React.useState<Solution>({});
   const [editingValue, setEditingValue] = React.useState<string | undefined>();
@@ -195,6 +196,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Tab selected={selectedTab === 'collections'} onClick={() => setSelectedTab('collections')}>Collections</Tab>
           <Tab selected={selectedTab === 'classes'} onClick={() => setSelectedTab('classes')}>Classes</Tab>
           <Tab selected={selectedTab === 'objects'} onClick={() => setSelectedTab('objects')}>Objects</Tab>
+          <Tab selected={selectedTab === 'sets'} onClick={() => setSelectedTab('sets')}>Sets</Tab>
         </TabGroup>
         <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
           <Tab selected={selectedTab === 'interfaces'} onClick={() => setSelectedTab('interfaces')}>Interfaces</Tab>
@@ -222,15 +224,21 @@ const Asino = (props: AsinoProps): JSX.Element => {
         </ButtonGroup>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'classes' && <div>
-        {asinoPuzzle.classes?.map((classReference: AsinoClassReference, index: number) => getClassReferenceRow(asinoPuzzle, classReference, `${index}`, 0, (value: AsinoCollection) => { setAsinoPuzzle({ ...asinoPuzzle, classes: [...asinoPuzzle.classes!.slice(0, index), value, ...asinoPuzzle.classes!.slice(index + 1)] }) }))}
+        {asinoPuzzle.classes?.map((classReference: AsinoClassReference, index: number) => getClassReferenceRow(asinoPuzzle, classReference, `${index}`, 0, (value: AsinoClassReference) => { setAsinoPuzzle({ ...asinoPuzzle, classes: [...asinoPuzzle.classes!.slice(0, index), value, ...asinoPuzzle.classes!.slice(index + 1)] }) }))}
         <ButtonGroup>
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, classes: [...(asinoPuzzle.classes ?? []), { id: Utils.getRandomId(asinoPuzzle.classes?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Class ${(asinoPuzzle.classes?.length ?? 0) + 1}` } }] })}>Add Class</Button>
         </ButtonGroup>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'objects' && <div>
-        {asinoPuzzle.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(asinoPuzzle, objectReference, `${index}`, 0, (value: AsinoCollection) => { setAsinoPuzzle({ ...asinoPuzzle, objects: [...asinoPuzzle.objects!.slice(0, index), value, ...asinoPuzzle.objects!.slice(index + 1)] }) }))}
+        {asinoPuzzle.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(asinoPuzzle, objectReference, `${index}`, 0, (value: AsinoObjectReference) => { setAsinoPuzzle({ ...asinoPuzzle, objects: [...asinoPuzzle.objects!.slice(0, index), value, ...asinoPuzzle.objects!.slice(index + 1)] }) }))}
         <ButtonGroup>
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, objects: [...(asinoPuzzle.objects ?? []), { id: Utils.getRandomId(asinoPuzzle.objects?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Object ${(asinoPuzzle.objects?.length ?? 0) + 1}` } }] })}>Add Object</Button>
+        </ButtonGroup>
+      </div>}
+      {mode !== 'read' && isEditable && selectedTab === 'sets' && <div>
+        {asinoPuzzle.sets?.map((setReference: AsinoSetReference, index: number) => getSetReferenceRow(asinoPuzzle, setReference, `${index}`, 0, (value: AsinoSetReference) => { setAsinoPuzzle({ ...asinoPuzzle, sets: [...asinoPuzzle.sets!.slice(0, index), value, ...asinoPuzzle.sets!.slice(index + 1)] }) }))}
+        <ButtonGroup>
+          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, sets: [...(asinoPuzzle.sets ?? []), { id: Utils.getRandomId(asinoPuzzle.sets?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Set ${(asinoPuzzle.sets?.length ?? 0) + 1}` } }] })}>Add Set</Button>
         </ButtonGroup>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'interfaces' && <div>
