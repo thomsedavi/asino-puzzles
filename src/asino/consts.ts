@@ -98,7 +98,13 @@ export const systemColorDefaults: AsinoColorReference[] = [
   {
     id: BorderColor,
     name: { value: 'Interface Border Color' },
-    value: { hue: HueAzure, hueDark: HuePink }
+    value: {
+      hue: HueAzure,
+      hueDark: HuePink,
+      saturation: { numerator: 1, denominator: 4 },
+      lightness: { numerator: 1, denominator: 20 },
+      lightnessDark: { numerator: 19, denominator: 20 }
+    }
   },
   {
     id: InterfaceBorderTopColor,

@@ -3,7 +3,15 @@ import { AsinoNumber } from "./Number";
 
 export type ColorOperator = 'NONE' | 'IF_ELSE';
 
-export type Color = { hue?: AsinoNumber | string, hueDark?: AsinoNumber | string };
+export type Color = {
+  hue?: AsinoNumber | string,
+  hueDark?: AsinoNumber | string,
+  saturation?: AsinoNumber | string,
+  saturationDark?: AsinoNumber | string;
+  lightness?: AsinoNumber | string,
+  lightnessDark?: AsinoNumber | string;
+};
+
 export type AsinoColor = string | Color | ColorFormula | AsinoColorReference;
 
 export type ColorFormula = {
