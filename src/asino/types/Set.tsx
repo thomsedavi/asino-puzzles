@@ -3,7 +3,7 @@ import { AsinoPuzzle } from "../interfaces";
 import { AsinoObjects } from "./Object";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
-import { Button, ButtonGroup, InputInline } from '../../common/styled';
+import { InputInline } from '../../common/styled';
 
 export type SetsOperator = 'NONE' | 'SETS_CONTAINING_OBJECT';
 

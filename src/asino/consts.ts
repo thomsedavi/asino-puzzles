@@ -1,3 +1,4 @@
+import { AsinoColorReference } from "./types/Color";
 import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoNumberReference } from "./types/Number";
 import { AsinoRectangleReference } from "./types/Rectangle";
@@ -20,6 +21,10 @@ export const BorderTopHeight = 'borderTopHeight';
 export const BorderRightWidth = 'borderRightWidth';
 export const BorderBottomHeight = 'borderBottomHeight';
 export const BorderLeftWidth = 'borderLeftWidth';
+export const BorderTopFill = 'borderTopFill';
+export const BorderRightFill = 'borderRightFill';
+export const BorderBottomFill = 'borderBottomFill';
+export const BorderLeftFill = 'borderLeftFill';
 export const cx = 'cx';
 export const cy = 'cy';
 export const dx = 'dx';
@@ -64,13 +69,68 @@ const InterfaceWidth = 'b-ed';
 const InterfaceHeight = 'b-db';
 const OuterHorizontalDivisionBorderX = 'd-ac';
 const OuterVerticalDivisionBorderY = 'e-bd';
-const InterfaceBorderTopColor = 'a-aa';
-const InterfaceBorderTopStyle = 'c-ec';
 const InterfaceBorderSize = 'c-de';
 const InterfaceBorderTopHeight = 'e-dc';
 const InterfaceBorderRightWidth = 'e-de';
 const InterfaceBorderBottomHeight = 'e-cc';
 const InterfaceBorderLeftWidth = 'd-ee';
+const BorderColor = 'a-dd';
+const InterfaceBorderTopColor = 'a-aa';
+const InterfaceBorderRightColor = 'd-be';
+const InterfaceBorderBottomColor = 'f-af';
+const InterfaceBorderLeftColor = 'e-dd';
+const OuterHorizontalDivisionBorderColor = 'e-ec';
+const OuterVerticalDivisionBorderColor = 'e-ae';
+const HueRed = 'f-cc';
+const HueOrange = 'b-fa';
+const HueYellow = 'a-eb';
+const HueChartreuse = 'd-bb';
+const HueGreen = 'e-cd';
+const HueMint = 'b-ea';
+const HueCyan = 'b-da';
+const HueAzure = 'c-fd';
+const HueBlue = 'e-ad';
+const HueViolet = 'e-ce';
+const HueMagenta = 'c-fc';
+const HuePink = 'b-af';
+
+export const systemColorDefaults: AsinoColorReference[] = [
+  {
+    id: BorderColor,
+    name: { value: 'Interface Border Color' },
+    value: { hue: HueAzure, hueDark: HuePink }
+  },
+  {
+    id: InterfaceBorderTopColor,
+    name: { value: 'Interface Border Top Color' },
+    value: BorderColor
+  },
+  {
+    id: InterfaceBorderRightColor,
+    name: { value: 'Interface Border Right Color' },
+    value: BorderColor
+  },
+  {
+    id: InterfaceBorderBottomColor,
+    name: { value: 'Interface Border Bottom Color' },
+    value: BorderColor
+  },
+  {
+    id: InterfaceBorderLeftColor,
+    name: { value: 'Interface Border Left Color' },
+    value: BorderColor
+  },
+  {
+    id: OuterHorizontalDivisionBorderColor,
+    name: { value: 'Outer Horizontal Division Border Color' },
+    value: BorderColor
+  },
+  {
+    id: OuterVerticalDivisionBorderColor,
+    name: { value: 'Outer Vertical Division Border Color' },
+    value: BorderColor
+  }
+];
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
   {
@@ -126,7 +186,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: InterfaceBorderSize,
     name: { value: 'Interface Border Size' },
-    value: { numerator: 1, denominator: 25 }
+    value: { numerator: 1, denominator: 40 }
   },
   {
     id: InterfaceBorderTopHeight,
@@ -147,10 +207,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     id: InterfaceBorderLeftWidth,
     name: { value: 'Interface Border Left Width' },
     value: InterfaceBorderSize
-  }
-];
-
-export const systemNumberFormulas: AsinoNumberReference[] = [
+  },
   {
     id: InterfaceX,
     name: { value: 'Interface X' },
@@ -382,10 +439,67 @@ export const systemNumberFormulas: AsinoNumberReference[] = [
         }
       ]
     }
-  }
-];
-
-export const systemNumberParameters: AsinoNumberReference[] = [
+  },
+  {
+    id: HueRed,
+    name: { value: 'Hue Red' },
+    value: 0
+  },
+  {
+    id: HueOrange,
+    name: { value: 'Hue Orange' },
+    value: { numerator: 1, denominator: 12 }
+  },
+  {
+    id: HueYellow,
+    name: { value: 'Hue Yellow' },
+    value: { numerator: 1, denominator: 6 }
+  },
+  {
+    id: HueChartreuse,
+    name: { value: 'Hue Chartreuse' },
+    value: { numerator: 1, denominator: 4 }
+  },
+  {
+    id: HueGreen,
+    name: { value: 'Hue Green' },
+    value: { numerator: 1, denominator: 3 }
+  },
+  {
+    id: HueMint,
+    name: { value: 'Hue Mint' },
+    value: { numerator: 5, denominator: 12 }
+  },
+  {
+    id: HueCyan,
+    name: { value: 'Hue Cyan' },
+    value: { numerator: 1, denominator: 2 }
+  },
+  {
+    id: HueAzure,
+    name: { value: 'Hue Azure' },
+    value: { numerator: 7, denominator: 12 }
+  },
+  {
+    id: HueBlue,
+    name: { value: 'Hue Blue' },
+    value: { numerator: 2, denominator: 3 }
+  },
+  {
+    id: HueViolet,
+    name: { value: 'Hue Violet' },
+    value: { numerator: 3, denominator: 4 }
+  },
+  {
+    id: HueMagenta,
+    name: { value: 'Hue Magenta' },
+    value: { numerator: 5, denominator: 6 }
+  },
+  {
+    id: HuePink,
+    name: { value: 'Hue Pink' },
+    value: { numerator: 11, denominator: 12 }
+  },
   {
     id: OuterHorizontalDivisionBorderIndex,
     name: { value: 'Outer Horizontal Division Border Index' },
@@ -420,7 +534,11 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
       borderTopHeight: InterfaceBorderTopHeight,
       borderRightWidth: InterfaceBorderRightWidth,
       borderBottomHeight: InterfaceBorderBottomHeight,
-      borderLeftWidth: InterfaceBorderLeftWidth
+      borderLeftWidth: InterfaceBorderLeftWidth,
+      borderTopFill: InterfaceBorderTopColor,
+      borderRightFill: InterfaceBorderRightColor,
+      borderBottomFill: InterfaceBorderBottomColor,
+      borderLeftFill: InterfaceBorderLeftColor
     }
   }
 ];
@@ -433,7 +551,8 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
       x: OuterHorizontalDivisionBorderX,
       y: ViewBoxMinimumY,
       width: OuterHorizontalBorderWidth,
-      height: ViewBoxHeight
+      height: ViewBoxHeight,
+      fill: OuterHorizontalDivisionBorderColor
     }
   },
   {
@@ -443,7 +562,8 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
       y: OuterVerticalDivisionBorderY,
       x: ViewBoxMinimumX,
       height: OuterVerticalBorderHeight,
-      width: ViewBoxWidth
+      width: ViewBoxWidth,
+      fill: OuterVerticalDivisionBorderColor
     }
   }
 ]

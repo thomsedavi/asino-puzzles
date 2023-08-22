@@ -1,15 +1,14 @@
 import React from "react"
-import { getCommandFromAsinoCommand, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromAsinoColor, getValueFromNumber } from "../utils";
-import { C, L, M, S, strokeWidth as StrokeWidth, Z } from "../consts";
+import { getColorFromLayer, getCommandFromAsinoCommand, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
+import { C, L, M, S, strokeWidth as StrokeWidth, Z, fill as Fill, stroke as Stroke } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
-import { Solution } from "../interfaces";
+import { Solution, StyleClass } from "../interfaces";
+import Utils from "../../common/utils";
 
-export const drawPath = (paths: (AsinoPathReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string): JSX.Element => {
+export const drawPath = (paths: (AsinoPathReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, scale: Number, key: string, styleClasses: StyleClass[]): JSX.Element => {
   let d = '';
-  let fill: string | undefined = undefined;
-  let stroke: string | undefined = undefined;
   let strokeWidth: Number | undefined = getNumberFromLayer(paths, references.clone(), StrokeWidth, defaultStrokeWidth);
 
   paths.forEach((path: AsinoPathReference | undefined) => {
@@ -70,15 +69,23 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
         }
       });
     }
-
-    if (path?.value?.fill !== undefined) {
-      fill = getValueFromAsinoColor(path.value.fill, references.clone().addColors([path.colors]), solution);
-    }
-
-    if (path?.value?.stroke !== undefined) {
-      stroke = getValueFromAsinoColor(path.value.stroke, references.clone().addColors([path.colors]), solution);
-    }
   });
+
+  const fill = getColorFromLayer(paths, references.clone(), Fill);
+  const stroke = getColorFromLayer(paths, references.clone(), Stroke);
+
+  const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
+  const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);
+
+  const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
+  const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
+
+  styleClasses.filter(c => c.id === fillClass?.key).length === 0 && (styleClasses.push({ id: fillClass?.key, fill: fillClass?.value }));
+  styleClasses.filter(c => c.id === strokeClass?.key).length === 0 && (styleClasses.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
+
+  styleClasses.filter(c => c.id === fillDarkClass?.key).length === 0 && (styleClasses.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
+  styleClasses.filter(c => c.id === strokeDarkClass?.key).length === 0 && (styleClasses.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
+
 
   if (stroke === undefined) {
     strokeWidth = undefined;
@@ -88,8 +95,7 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
     id={`layer${key}`}
     key={`layer${key}`}
     d={d}
-    fill={fill}
-    stroke={stroke}
+    className={Utils.tidyString(`${fillClass?.key ?? ''} ${fillDarkClass?.key ?? ''} ${strokeClass?.key ?? ''} ${strokeDarkClass?.key ?? ''}`)}
     strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;
 }

@@ -1,11 +1,11 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemNumberDefaults, systemNumberFormulas, systemNumberParameters } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, systemColorDefaults, systemNumberDefaults } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoCollection } from "./types/Collection";
-import { AsinoColor, AsinoColorReference, ColorFormula, isColorFormula } from "./types/Color";
+import { AsinoColor, AsinoColorReference, Color, ColorFormula, isColorColor, isColorFormula } from "./types/Color";
 import { AsinoGroup, AsinoGroupReference } from "./types/Group";
 import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
@@ -177,34 +177,42 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined,
   }
 }
 
-export const getValueFromAsinoColor = (color: AsinoColor | undefined, references: References, solution: Solution): string | undefined => {
-  let result: string | undefined = undefined;
+//export const getValueFromAsinoColor = (color: AsinoColor | undefined, references: References, solution: Solution): string | undefined => {
+//  let result: string | undefined = undefined;
+//
+//  if (color === undefined) {
+//    // do nothing
+//  } else if (typeof color === 'string') {
+//    references.colors.forEach(colorReference => {
+//      if (colorReference.id === color) {
+//        console.log('REF', colorReference);
+//        result = 'red';
+//      }
+//    });
+//  } else {
+//    if (isColorFormula(color)) {
+//      result = getColorFromFormula(color, references.clone(), solution);
+//    } else {
+//      references.colors.forEach(colorReference => {
+//        result = 'cyan';
+//      });
+//    }
+//  }
+//
+//  return result;
+//}
 
-  if (color === undefined) {
-    // do nothing
-  } else if (typeof color === 'string') {
-    references.colors.forEach(colorReference => {
-      if (colorReference.id === color) {
-        if (typeof colorReference.value === 'string') {
-          result = colorReference.value;
-        }
-      }
-    });
-  } else {
-    if (isColorFormula(color)) {
-      result = getColorFromFormula(color, references.clone(), solution);
-    } else {
-      references.colors.forEach(colorReference => {
-        if (colorReference.id === color.id) {
-          if (typeof colorReference.value === 'string') {
-            result = colorReference.value;
-          }
-        }
-      });
-    }
+export const getValueFromColor = (color: Color | undefined, references: References, idPrefix: string, isDark: boolean): { key: string, value: string } | undefined => {
+  let hue: number | 'infinity' | 'negativeInfinity' | 'potato' | undefined = undefined;
+
+  const colorHue = isDark ? color?.hueDark : color?.hue;
+
+  if (colorHue !== undefined) {
+    const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone());
+    hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone(), true);
   }
 
-  return result;
+  return hue !== undefined ? { key: `${idPrefix}h${hue}s25l${isDark ? '95' : '5'}a1`, value: `hsla(${hue},25%,${isDark ? '95' : '5'}%,1)`} : undefined;
 }
 
 export const getValueFromNumber = (number: Number | undefined, references: References, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
@@ -262,31 +270,31 @@ export const getValueFromNumber = (number: Number | undefined, references: Refer
   return result;
 }
 
-export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): string | undefined => {
-  let result: string | undefined = undefined;
-
-  if (formula?.operator === 'IF_ELSE') {
-    let index = 0;
-    let match = false;
-
-    while (!match && index < (formula.booleanInputs?.length ?? 0)) {
-      const boolean = getBooleanFromAsinoBoolean(formula.booleanInputs![0], references.clone(), solution);
-
-      if (boolean) {
-        match = true;
-        result = getValueFromAsinoColor(formula.colorInputs?.[index], references.clone(), solution);
-      } else {
-        index++;
-      }
-    }
-
-    if (!match) {
-      result = getValueFromAsinoColor(formula.colorInputs?.[formula.colorInputs?.length - 1], references.clone(), solution);
-    }
-  }
-
-  return result;
-}
+//export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): string | undefined => {
+//  let result: string | undefined = undefined;
+//
+//  if (formula?.operator === 'IF_ELSE') {
+//    let index = 0;
+//    let match = false;
+//
+//    while (!match && index < (formula.booleanInputs?.length ?? 0)) {
+//      const boolean = getBooleanFromAsinoBoolean(formula.booleanInputs![0], references.clone(), solution);
+//
+//      if (boolean) {
+//        match = true;
+//        result = getValueFromAsinoColor(formula.colorInputs?.[index], references.clone(), solution);
+//      } else {
+//        index++;
+//      }
+//    }
+//
+//    if (!match) {
+//      result = getValueFromAsinoColor(formula.colorInputs?.[formula.colorInputs?.length - 1], references.clone(), solution);
+//    }
+//  }
+//
+//  return result;
+//}
 
 export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, references: References): string | undefined => {
   let result: string | undefined = undefined;
@@ -743,6 +751,40 @@ export const getCommandFromAsinoCommand = (command: AsinoCommand | undefined, re
   return result;
 }
 
+export const getColorFromAsinoColor = (color: AsinoColor | undefined, references: References): Color | undefined => {
+  let result: Color | undefined = undefined;
+
+  if (color === undefined) {
+    // do nothing
+  } else if (typeof color === 'string') {
+    systemColorDefaults.forEach((colorReference: AsinoColorReference) => {
+      if (colorReference.id === color) {
+        result = getColorFromAsinoColor(colorReference.value, references.clone());
+      }
+    })
+  } else if (isColorFormula(color)) {
+    console.log('TODO', color);
+  } else if (isColorColor(color)) {
+    result = {};
+
+    if (color.hue !== undefined) {
+      result.hue = getNumberFromAsinoNumber(color.hue, references.clone());
+    }
+
+    if (color.hueDark !== undefined) {
+      result.hueDark = getNumberFromAsinoNumber(color.hueDark, references.clone());
+    }
+  } else {
+    if (color.id === undefined && color.value !== undefined) {
+      result = getColorFromAsinoColor(color.value, references.clone());
+    } else {
+      result = getColorFromAsinoColor(color.id, references.clone());
+    }
+  }
+
+  return result;
+}
+
 export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, references: References): Number | undefined => {
   let result: Number | undefined = undefined;
 
@@ -751,21 +793,9 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   } else if (typeof number === 'number') {
     result = number;
   } else if (typeof number === 'string') {
-    systemNumberDefaults.forEach((number: AsinoNumberReference) => {
-      if (number.id === number) {
-        result = getNumberFromAsinoNumber(number, references.clone());
-      }
-    });
-
-    systemNumberFormulas.forEach((number: AsinoNumberReference) => {
-      if (number.id === number) {
-        result = getNumberFromAsinoNumber(number, references.clone());
-      }
-    });
-
-    systemNumberParameters.forEach((number: AsinoNumberReference) => {
-      if (number.id === number) {
-        result = getNumberFromAsinoNumber(number, references.clone());
+    systemNumberDefaults.forEach((numberReference: AsinoNumberReference) => {
+      if (numberReference.id === number) {
+        result = getNumberFromAsinoNumber(numberReference.value, references.clone());
       }
     });
 
@@ -791,6 +821,26 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   return result;
 }
 
+export const getColorFromLayer = (array: (any | undefined)[], references: References, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
+  let result: Color | undefined = getColorFromAsinoColor(colorDefault, references.clone());
+
+  array.forEach(value => {
+    const valueColorValue: string = value?.value?.[valueNameAndId];
+
+    if (valueColorValue !== undefined) {
+      if (typeof valueColorValue === 'string') {
+        systemColorDefaults.forEach((colorReference: AsinoColorReference) => {
+          if (colorReference.id === valueColorValue) {
+            result = getColorFromAsinoColor(colorReference.value, references.clone());
+          }
+        });
+      }
+    }
+  });
+
+  return result;
+}
+
 export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
   let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, references.clone());
 
@@ -803,25 +853,13 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
       } else if (typeof valueNumberValue === 'string') {
         systemNumberDefaults.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
-            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
-          }
-        });
-
-        systemNumberFormulas.forEach((number: AsinoNumberReference) => {
-          if (number.id === valueNumberValue) {
-            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
-          }
-        });
-
-        systemNumberParameters.forEach((number: AsinoNumberReference) => {
-          if (number.id === valueNumberValue) {
-            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
+            result = getNumberFromAsinoNumber(number.value, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }
         });
 
         references.numbers.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
-            result = getNumberFromAsinoNumber(number, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
+            result = getNumberFromAsinoNumber(number.value, references.clone().addNumbers([value?.[valueNameAndId]?.numbers]));
           }
         });
       } else if (isAsinoNumberFraction(valueNumberValue)) {
@@ -1112,7 +1150,7 @@ const minifyColor = (color: AsinoColor): any => {
 
     return result;
   } else {
-    return minifyColorReference(color);
+    console.log('TODO');
   }
 }
 
@@ -1349,6 +1387,10 @@ const minifyInterface = (asinoInterface: AsinoInterface): any => {
   asinoInterface.borderRightWidth !== undefined && (result[BorderRightWidth] = minifyNumber(asinoInterface.borderRightWidth));
   asinoInterface.borderBottomHeight !== undefined && (result[BorderBottomHeight] = minifyNumber(asinoInterface.borderBottomHeight));
   asinoInterface.borderLeftWidth !== undefined && (result[BorderLeftWidth] = minifyNumber(asinoInterface.borderLeftWidth));
+  asinoInterface.borderTopFill !== undefined && (result[BorderTopFill] = minifyColor(asinoInterface.borderTopFill));
+  asinoInterface.borderRightFill !== undefined && (result[BorderRightFill] = minifyColor(asinoInterface.borderRightFill));
+  asinoInterface.borderBottomFill !== undefined && (result[BorderBottomFill] = minifyColor(asinoInterface.borderBottomFill));
+  asinoInterface.borderLeftFill !== undefined && (result[BorderLeftFill] = minifyColor(asinoInterface.borderLeftFill));
 
   return result;
 }
@@ -1610,6 +1652,10 @@ const unminifyInterface = (asinoInterface: any): AsinoInterface => {
   asinoInterface[BorderRightWidth] !== undefined && (result.borderRightWidth = unminifyNumber(asinoInterface[BorderRightWidth]));
   asinoInterface[BorderBottomHeight] !== undefined && (result.borderBottomHeight = unminifyNumber(asinoInterface[BorderBottomHeight]));
   asinoInterface[BorderLeftWidth] !== undefined && (result.borderLeftWidth = unminifyNumber(asinoInterface[BorderLeftWidth]));
+  asinoInterface[BorderTopFill] !== undefined && (result.borderTopFill = unminifyColor(asinoInterface[BorderTopFill]));
+  asinoInterface[BorderRightFill] !== undefined && (result.borderRightFill = unminifyColor(asinoInterface[BorderRightFill]));
+  asinoInterface[BorderBottomFill] !== undefined && (result.borderBottomFill = unminifyColor(asinoInterface[BorderBottomFill]));
+  asinoInterface[BorderLeftFill] !== undefined && (result.borderLeftFill = unminifyColor(asinoInterface[BorderLeftFill]));
 
   return result;
 }
@@ -1756,6 +1802,10 @@ const BorderTopHeight = 'brtpht';
 const BorderRightWidth = 'brrtwh';
 const BorderBottomHeight = 'brbmht';
 const BorderLeftWidth = 'brltwh';
+const BorderTopFill = 'brtpfl';
+const BorderRightFill = 'brrtfl';
+const BorderBottomFill = 'brbtfl';
+const BorderLeftFill = 'brltfl';
 
 const C = 'c';
 const Circle = 'ce';

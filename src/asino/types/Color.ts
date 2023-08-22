@@ -1,8 +1,10 @@
 import { AsinoBoolean } from "./Boolean";
+import { AsinoNumber } from "./Number";
 
 export type ColorOperator = 'NONE' | 'IF_ELSE';
 
-export type AsinoColor = string | ColorFormula | AsinoColorReference;
+export type Color = { hue?: AsinoNumber | string, hueDark?: AsinoNumber | string };
+export type AsinoColor = string | Color | ColorFormula | AsinoColorReference;
 
 export type ColorFormula = {
   operator?: ColorOperator;
@@ -18,4 +20,8 @@ export type AsinoColorReference = {
 
 export const isColorFormula = (number: AsinoColor): number is ColorFormula => {
   return typeof number !== 'string' && typeof number !== 'number' && 'operator' in number;
+}
+
+export const isColorColor = (color: AsinoColor): color is Color => {
+  return typeof color !== 'string' && 'hue' in color;
 }
