@@ -5,7 +5,7 @@ import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula }
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoCollection } from "./types/Collection";
-import { AsinoColor, AsinoColorReference, Color, ColorFormula, isColorColor, isColorFormula } from "./types/Color";
+import { AsinoColor, AsinoColorReference, Color, isColorColor, isColorFormula } from "./types/Color";
 import { AsinoGroup, AsinoGroupReference } from "./types/Group";
 import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
