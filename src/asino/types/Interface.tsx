@@ -1,5 +1,5 @@
 import React from 'react';
-import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y } from "../consts";
+import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected } from "../consts";
 import { AsinoPuzzle } from "../interfaces";
 import { AsinoColor, AsinoColorReference } from "./Color";
 import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
@@ -23,6 +23,8 @@ export type AsinoInterface = {
   [BorderRightFill]?: AsinoColor;
   [BorderBottomFill]?: AsinoColor;
   [BorderLeftFill]?: AsinoColor;
+  [Fill]?: AsinoColor;
+  [FillSelected]?: AsinoColor;
 }
 
 export type AsinoInterfaceReference = {

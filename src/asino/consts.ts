@@ -35,6 +35,7 @@ export const dy1 = 'dy1';
 export const dy2 = 'dy2';
 export const r = 'r';
 export const fill = 'fill';
+export const fillSelected = 'fillSelected';
 export const stroke = 'stroke';
 export const strokeWidth = 'strokeWidth';
 
@@ -81,6 +82,8 @@ const InterfaceBorderBottomColor = 'f-af';
 const InterfaceBorderLeftColor = 'e-dd';
 const OuterHorizontalDivisionBorderColor = 'e-ec';
 const OuterVerticalDivisionBorderColor = 'e-ae';
+const InterfaceColor = 'f-ae';
+const InterfaceSelectedColor = 'c-fa';
 const HueRed = 'f-cc';
 const HueOrange = 'b-fa';
 const HueYellow = 'a-eb';
@@ -135,6 +138,22 @@ export const systemColorDefaults: AsinoColorReference[] = [
     id: OuterVerticalDivisionBorderColor,
     name: { value: 'Outer Vertical Division Border Color' },
     value: BorderColor
+  },
+  {
+    id: InterfaceColor,
+    name: { value: 'Interface Color' },
+    value: {
+      hue: HuePink,
+      hueDark: HueAzure,
+    }
+  },
+  {
+    id: InterfaceSelectedColor,
+    name: { value: 'Interface Selected Color' },
+    value: {
+      hue: HueChartreuse,
+      hueDark: HuePink
+    }
   }
 ];
 
@@ -544,7 +563,9 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
       borderTopFill: InterfaceBorderTopColor,
       borderRightFill: InterfaceBorderRightColor,
       borderBottomFill: InterfaceBorderBottomColor,
-      borderLeftFill: InterfaceBorderLeftColor
+      borderLeftFill: InterfaceBorderLeftColor,
+      fill: InterfaceColor,
+      fillSelected: InterfaceSelectedColor
     }
   }
 ];

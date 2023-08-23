@@ -1436,6 +1436,8 @@ const minifyInterface = (asinoInterface: AsinoInterface): any => {
   asinoInterface.borderRightFill !== undefined && (result[BorderRightFill] = minifyColor(asinoInterface.borderRightFill));
   asinoInterface.borderBottomFill !== undefined && (result[BorderBottomFill] = minifyColor(asinoInterface.borderBottomFill));
   asinoInterface.borderLeftFill !== undefined && (result[BorderLeftFill] = minifyColor(asinoInterface.borderLeftFill));
+  asinoInterface.fill !== undefined && (result[Fill] = minifyColor(asinoInterface.fill));
+  asinoInterface.fillSelected !== undefined && (result[FillSelected] = minifyColor(asinoInterface.fillSelected));
 
   return result;
 }
@@ -1701,6 +1703,8 @@ const unminifyInterface = (asinoInterface: any): AsinoInterface => {
   asinoInterface[BorderRightFill] !== undefined && (result.borderRightFill = unminifyColor(asinoInterface[BorderRightFill]));
   asinoInterface[BorderBottomFill] !== undefined && (result.borderBottomFill = unminifyColor(asinoInterface[BorderBottomFill]));
   asinoInterface[BorderLeftFill] !== undefined && (result.borderLeftFill = unminifyColor(asinoInterface[BorderLeftFill]));
+  asinoInterface[Fill] !== undefined && (result.fill = unminifyColor(asinoInterface[Fill]));
+  asinoInterface[FillSelected] !== undefined && (result.fillSelected = unminifyColor(asinoInterface[FillSelected]));
 
   return result;
 }
@@ -1883,6 +1887,7 @@ const E = 'e';
 
 const F = 'f';
 const Fill = 'fl';
+const FillSelected = 'flsd';
 const FixedClassId = 'fdcsid';
 
 const Group = 'gp';

@@ -4,11 +4,17 @@ import { AsinoNumber } from "./Number";
 export type ColorOperator = 'NONE' | 'IF_ELSE';
 
 export type Color = {
-  hue?: AsinoNumber | string,
-  hueDark?: AsinoNumber | string,
-  saturation?: AsinoNumber | string,
+  red?: AsinoNumber | string;
+  redDark?: AsinoNumber | string;
+  green?: AsinoNumber | string;
+  greenDark?: AsinoNumber | string;
+  blue?: AsinoNumber | string;
+  blueDark?: AsinoNumber | string;
+  hue?: AsinoNumber | string;
+  hueDark?: AsinoNumber | string;
+  saturation?: AsinoNumber | string;
   saturationDark?: AsinoNumber | string;
-  lightness?: AsinoNumber | string,
+  lightness?: AsinoNumber | string;
   lightnessDark?: AsinoNumber | string;
 };
 

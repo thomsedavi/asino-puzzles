@@ -1,7 +1,7 @@
 import React from "react"
 import { AsinoPuzzle, Solution, StyleClass } from "../interfaces"
 import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
-import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y } from "../consts";
+import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
@@ -37,27 +37,34 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), BorderBottomHeight, { value: 0 });
   const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), BorderLeftWidth, { value: 0 });
 
-  let fill = interfaceObjectId === selectedObjectId ? 'red' : 'var(--background-color-input)';
+  console.log('i', interfaceObjectId);
+  console.log('s', selectedObjectId);
+
+  const fill = getColorFromLayer(interfaces, references.clone(), interfaceObjectId === selectedObjectId ? FillSelected : Fill);
   const borderTopFill = getColorFromLayer(interfaces, references.clone(), BorderTopFill);
   const borderRightFill = getColorFromLayer(interfaces, references.clone(), BorderRightFill);
   const borderBottomFill = getColorFromLayer(interfaces, references.clone(), BorderBottomFill);
   const borderLeftFill = getColorFromLayer(interfaces, references.clone(), BorderLeftFill);
 
+  const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const borderTopFillClass = getValueFromColor(borderTopFill, references.clone(), 'f', false);
   const borderRightFillClass = getValueFromColor(borderRightFill, references.clone(), 'f', false);
   const borderBottomFillClass = getValueFromColor(borderBottomFill, references.clone(), 'f', false);
   const borderLeftFillClass = getValueFromColor(borderLeftFill, references.clone(), 'f', false);
 
+  const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
   const borderTopFillDarkClass = getValueFromColor(borderTopFill, references.clone(), 'fd', true);
   const borderRightFillDarkClass = getValueFromColor(borderRightFill, references.clone(), 'fd', true);
   const borderBottomFillDarkClass = getValueFromColor(borderBottomFill, references.clone(), 'fd', true);
   const borderLeftFillDarkClass = getValueFromColor(borderLeftFill, references.clone(), 'fd', true);
 
+  styleClasses.filter(c => c.id === fillClass?.key).length === 0 && (styleClasses.push({ id: fillClass?.key, fill: fillClass?.value }));
   styleClasses.filter(c => c.id === borderTopFillClass?.key).length === 0 && (styleClasses.push({ id: borderTopFillClass?.key, fill: borderTopFillClass?.value }));
   styleClasses.filter(c => c.id === borderRightFillClass?.key).length === 0 && (styleClasses.push({ id: borderRightFillClass?.key, fill: borderRightFillClass?.value }));
   styleClasses.filter(c => c.id === borderBottomFillClass?.key).length === 0 && (styleClasses.push({ id: borderBottomFillClass?.key, fill: borderBottomFillClass?.value }));
   styleClasses.filter(c => c.id === borderLeftFillClass?.key).length === 0 && (styleClasses.push({ id: borderLeftFillClass?.key, fill: borderLeftFillClass?.value }));
 
+  styleClasses.filter(c => c.id === fillDarkClass?.key).length === 0 && (styleClasses.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
   styleClasses.filter(c => c.id === borderTopFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderTopFillDarkClass?.key, fillDark: borderTopFillDarkClass?.value }));
   styleClasses.filter(c => c.id === borderRightFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderRightFillDarkClass?.key, fillDark: borderRightFillDarkClass?.value }));
   styleClasses.filter(c => c.id === borderBottomFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderBottomFillDarkClass?.key, fillDark: borderBottomFillDarkClass?.value }));
@@ -102,7 +109,8 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   >
     <rect
       width={getValueFromNumber(width, references.clone())}
-      fill={fill}
+      height={getValueFromNumber(height, references.clone())}
+      className={Utils.tidyString(`${fillClass?.key ?? ''} ${fillDarkClass?.key ?? ''}`)}
     />
     <path
       d={`M${outerLeft},${outerTop}L${outerRight},${outerTop}L${innerRight},${innerTop}L${innerLeft},${innerTop}Z`}
