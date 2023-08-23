@@ -37,9 +37,6 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), BorderBottomHeight, { value: 0 });
   const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), BorderLeftWidth, { value: 0 });
 
-  console.log('i', interfaceObjectId);
-  console.log('s', selectedObjectId);
-
   const fill = getColorFromLayer(interfaces, references.clone(), interfaceObjectId === selectedObjectId ? FillSelected : Fill);
   const borderTopFill = getColorFromLayer(interfaces, references.clone(), BorderTopFill);
   const borderRightFill = getColorFromLayer(interfaces, references.clone(), BorderRightFill);

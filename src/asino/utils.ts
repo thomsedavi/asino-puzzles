@@ -203,45 +203,91 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined,
 //}
 
 export const getValueFromColor = (color: Color | undefined, references: References, idPrefix: string, isDark: boolean): { key: string, value: string } | undefined => {
-  const colorHue: AsinoNumber = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? 0;
-  const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone());
-  let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone(), true);
+  if (color !== undefined && 'red' in color) {
+    const colorRed: AsinoNumber = isDark ? color?.redDark ?? color?.red ?? 0 : color?.lightness ?? 1;
+    const colorRedNumber = getNumberFromAsinoNumber(colorRed, references.clone());
+    let red = getValueFromNumber(getProduct(colorRedNumber, 255, references.clone()), references.clone(), true);
 
-  if (hue === 'infinity' || hue === 'negativeInfinity' || hue === 'potato' || hue === undefined) {
-    hue = 0;
+    if (red === 'infinity') {
+      red = 255;
+    } else if (red === 'negativeInfinity') {
+      red = 0;
+    } else if (red === 'potato' || red === undefined) {
+      red = 127;
+    }
+
+    red = Math.max(Math.min(Math.round(red), 255), 0);
+
+    const colorGreen: AsinoNumber = isDark ? color?.greenDark ?? color?.green ?? 0 : color?.green ?? 1;
+    const colorGreenNumber = getNumberFromAsinoNumber(colorGreen, references.clone());
+    let green = getValueFromNumber(getProduct(colorGreenNumber, 255, references.clone()), references.clone(), true);
+
+    if (green === 'infinity') {
+      green = 255;
+    } else if (green === 'negativeInfinity') {
+      green = 0;
+    } else if (green === 'potato' || green === undefined) {
+      green = 127;
+    }
+
+    green = Math.max(Math.min(Math.round(green), 255), 0);
+
+    const colorBlue: AsinoNumber = isDark ? color?.blueDark ?? color?.blue ?? 0 : color?.blue ?? 1;
+    const colorBlueNumber = getNumberFromAsinoNumber(colorBlue, references.clone());
+    let blue = getValueFromNumber(getProduct(colorBlueNumber, 255, references.clone()), references.clone(), true);
+
+    if (blue === 'infinity') {
+      blue = 255;
+    } else if (blue === 'negativeInfinity') {
+      blue = 0;
+    } else if (blue === 'potato' || blue === undefined) {
+      blue = 127;
+    }
+
+    blue = Math.max(Math.min(Math.round(blue), 255), 0);
+
+    return { key: `${idPrefix}r${red}g${green}b${blue}a1`, value: `rgba(${red},${green},${blue},1)` };
+  } else {
+    const colorHue: AsinoNumber = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? 0;
+    const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone());
+    let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone(), true);
+
+    if (hue === 'infinity' || hue === 'negativeInfinity' || hue === 'potato' || hue === undefined) {
+      hue = 0;
+    }
+
+    hue = Math.round(hue) % 360;
+
+    const colorSaturation: AsinoNumber = (isDark ? (color?.saturationDark ?? color?.saturation) : color?.saturation) ?? { numerator: 3, denominator: 4 };
+    const colorSaturationNumber = getNumberFromAsinoNumber(colorSaturation, references.clone());
+    let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()), references.clone(), true);
+
+    if (saturation === 'infinity') {
+      saturation = 100;
+    } else if (saturation === 'negativeInfinity') {
+      saturation = 0;
+    } else if (saturation === 'potato' || saturation === undefined) {
+      saturation = 75;
+    }
+
+    saturation = Math.max(Math.min(Math.round(saturation), 100), 0);
+
+    const colorLightness: AsinoNumber = (isDark ? (color?.lightnessDark ?? color?.lightness) : color?.lightness) ?? { numerator: 1, denominator: 2 };
+    const colorLightnessNumber = getNumberFromAsinoNumber(colorLightness, references.clone());
+    let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()), references.clone(), true);
+
+    if (lightness === 'infinity') {
+      lightness = 100;
+    } else if (lightness === 'negativeInfinity') {
+      lightness = 0;
+    } else if (lightness === 'potato' || lightness === undefined) {
+      lightness = 50;
+    }
+
+    lightness = Math.max(Math.min(Math.round(lightness), 100), 0);
+
+    return { key: `${idPrefix}h${hue}s${saturation}l${lightness}a1`, value: `hsla(${hue},${saturation}%,${lightness}%,1)` };
   }
-
-  hue = Math.round(hue) % 360;
-
-  const colorSaturation: AsinoNumber = (isDark ? (color?.saturationDark ?? color?.saturation) : color?.saturation) ?? { numerator: 3, denominator: 4 };
-  const colorSaturationNumber = getNumberFromAsinoNumber(colorSaturation, references.clone());
-  let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()), references.clone(), true);
-
-  if (saturation === 'infinity') {
-    saturation = 100;
-  } else if (saturation === 'negativeInfinity') {
-    saturation = 0;
-  } else if (saturation === 'potato' || saturation == undefined) {
-    saturation = 75;
-  }
-
-  saturation = Math.max(Math.min(Math.round(saturation), 100), 0);
-
-  const colorLightness: AsinoNumber = (isDark ? (color?.lightnessDark ?? color?.lightness) : color?.lightness) ?? { numerator: 1, denominator: 2 };
-  const colorLightnessNumber = getNumberFromAsinoNumber(colorLightness, references.clone());
-  let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()), references.clone(), true);
-
-  if (lightness === 'infinity') {
-    lightness = 100;
-  } else if (lightness === 'negativeInfinity') {
-    lightness = 0;
-  } else if (lightness === 'potato' || lightness === undefined) {
-    lightness = 50;
-  }
-
-  lightness = Math.max(Math.min(Math.round(lightness), 100), 0);
-
-  return { key: `${idPrefix}h${hue}s${saturation}l${lightness}a1`, value: `hsla(${hue},${saturation}%,${lightness}%,1)` };
 }
 
 export const getValueFromNumber = (number: Number | undefined, references: References, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
@@ -818,6 +864,30 @@ export const getColorFromAsinoColor = (color: AsinoColor | undefined, references
 
     if (color.lightnessDark !== undefined) {
       result.lightnessDark = getNumberFromAsinoNumber(color.lightnessDark, references.clone());
+    }
+
+    if (color.red !== undefined) {
+      result.red = getNumberFromAsinoNumber(color.red, references.clone());
+    }
+
+    if (color.redDark !== undefined) {
+      result.redDark = getNumberFromAsinoNumber(color.redDark, references.clone());
+    }
+
+    if (color.green !== undefined) {
+      result.green = getNumberFromAsinoNumber(color.green, references.clone());
+    }
+
+    if (color.greenDark !== undefined) {
+      result.greenDark = getNumberFromAsinoNumber(color.greenDark, references.clone());
+    }
+
+    if (color.blue !== undefined) {
+      result.blue = getNumberFromAsinoNumber(color.blue, references.clone());
+    }
+
+    if (color.blueDark !== undefined) {
+      result.blueDark = getNumberFromAsinoNumber(color.blueDark, references.clone());
     }
   } else {
     if (color.id === undefined && color.value !== undefined) {

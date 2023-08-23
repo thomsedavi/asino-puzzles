@@ -37,5 +37,5 @@ export const isColorFormula = (number: AsinoColor): number is ColorFormula => {
 }
 
 export const isColorColor = (color: AsinoColor): color is Color => {
-  return typeof color !== 'string' && 'hue' in color;
+  return typeof color !== 'string' && ('hue' in color || 'red' in color);
 }

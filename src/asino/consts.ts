@@ -96,6 +96,7 @@ const HueBlue = 'e-ad';
 const HueViolet = 'e-ce';
 const HueMagenta = 'c-fc';
 const HuePink = 'b-af';
+const InputBackground = 'c-eb';
 
 export const systemColorDefaults: AsinoColorReference[] = [
   {
@@ -140,12 +141,21 @@ export const systemColorDefaults: AsinoColorReference[] = [
     value: BorderColor
   },
   {
+    id: InputBackground,
+    name: { value: 'Input Background' },
+    value: {
+      red: 1,
+      green: 1,
+      blue: 1,
+      redDark: 0,
+      greenDark: 0,
+      blueDark: 0
+    }
+  },
+  {
     id: InterfaceColor,
     name: { value: 'Interface Color' },
-    value: {
-      hue: HuePink,
-      hueDark: HueAzure,
-    }
+    value: InputBackground
   },
   {
     id: InterfaceSelectedColor,
