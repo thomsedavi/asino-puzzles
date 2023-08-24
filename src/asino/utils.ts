@@ -11,7 +11,7 @@ import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
 import { AsinoLine, AsinoLineReference } from "./types/Line";
 import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber, Fraction } from "./types/Number";
-import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula } from "./types/Object";
+import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula, isObjectsObjects } from "./types/Object";
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
@@ -463,14 +463,16 @@ export const getObjectIdsFromAsinoObjects = (objects: AsinoObjects | undefined, 
     } else {
       console.log('objects', objects);
     }
-  } else {
+  } else if (isObjectsObjects(objects)) {
     result = [];
 
     objects.forEach(asinoObject => {
       const object = getObjectIdFromAsinoObject(asinoObject, references.clone());
 
       object !== undefined && (result?.push(object));
-    });
+    });    
+  } else {
+    console.log('TODO');
   }
 
   return result;
@@ -1134,8 +1136,10 @@ const minifyObjects = (objects: AsinoObjects): any => {
     objects.objectsInputs !== undefined && (result[ObjectsInputs] = objects.objectsInputs.map(o => o !== undefined ? minifyObjects(o) : undefined));
 
     return result;
+  } else if (isObjectsObjects(objects)) {
+    return objects.map((c: AsinoObject) => minifyObject(c));
   } else {
-    objects.map((c: AsinoObject) => minifyObject(c));
+    console.log('TODO');
   }
 }
 
@@ -1708,19 +1712,31 @@ const unminifyClass = (asinoClass: any): AsinoClass => {
 }
 
 const unminifySet = (asinoSet: any): AsinoSet => {
-  const result: AsinoSet = {};
+  if (typeof asinoSet === 'string') {
+    return asinoSet;
+  } else if (Objects in asinoSet) {
+    const result: Set = {};
 
-  console.log('TODO');
+    asinoSet[Objects] !== undefined && (result.objects = asinoSet[Objects].map((o: any) => o !== undefined ? unminifyObject(o) : undefined));
 
-  return result;
+    return result;
+  } else {
+    return unminifySetReference(asinoSet);
+  }
 }
 
-const unminifyObject = (asinoClass: any): AsinoObject => {
-  const result: AsinoObject = {};
+const unminifyObject = (asinoObject: any): AsinoObject => {
+  if (typeof asinoObject === 'string') {
+    return asinoObject;
+  } else if (Classs in asinoObject) {
+    const result: Object = {};
 
-  console.log('TODO');
+    asinoObject[Classs] !== undefined && (result.class = unminifyClass(asinoObject[Classs]));
 
-  return result;
+    return result;
+  } else {
+    return unminifyObjectReference(asinoObject);
+  }
 }
 
 const unminifyColorReference = (color: any): AsinoColorReference => {
@@ -1906,7 +1922,7 @@ const unminifySetReference = (set: any): AsinoSetReference => {
 
   set[Id] !== undefined && (result.id = set[Id]);
   set[Name] !== undefined && (result.name = { value: set[Name] });
-  console.log('TODO');
+  set[Value] !== undefined && (result.value = unminifySet(set[Value]));
 
   return result;
 }

@@ -61,20 +61,12 @@ export interface AsinoPuzzle {
   userName?: string;
   layer?: string;
   size?: string;
-  collections?: AsinoCollection[];
   objects?: AsinoObject[];
   classes?: AsinoClass[];
   numbers?: AsinoNumber[];
-  colors?: AsinoColor[];
   layers?: AsinoLayer[];
-  booleans?: AsinoBoolean[];
   dateCreated?: string;
   dateUpdated?: string;
-}
-
-export interface AsinoCollection {
-  name?: string;
-  description?: string;
 }
 
 export interface AsinoClass {
@@ -116,39 +108,12 @@ export interface AsinoLayer {
   strokeColor?: string;
 }
 
-export interface AsinoColor {
-  name?: string;
-  description?: string;
-  hueLight?: number;
-  hueDark?: number;
-  lightnessLight?: number;
-  lightnessDark?: number;
-
-}
-
-export interface AsinoGroup {
-  name?: string;
-  description?: string;
-}
-
-export interface AsinoBoolean {
-  name?: string;
-  description?: string;
-  value?: boolean;
-}
-
 export const asinoPuzzle: AsinoPuzzle = {
   id: '0-00-000',
   userId: '0-00',
   title: 'My Test Puzzle',
   layer: 'Layout',
   size: 'Size',
-  collections: [
-    {
-      name: 'Numbers',
-      description: 'Numbers Collection'
-    }
-  ],
   objects: [
     {
       name: 'R1C1',
@@ -889,13 +854,6 @@ export const asinoPuzzle: AsinoPuzzle = {
         '8',
         'Cell Size'
       ]
-    }
-  ],
-  booleans: [
-    {
-      name: 'True',
-      description: 'True',
-      value: true
     }
   ],
   layers: [

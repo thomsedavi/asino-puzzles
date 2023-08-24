@@ -1,13 +1,13 @@
 import React from 'react';
 import { AsinoPuzzle } from "../interfaces";
-import { AsinoObjects } from "./Object";
+import { AsinoObjects, getObjectsRow } from "./Object";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
-import { InputInline } from '../../common/styled';
+import { InputInline, SelectInline } from '../../common/styled';
 
 export type SetsOperator = 'NONE' | 'SETS_CONTAINING_OBJECT';
 
-export type Set = { objects: AsinoObjects };
+export type Set = { objects?: AsinoObjects };
 
 export type AsinoSet = Set | string | AsinoSetReference;
 
@@ -31,6 +31,32 @@ export type AsinoSetsReference = {
 
 export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetReference, key: string, depth: number, update: (value: AsinoSetReference) => void): JSX.Element => {
   const rowKey = `set${key}`;
+  let selectValue = 'NONE';
+  let set: Set | undefined = undefined;
+
+  if (setReference.value !== undefined) {
+    if (typeof setReference.value === 'string') {
+      selectValue = 'ID';
+    } else if (isSetSet(setReference.value)) {
+      selectValue = 'SET';
+      set = setReference.value;
+    }
+  }
+
+  const onChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const setReferenceUpdate: AsinoSetReference = { ...setReference };
+
+    if (event.target.value === 'NONE') {
+      delete setReferenceUpdate.value;
+      update(setReferenceUpdate);
+    } else if (event.target.value === 'ID') {
+      setReferenceUpdate.value = 'NONE';
+      update(setReferenceUpdate);
+    } else if (event.target.value === 'SET') {
+      setReferenceUpdate.value = { objects: undefined };
+      update(setReferenceUpdate);
+    }
+  }
 
   const updateName = () => {
     const updatedName = Utils.tidyString(setReference.name?.editedValue);
@@ -51,6 +77,18 @@ export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetRe
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {setReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...setReference, name: { ...setReference.name, editedValue: setReference.name?.value } })}>{setReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {setReference.name?.editedValue !== undefined && <InputInline block autoFocus value={setReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...setReference, name: { ...setReference.name, editedValue: event.target.value } })} />}
+    <SelectInline name={`Set {${rowKey}} Type`} id={`Number {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
+      <option value='NONE'>Select Type</option>
+      <option value='SET'>Set</option>
+      <option value='ID'>Id</option>
+    </SelectInline>
+    {typeof setReference.value === 'string' && <SelectInline name={`Set {${rowKey}} Id`} id={`Set {${rowKey}} Id`} value={setReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...setReference, value: event.target.value })}>
+      <option value='NONE'>Select Set</option>
+      {puzzle.sets !== undefined && puzzle.sets.length !== 0 && <optgroup label="Custom Sets">
+        {puzzle.sets?.map((s, index) => <option key={`${rowKey} Id ${index}`} value={s.id}>{s.name?.value ?? 'undefined'}</option>)}
+      </optgroup>}
+    </SelectInline>}
+    {set !== undefined && getObjectsRow(puzzle, set.objects, `${rowKey}objects`, depth + 1, (value: AsinoObjects | undefined) => update({ ...setReference, value: { objects: value } }))}
   </div>;
 }
 

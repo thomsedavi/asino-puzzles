@@ -170,7 +170,6 @@ const generateDefaultSudoku = (puzzle: AsinoPuzzle): AsinoPuzzle => {
 
   puzzle.layer = 'Layout';
   puzzle.size = 'Size'
-  puzzle.collections = [{ name: 'Numbers', description: 'Numbers Collection' }];
   puzzle.numbers = numbers;
   puzzle.classes = classes;
   puzzle.objects = objects;
