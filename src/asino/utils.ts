@@ -1,6 +1,9 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemClassDefaults, systemColorDefaults, systemNumberDefaults } from "./consts";
+import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
+import { systemClassDefaults } from "./references/Classes";
+import { systemColorDefaults } from "./references/Colors";
+import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";

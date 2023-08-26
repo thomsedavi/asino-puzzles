@@ -11,7 +11,9 @@ import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoGroupReference } from './Group';
-import { systemInterfaceDefaults, systemPathDefaults, systemRectangleDefaults } from '../consts';
+import { systemInterfaceDefaults } from '../references/Interfaces';
+import { systemPathDefaults } from '../references/Paths';
+import { systemRectangleDefaults } from '../references/Rectangles';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle

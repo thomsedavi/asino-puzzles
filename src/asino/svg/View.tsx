@@ -10,7 +10,10 @@ import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
 import { drawGroup } from "./Group";
-import { systemInterfaceDefaults, systemNumberDefaults, systemPathDefaults, systemRectangleDefaults } from "../consts";
+import { systemInterfaceDefaults } from "../references/Interfaces";
+import { systemNumberDefaults } from "../references/Numbers";
+import { systemPathDefaults } from "../references/Paths";
+import { systemRectangleDefaults } from "../references/Rectangles";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {

@@ -5,7 +5,7 @@ import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline, SelectInline } from '../../common/styled';
-import { systemClassDefaults } from '../consts';
+import { systemClassDefaults } from '../references/Classes';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 

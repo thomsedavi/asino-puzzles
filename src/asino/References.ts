@@ -1,4 +1,4 @@
-import { systemNumberDefaults } from "./consts";
+import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";

@@ -3,7 +3,7 @@ import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
-import { systemNumberDefaults } from '../consts';
+import { systemNumberDefaults } from '../references/Numbers';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
 
