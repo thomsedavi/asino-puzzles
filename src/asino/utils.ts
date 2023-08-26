@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction, systemColorDefaults, systemNumberDefaults } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, systemClassDefaults, systemColorDefaults, systemNumberDefaults } from "./consts";
 import { AsinoPuzzle, Solution } from "./interfaces";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -469,7 +469,7 @@ export const getObjectIdsFromAsinoObjects = (objects: AsinoObjects | undefined, 
       const object = getObjectIdFromAsinoObject(asinoObject, references.clone());
 
       object !== undefined && (result?.push(object));
-    });    
+    });
   } else {
     console.log('TODO');
   }
@@ -530,6 +530,12 @@ export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, refer
   if (asinoClass === undefined) {
     // do nothing
   } else if (typeof asinoClass === 'string') {
+    systemClassDefaults.forEach(classReference => {
+      if (classReference.id === asinoClass) {
+        result = getClassFromAsinoClass(classReference.value, references.clone(), solution);
+      }
+    });
+
     references.classes.forEach(classReference => {
       if (classReference.id === asinoClass) {
         result = getClassFromAsinoClass(classReference.value, references.clone(), solution);
