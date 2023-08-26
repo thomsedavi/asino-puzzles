@@ -4,7 +4,8 @@ import { AsinoObject } from "./Object";
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
-import { InputInline } from '../../common/styled';
+import { InputInline, SelectInline } from '../../common/styled';
+import { systemClassDefaults } from '../consts';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 
@@ -29,6 +30,25 @@ export type AsinoClassReference = {
 
 export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoClassReference, key: string, depth: number, update: (value: AsinoClassReference) => void): JSX.Element => {
   const rowKey = `class${key}`;
+  let selectValue = 'NONE';
+
+  if (classReference.value !== undefined) {
+    if (typeof classReference.value === 'string') {
+      selectValue = 'ID';
+    }
+  }
+
+  const onChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const classReferenceUpdate: AsinoClassReference = { ...classReference };
+
+    if (event.target.value === 'NONE') {
+      delete classReferenceUpdate.value;
+      update(classReferenceUpdate);
+    } else if (event.target.value === 'ID') {
+      classReferenceUpdate.value = 'NONE';
+      update(classReferenceUpdate);
+    }
+  }
 
   const updateName = () => {
     const updatedName = Utils.tidyString(classReference.name?.editedValue);
@@ -49,6 +69,19 @@ export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoC
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {classReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...classReference, name: { ...classReference.name, editedValue: classReference.name?.value } })}>{classReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {classReference.name?.editedValue !== undefined && <InputInline block autoFocus value={classReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...classReference, name: { ...classReference.name, editedValue: event.target.value } })} />}
+    <SelectInline name={`Class {${rowKey}} Type`} id={`Class {${rowKey}} Type`} value={selectValue} onChange={onChangeType}>
+      <option value='NONE'>Select Type</option>
+      <option value='ID'>Id</option>
+    </SelectInline>
+    {typeof classReference.value === 'string' && <SelectInline name={`Class {${rowKey}} Id`} id={`Class {${rowKey}} Id`} value={classReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...classReference, value: event.target.value })}>
+      <option value='NONE'>Select Class</option>
+      {puzzle.classes !== undefined && puzzle.classes.length !== 0 && <optgroup label="Custom Classes">
+        {puzzle.classes?.map((c, index) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      </optgroup>}
+      <optgroup label="System Defaults">
+        {systemClassDefaults.map((c, index) => <option key={`${rowKey} Default Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      </optgroup>
+    </SelectInline>}
   </div>;
 }
 

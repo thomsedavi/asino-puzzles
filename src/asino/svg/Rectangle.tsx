@@ -4,10 +4,10 @@ import { height as Height, strokeWidth as StrokeWidth, width as Width, x as X, y
 import { AsinoRectangleReference } from "../types/Rectangle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
-import { StyleClass } from "../interfaces";
+import { Solution, StyleClass } from "../interfaces";
 import Utils from "../../common/utils";
 
-export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
+export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
   let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), StrokeWidth, defaultStrokeWidth);
 
   const x = getNumberFromLayer(rectangles, references.clone(), X, { value: 0 });
@@ -15,8 +15,8 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
   const width = getNumberFromLayer(rectangles, references.clone(), Width, { value: 0 });
   const height = getNumberFromLayer(rectangles, references.clone(), Height, { value: 0 });
 
-  const fill = getColorFromLayer(rectangles, references.clone(), Fill);
-  const stroke = getColorFromLayer(rectangles, references.clone(), Stroke);
+  const fill = getColorFromLayer(rectangles, references.clone(), solution, Fill);
+  const stroke = getColorFromLayer(rectangles, references.clone(), solution, Stroke);
 
   const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);

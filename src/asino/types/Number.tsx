@@ -128,10 +128,8 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
   }
 
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
-    {numberReference.name !== undefined && <>
-      {numberReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, name: { ...numberReference.name, editedValue: numberReference.name?.value } })}>{numberReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
-      {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
-    </>}
+    {numberReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, name: { ...numberReference.name, editedValue: numberReference.name?.value } })}>{numberReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
+    {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
     {numberReference.name === undefined && <>
       <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, value: [...systemNumberDefaults].find(d => d.id === event.target.value)?.value })}>
         <option value='NONE'>Select Number To Override</option>

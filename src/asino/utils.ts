@@ -5,7 +5,7 @@ import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula }
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
 import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula, isClassClass, isClassFormula } from "./types/Class";
 import { AsinoCollection } from "./types/Collection";
-import { AsinoColor, AsinoColorReference, Color, isColorColor, isColorFormula } from "./types/Color";
+import { AsinoColor, AsinoColorReference, Color, ColorFormula, isColorColor, isColorFormula } from "./types/Color";
 import { AsinoGroup, AsinoGroupReference } from "./types/Group";
 import { AsinoInterface, AsinoInterfaceReference } from "./types/Interface";
 import { AsinoLayer } from "./types/Layer";
@@ -345,31 +345,30 @@ export const getValueFromNumber = (number: Number | undefined, references: Refer
   return result;
 }
 
-//export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): string | undefined => {
-//  let result: string | undefined = undefined;
-//
-//  if (formula?.operator === 'IF_ELSE') {
-//    let index = 0;
-//    let match = false;
-//
-//    while (!match && index < (formula.booleanInputs?.length ?? 0)) {
-//      const boolean = getBooleanFromAsinoBoolean(formula.booleanInputs![0], references.clone(), solution);
-//
-//      if (boolean) {
-//        match = true;
-//        result = getValueFromAsinoColor(formula.colorInputs?.[index], references.clone(), solution);
-//      } else {
-//        index++;
-//      }
-//    }
-//
-//    if (!match) {
-//      result = getValueFromAsinoColor(formula.colorInputs?.[formula.colorInputs?.length - 1], references.clone(), solution);
-//    }
-//  }
-//
-//  return result;
-//}
+export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): Color | undefined => {
+  let result: Color | undefined = undefined;
+
+  if (formula?.operator === 'IF_ELSE') {
+    let index = 0;
+    let match = false;
+    while (!match && index < (formula.booleanInputs?.length ?? 0)) {
+      const boolean = getBooleanFromAsinoBoolean(formula.booleanInputs![0], references.clone(), solution);
+
+      if (boolean) {
+        match = true;
+        result = getColorFromAsinoColor(formula.colorInputs?.[index], references.clone(), solution);
+      } else {
+        index++;
+      }
+    }
+
+    if (!match) {
+      result = getColorFromAsinoColor(formula.colorInputs?.[formula.colorInputs?.length - 1], references.clone(), solution);
+    }
+  }
+
+  return result;
+}
 
 export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, references: References): string | undefined => {
   let result: string | undefined = undefined;
@@ -828,7 +827,7 @@ export const getCommandFromAsinoCommand = (command: AsinoCommand | undefined, re
   return result;
 }
 
-export const getColorFromAsinoColor = (color: AsinoColor | undefined, references: References): Color | undefined => {
+export const getColorFromAsinoColor = (color: AsinoColor | undefined, references: References, solution: Solution): Color | undefined => {
   let result: Color | undefined = undefined;
 
   if (color === undefined) {
@@ -836,7 +835,7 @@ export const getColorFromAsinoColor = (color: AsinoColor | undefined, references
   } else if (typeof color === 'string') {
     systemColorDefaults.forEach((colorReference: AsinoColorReference) => {
       if (colorReference.id === color) {
-        result = getColorFromAsinoColor(colorReference.value, references.clone());
+        result = getColorFromAsinoColor(colorReference.value, references.clone(), solution);
       }
     })
   } else if (isColorFormula(color)) {
@@ -893,9 +892,9 @@ export const getColorFromAsinoColor = (color: AsinoColor | undefined, references
     }
   } else {
     if (color.id === undefined && color.value !== undefined) {
-      result = getColorFromAsinoColor(color.value, references.clone());
+      result = getColorFromAsinoColor(color.value, references.clone(), solution);
     } else {
-      result = getColorFromAsinoColor(color.id, references.clone());
+      result = getColorFromAsinoColor(color.id, references.clone(), solution);
     }
   }
 
@@ -938,19 +937,25 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   return result;
 }
 
-export const getColorFromLayer = (array: (any | undefined)[], references: References, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
-  let result: Color | undefined = getColorFromAsinoColor(colorDefault, references.clone());
+export const getColorFromLayer = (array: (any | undefined)[], references: References, solution: Solution, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
+  let result: Color | undefined = getColorFromAsinoColor(colorDefault, references.clone(), solution);
 
   array.forEach(value => {
-    const valueColorValue: string = value?.value?.[valueNameAndId];
+    const valueColorValue: AsinoColor = value?.value?.[valueNameAndId];
 
     if (valueColorValue !== undefined) {
       if (typeof valueColorValue === 'string') {
         systemColorDefaults.forEach((colorReference: AsinoColorReference) => {
           if (colorReference.id === valueColorValue) {
-            result = getColorFromAsinoColor(colorReference.value, references.clone());
+            result = getColorFromAsinoColor(colorReference.value, references.clone(), solution);
           }
         });
+      } else if (isColorFormula(valueColorValue)) {
+        result = getColorFromFormula(valueColorValue, references.clone(), solution);
+      } else if (isColorColor(valueColorValue)) {
+        result = valueColorValue;
+      } else {
+        console.log('valColVal', valueColorValue);
       }
     }
   });
@@ -1038,7 +1043,7 @@ const minifyClassReference = (asinoClass: AsinoClassReference): any => {
 
   asinoClass.id !== undefined && (result[Id] = asinoClass.id);
   asinoClass.name !== undefined && asinoClass.name.value !== undefined && (result[Name] = asinoClass.name.value);
-  asinoClass.value !== undefined && (result[Value] = minifyClass(asinoClass));
+  asinoClass.value !== undefined && (result[Value] = minifyClass(asinoClass.value));
 
   return result;
 }
@@ -1510,6 +1515,12 @@ const minifyInterface = (asinoInterface: AsinoInterface): any => {
   asinoInterface.borderRightFill !== undefined && (result[BorderRightFill] = minifyColor(asinoInterface.borderRightFill));
   asinoInterface.borderBottomFill !== undefined && (result[BorderBottomFill] = minifyColor(asinoInterface.borderBottomFill));
   asinoInterface.borderLeftFill !== undefined && (result[BorderLeftFill] = minifyColor(asinoInterface.borderLeftFill));
+  asinoInterface.paddingTopHeight !== undefined && (result[PaddingTopHeight] = minifyNumber(asinoInterface.paddingTopHeight));
+  asinoInterface.paddingRightWidth !== undefined && (result[PaddingRightWidth] = minifyNumber(asinoInterface.paddingRightWidth));
+  asinoInterface.paddingBottomHeight !== undefined && (result[PaddingBottomHeight] = minifyNumber(asinoInterface.paddingBottomHeight));
+  asinoInterface.paddingLeftWidth !== undefined && (result[PaddingLeftWidth] = minifyNumber(asinoInterface.paddingLeftWidth));
+  asinoInterface.alignmentHorizontal !== undefined && (result[AlignmentHorizonal] = minifyNumber(asinoInterface.alignmentHorizontal));
+  asinoInterface.alignmentVertical !== undefined && (result[AlignmentVertical] = minifyNumber(asinoInterface.alignmentVertical));
   asinoInterface.fill !== undefined && (result[Fill] = minifyColor(asinoInterface.fill));
   asinoInterface.fillSelected !== undefined && (result[FillSelected] = minifyColor(asinoInterface.fillSelected));
 
@@ -1789,6 +1800,12 @@ const unminifyInterface = (asinoInterface: any): AsinoInterface => {
   asinoInterface[BorderRightFill] !== undefined && (result.borderRightFill = unminifyColor(asinoInterface[BorderRightFill]));
   asinoInterface[BorderBottomFill] !== undefined && (result.borderBottomFill = unminifyColor(asinoInterface[BorderBottomFill]));
   asinoInterface[BorderLeftFill] !== undefined && (result.borderLeftFill = unminifyColor(asinoInterface[BorderLeftFill]));
+  asinoInterface[PaddingTopHeight] !== undefined && (result.paddingTopHeight = unminifyNumber(asinoInterface[PaddingTopHeight]));
+  asinoInterface[PaddingRightWidth] !== undefined && (result.paddingRightWidth = unminifyNumber(asinoInterface[PaddingRightWidth]));
+  asinoInterface[PaddingBottomHeight] !== undefined && (result.paddingBottomHeight = unminifyNumber(asinoInterface[PaddingBottomHeight]));
+  asinoInterface[PaddingLeftWidth] !== undefined && (result.paddingLeftWidth = unminifyNumber(asinoInterface[PaddingLeftWidth]));
+  asinoInterface[AlignmentHorizonal] !== undefined && (result.alignmentHorizontal = unminifyNumber(asinoInterface[AlignmentHorizonal]));
+  asinoInterface[AlignmentVertical] !== undefined && (result.alignmentVertical = unminifyNumber(asinoInterface[AlignmentVertical]));
   asinoInterface[Fill] !== undefined && (result.fill = unminifyColor(asinoInterface[Fill]));
   asinoInterface[FillSelected] !== undefined && (result.fillSelected = unminifyColor(asinoInterface[FillSelected]));
 
@@ -1844,7 +1861,8 @@ const unminifyPathReference = (path: any): AsinoPathReference => {
   path[Id] !== undefined && (result.id = path[Id]);
   path[Name] !== undefined && (result.name = { value: path[Name] });
   path[Numbers] !== undefined && (result.numbers = path[Numbers].map((n: any) => unminifyNumberReference(n)));
-  console.log('TODO');
+  path[Colors] !== undefined && (result.colors = path[Colors].map((c: any) => unminifyColorReference(c)));
+  path[Value] !== undefined && (result.value = unminifyPath(path[Value]));
 
   return result;
 }
@@ -1857,6 +1875,14 @@ const unminifyGroupReference = (group: any): AsinoGroupReference => {
   group[Numbers] !== undefined && (result.numbers = group[Numbers].map((n: any) => unminifyGroupReference(n)));
   group[Colors] !== undefined && (result.colors = group[Colors].map((c: any) => unminifyColorReference(c)));
   group[Value] !== undefined && (result.value = unminifyGroup(group[Value]));
+
+  return result;
+}
+
+const unminifyPath = (path: any): AsinoPath => {
+  const result: AsinoPath = {};
+
+  console.log('TODO');
 
   return result;
 }
@@ -1928,6 +1954,8 @@ const unminifySetReference = (set: any): AsinoSetReference => {
 }
 
 const A = 'a';
+const AlignmentHorizonal = 'athl';
+const AlignmentVertical = 'atvl';
 
 const B = 'b';
 const Booleann = 'bn';
@@ -2001,6 +2029,10 @@ const ObjectId = 'otid';
 const Objects = 'ots';
 const Operator = 'or';
 
+const PaddingTopHeight = 'pgtpht';
+const PaddingRightWidth = 'pgrtwh';
+const PaddingBottomHeight = 'pgbmht';
+const PaddingLeftWidth = 'pgltwh';
 const Path = 'ph';
 const Paths = 'phs';
 

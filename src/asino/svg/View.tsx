@@ -10,13 +10,13 @@ import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
 import { drawGroup } from "./Group";
-import { systemInterfaceDefaults, systemNumberDefaults, systemRectangleDefaults } from "../consts";
+import { systemInterfaceDefaults, systemNumberDefaults, systemPathDefaults, systemRectangleDefaults } from "../consts";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
     const layerLine = puzzle.lines?.filter(line => line.id === layer.line?.id)[0];
 
-    return drawLine([layerLine, layer.line], references.clone().addNumbers([puzzle.numbers]).addColors([layerLine?.colors, layer.colors]).addClasses([puzzle.classes]), { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawLine([layerLine, layer.line], references.clone().addNumbers([puzzle.numbers]).addColors([layerLine?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.interface !== undefined) {
     const defaultLayerInterface = systemInterfaceDefaults.filter(asinoInterface => asinoInterface.id === layer.interface?.id)[0];
     const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interface?.id)[0];
@@ -31,16 +31,17 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
   } else if (layer.circle !== undefined) {
     const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circle?.id)[0];
 
-    return drawCircle([layerCircle, layer.circle], references.clone().addNumbers([puzzle.numbers]).addColors([layerCircle?.colors, layer.colors]).addClasses([puzzle.classes]), { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawCircle([layerCircle, layer.circle], references.clone().addNumbers([puzzle.numbers]).addColors([layerCircle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.rectangle !== undefined) {
     const defaultLayerRectangle = systemRectangleDefaults.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
     const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
 
-    return drawRectangle([defaultLayerRectangle, layerRectangle, layer.rectangle], references.clone().addNumbers([systemNumberDefaults, defaultLayerRectangle?.numbers, layerRectangle?.numbers, puzzle.numbers, layer.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawRectangle([defaultLayerRectangle, layerRectangle, layer.rectangle], references.clone().addNumbers([systemNumberDefaults, defaultLayerRectangle?.numbers, layerRectangle?.numbers, puzzle.numbers, layer.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.path !== undefined) {
+    const defaultLayerPath = systemPathDefaults.filter(path => path.id === layer.path?.id)[0];
     const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];
 
-    return drawPath([layerPath, layer.path], references.clone().addNumbers([puzzle.numbers]).addColors([layerPath?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, scale, key, styleClasses);
+    return drawPath([defaultLayerPath, layerPath, layer.path], references.clone().addNumbers([systemNumberDefaults, defaultLayerPath?.numbers, layerPath?.numbers, puzzle.numbers, layer.numbers]).addColors([layerPath?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, scale, key, styleClasses);
   } else if (layer.group !== undefined) {
     const layerGroup = puzzle.groups?.filter(group => group.id === layer.group?.id)[0];
 

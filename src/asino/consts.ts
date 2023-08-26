@@ -1,6 +1,8 @@
+import { AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoInterfaceReference } from "./types/Interface";
 import { AsinoNumberReference } from "./types/Number";
+import { AsinoPathReference } from "./types/Path";
 import { AsinoRectangleReference } from "./types/Rectangle";
 
 export const a = 'a';
@@ -17,6 +19,8 @@ export const y1 = 'y1';
 export const y2 = 'y2';
 export const width = 'width';
 export const height = 'height';
+export const AlignmentHorizontal = 'alignmentHorizontal';
+export const AlignmentVertical = 'alignmentVertical';
 export const BorderTopHeight = 'borderTopHeight';
 export const BorderRightWidth = 'borderRightWidth';
 export const BorderBottomHeight = 'borderBottomHeight';
@@ -25,6 +29,10 @@ export const BorderTopFill = 'borderTopFill';
 export const BorderRightFill = 'borderRightFill';
 export const BorderBottomFill = 'borderBottomFill';
 export const BorderLeftFill = 'borderLeftFill';
+export const PaddingTopHeight = 'paddingTopHeight';
+export const PaddingRightWidth = 'paddingRightWidth';
+export const PaddingBottomHeight = 'paddingBottomHeight';
+export const PaddingLeftWidth = 'paddingLeftWidth';
 export const cx = 'cx';
 export const cy = 'cy';
 export const dx = 'dx';
@@ -71,10 +79,13 @@ const InterfaceHeight = 'b-db';
 const OuterHorizontalDivisionBorderX = 'd-ac';
 const OuterVerticalDivisionBorderY = 'e-bd';
 const InterfaceBorderSize = 'c-de';
+const PathSize = 'd-ae';
+const CurveFraction = 'b-cd';
 const InterfaceBorderTopHeight = 'e-dc';
 const InterfaceBorderRightWidth = 'e-de';
 const InterfaceBorderBottomHeight = 'e-cc';
 const InterfaceBorderLeftWidth = 'd-ee';
+const Color = 'a-ac';
 const BorderColor = 'a-dd';
 const InterfaceBorderTopColor = 'a-aa';
 const InterfaceBorderRightColor = 'd-be';
@@ -100,8 +111,8 @@ const InputBackground = 'c-eb';
 
 export const systemColorDefaults: AsinoColorReference[] = [
   {
-    id: BorderColor,
-    name: { value: 'Interface Border Color' },
+    id: Color,
+    name: { value: 'Color' },
     value: {
       hue: HueAzure,
       hueDark: HuePink,
@@ -109,6 +120,11 @@ export const systemColorDefaults: AsinoColorReference[] = [
       lightness: { numerator: 1, denominator: 20 },
       lightnessDark: { numerator: 19, denominator: 20 }
     }
+  },
+  {
+    id: BorderColor,
+    name: { value: 'Interface Border Color' },
+    value: Color
   },
   {
     id: InterfaceBorderTopColor,
@@ -166,6 +182,20 @@ export const systemColorDefaults: AsinoColorReference[] = [
     }
   }
 ];
+
+export const systemClassDefaults: AsinoClassReference[] = [
+  {
+    id: 'a-df',
+    name: { value: 'Curve Bottom To Left' },
+    value: {
+      layers: [
+        {
+          path: { id: 'b-bc' }
+        }
+      ]
+    }
+  }
+]
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
   {
@@ -242,6 +272,16 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     id: InterfaceBorderLeftWidth,
     name: { value: 'Interface Border Left Width' },
     value: InterfaceBorderSize
+  },
+  {
+    id: PathSize,
+    name: { value: 'Path Size' },
+    value: { numerator: 1, denominator: 10 }
+  },
+  {
+    id: CurveFraction,
+    name: { value: 'Curve Fraction' },
+    value: { numerator: 11, denominator: 20 }
   },
   {
     id: InterfaceX,
@@ -556,6 +596,229 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     value: 1
   }
 ];
+
+export const systemPathDefaults: AsinoPathReference[] = [
+  {
+    id: 'b-bc',
+    name: { value: 'Curve Bottom To Left' },
+    value: {
+      commands: [
+        {
+          letter: 'M',
+          x: 0,
+          y: {
+            operator: '-',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          }
+        },
+        {
+          letter: 'C',
+          x1: {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  { numerator: 1, denominator: 2 },
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      PathSize,
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          y1: {
+            operator: '-',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          x2: {
+            operator: '+',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          y2: {
+            operator: '-',
+            numberInputs: [
+              1,
+              {
+                operator: '*',
+                numberInputs: [
+                  CurveFraction,
+                  {
+                    operator: '+',
+                    numberInputs: [
+                      { numerator: 1, denominator: 2 },
+                      {
+                        operator: '/',
+                        numberInputs: [
+                          PathSize,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          x: {
+            operator: '+',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          y: 1
+        },
+        {
+          letter: 'L',
+          x: {
+            operator: '-',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          y: 1
+        },
+        {
+          letter: 'C',
+          x1: {
+            operator: '-',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          y1: {
+            operator: '-',
+            numberInputs: [
+              1,
+              {
+                operator: '*',
+                numberInputs: [
+                  CurveFraction,
+                  {
+                    operator: '-',
+                    numberInputs: [
+                      { numerator: 1, denominator: 2 },
+                      {
+                        operator: '/',
+                        numberInputs: [
+                          PathSize,
+                          2
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          x2: {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '-',
+                numberInputs: [
+                  { numerator: 1, denominator: 2 },
+                  {
+                    operator: '/',
+                    numberInputs: [
+                      PathSize,
+                      2
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          y2: {
+            operator: '+',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          },
+          x: 0,
+          y: {
+            operator: '+',
+            numberInputs: [
+              { numerator: 1, denominator: 2 },
+              {
+                operator: '/',
+                numberInputs: [
+                  PathSize,
+                  2
+                ]
+              }
+            ]
+          }
+        },
+        {
+          letter: 'Z'
+        }
+      ],
+      fill: Color
+    }
+  }
+]
 
 export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
   {

@@ -37,11 +37,11 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), BorderBottomHeight, { value: 0 });
   const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), BorderLeftWidth, { value: 0 });
 
-  const fill = getColorFromLayer(interfaces, references.clone(), interfaceObjectId === selectedObjectId ? FillSelected : Fill);
-  const borderTopFill = getColorFromLayer(interfaces, references.clone(), BorderTopFill);
-  const borderRightFill = getColorFromLayer(interfaces, references.clone(), BorderRightFill);
-  const borderBottomFill = getColorFromLayer(interfaces, references.clone(), BorderBottomFill);
-  const borderLeftFill = getColorFromLayer(interfaces, references.clone(), BorderLeftFill);
+  const fill = getColorFromLayer(interfaces, references.clone(), solution, interfaceObjectId === selectedObjectId ? FillSelected : Fill);
+  const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, BorderTopFill);
+  const borderRightFill = getColorFromLayer(interfaces, references.clone(), solution, BorderRightFill);
+  const borderBottomFill = getColorFromLayer(interfaces, references.clone(), solution, BorderBottomFill);
+  const borderLeftFill = getColorFromLayer(interfaces, references.clone(), solution, BorderLeftFill);
 
   const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const borderTopFillClass = getValueFromColor(borderTopFill, references.clone(), 'f', false);

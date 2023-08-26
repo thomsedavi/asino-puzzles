@@ -71,8 +71,8 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
     }
   });
 
-  const fill = getColorFromLayer(paths, references.clone(), Fill);
-  const stroke = getColorFromLayer(paths, references.clone(), Stroke);
+  const fill = getColorFromLayer(paths, references.clone(), solution, Fill);
+  const stroke = getColorFromLayer(paths, references.clone(), solution, Stroke);
 
   const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);
