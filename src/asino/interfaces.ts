@@ -135,7 +135,7 @@ export const Test: AsinoPuzzle = {
     { id: '4-70', name: { value: 'Object r8c1' } },
     { id: '4-71', name: { value: 'Object r8c2' } },
     { id: '4-72', name: { value: 'Object r8c3' } },
-    { id: '4-73', name: { value: 'Object r8c4' }, value: { class: '3-05' } },
+    { id: '4-73', name: { value: 'Object r8c4' }, value: { classFixed: '3-05' } },
     { id: '4-74', name: { value: 'Object r8c5' } },
     { id: '4-75', name: { value: 'Object r8c6' } },
     { id: '4-76', name: { value: 'Object r8c7' } },
@@ -149,7 +149,7 @@ export const Test: AsinoPuzzle = {
     { id: '4-85', name: { value: 'Object r9c6' } },
     { id: '4-86', name: { value: 'Object r9c7' } },
     { id: '4-87', name: { value: 'Object r9c8' } },
-    { id: '4-88', name: { value: 'Object r9c9' }, value: { class: '3-08' } },
+    { id: '4-88', name: { value: 'Object r9c9' }, value: { classFixed: '3-08' } },
     { id: '4-000', name: { value: 'Is Each Object Input' } }
   ],
   classes: [

@@ -655,7 +655,7 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
       const fixedObject = getObjectFromAsinoObject(references.object, references.clone());
       const solutionObject = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === getObjectIdFromAsinoObject(references.object, references.clone()))[0];
 
-      const asinoClass = getClassIdFromAsinoClass(fixedObject?.class ?? solutionObject?.classId, references.clone(), solution);
+      const asinoClass = getClassIdFromAsinoClass(fixedObject?.classFixed ?? solutionObject?.classId, references.clone(), solution);
       const newReferences = references.clone().setClass(asinoClass);
       typeof formula.classOutput === 'string' && newReferences.addClasses([[{ id: formula.classOutput, value: asinoClass }]]);
 
@@ -1073,7 +1073,7 @@ const minifyObject = (object: AsinoObject): any => {
   } else if (isObjectObject(object)) {
     const result: any = {};
 
-    object.class !== undefined && (result[Classs] = minifyClass(object.class));
+    object.classFixed !== undefined && (result[ClassFixed] = minifyClass(object.classFixed));
 
     return result;
   } else {
@@ -1748,10 +1748,10 @@ const unminifySet = (asinoSet: any): AsinoSet => {
 const unminifyObject = (asinoObject: any): AsinoObject => {
   if (typeof asinoObject === 'string') {
     return asinoObject;
-  } else if (Classs in asinoObject) {
+  } else if (ClassFixed in asinoObject) {
     const result: Object = {};
 
-    asinoObject[Classs] !== undefined && (result.class = unminifyClass(asinoObject[Classs]));
+    asinoObject[ClassFixed] !== undefined && (result.classFixed = unminifyClass(asinoObject[ClassFixed]));
 
     return result;
   } else {
@@ -1984,6 +1984,7 @@ const Circle = 'ce';
 const Circles = 'ces';
 const ClassOutput = 'csot';
 const Classs = 'cs';
+const ClassFixed = 'csfd';
 const ClassesInputs = 'cssits';
 const Classes = 'css';
 const Commandd = 'cd';

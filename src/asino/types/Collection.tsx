@@ -39,7 +39,7 @@ export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollectio
     <ButtonGroup>
       <Button onClick={() => update({ ...collection, classes: [...(collection.classes ?? []), { id: Utils.getRandomId(collection.classes?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Class ${(collection.classes?.length ?? 0) + 1}` } }] })}>Add Class</Button>
     </ButtonGroup>
-    {collection.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(puzzle, objectReference, `${index}`, 0, (value: AsinoCollection) => { update({ ...collection, objects: [...collection.objects!.slice(0, index), value, ...collection.objects!.slice(index + 1)] }) }))}
+    {collection.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(puzzle, objectReference, `${index}`, 0, (value: AsinoCollection) => { update({ ...collection, objects: [...collection.objects!.slice(0, index), value, ...collection.objects!.slice(index + 1)] }) }, collection))}
     <ButtonGroup>
       <Button onClick={() => update({ ...collection, objects: [...(collection.objects ?? []), { id: Utils.getRandomId(collection.objects?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Object ${(collection.objects?.length ?? 0) + 1}` } }] })}>Add Object</Button>
     </ButtonGroup>

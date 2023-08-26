@@ -1,14 +1,15 @@
 import React from 'react';
-import { AsinoClass } from "./Class";
+import { AsinoClass, AsinoClassReference } from "./Class";
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
+import { AsinoCollection } from './Collection';
 
 export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 
 export type Object = {
-  class?: AsinoClass; // class of this object
+  classFixed?: AsinoClass; // fixed class of this object
 }
 
 export type AsinoObject = Object | string | AsinoObjectReference;
@@ -33,8 +34,42 @@ export interface AsinoObjectsReference {
   value?: AsinoObjects; // value of these objects
 }
 
-export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: AsinoObjectReference, key: string, depth: number, update: (value: AsinoObjectReference) => void): JSX.Element => {
+export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: AsinoObjectReference, key: string, depth: number, update: (value: AsinoObjectReference) => void, collection?: AsinoCollection): JSX.Element => {
   const rowKey = `object${key}`;
+  let selectValue = 'NONE';
+
+  if (objectReference.value !== undefined) {
+    if (isObjectObject(objectReference.value)) {
+      if (typeof objectReference.value.classFixed === 'string') {
+        selectValue = objectReference.value.classFixed;
+      }
+    }
+  }
+
+  const onChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const objectReferenceUpdate: AsinoObjectReference = { ...objectReference };
+
+    if (event.target.value === 'NONE') {
+      if (objectReferenceUpdate.value !== undefined) {
+        if (isObjectObject(objectReferenceUpdate.value)) {
+          if (typeof objectReferenceUpdate.value.classFixed === 'string') {
+            delete objectReferenceUpdate.value;
+            update(objectReferenceUpdate);
+          }
+        }
+      }
+    } else {
+      if (objectReferenceUpdate.value === undefined) {
+        objectReferenceUpdate.value = { classFixed: event.target.value };
+        update(objectReferenceUpdate);
+      } else if (isObjectObject(objectReferenceUpdate.value)) {
+        if (typeof objectReferenceUpdate.value.classFixed === 'string') {
+          objectReferenceUpdate.value.classFixed = event.target.value;
+          update(objectReferenceUpdate);
+        }
+      }
+    }
+  }
 
   const updateName = () => {
     const updatedName = Utils.tidyString(objectReference.name?.editedValue);
@@ -55,6 +90,10 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {objectReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...objectReference, name: { ...objectReference.name, editedValue: objectReference.name?.value } })}>{objectReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {objectReference.name?.editedValue !== undefined && <InputInline block autoFocus value={objectReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...objectReference, name: { ...objectReference.name, editedValue: event.target.value } })} />}
+    <SelectInline name={`Object {${rowKey}} Type`} id={`Object {${rowKey}} Class`} value={selectValue} onChange={onChangeType}>
+      <option value='NONE'>No Fixed Class</option>
+      {collection?.classes?.map((c: AsinoClassReference, index: number) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+    </SelectInline>
   </div>;
 }
 
@@ -153,7 +192,7 @@ export const getObjectsRow = (puzzle: AsinoPuzzle, objects: AsinoObjects | undef
 }
 
 export const isObjectObject = (object: AsinoObject): object is Object => {
-  return typeof object !== 'string' && 'class' in object;
+  return typeof object !== 'string' && 'classFixed' in object;
 }
 
 export const isObjectsObjects = (objects: AsinoObjects): objects is AsinoObject[] => {
