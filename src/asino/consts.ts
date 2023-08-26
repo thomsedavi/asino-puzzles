@@ -1,10 +1,3 @@
-import { AsinoClassReference } from "./types/Class";
-import { AsinoColorReference } from "./types/Color";
-import { AsinoInterfaceReference } from "./types/Interface";
-import { AsinoNumberReference } from "./types/Number";
-import { AsinoPathReference } from "./types/Path";
-import { AsinoRectangleReference } from "./types/Rectangle";
-
 export const a = 'a';
 export const b = 'b';
 export const c = 'c';
