@@ -513,6 +513,14 @@ export const getObjectFromAsinoObject = (asinoObject: AsinoObject | undefined, r
   if (asinoObject === undefined) {
     // do nothing
   } else if (typeof asinoObject === 'string') {
+    references.puzzle.collections?.forEach(collection => {
+      collection.objects?.forEach(objectReference => {
+        if (objectReference.id === asinoObject) {
+          result = getObjectFromAsinoObject(objectReference.value, references.clone());
+        }
+      });
+    });
+
     references.objects.forEach(objectReference => {
       if (objectReference.id === asinoObject) {
         result = getObjectFromAsinoObject(objectReference.value, references.clone());

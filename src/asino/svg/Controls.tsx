@@ -12,9 +12,9 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   const selectedCollection = puzzle.collections?.filter(collection => collection.id === selectedCollectionId)[0];
 
   selectedCollection?.classes?.forEach((asinoClass: AsinoClassReference, classIndex: number) => {
-    const result = getClassFromClassReference(asinoClass, new References().addClasses([puzzle.classes]));
+    const result = getClassFromClassReference(asinoClass, new References(puzzle).addClasses([puzzle.classes]));
 
-    const classResult = getClassFromAsinoClass(result, new References().addClasses([puzzle.classes]), solution);
+    const classResult = getClassFromAsinoClass(result, new References(puzzle).addClasses([puzzle.classes]), solution);
 
     classResult?.layers?.forEach((layer, layerIndex) => {
       layers.push(
@@ -24,7 +24,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
           onClick={() => asinoClass.id !== undefined && selectClass(asinoClass.id)}
         >
           <rect x={0} y={0} width={560} height={560} fill="transparent" cursor='pointer' />
-          {drawLayer(puzzle, solution, layer, new References().addColors([puzzle.colors]), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styleClasses)}
+          {drawLayer(puzzle, solution, layer, new References(puzzle).addColors([puzzle.colors]), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styleClasses)}
         </g>
       );
     });

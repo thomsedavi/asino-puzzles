@@ -1,3 +1,4 @@
+import { AsinoPuzzle } from "./interfaces";
 import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoClass, AsinoClassReference } from "./types/Class";
@@ -8,6 +9,8 @@ import { AsinoCommandReference } from "./types/Path";
 import { AsinoSet, AsinoSetReference } from "./types/Set";
 
 export class References {
+  puzzle: AsinoPuzzle;
+
   booleans: AsinoBooleanReference[];
   classes: AsinoClassReference[];
   colors: AsinoColorReference[];
@@ -22,7 +25,9 @@ export class References {
 
   fixedClassId: string | undefined;
 
-  constructor() {
+  constructor(puzzle: AsinoPuzzle) {
+    this.puzzle = puzzle;
+
     this.booleans = [];
     this.classes = [];
     this.colors = [];
@@ -33,7 +38,7 @@ export class References {
   }
 
   clone = (): References => {
-    const refClone: References = new References();
+    const refClone: References = new References(this.puzzle);
 
     refClone.booleans = [...this.booleans];
     refClone.classes = [...this.classes];
