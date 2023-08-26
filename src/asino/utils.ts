@@ -1983,7 +1983,6 @@ const C = 'c';
 const Circle = 'ce';
 const Circles = 'ces';
 const ClassOutput = 'csot';
-const Classs = 'cs';
 const ClassFixed = 'csfd';
 const ClassesInputs = 'cssits';
 const Classes = 'css';
