@@ -66,7 +66,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } else if (mode === 'update' && (props.user === undefined || props.user === null || props.user?.id !== asinoPuzzle.userId)) {
     return <>
       <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
-      <Heading1>401 (temp testing something, user id {props.user?.id}, puzzle user id {asinoPuzzle.userId})</Heading1>
+      <Heading1>401</Heading1>
     </>
   }
 
