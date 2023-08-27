@@ -147,7 +147,7 @@ export const putAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | undefi
     if (response.status === 200) {
       const json = await response.json();
 
-      return Promise.resolve(json);
+      return Promise.resolve(unminifyAsino(json));
     } else if (response.status === 400) {
       var text = await response.text();
 
@@ -198,7 +198,7 @@ export const postAsino = async (asino: AsinoPuzzle): Promise<AsinoPuzzle | strin
     if (response.status === 200) {
       const json = await response.json();
 
-      return Promise.resolve(json);
+      return Promise.resolve(unminifyAsino(json));
     } else if (response.status === 400) {
       var text = await response.text();
 
