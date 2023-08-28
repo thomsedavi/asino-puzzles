@@ -27,21 +27,21 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     references.setFixedClassId(fixedClassId);
   });
 
-  const x = getNumberFromLayer(interfaces, references.clone(), X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), Y, { value: 0 });
-  const width = getNumberFromLayer(interfaces, references.clone(), Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, references.clone(), Height, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(interfaces, references.clone(), 'value', X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), 'value', Y, { value: 0 });
+  const width = getNumberFromLayer(interfaces, references.clone(), 'value', Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, references.clone(), 'value', Height, defaultInterfaceHeightValue);
 
-  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), BorderTopHeight, { value: 0 });
-  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), BorderRightWidth, { value: 0 });
-  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), BorderBottomHeight, { value: 0 });
-  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), BorderLeftWidth, { value: 0 });
+  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), 'value', BorderTopHeight, { value: 0 });
+  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), 'value', BorderRightWidth, { value: 0 });
+  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'value', BorderBottomHeight, { value: 0 });
+  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'value', BorderLeftWidth, { value: 0 });
 
-  const fill = getColorFromLayer(interfaces, references.clone(), solution, interfaceObjectId === selectedObjectId ? FillSelected : Fill);
-  const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, BorderTopFill);
-  const borderRightFill = getColorFromLayer(interfaces, references.clone(), solution, BorderRightFill);
-  const borderBottomFill = getColorFromLayer(interfaces, references.clone(), solution, BorderBottomFill);
-  const borderLeftFill = getColorFromLayer(interfaces, references.clone(), solution, BorderLeftFill);
+  const fill = getColorFromLayer(interfaces, references.clone(), solution, 'value', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
+  const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, 'value', BorderTopFill);
+  const borderRightFill = getColorFromLayer(interfaces, references.clone(), solution, 'value', BorderRightFill);
+  const borderBottomFill = getColorFromLayer(interfaces, references.clone(), solution, 'value', BorderBottomFill);
+  const borderLeftFill = getColorFromLayer(interfaces, references.clone(), solution, 'value', BorderLeftFill);
 
   const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const borderTopFillClass = getValueFromColor(borderTopFill, references.clone(), 'f', false);
@@ -130,10 +130,10 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 }
 
 export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, references.clone(), X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), Y, { value: 0 });
-  const width = getNumberFromLayer(interfaces, references.clone(), Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, references.clone(), Height, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(interfaces, references.clone(), 'value', X, { value: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), 'value', Y, { value: 0 });
+  const width = getNumberFromLayer(interfaces, references.clone(), 'value', Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(interfaces, references.clone(), 'value', Height, defaultInterfaceHeightValue);
 
   let interfaceObjectId: string | undefined = undefined;
   let interfaceCollectionId: string | undefined = undefined;

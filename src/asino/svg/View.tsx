@@ -35,11 +35,11 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circle?.id)[0];
 
     return drawCircle([layerCircle, layer.circle], references.clone().addNumbers([puzzle.numbers]).addColors([layerCircle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
-  } else if (layer.rectangle !== undefined) {
-    const defaultLayerRectangle = systemRectangleDefaults.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
-    const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangle?.id)[0];
+  } else if (layer.rectangleId !== undefined) {
+    const defaultLayerRectangle = systemRectangleDefaults.filter(rectangle => rectangle.id === layer.rectangleId)[0];
+    const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangleId)[0];
 
-    return drawRectangle([defaultLayerRectangle, layerRectangle, layer.rectangle], references.clone().addNumbers([systemNumberDefaults, defaultLayerRectangle?.numbers, layerRectangle?.numbers, puzzle.numbers, layer.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawRectangle([defaultLayerRectangle, layerRectangle], references.clone().addNumbers([systemNumberDefaults, defaultLayerRectangle?.numbers, layerRectangle?.numbers, puzzle.numbers, layer.numbers]).addColors([layerRectangle?.colors, layer.colors]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.path !== undefined) {
     const defaultLayerPath = systemPathDefaults.filter(path => path.id === layer.path?.id)[0];
     const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];

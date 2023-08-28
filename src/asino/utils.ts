@@ -954,11 +954,11 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   return result;
 }
 
-export const getColorFromLayer = (array: (any | undefined)[], references: References, solution: Solution, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
+export const getColorFromLayer = (array: (any | undefined)[], references: References, solution: Solution, valueName: string, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
   let result: Color | undefined = getColorFromAsinoColor(colorDefault, references.clone(), solution);
 
   array.forEach(value => {
-    const valueColorValue: AsinoColor = value?.value?.[valueNameAndId];
+    const valueColorValue: AsinoColor = value?.[valueName]?.[valueNameAndId];
 
     if (valueColorValue !== undefined) {
       if (typeof valueColorValue === 'string') {
@@ -980,11 +980,11 @@ export const getColorFromLayer = (array: (any | undefined)[], references: Refere
   return result;
 }
 
-export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
+export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueName: string, valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
   let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, references.clone());
 
   array.forEach(value => {
-    const valueNumberValue: number | string | AsinoNumber | undefined = value?.value?.[valueNameAndId];
+    const valueNumberValue: number | string | AsinoNumber | undefined = value?.[valueName]?.[valueNameAndId];
 
     if (valueNumberValue !== undefined) {
       if (typeof valueNumberValue === 'number') {
@@ -1113,7 +1113,8 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
   layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
   layer.group !== undefined && (result[Group] = minifyGroupReference(layer.group));
-  layer.rectangle !== undefined && (result[Rectangle] = minifyRectangleReference(layer.rectangle));
+  layer.rectangle !== undefined && (result[Rectangle] = minifyRectangle(layer.rectangle));
+  layer.rectangleId !== undefined && layer.rectangleId !== 'NONE' && (result[RectangleId] = layer.rectangleId)
 
   return result;
 }
@@ -1311,7 +1312,7 @@ const minifyRectangleReference = (rectangle: AsinoRectangleReference): any => {
 
   rectangle.id !== undefined && (result[Id] = rectangle.id);
   rectangle.name !== undefined && rectangle.name.value !== undefined && (result[Name] = rectangle.name.value);
-  rectangle.value !== undefined && (result[Value] = minifyRectangle(rectangle.value))
+  rectangle.rectangle !== undefined && (result[Rectangle] = minifyRectangle(rectangle.rectangle))
   rectangle.numbers !== undefined && (result[Numbers] = rectangle.numbers.map(n => minifyNumberReference(n)));
   rectangle.colors !== undefined && (result[Colors] = rectangle.colors.map(c => minifyColorReference(c)));
 
@@ -1607,7 +1608,8 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
   layer[Path] !== undefined && (result.path = unminifyPathReference(layer[Path]));
   layer[Group] !== undefined && (result.group = unminifyGroupReference(layer[Group]));
-  layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangleReference(layer[Rectangle]));
+  layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangle(layer[Rectangle]));
+  layer[RectangleId] !== undefined && (result.rectangleId = layer[RectangleId]);
 
   return result;
 }
@@ -1678,7 +1680,7 @@ const unminifyRectangleReference = (rectangle: any): AsinoRectangleReference => 
   rectangle[Name] !== undefined && (result.name = { value: rectangle[Name] });
   rectangle[Numbers] !== undefined && (result.numbers = rectangle[Numbers].map((n: any) => unminifyNumberReference(n)));
   rectangle[Colors] !== undefined && (result.colors = rectangle[Colors].map((c: any) => unminifyColor(c)));
-  rectangle[Value] !== undefined && (result.value = unminifyRectangle(rectangle[Value]));
+  rectangle[Rectangle] !== undefined && (result.rectangle = unminifyRectangle(rectangle[Rectangle]));
 
   return result;
 }
@@ -2056,6 +2058,7 @@ const Paths = 'phs';
 const R = 'r';
 
 const Rectangle = 're';
+const RectangleId = 'reid';
 const Rectangles = 'res';
 
 const SetsInputs = 'stsits';

@@ -6,7 +6,7 @@ import { AsinoInterfaceReference } from "./Interface";
 import { AsinoLineReference } from "./Line";
 import { AsinoNumberReference, getNumberReferenceRow } from "./Number";
 import { AsinoPathReference } from "./Path";
-import { AsinoRectangleReference } from "./Rectangle";
+import { AsinoRectangle } from "./Rectangle";
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
@@ -18,7 +18,8 @@ import { systemRectangleDefaults } from '../references/Rectangles';
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
   interface?: AsinoInterfaceReference; // draw the interface with these attributes
-  rectangle?: AsinoRectangleReference; // draw the rectangle with these attributes
+  rectangle?: AsinoRectangle; // draw this rectangle
+  rectangleId?: string; // draw the rectangle with this id
   line?: AsinoLineReference; // draw the layer with these attributes
   circle?: AsinoCircleReference; // draw the circle with these attributes
   path?: AsinoPathReference; // draw the path with these attributes
@@ -39,6 +40,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     selectValue = 'LINE';
   } else if (layer.rectangle !== undefined) {
     selectValue = 'RECTANGLE';
+  } else if (layer.rectangle !== undefined) {
+    selectValue = 'RECTANGLE_ID';
   } else if (layer.circle !== undefined) {
     selectValue = 'CIRCLE';
   } else if (layer.path !== undefined) {
@@ -56,6 +59,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       update({ name: layer.name, line: {} });
     } else if (event.target.value === 'RECTANGLE') {
       update({ name: layer.name, rectangle: {} });
+    } else if (event.target.value === 'RECTANGLE_ID') {
+      update({ name: layer.name, rectangleId: 'NONE' });
     } else if (event.target.value === 'CIRCLE') {
       update({ name: layer.name, circle: {} });
     } else if (event.target.value === 'PATH') {
@@ -89,6 +94,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='INTERFACE'>Interface</option>
       <option value='LINE'>Line</option>
       <option value='RECTANGLE'>Rectangle</option>
+      <option value='RECTANGLE_ID'>Rectangle Select</option>
       <option value='CIRCLE'>Circle</option>
       <option value='PATH'>Path</option>
       <option value='GROUP'>Group</option>
@@ -106,7 +112,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Line</option>
       {puzzle.lines?.map((l, index) => <option key={`${rowKey} Id ${index}`} value={l.id}>{l.name?.value ?? ''}</option>)}
     </SelectInline>}
-    {layer.rectangle !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangle: { ...layer.rectangle, id: event.target.value } })}>
+    {layer.rectangleId !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangleId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangleId: event.target.value })}>
       <option value='NONE'>Select Rectangle</option>
       {puzzle.rectangles !== undefined && puzzle.rectangles.length !== 0 && <optgroup label="Custom Rectangles">
         {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}

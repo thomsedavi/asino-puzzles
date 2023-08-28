@@ -5,7 +5,7 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
   {
     id: 'a-db',
     name: { value: 'Outer Horizontal Division Border' },
-    value: {
+    rectangle: {
       x: OuterHorizontalDivisionBorderX,
       y: ViewBoxMinimumY,
       width: OuterHorizontalBorderWidth,
@@ -16,7 +16,7 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
   {
     id: 'e-cb',
     name: { value: 'Outer Vertical Division Border' },
-    value: {
+    rectangle: {
       y: OuterVerticalDivisionBorderY,
       x: ViewBoxMinimumX,
       height: OuterVerticalBorderHeight,

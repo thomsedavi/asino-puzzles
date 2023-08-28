@@ -20,9 +20,10 @@ export type AsinoRectangle = {
 export type AsinoRectangleReference = {
   id?: string; // id of this rectangle
   name?: { value?: string, editedValue?: string }; // name of this rectangle
-  value?: AsinoRectangle; // value of this rectangle
+  rectangle?: AsinoRectangle; // value of this rectangle
+  rectangleId?: string; // refer to the rectangle with this id
   numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // number colors
+  colors?: AsinoColorReference[] // color parameters
 }
 
 export const getRectangleReferenceRow = (puzzle: AsinoPuzzle, rectangleReference: AsinoRectangleReference, key: string, depth: number, update: (value: AsinoRectangleReference) => void): JSX.Element => {
@@ -47,9 +48,9 @@ export const getRectangleReferenceRow = (puzzle: AsinoPuzzle, rectangleReference
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {rectangleReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...rectangleReference, name: { ...rectangleReference.name, editedValue: rectangleReference.name?.value } })}>{rectangleReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {rectangleReference.name?.editedValue !== undefined && <InputInline block autoFocus value={rectangleReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...rectangleReference, name: { ...rectangleReference.name, editedValue: event.target.value } })} />}
-    {getNumberRow(puzzle, rectangleReference.value?.[X], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, value: { ...rectangleReference.value, [X]: value ?? 1 } }))}
-    {getNumberRow(puzzle, rectangleReference.value?.[Y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, value: { ...rectangleReference.value, [Y]: value ?? 1 } }))}
-    {getNumberRow(puzzle, rectangleReference.value?.[Width], `${rowKey}width`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, value: { ...rectangleReference.value, [Width]: value ?? 1 } }))}
-    {getNumberRow(puzzle, rectangleReference.value?.[Height], `${rowKey}height`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, value: { ...rectangleReference.value, [Height]: value ?? 1 } }))}
+    {getNumberRow(puzzle, rectangleReference.rectangle?.[X], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, rectangle: { ...rectangleReference.rectangle, [X]: value ?? 1 } }))}
+    {getNumberRow(puzzle, rectangleReference.rectangle?.[Y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, rectangle: { ...rectangleReference.rectangle, [Y]: value ?? 1 } }))}
+    {getNumberRow(puzzle, rectangleReference.rectangle?.[Width], `${rowKey}width`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, rectangle: { ...rectangleReference.rectangle, [Width]: value ?? 1 } }))}
+    {getNumberRow(puzzle, rectangleReference.rectangle?.[Height], `${rowKey}height`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rectangleReference, rectangle: { ...rectangleReference.rectangle, [Height]: value ?? 1 } }))}
   </div>;
 }
