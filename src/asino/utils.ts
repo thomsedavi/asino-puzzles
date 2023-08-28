@@ -1106,7 +1106,8 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.circle !== undefined && (result[Circle] = minifyCircleReference(layer.circle));
   layer.collectionId !== undefined && (result[CollectionId] = layer.collectionId);
   layer.colors !== undefined && (result[Colors] = layer.colors.map((c: AsinoColorReference) => minifyColorReference(c)));
-  layer.interface !== undefined && (result[Interface] = minifyInterfaceReference(layer.interface));
+  layer.interface !== undefined && (result[Interface] = minifyInterface(layer.interface));
+  layer.interfaceId !== undefined && layer.interfaceId !== 'NONE' && (result[InterfaceId] = layer.interfaceId)
   layer.line !== undefined && (result[Line] = minifyLineReference(layer.line));
   layer.name !== undefined && layer.name.value !== undefined && (result[Name] = layer.name.value);
   layer.numbers !== undefined && (result[Numbers] = layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
@@ -1313,6 +1314,7 @@ const minifyRectangleReference = (rectangle: AsinoRectangleReference): any => {
   rectangle.id !== undefined && (result[Id] = rectangle.id);
   rectangle.name !== undefined && rectangle.name.value !== undefined && (result[Name] = rectangle.name.value);
   rectangle.rectangle !== undefined && (result[Rectangle] = minifyRectangle(rectangle.rectangle))
+  rectangle.rectangleId !== undefined && rectangle.rectangleId !== 'NONE' && (result[RectangleId] = rectangle.rectangleId);
   rectangle.numbers !== undefined && (result[Numbers] = rectangle.numbers.map(n => minifyNumberReference(n)));
   rectangle.colors !== undefined && (result[Colors] = rectangle.colors.map(c => minifyColorReference(c)));
 
@@ -1508,7 +1510,8 @@ const minifyInterfaceReference = (asinoInterface: AsinoInterfaceReference): any 
 
   asinoInterface.id !== undefined && (result[Id] = asinoInterface.id);
   asinoInterface.name !== undefined && asinoInterface.name.value !== undefined && (result[Name] = asinoInterface.name.value);
-  asinoInterface.value !== undefined && (result[Value] = minifyInterface(asinoInterface.value))
+  asinoInterface.interface !== undefined && (result[Interface] = minifyInterface(asinoInterface.interface))
+  asinoInterface.interfaceId !== undefined && asinoInterface.interfaceId !== 'NONE' && (result[InterfaceId] = asinoInterface.interfaceId);
   asinoInterface.numbers !== undefined && (result[Numbers] = asinoInterface.numbers.map(n => minifyNumberReference(n)));
   asinoInterface.colors !== undefined && (result[Colors] = asinoInterface.colors.map(c => minifyColorReference(c)));
 
@@ -1602,7 +1605,8 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   layer[CollectionId] !== undefined && (result.collectionId = layer[CollectionId]);
   layer[Colors] !== undefined && (result.colors = layer[Colors].map((c: any) => unminifyColor(c)));
   layer[Circle] !== undefined && (result.circle = unminifyCircleReference(layer[Circle]));
-  layer[Interface] !== undefined && (result.interface = unminifyInterfaceReference(layer[Interface]));
+  layer[Interface] !== undefined && (result.interface = unminifyInterface(layer[Interface]));
+  layer[InterfaceId] !== undefined && (result.interfaceId = layer[InterfaceId]);
   layer[Line] !== undefined && (result.line = unminifyLineReference(layer[Line]));
   layer[Numbers] !== undefined && (result.numbers = layer[Numbers].map((n: any) => unminifyNumberReference(n)));
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
@@ -1681,6 +1685,7 @@ const unminifyRectangleReference = (rectangle: any): AsinoRectangleReference => 
   rectangle[Numbers] !== undefined && (result.numbers = rectangle[Numbers].map((n: any) => unminifyNumberReference(n)));
   rectangle[Colors] !== undefined && (result.colors = rectangle[Colors].map((c: any) => unminifyColor(c)));
   rectangle[Rectangle] !== undefined && (result.rectangle = unminifyRectangle(rectangle[Rectangle]));
+  rectangle[RectangleId] !== undefined && (result.rectangleId = rectangle[RectangleId]);
 
   return result;
 }
@@ -1795,7 +1800,8 @@ const unminifyInterfaceReference = (asinoInterface: any): AsinoInterfaceReferenc
   asinoInterface[Id] !== undefined && (result.id = asinoInterface[Id]);
   asinoInterface[Name] !== undefined && (result.name = { value: asinoInterface[Name] });
   asinoInterface[Numbers] !== undefined && (result.numbers = asinoInterface[Numbers].map((n: any) => unminifyNumberReference(n)));
-  asinoInterface[Value] !== undefined && (result.value = unminifyInterface(asinoInterface[Value]));
+  asinoInterface[Interface] !== undefined && (result.interface = unminifyInterface(asinoInterface[Interface]));
+  asinoInterface[InterfaceId] !== undefined && (result.interfaceId = asinoInterface[InterfaceId]);
   asinoInterface[Colors] !== undefined && (result.colors = asinoInterface[Colors].map((c: any) => unminifyColor(c)));
 
   return result;
@@ -2030,6 +2036,7 @@ const Height = 'ht';
 
 const Id = 'id';
 const Interface = 'ie';
+const InterfaceId = 'ieid';
 const Interfaces = 'ies';
 
 const Layers = 'lrs';

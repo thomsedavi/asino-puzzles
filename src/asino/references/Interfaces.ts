@@ -5,7 +5,7 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
   {
     id: 'c-fe',
     name: { value: 'Interface' },
-    value: {
+    interface: {
       x: InterfaceX,
       y: InterfaceY,
       width: InterfaceWidth,
