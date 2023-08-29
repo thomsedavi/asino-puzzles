@@ -1243,7 +1243,11 @@ const minifyNumber = (number: AsinoNumber): any => {
   if (typeof number === 'string') {
     return number;
   } else if (typeof number === 'number') {
-    return number;
+    const result: any = {};
+
+    result[Integer] = number;
+
+    return result;
   } else if (isNumberFormula(number)) {
     const result: any = {};
 
@@ -1666,8 +1670,8 @@ const unminifyBoolean = (boolean: any): AsinoBoolean => {
 const unminifyNumber = (number: any): AsinoNumber => {
   if (typeof number === 'string') {
     return number;
-  } else if (typeof number === 'number') {
-    return number;
+  } else if (Integer in number) {
+    return number[Integer];
   } else if (Operator in number) {
     const result: NumberFormula = {};
 
@@ -2058,6 +2062,7 @@ const Groups = 'gps';
 const Height = 'ht';
 
 const Id = 'id';
+const Integer = 'ir';
 const Interface = 'ie';
 const InterfaceId = 'ieid';
 const Interfaces = 'ies';
