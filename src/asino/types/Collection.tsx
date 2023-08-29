@@ -1,16 +1,16 @@
 import React from 'react';
 import { AsinoClassReference, getClassReferenceRow } from './Class';
-import { AsinoObjectReference, getObjectReferenceRow } from './Object';
+import { AsinoObjectReference } from './Object';
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
-import { Button, ButtonGroup, InputInline } from '../../common/styled';
+import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 
 export interface AsinoCollection {
   id?: string; // id of this collection
   name?: { value?: string, editedValue?: string }; // name of this collection
   classes?: AsinoClassReference[]; // classes
-  objects?: AsinoObjectReference[]; // objects
+  objectIds?: string[]; // objects
 }
 
 export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollection, key: string, depth: number, update: (value: AsinoCollection) => void): JSX.Element => {
@@ -39,9 +39,20 @@ export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollectio
     <ButtonGroup>
       <Button onClick={() => update({ ...collection, classes: [...(collection.classes ?? []), { id: Utils.getRandomId(collection.classes?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Class ${(collection.classes?.length ?? 0) + 1}` } }] })}>Add Class</Button>
     </ButtonGroup>
-    {collection.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(puzzle, objectReference, `${index}`, 0, (value: AsinoCollection) => { update({ ...collection, objects: [...collection.objects!.slice(0, index), value, ...collection.objects!.slice(index + 1)] }) }, collection))}
+    {collection.objectIds?.map((objectId: string, index: number) => getObjectRow(puzzle, objectId, `${rowKey}object${index}`, (objectId: string) => update({ ...collection, objectIds: [...(collection.objectIds?.slice(0, index) ?? []), objectId, ...(collection.objectIds?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>
-      <Button onClick={() => update({ ...collection, objects: [...(collection.objects ?? []), { id: Utils.getRandomId(collection.objects?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Object ${(collection.objects?.length ?? 0) + 1}` } }] })}>Add Object</Button>
+      <Button onClick={() => update({ ...collection, objectIds: [...(collection.objectIds ?? []), 'NONE'] })}>Add Object</Button>
     </ButtonGroup>
+  </div>;
+}
+
+export const getObjectRow = (puzzle: AsinoPuzzle, objectId: string, key: string, update: (objectId: string) => void): JSX.Element => {
+  const rowKey = `object${key}`;
+
+  return <div key={rowKey}>
+    <SelectInline value={objectId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
+      <option value='NONE'>Select Object</option>
+      {puzzle.objects?.map((object: AsinoObjectReference, index: number) => <option key={`${rowKey} Object ${index}`} value={object.id}>{object.name?.value}</option>)}
+    </SelectInline>
   </div>;
 }

@@ -514,14 +514,6 @@ export const getObjectFromAsinoObject = (asinoObject: AsinoObject | undefined, r
   if (asinoObject === undefined) {
     // do nothing
   } else if (typeof asinoObject === 'string') {
-    references.puzzle.collections?.forEach(collection => {
-      collection.objects?.forEach(objectReference => {
-        if (objectReference.id === asinoObject) {
-          result = getObjectFromAsinoObject(objectReference.value, references.clone());
-        }
-      });
-    });
-
     references.objects.forEach(objectReference => {
       if (objectReference.id === asinoObject) {
         result = getObjectFromAsinoObject(objectReference.value, references.clone());
@@ -1096,7 +1088,7 @@ const minifyCollection = (collection: AsinoCollection): any => {
   collection.id !== undefined && (result[Id] = collection.id);
   collection.name !== undefined && collection.name.value !== undefined && (result[Name] = collection.name.value);
   collection.classes !== undefined && (result[Classes] = collection.classes.map((c: AsinoClassReference) => minifyClassReference(c)));
-  collection.objects !== undefined && (result[Objects] = collection.objects.map((o: AsinoObjectReference) => minifyObjectReference(o)));
+  collection.objectIds !== undefined && (result[ObjectIds] = collection.objectIds.filter(o => o !== 'NONE'));
 
   return result;
 }
@@ -1608,7 +1600,7 @@ const unminifyCollection = (collection: any): AsinoCollection => {
   collection[Id] !== undefined && (result.id = collection[Id]);
   collection[Name] !== undefined && (result.name = { value: collection[Name] });
   collection[Classes] !== undefined && (result.classes = collection[Classes].map((c: any) => unminifyClassReference(c)));
-  collection[Objects] !== undefined && (result.objects = collection[Objects].map((o: any) => unminifyObjectReference(o)));
+  collection[ObjectIds] !== undefined && (result.objectIds = collection[ObjectIds]);
 
   return result;
 }
@@ -2082,6 +2074,7 @@ const ObjectOutput = 'otot';
 const ObjectInputs = 'otits';
 const ObjectsInputs = 'otsits';
 const ObjectId = 'otid';
+const ObjectIds = 'otids';
 const Objects = 'ots';
 const Operator = 'or';
 
