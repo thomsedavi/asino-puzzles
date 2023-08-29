@@ -144,7 +144,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     </SelectInline>}
     {layer.collectionId !== undefined && <SelectInline value={layer.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, objectId: event.target.value !== 'NONE' ? event.target.value : undefined })}>
       <option value='NONE'>Select Object</option>
-      {puzzle.collections?.filter(collection => collection.id === layer.collectionId)[0]?.objectIds?.map((objectId: string, index: number) => <option key={`${rowKey} Object ${index}`} value={objectId}>{puzzle.objects?.filter(object => object.id === objectId)[0].name?.value}</option>)}
+      {puzzle.collections?.filter(collection => collection.id === layer.collectionId)[0]?.objects?.filter(object => (object.objectId !== undefined && object.objectId !== 'NONE')).map((object: {objectId?: string}, index: number) => <option key={`${rowKey} Object ${index}`} value={object.objectId}>{puzzle.objects?.filter(puzzleObject => puzzleObject.id === object.objectId)[0].name?.value}</option>)}
     </SelectInline>}
     {layer.parameters?.map((parameter: AsinoParameter, index: number) => getParameterRow(puzzle, parameter, `${index}`, depth + 1, (parameter: AsinoParameter) => update({ ...layer, parameters: [...(layer.parameters?.slice(0, index) ?? []), parameter, ...(layer.parameters?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>

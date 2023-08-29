@@ -1088,7 +1088,15 @@ const minifyCollection = (collection: AsinoCollection): any => {
   collection.id !== undefined && (result[Id] = collection.id);
   collection.name !== undefined && collection.name.value !== undefined && (result[Name] = collection.name.value);
   collection.classes !== undefined && (result[Classes] = collection.classes.map((c: AsinoClassReference) => minifyClassReference(c)));
-  collection.objectIds !== undefined && (result[ObjectIds] = collection.objectIds.filter(o => o !== 'NONE'));
+  collection.objects !== undefined && (result[Objects] = collection.objects.filter(o => o.objectId !== 'NONE').map((object: { objectId?: string }) => minifyCollectionObject(object)));
+
+  return result;
+}
+
+const minifyCollectionObject = (object: { objectId?: string }): any => {
+  const result: any = {};
+
+  object.objectId !== undefined && (result[ObjectId] = object.objectId);
 
   return result;
 }
@@ -1600,7 +1608,15 @@ const unminifyCollection = (collection: any): AsinoCollection => {
   collection[Id] !== undefined && (result.id = collection[Id]);
   collection[Name] !== undefined && (result.name = { value: collection[Name] });
   collection[Classes] !== undefined && (result.classes = collection[Classes].map((c: any) => unminifyClassReference(c)));
-  collection[ObjectIds] !== undefined && (result.objectIds = collection[ObjectIds]);
+  collection[Objects] !== undefined && (result.objects = collection[Objects].map((o: any) => unminifyCollectionObject(o)));
+
+  return result;
+}
+
+const unminifyCollectionObject = (object: any): {objectId?: string} => {
+  const result: {objectId?: string} = {}
+
+  object[ObjectId] !== undefined && (result.objectId = object[ObjectId]);
 
   return result;
 }
@@ -2074,7 +2090,6 @@ const ObjectOutput = 'otot';
 const ObjectInputs = 'otits';
 const ObjectsInputs = 'otsits';
 const ObjectId = 'otid';
-const ObjectIds = 'otids';
 const Objects = 'ots';
 const Operator = 'or';
 
