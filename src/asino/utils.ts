@@ -15,6 +15,7 @@ import { AsinoLayer } from "./types/Layer";
 import { AsinoLine, AsinoLineReference } from "./types/Line";
 import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber, Fraction } from "./types/Number";
 import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula, isObjectsObjects } from "./types/Object";
+import { AsinoParameter } from "./types/Parameter";
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
@@ -1105,17 +1106,27 @@ const minifyLayer = (layer: AsinoLayer): any => {
 
   layer.circle !== undefined && (result[Circle] = minifyCircleReference(layer.circle));
   layer.collectionId !== undefined && (result[CollectionId] = layer.collectionId);
-  layer.colors !== undefined && (result[Colors] = layer.colors.map((c: AsinoColorReference) => minifyColorReference(c)));
   layer.interface !== undefined && (result[Interface] = minifyInterface(layer.interface));
   layer.interfaceId !== undefined && layer.interfaceId !== 'NONE' && (result[InterfaceId] = layer.interfaceId)
   layer.line !== undefined && (result[Line] = minifyLineReference(layer.line));
   layer.name !== undefined && layer.name.value !== undefined && (result[Name] = layer.name.value);
-  layer.numbers !== undefined && (result[Numbers] = layer.numbers.map((n: AsinoNumberReference) => minifyNumberReference(n)));
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
   layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
   layer.group !== undefined && (result[Group] = minifyGroupReference(layer.group));
   layer.rectangle !== undefined && (result[Rectangle] = minifyRectangle(layer.rectangle));
   layer.rectangleId !== undefined && layer.rectangleId !== 'NONE' && (result[RectangleId] = layer.rectangleId)
+  layer.parameters !== undefined && (result[Parameters] = layer.parameters.map((p) => minifyParameter(p)))
+
+  return result;
+}
+
+const minifyParameter = (parameter: AsinoParameter): any => {
+  const result: any = {}
+
+  parameter.colorId !== undefined && parameter.colorId !== 'NONE' && (result[ColorId] = parameter.colorId);
+  parameter.numberId !== undefined && parameter.numberId !== 'NONE' && (result[NumberId] = parameter.numberId);
+  parameter.color !== undefined && (result[Colorr] = minifyColor(parameter.color));
+  parameter.number !== undefined && (result[Numberr] = minifyNumber(parameter.number));
 
   return result;
 }
@@ -1603,17 +1614,27 @@ const unminifyLayer = (layer: any): AsinoLayer => {
 
   layer[Name] !== undefined && (result.name = { value: layer[Name] });
   layer[CollectionId] !== undefined && (result.collectionId = layer[CollectionId]);
-  layer[Colors] !== undefined && (result.colors = layer[Colors].map((c: any) => unminifyColor(c)));
   layer[Circle] !== undefined && (result.circle = unminifyCircleReference(layer[Circle]));
   layer[Interface] !== undefined && (result.interface = unminifyInterface(layer[Interface]));
   layer[InterfaceId] !== undefined && (result.interfaceId = layer[InterfaceId]);
   layer[Line] !== undefined && (result.line = unminifyLineReference(layer[Line]));
-  layer[Numbers] !== undefined && (result.numbers = layer[Numbers].map((n: any) => unminifyNumberReference(n)));
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
   layer[Path] !== undefined && (result.path = unminifyPathReference(layer[Path]));
   layer[Group] !== undefined && (result.group = unminifyGroupReference(layer[Group]));
   layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangle(layer[Rectangle]));
   layer[RectangleId] !== undefined && (result.rectangleId = layer[RectangleId]);
+  layer[Parameters] !== undefined && (result.parameters = layer[Parameters].map((p: any) => unminifyParameter(p)));
+
+  return result;
+}
+
+const unminifyParameter = (parameter: any): AsinoParameter => {
+  const result: AsinoParameter = {};
+
+  parameter[NumberId] !== undefined && (result.numberId = parameter[NumberId]);
+  parameter[ColorId] !== undefined && (result.colorId = parameter[ColorId]);
+  parameter[Colorr] !== undefined && (result.color = unminifyColor(parameter[Colorr]));
+  parameter[Numberr] !== undefined && (result.number = unminifyNumber(parameter[Numberr]));
 
   return result;
 }
@@ -1628,7 +1649,7 @@ const unminifyBoolean = (boolean: any): AsinoBoolean => {
   } else if (Operator in boolean) {
     const result: BooleanFormula = {};
 
-    boolean[Operator] !== undefined && boolean[Operator] !== 'NONE' && (result.operator = boolean[Operator]);
+    boolean[Operator] !== undefined && (result.operator = boolean[Operator]);
     boolean[Booleann] !== undefined && (result.boolean = unminifyBoolean(boolean[Booleann]));
     boolean[ClassOutput] !== undefined && (result.classOutput = unminifyClass(boolean[ClassOutput]));
     boolean[ClassesInputs] !== undefined && (result.classesInputs = boolean[ClassesInputs].map((c: any) => unminifyClass(c)));
@@ -1650,7 +1671,7 @@ const unminifyNumber = (number: any): AsinoNumber => {
   } else if (Operator in number) {
     const result: NumberFormula = {};
 
-    number[Operator] !== undefined && number[Operator] !== 'NONE' && (result.operator = number[Operator]);
+    number[Operator] !== undefined && (result.operator = number[Operator]);
     number[NumberInputs] !== undefined && (result.numberInputs = number[NumberInputs].map((n: any) => n !== undefined ? unminifyNumber(n) : undefined));
 
     return result;
@@ -2007,6 +2028,8 @@ const Commands = 'cds';
 const CollectionId = 'cnid';
 const Collections = 'cns';
 const ColorInputs = 'crits';
+const Colorr = 'cr';
+const ColorId = 'crid';
 const Colors = 'crs';
 const CX = 'cx';
 const CY = 'cy';
@@ -2044,6 +2067,8 @@ const Line = 'le';
 const Lines = 'les';
 
 const Name = 'ne';
+const Numberr = 'nr';
+const NumberId = 'nrid';
 const Numbers = 'nrs';
 const NumberInputs = 'nrits';
 const Numerator = 'nr';
@@ -2061,6 +2086,7 @@ const PaddingBottomHeight = 'pgbmht';
 const PaddingLeftWidth = 'pgltwh';
 const Path = 'ph';
 const Paths = 'phs';
+const Parameters = 'prs';
 
 const R = 'r';
 

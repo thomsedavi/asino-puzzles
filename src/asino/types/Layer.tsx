@@ -1,10 +1,8 @@
 import React from 'react';
 import { AsinoPuzzle } from "../interfaces";
 import { AsinoCircleReference } from "./Circle";
-import { AsinoColorReference } from "./Color";
 import { AsinoInterface } from "./Interface";
 import { AsinoLineReference } from "./Line";
-import { AsinoNumberReference, getNumberReferenceRow } from "./Number";
 import { AsinoPathReference } from "./Path";
 import { AsinoRectangle } from "./Rectangle";
 import Utils from '../../common/utils';
@@ -14,6 +12,7 @@ import { AsinoGroupReference } from './Group';
 import { systemInterfaceDefaults } from '../references/Interfaces';
 import { systemPathDefaults } from '../references/Paths';
 import { systemRectangleDefaults } from '../references/Rectangles';
+import { AsinoParameter, getParameterRow } from './Parameter';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -25,10 +24,9 @@ export interface AsinoLayer {
   circle?: AsinoCircleReference; // draw the circle with these attributes
   path?: AsinoPathReference; // draw the path with these attributes
   group?: AsinoGroupReference; // draw the group with these attributes
-  numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // color parameters
   objectId?: string; // id of the interface of this layer
   collectionId?: string; // id of collection of this layer
+  parameters?: AsinoParameter[]; // number and color parameters
 }
 
 export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string, depth: number, update: (value: AsinoLayer) => void): JSX.Element => {
@@ -148,9 +146,9 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Object</option>
       {puzzle.collections?.filter(c => c.id === layer.collectionId)[0].objects?.map((o, index) => <option key={`${rowKey} Collection ${index}`} value={o.id}>{o.name?.value}</option>)}
     </SelectInline>}
-    {layer.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberReferenceRow(puzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { update({ ...layer, numbers: [...layer.numbers!.slice(0, index), value, ...layer.numbers!.slice(index + 1)] }) }))}
+    {layer.parameters?.map((parameter: AsinoParameter, index: number) => getParameterRow(puzzle, parameter, `${index}`, depth + 1, (parameter: AsinoParameter) => update({ ...layer, parameters: [...(layer.parameters?.slice(0, index) ?? []), parameter, ...(layer.parameters?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>
-      <Button onClick={() => update({ ...layer, numbers: [...(layer.numbers ?? []), {}] })}>Add Number Override</Button>
+      <Button onClick={() => update({ ...layer, parameters: [...(layer.parameters ?? []), {}] })}>Add Parameter</Button>
     </ButtonGroup>
   </div>;
 }

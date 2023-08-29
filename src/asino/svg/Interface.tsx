@@ -83,7 +83,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
         const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
 
         asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.colors]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styleClasses, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styleClasses, selectedObjectId));
         });
       }
     }
