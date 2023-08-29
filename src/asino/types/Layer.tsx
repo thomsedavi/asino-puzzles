@@ -138,7 +138,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Group</option>
       {puzzle.groups?.map((g, index) => <option key={`${rowKey} Id ${index}`} value={g.id}>{g.name?.value ?? ''}</option>)}
     </SelectInline>}
-    {layer.interface !== undefined && <SelectInline value={layer.collectionId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, collectionId: event.target.value !== 'NONE' ? event.target.value : undefined, objectId: undefined })}>
+    {(layer.interface !== undefined || layer.interfaceId !== undefined) && <SelectInline value={layer.collectionId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, collectionId: event.target.value !== 'NONE' ? event.target.value : undefined, objectId: undefined })}>
       <option value='NONE'>Select Collection</option>
       {puzzle.collections?.map((c, index) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
     </SelectInline>}
