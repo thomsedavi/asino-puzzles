@@ -77,9 +77,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   }
 
   const onSelectClassId = (selectedClassId: string) => {
-    const selectedClass = asinoPuzzle.collections
-      ?.filter(collection => collection.id === selectedCollectionId)[0]
-      ?.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
+    const selectedClass = asinoPuzzle.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
 
 
     if (selectedClass !== undefined && selectedClass.id !== undefined) {

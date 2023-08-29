@@ -26,9 +26,9 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
     const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
     const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
-    const class1 = getClassIdFromAsinoClass(object1?.classFixed, new References(puzzle).addClasses([puzzle.classes]), solution);
-    const class2 = getClassIdFromAsinoClass(object2?.classFixed, new References(puzzle).addClasses([puzzle.classes]), solution);
-    const class3 = getClassIdFromAsinoClass(object3?.classFixed, new References(puzzle).addClasses([puzzle.classes]), solution);
+    const class1 = object1?.classFixedId;
+    const class2 = object2?.classFixedId;
+    const class3 = object3?.classFixedId;
 
     return drawInterface(puzzle, [defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId, layer.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], [class1, class2, class3], solution, references.clone().addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addColors([layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]).addObjects([puzzle.objects]), { value: { numerator: 1, denominator: 9 } }, { value: { numerator: 1, denominator: 9 } }, key, styleClasses, selectedObjectId);
   } else if (layer.circle !== undefined) {

@@ -19,7 +19,7 @@ export class References {
   sets: AsinoSetReference[];
   commands: AsinoCommandReference[];
 
-  class: AsinoClass | undefined;
+  classId: string | undefined;
   object: AsinoObject | undefined;
   set: AsinoSet | undefined;
 
@@ -48,7 +48,7 @@ export class References {
     refClone.sets = [...this.sets];
     refClone.commands = [...this.commands];
 
-    refClone.class = this.class;
+    refClone.classId = this.classId;
     refClone.object = this.object;
     refClone.set = this.set;
 
@@ -113,8 +113,8 @@ export class References {
     return this;
   }
 
-  setClass = (asinoClass: AsinoClass | undefined): References => {
-    asinoClass !== undefined && (this.class = asinoClass);
+  setClassId = (classId: string | undefined): References => {
+    classId !== undefined && (this.classId = classId);
 
     return this;
   }

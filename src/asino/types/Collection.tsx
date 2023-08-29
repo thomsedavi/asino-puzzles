@@ -1,15 +1,16 @@
 import React from 'react';
-import { AsinoClassReference, getClassReferenceRow } from './Class';
+import { AsinoClassReference } from './Class';
 import { AsinoObjectReference } from './Object';
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
+import { systemClassDefaults } from '../references/Classes';
 
 export interface AsinoCollection {
   id?: string; // id of this collection
   name?: { value?: string, editedValue?: string }; // name of this collection
-  classes?: AsinoClassReference[]; // classes
+  classes?: { classId?: string }[]; // classes
   objects?: { objectId?: string }[]; // objects
 }
 
@@ -35,14 +36,30 @@ export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollectio
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {collection.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...collection, name: { ...collection.name, editedValue: collection.name?.value } })}>{collection.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {collection.name?.editedValue !== undefined && <InputInline block autoFocus value={collection.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...collection, name: { ...collection.name, editedValue: event.target.value } })} />}
-    {collection.classes?.map((classReference: AsinoClassReference, index: number) => getClassReferenceRow(puzzle, classReference, `${index}`, 0, (value: AsinoCollection) => { update({ ...collection, classes: [...collection.classes!.slice(0, index), value, ...collection.classes!.slice(index + 1)] }) }))}
+    {collection.classes?.map((asinoClass: { classId?: string }, index: number) => getClassRow(puzzle, asinoClass, `${rowKey}class${index}`, (classId: string) => update({ ...collection, classes: [...(collection.classes?.slice(0, index) ?? []), { ...asinoClass, classId: classId }, ...(collection.classes?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>
-      <Button onClick={() => update({ ...collection, classes: [...(collection.classes ?? []), { id: Utils.getRandomId(collection.classes?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Class ${(collection.classes?.length ?? 0) + 1}` } }] })}>Add Class</Button>
+      <Button onClick={() => update({ ...collection, classes: [...(collection.classes ?? []), { classId: 'NONE' }] })}>Add Class</Button>
     </ButtonGroup>
-    {collection.objects?.map((object: { objectId?: string }, index: number) => getObjectRow(puzzle, object, `${rowKey}object${index}`, (objectId: string) => update({ ...collection, objects: [...(collection.objects?.slice(0, index) ?? []), {...object, objectId: objectId}, ...(collection.objects?.slice(index + 1) ?? [])] })))}
+    {collection.objects?.map((object: { objectId?: string }, index: number) => getObjectRow(puzzle, object, `${rowKey}object${index}`, (objectId: string) => update({ ...collection, objects: [...(collection.objects?.slice(0, index) ?? []), { ...object, objectId: objectId }, ...(collection.objects?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>
       <Button onClick={() => update({ ...collection, objects: [...(collection.objects ?? []), { objectId: 'NONE' }] })}>Add Object</Button>
     </ButtonGroup>
+  </div>;
+}
+
+export const getClassRow = (puzzle: AsinoPuzzle, asinoClass: { classId?: string }, key: string, update: (classId: string) => void): JSX.Element => {
+  const rowKey = `class${key}`;
+
+  return <div key={rowKey}>
+    <SelectInline value={asinoClass.classId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
+      <option value='NONE'>Select Class</option>
+      {puzzle.classes !== undefined && puzzle.classes.length !== 0 && <optgroup label="Custom Classes">
+        {puzzle.classes?.map((asinoClassReference: AsinoClassReference, index: number) => <option key={`${rowKey} Class ${index}`} value={asinoClassReference.id}>{asinoClassReference.name?.value}</option>)}
+      </optgroup>}
+      <optgroup label="System Defaults">
+        {systemClassDefaults.map((c, index) => <option key={`${rowKey} Default Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      </optgroup>
+    </SelectInline>
   </div>;
 }
 

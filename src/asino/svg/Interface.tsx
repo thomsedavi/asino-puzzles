@@ -75,7 +75,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
 
     if (interfaceClassId !== undefined) {
-      const selectedClassReference = collection.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+      const selectedClassReference = puzzle.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
       const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 

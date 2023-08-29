@@ -392,7 +392,7 @@ export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, refe
   return result;
 }
 
-export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | undefined, references: References, solution: Solution): string | undefined => {
+export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | string | undefined, references: References, solution: Solution): string | undefined => {
   let result: string | undefined = undefined;
 
   if (asinoClass === undefined) {
@@ -402,7 +402,7 @@ export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | undefined, ref
 
     references.classes.forEach(referenceClass => {
       if (referenceClass.id === asinoClass) {
-        referenceClass.value !== undefined && typeof referenceClass.value === 'string' && (result = getClassIdFromAsinoClass(referenceClass.value, references.clone(), solution));
+        referenceClass.class !== undefined && typeof referenceClass.class === 'string' && (result = getClassIdFromAsinoClass(referenceClass.class, references.clone(), solution));
       }
     });
   } else if (isClassFormula(asinoClass)) {
@@ -528,7 +528,7 @@ export const getObjectFromAsinoObject = (asinoObject: AsinoObject | undefined, r
   return result;
 }
 
-export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, references: References, solution: Solution): Class | undefined => {
+export const getClassFromAsinoClass = (asinoClass: AsinoClass | string | undefined, references: References, solution: Solution): Class | undefined => {
   let result: Class | undefined = undefined;
 
   if (asinoClass === undefined) {
@@ -536,13 +536,13 @@ export const getClassFromAsinoClass = (asinoClass: AsinoClass | undefined, refer
   } else if (typeof asinoClass === 'string') {
     systemClassDefaults.forEach(classReference => {
       if (classReference.id === asinoClass) {
-        result = getClassFromAsinoClass(classReference.value, references.clone(), solution);
+        result = getClassFromAsinoClass(classReference.class, references.clone(), solution);
       }
     });
 
     references.classes.forEach(classReference => {
       if (classReference.id === asinoClass) {
-        result = getClassFromAsinoClass(classReference.value, references.clone(), solution);
+        result = getClassFromAsinoClass(classReference.class, references.clone(), solution);
       }
     });
   } else if (isClassClass(asinoClass)) {
@@ -656,9 +656,9 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
       const fixedObject = getObjectFromAsinoObject(references.object, references.clone());
       const solutionObject = solution.selectedClasses?.filter(selectedClass => selectedClass.objectId === getObjectIdFromAsinoObject(references.object, references.clone()))[0];
 
-      const asinoClass = getClassIdFromAsinoClass(fixedObject?.classFixed ?? solutionObject?.classId, references.clone(), solution);
-      const newReferences = references.clone().setClass(asinoClass);
-      typeof formula.classOutput === 'string' && newReferences.addClasses([[{ id: formula.classOutput, value: asinoClass }]]);
+      const asinoClassId = fixedObject?.classFixedId ?? solutionObject?.classId;
+      const newReferences = references.clone().setClassId(asinoClassId);
+      typeof formula.classOutput === 'string' && newReferences.addClasses([[{ id: formula.classOutput, classId: asinoClassId }]]);
 
       result = getBooleanFromAsinoBoolean(formula.boolean, newReferences, solution);
     } else if (formula.operator === 'IS_EACH_CLASS_DIFFERENT') {
@@ -764,8 +764,8 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
 
   if (asinoClass === undefined) {
     // do nothing
-  } else if (asinoClass.value) {
-    result = asinoClass.value;
+  } else if (asinoClass.class !== undefined) {
+    result = asinoClass.class;
   } else {
     references.classes.forEach(classReference => {
       if (classReference.id === asinoClass.id) {
@@ -1053,7 +1053,8 @@ const minifyClassReference = (asinoClass: AsinoClassReference): any => {
 
   asinoClass.id !== undefined && (result[Id] = asinoClass.id);
   asinoClass.name !== undefined && asinoClass.name.value !== undefined && (result[Name] = asinoClass.name.value);
-  asinoClass.value !== undefined && (result[Value] = minifyClass(asinoClass.value));
+  asinoClass.class !== undefined && (result[Classs] = minifyClass(asinoClass.class));
+  asinoClass.classId !== undefined && asinoClass.classId !== 'NONE' && (result[ClassId] = asinoClass.classId);
 
   return result;
 }
@@ -1074,7 +1075,7 @@ const minifyObject = (object: AsinoObject): any => {
   } else if (isObjectObject(object)) {
     const result: any = {};
 
-    object.classFixed !== undefined && (result[ClassFixed] = minifyClass(object.classFixed));
+    object.classFixedId !== undefined && (result[ClassFixedId] = object.classFixedId);
 
     return result;
   } else {
@@ -1613,8 +1614,8 @@ const unminifyCollection = (collection: any): AsinoCollection => {
   return result;
 }
 
-const unminifyCollectionObject = (object: any): {objectId?: string} => {
-  const result: {objectId?: string} = {}
+const unminifyCollectionObject = (object: any): { objectId?: string } => {
+  const result: { objectId?: string } = {}
 
   object[ObjectId] !== undefined && (result.objectId = object[ObjectId]);
 
@@ -1753,15 +1754,14 @@ const unminifyClassReference = (asinoClass: any): AsinoClassReference => {
 
   asinoClass[Id] !== undefined && (result.id = asinoClass[Id]);
   asinoClass[Name] !== undefined && (result.name = { value: asinoClass[Name] });
-  asinoClass[Value] !== undefined && (result.value = unminifyClass(asinoClass[Value]));
+  asinoClass[Classs] !== undefined && (result.class = unminifyClass(asinoClass[Classs]));
+  asinoClass[ClassId] !== undefined && (result.classId = asinoClass[ClassId]);
 
   return result;
 }
 
 const unminifyClass = (asinoClass: any): AsinoClass => {
-  if (typeof asinoClass === 'string') {
-    return asinoClass;
-  } else if (Operator in asinoClass) {
+  if (Operator in asinoClass) {
     const result: ClassFormula = {};
 
     asinoClass[Operator] !== undefined && asinoClass[Operator] !== 'NONE' && (result.operator = asinoClass[Operator]);
@@ -1796,10 +1796,10 @@ const unminifySet = (asinoSet: any): AsinoSet => {
 const unminifyObject = (asinoObject: any): AsinoObject => {
   if (typeof asinoObject === 'string') {
     return asinoObject;
-  } else if (ClassFixed in asinoObject) {
+  } else if (ClassFixedId in asinoObject) {
     const result: Object = {};
 
-    asinoObject[ClassFixed] !== undefined && (result.classFixed = unminifyClass(asinoObject[ClassFixed]));
+    asinoObject[ClassFixedId] !== undefined && (result.classFixedId = asinoObject[ClassFixedId]);
 
     return result;
   } else {
@@ -2031,8 +2031,10 @@ const BorderLeftFill = 'brltfl';
 const C = 'c';
 const Circle = 'ce';
 const Circles = 'ces';
+const Classs = 'cs';
+const ClassId = 'cdid';
 const ClassOutput = 'csot';
-const ClassFixed = 'csfd';
+const ClassFixedId = 'csfdid';
 const ClassesInputs = 'cssits';
 const Classes = 'css';
 const Commandd = 'cd';

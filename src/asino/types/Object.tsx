@@ -9,7 +9,7 @@ import { AsinoCollection } from './Collection';
 export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 
 export type Object = {
-  classFixed?: AsinoClass; // fixed class of this object
+  classFixedId?: string; // fixed class of this object
 }
 
 export type AsinoObject = Object | string | AsinoObjectReference;
@@ -40,8 +40,8 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
 
   if (objectReference.value !== undefined) {
     if (isObjectObject(objectReference.value)) {
-      if (typeof objectReference.value.classFixed === 'string') {
-        selectValue = objectReference.value.classFixed;
+      if (typeof objectReference.value.classFixedId === 'string') {
+        selectValue = objectReference.value.classFixedId;
       }
     }
   }
@@ -52,7 +52,7 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
     if (event.target.value === 'NONE') {
       if (objectReferenceUpdate.value !== undefined) {
         if (isObjectObject(objectReferenceUpdate.value)) {
-          if (typeof objectReferenceUpdate.value.classFixed === 'string') {
+          if (typeof objectReferenceUpdate.value.classFixedId === 'string') {
             delete objectReferenceUpdate.value;
             update(objectReferenceUpdate);
           }
@@ -60,11 +60,11 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
       }
     } else {
       if (objectReferenceUpdate.value === undefined) {
-        objectReferenceUpdate.value = { classFixed: event.target.value };
+        objectReferenceUpdate.value = { classFixedId: event.target.value };
         update(objectReferenceUpdate);
       } else if (isObjectObject(objectReferenceUpdate.value)) {
-        if (typeof objectReferenceUpdate.value.classFixed === 'string') {
-          objectReferenceUpdate.value.classFixed = event.target.value;
+        if (typeof objectReferenceUpdate.value.classFixedId === 'string') {
+          objectReferenceUpdate.value.classFixedId = event.target.value;
           update(objectReferenceUpdate);
         }
       }

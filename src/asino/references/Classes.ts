@@ -4,7 +4,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'e-af',
     name: { value: 'Curve Right To Bottom And Left To Top' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'f-ee' }
@@ -18,7 +18,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'b-dd',
     name: { value: 'Curve Right To Bottom' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'f-ee' }
@@ -29,7 +29,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'e-be',
     name: { value: 'Curve Left To Top' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'f-eb' }
@@ -40,7 +40,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'd-ab',
     name: { value: 'Curve Top To Right And Bottom To Left' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'b-ff' }
@@ -54,7 +54,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'e-cd',
     name: { value: 'Curve Top To Bottom And Right To Left' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'c-fb' }
@@ -68,7 +68,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'e-da',
     name: { value: 'Curve Right To Left' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'c-fb' }
@@ -79,7 +79,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'a-cf',
     name: { value: 'Curve Top To Right' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'b-ff' }
@@ -90,7 +90,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'a-df',
     name: { value: 'Curve Bottom To Left' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'b-bc' }
@@ -101,7 +101,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
   {
     id: 'd-ce',
     name: { value: 'Curve Top To Bottom' },
-    value: {
+    class: {
       layers: [
         {
           path: { id: 'a-ee' }
