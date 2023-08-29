@@ -1,7 +1,7 @@
 import { AsinoPuzzle } from "./interfaces";
 import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBooleanReference } from "./types/Boolean";
-import { AsinoClass, AsinoClassReference } from "./types/Class";
+import { AsinoClassReference } from "./types/Class";
 import { AsinoColorReference } from "./types/Color";
 import { AsinoNumberReference } from "./types/Number";
 import { AsinoObject, AsinoObjectReference } from "./types/Object";

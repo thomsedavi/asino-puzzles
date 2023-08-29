@@ -8,7 +8,7 @@ import { drawPath } from "./Path";
 import { Number } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
-import { getClassIdFromAsinoClass, getObjectFromAsinoObject } from "../utils";
+import { getObjectFromAsinoObject } from "../utils";
 import { drawGroup } from "./Group";
 import { systemInterfaceDefaults } from "../references/Interfaces";
 import { systemNumberDefaults } from "../references/Numbers";

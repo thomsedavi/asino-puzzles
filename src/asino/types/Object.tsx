@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsinoClass, AsinoClassReference } from "./Class";
+import { AsinoClassReference } from "./Class";
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
