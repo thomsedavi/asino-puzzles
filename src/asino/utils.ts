@@ -766,6 +766,18 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
     // do nothing
   } else if (asinoClass.class !== undefined) {
     result = asinoClass.class;
+  } else if (asinoClass.classId !== undefined) {
+    systemClassDefaults.forEach(classReference => {
+      if (classReference.id === asinoClass.classId) {
+        result = getClassFromClassReference(classReference, references.clone());
+      }
+    });
+
+    references.classes.forEach(classReference => {
+      if (classReference.id === asinoClass.classId) {
+        result = getClassFromClassReference(classReference, references.clone());
+      }
+    });
   } else {
     references.classes.forEach(classReference => {
       if (classReference.id === asinoClass.id) {

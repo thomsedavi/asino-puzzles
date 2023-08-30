@@ -8,6 +8,7 @@ import { AsinoNumberReference } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";
+import { systemClassDefaults } from "../references/Classes";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
@@ -75,7 +76,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
 
     if (interfaceClassId !== undefined) {
-      const selectedClassReference = puzzle.classes?.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+      const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
       const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 

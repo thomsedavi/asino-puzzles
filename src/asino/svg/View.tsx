@@ -26,6 +26,7 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
     const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
     const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
+
     const class1 = object1?.classFixedId;
     const class2 = object2?.classFixedId;
     const class3 = object3?.classFixedId;

@@ -77,10 +77,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   }
 
   const onSelectClassId = (selectedClassId: string) => {
-    const selectedClass = asinoPuzzle.classes?.filter(asinoClass => asinoClass.id === selectedClassId)[0];
-
-
-    if (selectedClass !== undefined && selectedClass.id !== undefined) {
+    if (selectedClassId !== undefined) {
       const currentSolution = { ...solution };
 
       if (currentSolution.selectedClasses === undefined) {
@@ -91,9 +88,9 @@ const Asino = (props: AsinoProps): JSX.Element => {
 
       if (selectedObjectId !== undefined) {
         if (currentObject === undefined) {
-          currentSolution.selectedClasses.push({ objectId: selectedObjectId, classId: selectedClass.id });
+          currentSolution.selectedClasses.push({ objectId: selectedObjectId, classId: selectedClassId });
         } else {
-          currentObject.classId = selectedClass.id;
+          currentObject.classId = selectedClassId;
         }
 
         setSolution(currentSolution);
