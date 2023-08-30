@@ -1,4 +1,4 @@
-import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceColumnIndex, InterfaceHeight, InterfaceRowIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth } from "../consts";
+import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth } from "../consts";
 import { AsinoNumberReference } from "../types/Number";
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
@@ -99,7 +99,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
             {
               operator: '-',
               numberInputs: [
-                InterfaceRowIndex,
+                InterfaceColumnIndex,
                 1
               ]
             },
@@ -118,7 +118,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
                     {
                       operator: '-',
                       numberInputs: [
-                        InterfaceRowIndex,
+                        InterfaceColumnIndex,
                         1
                       ]
                     },
@@ -145,7 +145,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
             {
               operator: '-',
               numberInputs: [
-                InterfaceColumnIndex,
+                InterfaceRowIndex,
                 1
               ]
             },
@@ -164,7 +164,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
                     {
                       operator: '-',
                       numberInputs: [
-                        InterfaceColumnIndex,
+                        InterfaceRowIndex,
                         1
                       ]
                     },
@@ -390,13 +390,13 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     value: 1
   },
   {
-    id: InterfaceRowIndex,
-    name: { value: 'Interface Row Index' },
+    id: InterfaceColumnIndex,
+    name: { value: 'Interface Column Index' },
     value: 1
   },
   {
-    id: InterfaceColumnIndex,
-    name: { value: 'Interface Column Index' },
+    id: InterfaceRowIndex,
+    name: { value: 'Interface Row Index' },
     value: 1
   }
 ];
