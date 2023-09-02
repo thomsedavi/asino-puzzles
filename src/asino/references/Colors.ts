@@ -5,7 +5,7 @@ export const systemColorDefaults: AsinoColorReference[] = [
   {
     id: Color,
     name: { value: 'Color' },
-    value: {
+    color: {
       hue: HueAzure,
       hueDark: HuePink,
       saturation: { numerator: 1, denominator: 4 },
@@ -16,42 +16,42 @@ export const systemColorDefaults: AsinoColorReference[] = [
   {
     id: BorderColor,
     name: { value: 'Interface Border Color' },
-    value: Color
+    color: Color
   },
   {
     id: InterfaceBorderTopColor,
     name: { value: 'Interface Border Top Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: InterfaceBorderRightColor,
     name: { value: 'Interface Border Right Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: InterfaceBorderBottomColor,
     name: { value: 'Interface Border Bottom Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: InterfaceBorderLeftColor,
     name: { value: 'Interface Border Left Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: OuterHorizontalDivisionBorderColor,
     name: { value: 'Outer Horizontal Division Border Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: OuterVerticalDivisionBorderColor,
     name: { value: 'Outer Vertical Division Border Color' },
-    value: BorderColor
+    color: BorderColor
   },
   {
     id: InputBackground,
     name: { value: 'Input Background' },
-    value: {
+    color: {
       red: 1,
       green: 1,
       blue: 1,
@@ -63,12 +63,12 @@ export const systemColorDefaults: AsinoColorReference[] = [
   {
     id: InterfaceColor,
     name: { value: 'Interface Color' },
-    value: InputBackground
+    color: InputBackground
   },
   {
     id: InterfaceSelectedColor,
     name: { value: 'Interface Selected Color' },
-    value: {
+    color: {
       hue: HueChartreuse,
       hueDark: HuePink
     }

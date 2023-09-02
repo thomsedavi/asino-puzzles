@@ -19,37 +19,37 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
   if (layer.line !== undefined) {
     const layerLine = puzzle.lines?.filter(line => line.id === layer.line?.id)[0];
 
-    return drawLine([layerLine, layer.line], references.clone().addNumbers([puzzle.numbers]).addColors([layerLine?.colors, layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawLine([layerLine, layer.line], references.clone().addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layerLine?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.interfaceId !== undefined) {
     const defaultLayerInterface = systemInterfaceDefaults.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
     const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
-    const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
-    const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
-    const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
+    const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
+    const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
+    const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
 
     const class1 = object1?.classFixedId;
     const class2 = object2?.classFixedId;
     const class3 = object3?.classFixedId;
 
-    return drawInterface(puzzle, [defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId, layer.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], [class1, class2, class3], solution, references.clone().addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addColors([layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]).addObjects([puzzle.objects]), { value: { numerator: 1, denominator: 9 } }, { value: { numerator: 1, denominator: 9 } }, key, styleClasses, selectedObjectId);
+    return drawInterface(puzzle, [defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], [class1, class2, class3], solution, references.clone().addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addClasses([puzzle.classes]).addObjects([puzzle.objects]), { number: { numerator: 1, denominator: 9 } }, { number: { numerator: 1, denominator: 9 } }, key, styleClasses, selectedObjectId);
   } else if (layer.circle !== undefined) {
     const layerCircle = puzzle.circles?.filter(circle => circle.id === layer.circle?.id)[0];
 
-    return drawCircle([layerCircle, layer.circle], references.clone().addNumbers([puzzle.numbers]).addColors([layerCircle?.colors, layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawCircle([layerCircle, layer.circle], references.clone().addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layerCircle?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.rectangleId !== undefined) {
     const defaultLayerRectangle = systemRectangleDefaults.filter(rectangle => rectangle.id === layer.rectangleId)[0];
     const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangleId)[0];
 
-    return drawRectangle([defaultLayerRectangle, layerRectangle], references.clone().addNumbers([systemNumberDefaults, defaultLayerRectangle?.numbers, layerRectangle?.numbers, puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addColors([layerRectangle?.colors, layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, key, styleClasses);
+    return drawRectangle([defaultLayerRectangle, layerRectangle], references.clone().addParameters([systemNumberDefaults.map(n => { return { numberId: n.id, number: n.number } }), defaultLayerRectangle?.parameters, layerRectangle?.parameters, puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters, layerRectangle?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, key, styleClasses);
   } else if (layer.path !== undefined) {
     const defaultLayerPath = systemPathDefaults.filter(path => path.id === layer.path?.id)[0];
     const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];
 
-    return drawPath([defaultLayerPath, layerPath, layer.path], references.clone().addNumbers([systemNumberDefaults, defaultLayerPath?.numbers, layerPath?.numbers, puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addColors([layerPath?.colors, layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]), solution, { value: { numerator: 1, denominator: 200 } }, scale, key, styleClasses);
+    return drawPath([defaultLayerPath, layerPath, layer.path], references.clone().addParameters([systemNumberDefaults.map(n => { return { numberId: n.id, number: n.number } }), defaultLayerPath?.parameters, layerPath?.parameters, puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters, layerPath?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, scale, key, styleClasses);
   } else if (layer.group !== undefined) {
     const layerGroup = puzzle.groups?.filter(group => group.id === layer.group?.id)[0];
 
-    return drawGroup([layerGroup, layer.group], references.clone().addNumbers([puzzle.numbers]).addColors([layerGroup?.colors, layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).addClasses([puzzle.classes]), solution, key);
+    return drawGroup([layerGroup, layer.group], references.clone().addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layerGroup?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, key);
   } else {
     return undefined;
   }
@@ -60,18 +60,18 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
   const styleClasses: StyleClass[] = [];
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
-    layers.push(drawLayer(puzzle, solution, layer, new References(puzzle).addBooleans([puzzle.booleans]).addColors([puzzle.colors]).addSets([puzzle.sets]).addClasses([puzzle.classes]), 1, `layer${layerIndex}`, styleClasses, selectedObjectId));
+    layers.push(drawLayer(puzzle, solution, layer, new References(puzzle).addBooleans([puzzle.booleans]).addParameters([puzzle.colors?.map(c => { return { colorId: c.id, color: c.color } })]).addSets([puzzle.sets]).addClasses([puzzle.classes]), 1, `layer${layerIndex}`, styleClasses, selectedObjectId));
   });
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
     if (layer.interfaceId !== undefined) {
       const defaultLayerInterface = systemInterfaceDefaults.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
       const layerInterface = puzzle.interfaces?.filter(asinoInterface => asinoInterface.id === layer.interfaceId)[0];
-      const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
-      const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
-      const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]).addObjects([puzzle.objects]));
+      const object1 = getObjectFromAsinoObject(defaultLayerInterface?.interface?.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
+      const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
+      const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]).addObjects([puzzle.objects]));
 
-      object1 === undefined && object2 === undefined && object3 === undefined && layers.push(drawInterfaceInteractive([defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId, layer.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], new References(puzzle).addNumbers([puzzle.numbers, layer?.parameters?.map(p => { return { id: p.numberId, value: p.number } })]), { value: { numerator: 1, denominator: 9 } }, { value: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+      object1 === undefined && object2 === undefined && object3 === undefined && layers.push(drawInterfaceInteractive([defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], new References(puzzle).addParameters([puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }), layer?.parameters]), { number: { numerator: 1, denominator: 9 } }, { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     }
   });
 

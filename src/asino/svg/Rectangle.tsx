@@ -10,10 +10,10 @@ import Utils from "../../common/utils";
 export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
   let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), 'rectangle', StrokeWidth, defaultStrokeWidth);
 
-  const x = getNumberFromLayer(rectangles, references.clone(), 'rectangle', X, { value: 0 });
-  const y = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Y, { value: 0 });
-  const width = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Width, { value: 0 });
-  const height = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Height, { value: 0 });
+  const x = getNumberFromLayer(rectangles, references.clone(), 'rectangle', X, { number: 0 });
+  const y = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Y, { number: 0 });
+  const width = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Width, { number: 0 });
+  const height = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Height, { number: 0 });
 
   const fill = getColorFromLayer(rectangles, references.clone(), solution, 'rectangle', Fill);
   const stroke = getColorFromLayer(rectangles, references.clone(), solution, 'rectangle', Stroke);

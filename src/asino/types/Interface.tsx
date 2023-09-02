@@ -1,11 +1,12 @@
 import React from 'react';
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingBottomHeight, PaddingRightWidth, PaddingLeftWidth, AlignmentHorizontal, AlignmentVertical } from "../consts";
 import { AsinoPuzzle } from "../interfaces";
-import { AsinoColor, AsinoColorReference } from "./Color";
-import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
+import { AsinoColor } from "./Color";
+import { AsinoNumber, getNumberRow } from "./Number";
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
+import { AsinoParameter } from './Parameter';
 
 export type AsinoInterface = {
   objectId?: string; // id of the object for this interface
@@ -38,8 +39,7 @@ export type AsinoInterfaceReference = {
   name?: { value?: string, editedValue?: string }; // name of this interface
   interface?: AsinoInterface; // value of this interface
   interfaceId?: string; // refer to the interface with this id
-  numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // number colors
+  parameters?: AsinoParameter[]; // number and color parameters
 }
 
 export const getInterfaceReferenceRow = (puzzle: AsinoPuzzle, interaceReference: AsinoInterfaceReference, key: string, depth: number, update: (value: AsinoInterfaceReference) => void): JSX.Element => {

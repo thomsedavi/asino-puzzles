@@ -13,6 +13,7 @@ import { systemInterfaceDefaults } from '../references/Interfaces';
 import { systemPathDefaults } from '../references/Paths';
 import { systemRectangleDefaults } from '../references/Rectangles';
 import { AsinoParameter, getParameterRow } from './Parameter';
+import { AsinoObjectReference } from './Object';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
@@ -25,7 +26,6 @@ export interface AsinoLayer {
   path?: AsinoPathReference; // draw the path with these attributes
   group?: AsinoGroupReference; // draw the group with these attributes
   objectId?: string; // id of the interface of this layer
-  collectionId?: string; // id of collection of this layer
   parameters?: AsinoParameter[]; // number and color parameters
 }
 
@@ -138,13 +138,9 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Group</option>
       {puzzle.groups?.map((g, index) => <option key={`${rowKey} Id ${index}`} value={g.id}>{g.name?.value ?? ''}</option>)}
     </SelectInline>}
-    {(layer.interface !== undefined || layer.interfaceId !== undefined) && <SelectInline value={layer.collectionId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, collectionId: event.target.value !== 'NONE' ? event.target.value : undefined, objectId: undefined })}>
-      <option value='NONE'>Select Collection</option>
-      {puzzle.collections?.map((c, index) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
-    </SelectInline>}
-    {layer.collectionId !== undefined && <SelectInline value={layer.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, objectId: event.target.value !== 'NONE' ? event.target.value : undefined })}>
+    {(layer.interface !== undefined || layer.interfaceId !== undefined) && <SelectInline value={layer.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, objectId: event.target.value !== 'NONE' ? event.target.value : undefined })}>
       <option value='NONE'>Select Object</option>
-      {puzzle.collections?.filter(collection => collection.id === layer.collectionId)[0]?.objects?.filter(object => (object.objectId !== undefined && object.objectId !== 'NONE')).map((object: {objectId?: string}, index: number) => <option key={`${rowKey} Object ${index}`} value={object.objectId}>{puzzle.objects?.filter(puzzleObject => puzzleObject.id === object.objectId)[0].name?.value}</option>)}
+      {puzzle.objects?.map((object: AsinoObjectReference, index: number) => <option key={`${rowKey} Object ${index}`} value={object.id}>{object.name?.value}</option>)}
     </SelectInline>}
     {layer.parameters?.map((parameter: AsinoParameter, index: number) => getParameterRow(puzzle, parameter, `${index}`, depth + 1, (parameter: AsinoParameter) => update({ ...layer, parameters: [...(layer.parameters?.slice(0, index) ?? []), parameter, ...(layer.parameters?.slice(index + 1) ?? [])] })))}
     <ButtonGroup>

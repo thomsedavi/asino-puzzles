@@ -40,7 +40,7 @@ export const getParameterRow = (puzzle: AsinoPuzzle, parameter: AsinoParameter, 
       <option value='COLOR'>Color</option>
     </SelectInline>
     {parameter.numberId !== undefined && <>
-      <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={parameter.numberId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...parameter, numberId: event.target.value, number: systemNumberDefaults.filter(n => n.id === event.target.value)[0].value })}>
+      <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={parameter.numberId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...parameter, numberId: event.target.value, number: systemNumberDefaults.filter(n => n.id === event.target.value)[0].number })}>
         <option value='NONE'>Select Number</option>
         {puzzle.numbers !== undefined && puzzle.numbers.length !== 0 && <optgroup label="Custom Numbers">
           {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}

@@ -8,14 +8,14 @@ import { Solution, StyleClass } from "../interfaces";
 import Utils from "../../common/utils";
 
 export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
-  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'value', StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'line', StrokeWidth, defaultStrokeWidth);
 
-  const x1 = getNumberFromLayer(lines, references.clone(), 'value', X1, { value: 0 });
-  const y1 = getNumberFromLayer(lines, references.clone(), 'value', Y1, { value: 0 });
-  const x2 = getNumberFromLayer(lines, references.clone(), 'value', X2, { value: 0 });
-  const y2 = getNumberFromLayer(lines, references.clone(), 'value', Y2, { value: 0 });
+  const x1 = getNumberFromLayer(lines, references.clone(), 'line', X1, { number: 0 });
+  const y1 = getNumberFromLayer(lines, references.clone(), 'line', Y1, { number: 0 });
+  const x2 = getNumberFromLayer(lines, references.clone(), 'line', X2, { number: 0 });
+  const y2 = getNumberFromLayer(lines, references.clone(), 'line', Y2, { number: 0 });
 
-  const stroke = getColorFromLayer(lines, references.clone(), solution, 'value', Stroke);
+  const stroke = getColorFromLayer(lines, references.clone(), solution, 'line', Stroke);
 
   const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);
 

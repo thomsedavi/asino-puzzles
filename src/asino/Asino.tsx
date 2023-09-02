@@ -233,7 +233,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
       {mode !== 'read' && isEditable && selectedTab === 'sets' && <div>
         {asinoPuzzle.sets?.map((setReference: AsinoSetReference, index: number) => getSetReferenceRow(asinoPuzzle, setReference, `${index}`, 0, (value: AsinoSetReference) => { setAsinoPuzzle({ ...asinoPuzzle, sets: [...asinoPuzzle.sets!.slice(0, index), value, ...asinoPuzzle.sets!.slice(index + 1)] }) }))}
         <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, sets: [...(asinoPuzzle.sets ?? []), { id: Utils.getRandomId(asinoPuzzle.sets?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Set ${(asinoPuzzle.sets?.length ?? 0) + 1}` }, value: { objects: [] } }] })}>Add Set</Button>
+          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, sets: [...(asinoPuzzle.sets ?? []), { id: Utils.getRandomId(asinoPuzzle.sets?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Set ${(asinoPuzzle.sets?.length ?? 0) + 1}` }, set: { objects: [] } }] })}>Add Set</Button>
         </ButtonGroup>
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'interfaces' && <div>

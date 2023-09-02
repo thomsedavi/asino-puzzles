@@ -1,11 +1,12 @@
 import React from 'react';
 import { cx as CX, cy as CY, fill as Fill, r as R, stroke as Stroke, strokeWidth as StrokeWidth } from "../consts";
-import { AsinoColor, AsinoColorReference } from "./Color";
-import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
+import { AsinoColor } from "./Color";
+import { AsinoNumber, getNumberRow } from "./Number";
 import { AsinoPuzzle } from '../interfaces';
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
 import Utils from '../../common/utils';
+import { AsinoParameter } from './Parameter';
 
 export type AsinoCircle = {
   [CX]?: AsinoNumber; // if this exists, draw cx here
@@ -19,9 +20,8 @@ export type AsinoCircle = {
 export type AsinoCircleReference = {
   id?: string; // id of this circle
   name?: { value?: string, editedValue?: string }; // name of this circle
-  value?: AsinoCircle; // value of this circle
-  numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // number colors
+  circle?: AsinoCircle; // value of this circle
+  parameters?: AsinoParameter[]; // number and color parameters
 }
 
 export const getCircleReferenceRow = (puzzle: AsinoPuzzle, circleReference: AsinoCircleReference, key: string, depth: number, update: (value: AsinoCircleReference) => void): JSX.Element => {
@@ -46,8 +46,8 @@ export const getCircleReferenceRow = (puzzle: AsinoPuzzle, circleReference: Asin
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {circleReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...circleReference, name: { ...circleReference.name, editedValue: circleReference.name?.value } })}>{circleReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {circleReference.name?.editedValue !== undefined && <InputInline block autoFocus value={circleReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...circleReference, name: { ...circleReference.name, editedValue: event.target.value } })} />}
-    {getNumberRow(puzzle, circleReference.value?.[CX], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, value: { ...circleReference.value, [CX]: value ?? 1 } }))}
-    {getNumberRow(puzzle, circleReference.value?.[CY], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, value: { ...circleReference.value, [CY]: value ?? 1 } }))}
-    {getNumberRow(puzzle, circleReference.value?.[R], `${rowKey}width`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, value: { ...circleReference.value, [R]: value ?? 1 } }))}
+    {getNumberRow(puzzle, circleReference.circle?.[CX], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, circle: { ...circleReference.circle, [CX]: value ?? 1 } }))}
+    {getNumberRow(puzzle, circleReference.circle?.[CY], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, circle: { ...circleReference.circle, [CY]: value ?? 1 } }))}
+    {getNumberRow(puzzle, circleReference.circle?.[R], `${rowKey}width`, depth + 1, (value: AsinoNumber | undefined) => update({ ...circleReference, circle: { ...circleReference.circle, [R]: value ?? 1 } }))}
   </div>;
 }

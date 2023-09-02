@@ -28,15 +28,15 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     references.setFixedClassId(fixedClassId);
   });
 
-  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { value: 0 });
+  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { number: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { number: 0 });
   const width = getNumberFromLayer(interfaces, references.clone(), 'interface', Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(interfaces, references.clone(), 'interface', Height, defaultInterfaceHeightValue);
 
-  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderTopHeight, { value: 0 });
-  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderRightWidth, { value: 0 });
-  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderBottomHeight, { value: 0 });
-  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderLeftWidth, { value: 0 });
+  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderTopHeight, { number: 0 });
+  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderRightWidth, { number: 0 });
+  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderBottomHeight, { number: 0 });
+  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderLeftWidth, { number: 0 });
 
   const fill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
   const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderTopFill);
@@ -84,7 +84,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
         const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
 
         asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addColors([layer?.parameters?.map(p => { return { id: p.colorId, value: p.color } })]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styleClasses, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styleClasses, selectedObjectId));
         });
       }
     }
@@ -131,8 +131,8 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 }
 
 export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { value: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { value: 0 });
+  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { number: 0 });
+  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { number: 0 });
   const width = getNumberFromLayer(interfaces, references.clone(), 'interface', Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(interfaces, references.clone(), 'interface', Height, defaultInterfaceHeightValue);
 

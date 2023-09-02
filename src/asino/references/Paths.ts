@@ -5,7 +5,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'f-ee',
     name: { value: 'Curve Right To Bottom' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',
@@ -237,7 +237,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'f-eb',
     name: { value: 'Curve Left To Top' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',
@@ -445,7 +445,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'b-ff',
     name: { value: 'Curve Top To Right' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',
@@ -665,7 +665,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'c-fb',
     name: { value: 'Curve Right To Left' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',
@@ -745,7 +745,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'a-ee',
     name: { value: 'Curve Top To Bottom' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',
@@ -825,7 +825,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
   {
     id: 'b-bc',
     name: { value: 'Curve Bottom To Left' },
-    value: {
+    path: {
       commands: [
         {
           letter: 'M',

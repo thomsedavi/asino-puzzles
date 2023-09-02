@@ -2,9 +2,8 @@ import { AsinoPuzzle } from "./interfaces";
 import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoClassReference } from "./types/Class";
-import { AsinoColorReference } from "./types/Color";
-import { AsinoNumberReference } from "./types/Number";
 import { AsinoObject, AsinoObjectReference } from "./types/Object";
+import { AsinoParameter } from "./types/Parameter";
 import { AsinoCommandReference } from "./types/Path";
 import { AsinoSet, AsinoSetReference } from "./types/Set";
 
@@ -13,11 +12,10 @@ export class References {
 
   booleans: AsinoBooleanReference[];
   classes: AsinoClassReference[];
-  colors: AsinoColorReference[];
-  numbers: AsinoNumberReference[];
   objects: AsinoObjectReference[];
   sets: AsinoSetReference[];
   commands: AsinoCommandReference[];
+  parameters: AsinoParameter[];
 
   classId: string | undefined;
   object: AsinoObject | undefined;
@@ -30,8 +28,7 @@ export class References {
 
     this.booleans = [];
     this.classes = [];
-    this.colors = [];
-    this.numbers = [...systemNumberDefaults];
+    this.parameters = [...systemNumberDefaults.map(n => { return { numberId: n.id, number: n.number } })];
     this.objects = [];
     this.sets = [];
     this.commands = [];
@@ -42,8 +39,7 @@ export class References {
 
     refClone.booleans = [...this.booleans];
     refClone.classes = [...this.classes];
-    refClone.colors = [...this.colors];
-    refClone.numbers = [...this.numbers];
+    refClone.parameters = [...this.parameters];
     refClone.objects = [...this.objects];
     refClone.sets = [...this.sets];
     refClone.commands = [...this.commands];
@@ -73,17 +69,9 @@ export class References {
     return this;
   }
 
-  addColors = (colorLists: (AsinoColorReference[] | undefined)[]): References => {
-    colorLists.forEach(colors => {
-      colors !== undefined && (this.colors = [...this.colors, ...colors]);
-    });
-
-    return this;
-  }
-
-  addNumbers = (numberLists: (AsinoNumberReference[] | undefined)[]): References => {
-    numberLists.forEach(numbers => {
-      numbers !== undefined && (this.numbers = [...this.numbers, ...numbers]);
+  addParameters = (parametersList: (AsinoParameter[] | undefined)[]): References => {
+    parametersList.forEach(parameters => {
+      parameters !== undefined && (this.parameters = [...this.parameters, ...parameters]);
     });
 
     return this;

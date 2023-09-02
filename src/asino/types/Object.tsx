@@ -10,6 +10,7 @@ export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 
 export type Object = {
   classFixedId?: string; // fixed class of this object
+  collectionId?: string; // collection that this object belongs to
 }
 
 export type AsinoObject = Object | string | AsinoObjectReference;
@@ -25,7 +26,7 @@ export type AsinoObjectsFormula = {
 export interface AsinoObjectReference {
   id?: string; // id of this object
   name?: { value?: string, editedValue?: string }; // name of this object
-  value?: AsinoObject; // value of this object
+  object?: AsinoObject; // value of this object
 }
 
 export interface AsinoObjectsReference {
@@ -38,10 +39,10 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
   const rowKey = `object${key}`;
   let selectValue = 'NONE';
 
-  if (objectReference.value !== undefined) {
-    if (isObjectObject(objectReference.value)) {
-      if (typeof objectReference.value.classFixedId === 'string') {
-        selectValue = objectReference.value.classFixedId;
+  if (objectReference.object !== undefined) {
+    if (isObjectObject(objectReference.object)) {
+      if (typeof objectReference.object.classFixedId === 'string') {
+        selectValue = objectReference.object.classFixedId;
       }
     }
   }
@@ -50,21 +51,21 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
     const objectReferenceUpdate: AsinoObjectReference = { ...objectReference };
 
     if (event.target.value === 'NONE') {
-      if (objectReferenceUpdate.value !== undefined) {
-        if (isObjectObject(objectReferenceUpdate.value)) {
-          if (typeof objectReferenceUpdate.value.classFixedId === 'string') {
-            delete objectReferenceUpdate.value;
+      if (objectReferenceUpdate.object !== undefined) {
+        if (isObjectObject(objectReferenceUpdate.object)) {
+          if (typeof objectReferenceUpdate.object.classFixedId === 'string') {
+            delete objectReferenceUpdate.object;
             update(objectReferenceUpdate);
           }
         }
       }
     } else {
-      if (objectReferenceUpdate.value === undefined) {
-        objectReferenceUpdate.value = { classFixedId: event.target.value };
+      if (objectReferenceUpdate.object === undefined) {
+        objectReferenceUpdate.object = { classFixedId: event.target.value };
         update(objectReferenceUpdate);
-      } else if (isObjectObject(objectReferenceUpdate.value)) {
-        if (typeof objectReferenceUpdate.value.classFixedId === 'string') {
-          objectReferenceUpdate.value.classFixedId = event.target.value;
+      } else if (isObjectObject(objectReferenceUpdate.object)) {
+        if (typeof objectReferenceUpdate.object.classFixedId === 'string') {
+          objectReferenceUpdate.object.classFixedId = event.target.value;
           update(objectReferenceUpdate);
         }
       }
@@ -192,7 +193,7 @@ export const getObjectsRow = (puzzle: AsinoPuzzle, objects: AsinoObjects | undef
 }
 
 export const isObjectObject = (object: AsinoObject): object is Object => {
-  return typeof object !== 'string' && 'classFixed' in object;
+  return typeof object !== 'string' && 'collectionId' in object;
 }
 
 export const isObjectsObjects = (objects: AsinoObjects): objects is AsinoObject[] => {

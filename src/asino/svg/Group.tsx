@@ -25,10 +25,10 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
   let yRotate: number | string | undefined = undefined;
 
   groups.forEach((group: AsinoGroupReference | undefined) => {
-    const matrix = group?.value?.transform?.matrix;
-    const translate = group?.value?.transform?.translate;
-    const scale = group?.value?.transform?.scale;
-    const rotate = group?.value?.transform?.rotate;
+    const matrix = group?.group?.transform?.matrix;
+    const translate = group?.group?.transform?.translate;
+    const scale = group?.group?.transform?.scale;
+    const rotate = group?.group?.transform?.rotate;
 
     if (matrix !== undefined) {
       matrix[A] !== undefined && (aMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[A], references.clone()), references.clone(), true) ?? 1);
@@ -55,8 +55,8 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
       rotate[Y] !== undefined && (yRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[Y], references.clone()), references.clone(), true) ?? 0);
     }
 
-    if (group?.value?.layers !== undefined) {
-      layers = group.value.layers;
+    if (group?.group?.layers !== undefined) {
+      layers = group.group.layers;
     }
   });
 

@@ -5,92 +5,92 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: ViewBoxMinimumX,
     name: { value: 'View Box Minimum X' },
-    value: 0
+    number: 0
   },
   {
     id: ViewBoxMinimumY,
     name: { value: 'View Box Minimum Y' },
-    value: 0
+    number: 0
   },
   {
     id: ViewBoxWidth,
     name: { value: 'View Box Width' },
-    value: 1
+    number: 1
   },
   {
     id: ViewBoxHeight,
     name: { value: 'View Box Height' },
-    value: 1
+    number: 1
   },
   {
     id: OuterHorizontalBorderWidth,
     name: { value: 'Outer Horizontal Border Width' },
-    value: { numerator: 1, denominator: 200 }
+    number: { numerator: 1, denominator: 200 }
   },
   {
     id: OuterVerticalBorderHeight,
     name: { value: 'Outer Vertical Border Height' },
-    value: { numerator: 1, denominator: 200 }
+    number: { numerator: 1, denominator: 200 }
   },
   {
     id: OuterHorizontalDivisionCount,
     name: { value: 'Outer Horizontal Division Count' },
-    value: 3
+    number: 3
   },
   {
     id: InnerHorizontalDivisionCount,
     name: { value: 'Inner Horizontal Division Count' },
-    value: 3
+    number: 3
   },
   {
     id: OuterVerticalDivisionCount,
     name: { value: 'Outer Vertical Division Count' },
-    value: 3
+    number: 3
   },
   {
     id: InnerVerticalDivisionCount,
     name: { value: 'Inner Vertical Division Count' },
-    value: 3
+    number: 3
   },
   {
     id: InterfaceBorderSize,
     name: { value: 'Interface Border Size' },
-    value: { numerator: 1, denominator: 40 }
+    number: { numerator: 1, denominator: 40 }
   },
   {
     id: InterfaceBorderTopHeight,
     name: { value: 'Interface Border Top Height' },
-    value: InterfaceBorderSize
+    number: InterfaceBorderSize
   },
   {
     id: InterfaceBorderRightWidth,
     name: { value: 'Interface Border Right Width' },
-    value: InterfaceBorderSize
+    number: InterfaceBorderSize
   },
   {
     id: InterfaceBorderBottomHeight,
     name: { value: 'Interface Border Bottom Height' },
-    value: InterfaceBorderSize
+    number: InterfaceBorderSize
   },
   {
     id: InterfaceBorderLeftWidth,
     name: { value: 'Interface Border Left Width' },
-    value: InterfaceBorderSize
+    number: InterfaceBorderSize
   },
   {
     id: PathSize,
     name: { value: 'Path Size' },
-    value: { numerator: 1, denominator: 10 }
+    number: { numerator: 1, denominator: 10 }
   },
   {
     id: CurveFraction,
     name: { value: 'Curve Fraction' },
-    value: { numerator: 11, denominator: 20 }
+    number: { numerator: 11, denominator: 20 }
   },
   {
     id: InterfaceX,
     name: { value: 'Interface X' },
-    value: {
+    number: {
       operator: '+',
       numberInputs: [
         {
@@ -136,7 +136,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: InterfaceY,
     name: { value: 'Interface Y' },
-    value: {
+    number: {
       operator: '+',
       numberInputs: [
         {
@@ -182,7 +182,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: InterfaceWidth,
     name: { value: 'Interface Width' },
-    value: {
+    number: {
       operator: '/',
       numberInputs: [
         {
@@ -217,7 +217,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: InterfaceHeight,
     name: { value: 'Interface Height' },
-    value: {
+    number: {
       operator: '/',
       numberInputs: [
         {
@@ -252,7 +252,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: OuterHorizontalDivisionBorderX,
     name: { value: 'Outer Horizontal Division Border X' },
-    value: {
+    number: {
       operator: '+',
       numberInputs: [
         {
@@ -287,7 +287,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: OuterVerticalDivisionBorderY,
     name: { value: 'Outer Horizontal Division Border Y' },
-    value: {
+    number: {
       operator: '+',
       numberInputs: [
         {
@@ -322,81 +322,81 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
   {
     id: HueRed,
     name: { value: 'Hue Red' },
-    value: 0
+    number: 0
   },
   {
     id: HueOrange,
     name: { value: 'Hue Orange' },
-    value: { numerator: 1, denominator: 12 }
+    number: { numerator: 1, denominator: 12 }
   },
   {
     id: HueYellow,
     name: { value: 'Hue Yellow' },
-    value: { numerator: 1, denominator: 6 }
+    number: { numerator: 1, denominator: 6 }
   },
   {
     id: HueChartreuse,
     name: { value: 'Hue Chartreuse' },
-    value: { numerator: 1, denominator: 4 }
+    number: { numerator: 1, denominator: 4 }
   },
   {
     id: HueGreen,
     name: { value: 'Hue Green' },
-    value: { numerator: 1, denominator: 3 }
+    number: { numerator: 1, denominator: 3 }
   },
   {
     id: HueMint,
     name: { value: 'Hue Mint' },
-    value: { numerator: 5, denominator: 12 }
+    number: { numerator: 5, denominator: 12 }
   },
   {
     id: HueCyan,
     name: { value: 'Hue Cyan' },
-    value: { numerator: 1, denominator: 2 }
+    number: { numerator: 1, denominator: 2 }
   },
   {
     id: HueAzure,
     name: { value: 'Hue Azure' },
-    value: { numerator: 7, denominator: 12 }
+    number: { numerator: 7, denominator: 12 }
   },
   {
     id: HueBlue,
     name: { value: 'Hue Blue' },
-    value: { numerator: 2, denominator: 3 }
+    number: { numerator: 2, denominator: 3 }
   },
   {
     id: HueViolet,
     name: { value: 'Hue Violet' },
-    value: { numerator: 3, denominator: 4 }
+    number: { numerator: 3, denominator: 4 }
   },
   {
     id: HueMagenta,
     name: { value: 'Hue Magenta' },
-    value: { numerator: 5, denominator: 6 }
+    number: { numerator: 5, denominator: 6 }
   },
   {
     id: HuePink,
     name: { value: 'Hue Pink' },
-    value: { numerator: 11, denominator: 12 }
+    number: { numerator: 11, denominator: 12 }
   },
   {
     id: OuterHorizontalDivisionBorderIndex,
     name: { value: 'Outer Horizontal Division Border Index' },
-    value: 1
+    number: 1
   },
   {
     id: OuterVerticalDivisionBorderIndex,
     name: { value: 'Outer Vertical Division Border Index' },
-    value: 1
+    number: 1
   },
   {
     id: InterfaceColumnIndex,
     name: { value: 'Interface Column Index' },
-    value: 1
+    number: 1
   },
   {
     id: InterfaceRowIndex,
     name: { value: 'Interface Row Index' },
-    value: 1
+    number: 1
   }
 ];

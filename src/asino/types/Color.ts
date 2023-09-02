@@ -29,7 +29,7 @@ export type ColorFormula = {
 export type AsinoColorReference = {
   id?: string; // id of this color
   name?: { value?: string, editedValue?: string }; // name of this color
-  value?: AsinoColor;
+  color?: AsinoColor;
 }
 
 export const isColorFormula = (number: AsinoColor): number is ColorFormula => {

@@ -20,13 +20,13 @@ export type SetsFormula = {
 export type AsinoSetReference = {
   id?: string; // id of this set
   name?: { value?: string, editedValue?: string }; // name of this set
-  value?: AsinoSet; // value of this set
+  set?: AsinoSet; // value of this set
 }
 
 export type AsinoSetsReference = {
   id?: string; // id of these sets
   name?: { value?: string, editedValue?: string }; // name of these sets
-  value?: AsinoSets; // value of these sets
+  sets?: AsinoSets; // value of these sets
 }
 
 export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetReference, key: string, depth: number, update: (value: AsinoSetReference) => void): JSX.Element => {
@@ -34,12 +34,12 @@ export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetRe
   let selectValue = 'NONE';
   let set: Set | undefined = undefined;
 
-  if (setReference.value !== undefined) {
-    if (typeof setReference.value === 'string') {
+  if (setReference.set !== undefined) {
+    if (typeof setReference.set === 'string') {
       selectValue = 'ID';
-    } else if (isSetSet(setReference.value)) {
+    } else if (isSetSet(setReference.set)) {
       selectValue = 'SET';
-      set = setReference.value;
+      set = setReference.set;
     }
   }
 
@@ -47,13 +47,13 @@ export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetRe
     const setReferenceUpdate: AsinoSetReference = { ...setReference };
 
     if (event.target.value === 'NONE') {
-      delete setReferenceUpdate.value;
+      delete setReferenceUpdate.set;
       update(setReferenceUpdate);
     } else if (event.target.value === 'ID') {
-      setReferenceUpdate.value = 'NONE';
+      setReferenceUpdate.set = 'NONE';
       update(setReferenceUpdate);
     } else if (event.target.value === 'SET') {
-      setReferenceUpdate.value = { objects: undefined };
+      setReferenceUpdate.set = { objects: undefined };
       update(setReferenceUpdate);
     }
   }
@@ -82,13 +82,13 @@ export const getSetReferenceRow = (puzzle: AsinoPuzzle, setReference: AsinoSetRe
       <option value='SET'>Set</option>
       <option value='ID'>Id</option>
     </SelectInline>
-    {typeof setReference.value === 'string' && <SelectInline name={`Set {${rowKey}} Id`} id={`Set {${rowKey}} Id`} value={setReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...setReference, value: event.target.value })}>
+    {typeof setReference.set === 'string' && <SelectInline name={`Set {${rowKey}} Id`} id={`Set {${rowKey}} Id`} value={setReference.set ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...setReference, set: event.target.value })}>
       <option value='NONE'>Select Set</option>
       {puzzle.sets !== undefined && puzzle.sets.length !== 0 && <optgroup label="Custom Sets">
         {puzzle.sets?.map((s, index) => <option key={`${rowKey} Id ${index}`} value={s.id}>{s.name?.value ?? 'undefined'}</option>)}
       </optgroup>}
     </SelectInline>}
-    {set !== undefined && getObjectsRow(puzzle, set.objects, `${rowKey}objects`, depth + 1, (value: AsinoObjects | undefined) => update({ ...setReference, value: { objects: value } }))}
+    {set !== undefined && getObjectsRow(puzzle, set.objects, `${rowKey}objects`, depth + 1, (value: AsinoObjects | undefined) => update({ ...setReference, set: { objects: value } }))}
   </div>;
 }
 

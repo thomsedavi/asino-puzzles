@@ -4,6 +4,7 @@ import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
 import { systemNumberDefaults } from '../references/Numbers';
+import { AsinoParameter } from './Parameter';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
 
@@ -22,8 +23,8 @@ export type NumberFormula = {
 export type AsinoNumberReference = {
   id?: string; // id of this number
   name?: { value?: string, editedValue?: string }; // name of this number
-  value?: AsinoNumber; // value of this number
-  numbers?: AsinoNumberReference[]; // parameters to use when overriding
+  number?: AsinoNumber; // value of this number
+  parameters?: AsinoParameter[]; // number and color parameters
 }
 
 export const isNumberFraction = (number: Number): number is Fraction => {
@@ -46,14 +47,14 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
   const rowKey = `numberReference${key}`;
   let selectValue = 'NONE';
 
-  if (numberReference.value !== undefined) {
-    if (typeof numberReference.value === 'string') {
+  if (numberReference.number !== undefined) {
+    if (typeof numberReference.number === 'string') {
       selectValue = 'ID';
-    } else if (typeof numberReference.value === 'number' || isNumberEditedNumber(numberReference.value)) {
+    } else if (typeof numberReference.number === 'number' || isNumberEditedNumber(numberReference.number)) {
       selectValue = 'NUMBER';
-    } else if (isNumberFormula(numberReference.value)) {
+    } else if (isNumberFormula(numberReference.number)) {
       selectValue = 'FORMULA';
-    } else if (isAsinoNumberFraction(numberReference.value)) {
+    } else if (isAsinoNumberFraction(numberReference.number)) {
       selectValue = 'FRACTION';
     } else {
       selectValue = 'REFERENCE'
@@ -64,34 +65,34 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
     const numberReferenceUpdate: AsinoNumberReference = { ...numberReference };
 
     if (event.target.value === 'NONE') {
-      delete numberReferenceUpdate.value;
+      delete numberReferenceUpdate.number;
       update(numberReferenceUpdate);
     } else if (event.target.value === 'NUMBER') {
-      numberReferenceUpdate.value = 0;
+      numberReferenceUpdate.number = 0;
       update(numberReferenceUpdate);
     } else if (event.target.value === 'ID') {
-      numberReferenceUpdate.value = 'NONE';
+      numberReferenceUpdate.number = 'NONE';
       update(numberReferenceUpdate);
     } else if (event.target.value === 'FRACTION') {
-      numberReferenceUpdate.value = { numerator: 1, denominator: 1 };
+      numberReferenceUpdate.number = { numerator: 1, denominator: 1 };
       update(numberReferenceUpdate);
     } else {
-      numberReferenceUpdate.value = { operator: 'NONE' };
+      numberReferenceUpdate.number = { operator: 'NONE' };
       update(numberReferenceUpdate);
     }
   }
 
   const onUpdateFormula = (value: AsinoNumber | undefined, index: number) => {
-    if (numberReference.value !== undefined && isNumberFormula(numberReference.value)) {
-      update({ ...numberReference, value: { operator: numberReference.value.operator, numberInputs: [...(numberReference.value.numberInputs?.slice(0, index) ?? []), value, ...(numberReference.value.numberInputs?.slice(index + 1) ?? [])] } });
+    if (numberReference.number !== undefined && isNumberFormula(numberReference.number)) {
+      update({ ...numberReference, number: { operator: numberReference.number.operator, numberInputs: [...(numberReference.number.numberInputs?.slice(0, index) ?? []), value, ...(numberReference.number.numberInputs?.slice(index + 1) ?? [])] } });
     }
   }
 
   const updateNumber = () => {
     const numberReferenceUpdate: AsinoNumberReference = { ...numberReference };
 
-    if (numberReference.value !== undefined && isNumberEditedNumber(numberReference.value)) {
-      numberReferenceUpdate.value = toNumberOrFraction(Number(numberReference.value.editedValue));
+    if (numberReference.number !== undefined && isNumberEditedNumber(numberReference.number)) {
+      numberReferenceUpdate.number = toNumberOrFraction(Number(numberReference.number.editedValue));
     }
 
     update(numberReferenceUpdate);
@@ -110,8 +111,8 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
     } else if (event.keyCode === 27) {
       event.preventDefault();
       const numberReferenceUpdate: AsinoNumberReference = { ...numberReference };
-      if (numberReference.value !== undefined && isNumberEditedNumber(numberReference.value)) {
-        numberReferenceUpdate.value = numberReference.value.originalValue;
+      if (numberReference.number !== undefined && isNumberEditedNumber(numberReference.number)) {
+        numberReferenceUpdate.number = numberReference.number.originalValue;
       }
       update(numberReferenceUpdate);
     }
@@ -131,7 +132,7 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
     {numberReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, name: { ...numberReference.name, editedValue: numberReference.name?.value } })}>{numberReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {numberReference.name?.editedValue !== undefined && <InputInline block autoFocus value={numberReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, name: { ...numberReference.name, editedValue: event.target.value } })} />}
     {numberReference.name === undefined && <>
-      <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, value: [...systemNumberDefaults].find(d => d.id === event.target.value)?.value })}>
+      <SelectInline name={`Number {${rowKey}} Override`} id={`Number {${rowKey}} Type`} value={numberReference.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, id: event.target.value, number: [...systemNumberDefaults].find(d => d.id === event.target.value)?.number })}>
         <option value='NONE'>Select Number To Override</option>
         {systemNumberDefaults.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
       </SelectInline>
@@ -143,9 +144,9 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
       <option value='FRACTION'>Fraction</option>
       <option value='FORMULA'>Formula</option>
     </SelectInline>
-    {typeof numberReference.value === 'number' && <span style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, value: { originalValue: Number(numberReference.value), editedValue: `${numberReference.value}` } })}>{numberReference.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></span>}
-    {numberReference.value !== undefined && isNumberEditedNumber(numberReference.value) && <InputInline autoFocus type='number' value={numberReference.value.editedValue} onBlur={updateNumber} onKeyDown={onKeyDownNumber} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, value: { editedValue: event.target.value, originalValue: numberReference.value !== undefined && isNumberEditedNumber(numberReference.value) ? numberReference.value.originalValue : 0 } })} />}
-    {typeof numberReference.value === 'string' && <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={numberReference.value ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: event.target.value })}>
+    {typeof numberReference.number === 'number' && <span style={{ cursor: 'pointer' }} onClick={() => update({ ...numberReference, number: { originalValue: Number(numberReference.number), editedValue: `${numberReference.number}` } })}>{numberReference.number}<Icon title='edit' type='pencil' fillSecondary='--accent' /></span>}
+    {numberReference.number !== undefined && isNumberEditedNumber(numberReference.number) && <InputInline autoFocus type='number' value={numberReference.number.editedValue} onBlur={updateNumber} onKeyDown={onKeyDownNumber} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...numberReference, number: { editedValue: event.target.value, originalValue: numberReference.number !== undefined && isNumberEditedNumber(numberReference.number) ? numberReference.number.originalValue : 0 } })} />}
+    {typeof numberReference.number === 'string' && <SelectInline name={`Number {${rowKey}} Id`} id={`Number {${rowKey}} Id`} value={numberReference.number ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, number: event.target.value })}>
       <option value='NONE'>Select Number</option>
       {puzzle.numbers !== undefined && puzzle.numbers.length !== 0 && <optgroup label="Custom Numbers">
         {puzzle.numbers?.map((n, index) => <option key={`${rowKey} Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
@@ -154,31 +155,31 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, numberReference: Asin
         {systemNumberDefaults.map((n, index) => <option key={`${rowKey} Default Id ${index}`} value={n.id}>{n.name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
-    {numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) && <>
+    {numberReference.number !== undefined && isAsinoNumberFraction(numberReference.number) && <>
       {getTopBracket(depth)}
-      {getNumberRow(puzzle, numberReference.value.numerator, `${rowKey}numerator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { numerator: value ?? 1, denominator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.denominator : 1 } }))}
+      {getNumberRow(puzzle, numberReference.number.numerator, `${rowKey}numerator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, number: { numerator: value ?? 1, denominator: numberReference.number !== undefined && isAsinoNumberFraction(numberReference.number) ? numberReference.number.denominator : 1 } }))}
       {getBottomBracket(depth)}
       <div style={{ textAlign: 'center' }}>/</div>
       {getTopBracket(depth)}
-      {getNumberRow(puzzle, numberReference.value.denominator, `${rowKey}denominator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, value: { denominator: value ?? 1, numerator: numberReference.value !== undefined && isAsinoNumberFraction(numberReference.value) ? numberReference.value.numerator : 1 } }))}
+      {getNumberRow(puzzle, numberReference.number.denominator, `${rowKey}denominator`, depth + 1, (value: AsinoNumber | undefined) => update({ ...numberReference, number: { denominator: value ?? 1, numerator: numberReference.number !== undefined && isAsinoNumberFraction(numberReference.number) ? numberReference.number.numerator : 1 } }))}
       {getBottomBracket(depth)}
     </>}
-    {numberReference.value !== undefined && isNumberFormula(numberReference.value) && <>
-      <SelectInline name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={numberReference.value.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, value: { operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] } })}>
+    {numberReference.number !== undefined && isNumberFormula(numberReference.number) && <>
+      <SelectInline name={`Number {${rowKey}} Formula`} id={`Number {${rowKey}} Forumla`} value={numberReference.number.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...numberReference, number: { operator: getNumberOperator(event.target.value), numberInputs: [undefined, undefined] } })}>
         <option value='NONE'>Select Formula</option>
         <option value='*'>Number * Number</option>
         <option value='-'>Number - Number</option>
         <option value='+'>Number + Number</option>
         <option value='/'>Number / Number</option>
       </SelectInline>
-      <span onClick={() => numberReference.value !== undefined && isNumberFormula(numberReference.value) && update({ ...numberReference, value: { ...numberReference.value, collapsed: !numberReference.value.collapsed ?? undefined } })} style={{ cursor: 'pointer' }}>{numberReference.value.collapsed ? '>' : 'v'}</span>
-      {!numberReference.value.collapsed && <>
+      <span onClick={() => numberReference.number !== undefined && isNumberFormula(numberReference.number) && update({ ...numberReference, number: { ...numberReference.number, collapsed: !numberReference.number.collapsed ?? undefined } })} style={{ cursor: 'pointer' }}>{numberReference.number.collapsed ? '>' : 'v'}</span>
+      {!numberReference.number.collapsed && <>
         {getTopBracket(depth)}
-        {getNumberRow(puzzle, numberReference.value.numberInputs?.[0], `${rowKey}input0`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
+        {getNumberRow(puzzle, numberReference.number.numberInputs?.[0], `${rowKey}input0`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 0))}
         {getBottomBracket(depth)}
-        <div style={{ textAlign: 'center' }}>{numberReference.value.operator === 'NONE' ? '?' : numberReference.value.operator}</div>
+        <div style={{ textAlign: 'center' }}>{numberReference.number.operator === 'NONE' ? '?' : numberReference.number.operator}</div>
         {getTopBracket(depth)}
-        {getNumberRow(puzzle, numberReference.value.numberInputs?.[1], `${rowKey}input1`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
+        {getNumberRow(puzzle, numberReference.number.numberInputs?.[1], `${rowKey}input1`, depth + 1, (value: AsinoNumber | undefined) => onUpdateFormula(value, 1))}
         {getBottomBracket(depth)}
       </>}
     </>}

@@ -1,11 +1,12 @@
 import React from 'react';
 import { stroke as Stroke, strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2 } from "../consts";
-import { AsinoColor, AsinoColorReference } from "./Color";
-import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
+import { AsinoColor } from "./Color";
+import { AsinoNumber, getNumberRow } from "./Number";
 import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
+import { AsinoParameter } from './Parameter';
 
 export type AsinoLine = {
   [X1]?: AsinoNumber; // if this exists, draw x1 here
@@ -19,9 +20,8 @@ export type AsinoLine = {
 export type AsinoLineReference = {
   id?: string; // id of this line
   name?: { value?: string, editedValue?: string }; // name of this line
-  value?: AsinoLine; // value of this line
-  numbers?: AsinoNumberReference[] // number parameters
-  colors?: AsinoColorReference[] // number colors
+  line?: AsinoLine; // value of this line
+  parameters?: AsinoParameter[]; // number and color parameters
 }
 
 export const getLineReferenceRow = (puzzle: AsinoPuzzle, lineReference: AsinoLineReference, key: string, depth: number, update: (value: AsinoLineReference) => void): JSX.Element => {
@@ -46,9 +46,9 @@ export const getLineReferenceRow = (puzzle: AsinoPuzzle, lineReference: AsinoLin
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {lineReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...lineReference, name: { ...lineReference.name, editedValue: lineReference.name?.value } })}>{lineReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {lineReference.name?.editedValue !== undefined && <InputInline block autoFocus value={lineReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...lineReference, name: { ...lineReference.name, editedValue: event.target.value } })} />}
-    {getNumberRow(puzzle, lineReference.value?.[X1], `${rowKey}x1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, value: { ...lineReference.value, [X1]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.value?.[Y1], `${rowKey}y1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, value: { ...lineReference.value, [Y1]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.value?.[X2], `${rowKey}x2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, value: { ...lineReference.value, [X2]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.value?.[Y2], `${rowKey}y2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, value: { ...lineReference.value, [Y2]: value ?? 1 } }))}
+    {getNumberRow(puzzle, lineReference.line?.[X1], `${rowKey}x1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [X1]: value ?? 1 } }))}
+    {getNumberRow(puzzle, lineReference.line?.[Y1], `${rowKey}y1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [Y1]: value ?? 1 } }))}
+    {getNumberRow(puzzle, lineReference.line?.[X2], `${rowKey}x2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [X2]: value ?? 1 } }))}
+    {getNumberRow(puzzle, lineReference.line?.[Y2], `${rowKey}y2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [Y2]: value ?? 1 } }))}
   </div>;
 }

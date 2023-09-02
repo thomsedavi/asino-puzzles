@@ -24,7 +24,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
           onClick={() => asinoClass.classId !== undefined && selectClass(asinoClass.classId)}
         >
           <rect x={0} y={0} width={560} height={560} fill="transparent" cursor='pointer' />
-          {drawLayer(puzzle, solution, layer, new References(puzzle).addColors([puzzle.colors]), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styleClasses)}
+          {drawLayer(puzzle, solution, layer, new References(puzzle).addParameters([puzzle.colors?.map(c => { return { colorId: c.id, color: c.color } })]), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styleClasses)}
         </g>
       );
     });
