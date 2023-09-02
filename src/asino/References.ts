@@ -28,7 +28,7 @@ export class References {
 
     this.booleans = [];
     this.classes = [];
-    this.parameters = [...systemNumberDefaults.map(n => { return { numberId: n.id, number: n.number } })];
+    this.parameters = [...systemNumberDefaults.map(n => { return { numberId: n.id, number: n.number } }), ...(puzzle.numbers?.map(n => { return { numberId: n.id, number: n.number } }) ?? []), ...(puzzle.colors?.map(c => { return { colorId: c.id, color: c.color } }) ?? [])];
     this.objects = [];
     this.sets = [];
     this.commands = [];
