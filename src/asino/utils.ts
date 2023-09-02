@@ -1106,14 +1106,6 @@ const minifyCollection = (collection: AsinoCollection): any => {
   return result;
 }
 
-const minifyCollectionObject = (object: { objectId?: string }): any => {
-  const result: any = {};
-
-  object.objectId !== undefined && (result[ObjectId] = object.objectId);
-
-  return result;
-}
-
 const minifyLayer = (layer: AsinoLayer): any => {
   const result: any = {};
 
@@ -1614,14 +1606,6 @@ const unminifyCollection = (collection: any): AsinoCollection => {
   collection[Id] !== undefined && (result.id = collection[Id]);
   collection[Name] !== undefined && (result.name = { value: collection[Name] });
   collection[Classes] !== undefined && (result.classes = collection[Classes].map((c: any) => unminifyClassReference(c)));
-
-  return result;
-}
-
-const unminifyCollectionObject = (object: any): { objectId?: string } => {
-  const result: { objectId?: string } = {}
-
-  object[ObjectId] !== undefined && (result.objectId = object[ObjectId]);
 
   return result;
 }
