@@ -23,13 +23,13 @@ export type AsinoObjectsFormula = {
   collapsed?: boolean; // collapse in editor
 }
 
-export interface AsinoObjectReference {
+export type AsinoObjectReference = {
   id?: string; // id of this object
   name?: { value?: string, editedValue?: string }; // name of this object
   object?: AsinoObject; // value of this object
 }
 
-export interface AsinoObjectsReference {
+export type AsinoObjectsReference = {
   id?: string; // id of these objects
   name?: { value?: string, editedValue?: string }; // name of these objects
   value?: AsinoObjects; // value of these objects

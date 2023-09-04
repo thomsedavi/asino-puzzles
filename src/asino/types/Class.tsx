@@ -26,7 +26,7 @@ export type AsinoClassReference = {
   id?: string; // id of this class
   name?: { value?: string, editedValue?: string }; // name of this class
   class?: AsinoClass; // value of this class
-  classId?: string; // refer to the interface with this id
+  classId?: string; // refer to the class with this id
 }
 
 export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoClassReference, key: string, depth: number, update: (value: AsinoClassReference) => void): JSX.Element => {

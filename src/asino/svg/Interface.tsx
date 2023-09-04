@@ -1,5 +1,4 @@
 import React from "react"
-import { Solution, StyleClass } from "../interfaces"
 import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected } from "../consts";
 import { drawLayer } from "./View";
@@ -10,8 +9,10 @@ import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";
 import { systemClassDefaults } from "../references/Classes";
 import { AsinoPuzzle } from "../types/Puzzle";
+import { Solution } from "../types/Solution";
+import { Style } from "../types/Style";
 
-export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element => {
+export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styles: Style[], selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
   let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
@@ -57,17 +58,17 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomFillDarkClass = getValueFromColor(borderBottomFill, references.clone(), 'fd', true);
   const borderLeftFillDarkClass = getValueFromColor(borderLeftFill, references.clone(), 'fd', true);
 
-  styleClasses.filter(c => c.id === fillClass?.key).length === 0 && (styleClasses.push({ id: fillClass?.key, fill: fillClass?.value }));
-  styleClasses.filter(c => c.id === borderTopFillClass?.key).length === 0 && (styleClasses.push({ id: borderTopFillClass?.key, fill: borderTopFillClass?.value }));
-  styleClasses.filter(c => c.id === borderRightFillClass?.key).length === 0 && (styleClasses.push({ id: borderRightFillClass?.key, fill: borderRightFillClass?.value }));
-  styleClasses.filter(c => c.id === borderBottomFillClass?.key).length === 0 && (styleClasses.push({ id: borderBottomFillClass?.key, fill: borderBottomFillClass?.value }));
-  styleClasses.filter(c => c.id === borderLeftFillClass?.key).length === 0 && (styleClasses.push({ id: borderLeftFillClass?.key, fill: borderLeftFillClass?.value }));
+  styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
+  styles.filter(s => s.id === borderTopFillClass?.key).length === 0 && (styles.push({ id: borderTopFillClass?.key, fill: borderTopFillClass?.value }));
+  styles.filter(s => s.id === borderRightFillClass?.key).length === 0 && (styles.push({ id: borderRightFillClass?.key, fill: borderRightFillClass?.value }));
+  styles.filter(s => s.id === borderBottomFillClass?.key).length === 0 && (styles.push({ id: borderBottomFillClass?.key, fill: borderBottomFillClass?.value }));
+  styles.filter(s => s.id === borderLeftFillClass?.key).length === 0 && (styles.push({ id: borderLeftFillClass?.key, fill: borderLeftFillClass?.value }));
 
-  styleClasses.filter(c => c.id === fillDarkClass?.key).length === 0 && (styleClasses.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
-  styleClasses.filter(c => c.id === borderTopFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderTopFillDarkClass?.key, fillDark: borderTopFillDarkClass?.value }));
-  styleClasses.filter(c => c.id === borderRightFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderRightFillDarkClass?.key, fillDark: borderRightFillDarkClass?.value }));
-  styleClasses.filter(c => c.id === borderBottomFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderBottomFillDarkClass?.key, fillDark: borderBottomFillDarkClass?.value }));
-  styleClasses.filter(c => c.id === borderLeftFillDarkClass?.key).length === 0 && (styleClasses.push({ id: borderLeftFillDarkClass?.key, fillDark: borderLeftFillDarkClass?.value }));
+  styles.filter(s => s.id === fillDarkClass?.key).length === 0 && (styles.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
+  styles.filter(s => s.id === borderTopFillDarkClass?.key).length === 0 && (styles.push({ id: borderTopFillDarkClass?.key, fillDark: borderTopFillDarkClass?.value }));
+  styles.filter(s => s.id === borderRightFillDarkClass?.key).length === 0 && (styles.push({ id: borderRightFillDarkClass?.key, fillDark: borderRightFillDarkClass?.value }));
+  styles.filter(s => s.id === borderBottomFillDarkClass?.key).length === 0 && (styles.push({ id: borderBottomFillDarkClass?.key, fillDark: borderBottomFillDarkClass?.value }));
+  styles.filter(s => s.id === borderLeftFillDarkClass?.key).length === 0 && (styles.push({ id: borderLeftFillDarkClass?.key, fillDark: borderLeftFillDarkClass?.value }));
 
   const innards: (JSX.Element | undefined)[] = [];
 
@@ -85,7 +86,7 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
         const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
 
         asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styleClasses, selectedObjectId));
+          innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId));
         });
       }
     }

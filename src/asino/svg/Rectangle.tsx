@@ -4,10 +4,11 @@ import { height as Height, strokeWidth as StrokeWidth, width as Width, x as X, y
 import { AsinoRectangleReference } from "../types/Rectangle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
-import { Solution, StyleClass } from "../interfaces";
 import Utils from "../../common/utils";
+import { Solution } from "../types/Solution";
+import { Style } from "../types/Style";
 
-export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
+export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
   let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), 'rectangle', StrokeWidth, defaultStrokeWidth);
 
   const x = getNumberFromLayer(rectangles, references.clone(), 'rectangle', X, { number: 0 });
@@ -24,11 +25,11 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
   const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
   const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
 
-  styleClasses.filter(c => c.id === fillClass?.key).length === 0 && (styleClasses.push({ id: fillClass?.key, fill: fillClass?.value }));
-  styleClasses.filter(c => c.id === strokeClass?.key).length === 0 && (styleClasses.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
+  styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
+  styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
 
-  styleClasses.filter(c => c.id === fillDarkClass?.key).length === 0 && (styleClasses.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
-  styleClasses.filter(c => c.id === strokeDarkClass?.key).length === 0 && (styleClasses.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
+  styles.filter(s => s.id === fillDarkClass?.key).length === 0 && (styles.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
+  styles.filter(s => s.id === strokeDarkClass?.key).length === 0 && (styles.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
 
   return <rect
     key={key}

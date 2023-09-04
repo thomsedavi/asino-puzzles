@@ -4,10 +4,11 @@ import { AsinoLineReference } from "../types/Line";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { getColorFromLayer, getNumberFromLayer, getValueFromColor, getValueFromNumber } from "../utils";
 import { References } from "../References";
-import { Solution, StyleClass } from "../interfaces";
 import Utils from "../../common/utils";
+import { Solution } from "../types/Solution";
+import { Style } from "../types/Style";
 
-export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
+export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
   let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'line', StrokeWidth, defaultStrokeWidth);
 
   const x1 = getNumberFromLayer(lines, references.clone(), 'line', X1, { number: 0 });
@@ -21,9 +22,9 @@ export const drawLine = (lines: (AsinoLineReference | undefined)[], references: 
 
   const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
 
-  styleClasses.filter(c => c.id === strokeClass?.key).length === 0 && (styleClasses.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
+  styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
 
-  styleClasses.filter(c => c.id === strokeDarkClass?.key).length === 0 && (styleClasses.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
+  styles.filter(s => s.id === strokeDarkClass?.key).length === 0 && (styles.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
 
   if (stroke === undefined) {
     strokeWidth = undefined;

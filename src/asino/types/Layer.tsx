@@ -15,7 +15,7 @@ import { AsinoParameter, getParameterRow } from './Parameter';
 import { AsinoObjectReference } from './Object';
 import { AsinoPuzzle } from './Puzzle';
 
-export interface AsinoLayer {
+export type AsinoLayer = {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
   interface?: AsinoInterface; // draw this interface
   interfaceId?: string; // draw the interface with this id

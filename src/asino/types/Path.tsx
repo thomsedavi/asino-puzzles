@@ -26,7 +26,7 @@ export type AsinoPathReference = {
   parameters?: AsinoParameter[]; // number and color parameters
 }
 
-export interface Command {
+export type Command = {
   letter?: Letter;
   [X]?: AsinoNumber; // if this exists, draw the rectangle here, or...
   [X1]?: AsinoNumber; // if this exists, draw x1 here, or...
@@ -42,7 +42,7 @@ export interface Command {
   [DY2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
 }
 
-export interface AsinoCommandReference {
+export type AsinoCommandReference = {
   id?: string; // id of this command
   name?: { value?: string, editedValue?: string }; // name of this command
   value?: AsinoCommand; // value of this command

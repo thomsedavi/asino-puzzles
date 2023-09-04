@@ -13,7 +13,7 @@ import { AsinoCommandReference, AsinoPathReference } from "./Path";
 import { AsinoRectangleReference } from "./Rectangle";
 import { AsinoSetReference } from "./Set";
 
-export interface AsinoPuzzle {
+export type AsinoPuzzle = {
   id?: string; // id of this puzzle
   title?: string; // title of this puzzle
   userId?: string; // id of the creator of this puzzle

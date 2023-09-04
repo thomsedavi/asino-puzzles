@@ -1,6 +1,5 @@
 import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { Solution } from "./interfaces";
 import { systemClassDefaults } from "./references/Classes";
 import { systemColorDefaults } from "./references/Colors";
 import { systemNumberDefaults } from "./references/Numbers";
@@ -20,6 +19,7 @@ import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isC
 import { AsinoPuzzle } from "./types/Puzzle";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
+import { Solution } from "./types/Solution";
 import { AsinoMatrix, AsinoRotate, AsinoScale, AsinoTransform, AsinoTranslate } from "./types/Transform";
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {

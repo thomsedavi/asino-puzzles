@@ -1,14 +1,15 @@
 import React from "react"
-import { Solution, StyleClass } from "../interfaces"
 import { AsinoClassReference } from "../types/Class";
 import { getClassFromAsinoClass, getClassFromClassReference } from "../utils";
 import { drawLayer } from "./View";
 import { References } from "../References";
 import { AsinoPuzzle } from "../types/Puzzle";
+import { Solution } from "../types/Solution";
+import { Style } from "../types/Style";
 
 export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClass: (classId: string) => void, selectedCollectionId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
-  const styleClasses: StyleClass[] = [];
+  const styles: Style[] = [];
 
   const selectedCollection = puzzle.collections?.filter(collection => collection.id === selectedCollectionId)[0];
 
@@ -25,7 +26,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
           onClick={() => asinoClass.classId !== undefined && selectClass(asinoClass.classId)}
         >
           <rect x={0} y={0} width={560} height={560} fill="transparent" cursor='pointer' />
-          {drawLayer(puzzle, solution, layer, new References(puzzle), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styleClasses)}
+          {drawLayer(puzzle, solution, layer, new References(puzzle), { numerator: 1, denominator: 9 }, `class${classIndex}layer${layerIndex}`, styles)}
         </g>
       );
     });

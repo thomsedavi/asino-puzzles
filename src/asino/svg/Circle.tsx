@@ -4,10 +4,11 @@ import { cx as CX, cy as CY, r as R, strokeWidth as StrokeWidth, fill as Fill, s
 import { AsinoCircleReference } from "../types/Circle";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
-import { Solution, StyleClass } from "../interfaces";
 import Utils from "../../common/utils";
+import { Solution } from "../types/Solution";
+import { Style } from "../types/Style";
 
-export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styleClasses: StyleClass[]): JSX.Element => {
+export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
   let strokeWidth: Number | undefined = getNumberFromLayer(circles, references.clone(), 'circle', StrokeWidth, defaultStrokeWidth);
 
   const cx = getNumberFromLayer(circles, references.clone(), 'circle', CX, { number: 0 });
@@ -23,11 +24,11 @@ export const drawCircle = (circles: (AsinoCircleReference | undefined)[], refere
   const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
   const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
 
-  styleClasses.filter(c => c.id === fillClass?.key).length === 0 && (styleClasses.push({ id: fillClass?.key, fill: fillClass?.value }));
-  styleClasses.filter(c => c.id === strokeClass?.key).length === 0 && (styleClasses.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
+  styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
+  styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
 
-  styleClasses.filter(c => c.id === fillDarkClass?.key).length === 0 && (styleClasses.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
-  styleClasses.filter(c => c.id === strokeDarkClass?.key).length === 0 && (styleClasses.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
+  styles.filter(s => s.id === fillDarkClass?.key).length === 0 && (styles.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
+  styles.filter(s => s.id === strokeDarkClass?.key).length === 0 && (styles.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
 
   if (stroke === undefined) {
     strokeWidth = undefined;

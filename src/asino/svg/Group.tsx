@@ -1,10 +1,10 @@
 import React from "react"
-import { Solution } from "../interfaces"
 import { References } from "../References"
 import { AsinoGroupReference } from "../types/Group";
 import { getNumberFromAsinoNumber, getValueFromNumber } from "../utils";
 import { a as A, b as B, c as C, d as D, e as E, f as F, x as X, y as Y } from "../consts";
 import { AsinoLayer } from "../types/Layer";
+import { Solution } from "../types/Solution";
 
 export const drawGroup = (groups: (AsinoGroupReference | undefined)[], references: References, solution: Solution, key: string): JSX.Element => {
   let layers: (AsinoLayer | undefined)[] = [];

@@ -6,7 +6,7 @@ import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/sty
 import { Icon } from '../../common/icons';
 import { AsinoPuzzle } from './Puzzle';
 
-export interface AsinoCollection {
+export type AsinoCollection = {
   id?: string; // id of this collection
   name?: { value?: string, editedValue?: string }; // name of this collection
   classes?: { classId?: string }[]; // classes
