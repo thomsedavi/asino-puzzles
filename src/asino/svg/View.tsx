@@ -1,5 +1,5 @@
 import React from "react"
-import { AsinoPuzzle, Solution, StyleClass } from "../interfaces";
+import { Solution, StyleClass } from "../interfaces";
 import { drawLine } from "./Line";
 import { drawInterface, drawInterfaceInteractive } from "./Interface";
 import { drawCircle } from "./Circle";
@@ -13,6 +13,7 @@ import { drawGroup } from "./Group";
 import { systemInterfaceDefaults } from "../references/Interfaces";
 import { systemPathDefaults } from "../references/Paths";
 import { systemRectangleDefaults } from "../references/Rectangles";
+import { AsinoPuzzle } from "../types/Puzzle";
 
 export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoLayer, references: References, scale: Number, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {

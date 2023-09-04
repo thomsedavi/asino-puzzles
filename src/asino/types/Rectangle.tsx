@@ -1,12 +1,12 @@
 import React from 'react';
 import { fill as Fill, height as Height, stroke as Stroke, strokeWidth as StrokeWidth, width as Width, x as X, y as Y } from "../consts";
-import { AsinoPuzzle } from "../interfaces";
 import { AsinoColor } from "./Color";
 import { AsinoNumber, getNumberRow } from "./Number";
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoRectangle = {
   [Width]?: AsinoNumber; // if this exists, draw the rectangle this wide

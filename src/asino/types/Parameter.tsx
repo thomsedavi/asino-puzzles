@@ -3,8 +3,8 @@ import React from 'react';
 import { AsinoColor } from "./Color"
 import { AsinoNumber, getNumberRow } from "./Number"
 import { SelectInline } from '../../common/styled';
-import { AsinoPuzzle } from '../interfaces';
 import { systemNumberDefaults } from '../references/Numbers';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoParameter = {
   numberId?: string;

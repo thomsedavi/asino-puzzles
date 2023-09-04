@@ -7,8 +7,9 @@ import { Icon } from '../common/icons';
 import { useState } from '../common/saveState';
 import { Container, Heading1, Overlay, Placeholder, Flash, Heading2, Table, TableRow, TableHeader, ColumnGroup, Column, TableCell, TableCellAction, TextLink, TableCellLink, ButtonGroup, Button, Paragraph, Emphasis, ErrorMessage } from '../common/styled';
 import Utils from '../common/utils';
-import { AsinoPuzzle, AsinoSummary, LexicologerGame, LexicologerSummary, User } from '../common/interfaces';
+import { AsinoSummary, LexicologerGame, LexicologerSummary, User } from '../common/interfaces';
 import Layout from './Layout';
+import { AsinoPuzzle } from '../asino/types/Puzzle';
 
 interface UserPageProps {
   userId?: string | null;

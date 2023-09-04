@@ -2,11 +2,11 @@ import React from 'react';
 import { AsinoClass, AsinoClasses } from './Class';
 import { AsinoObject, AsinoObjects } from './Object';
 import { AsinoSets } from './Set';
-import { AsinoPuzzle } from '../interfaces';
 import { SelectInline, InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' | 'IS_EACH_CLASS_DIFFERENT';
 

@@ -1,10 +1,10 @@
 import React from 'react';
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { SelectInline, InputInline } from '../../common/styled';
 import { systemNumberDefaults } from '../references/Numbers';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
 

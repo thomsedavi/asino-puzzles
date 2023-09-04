@@ -1,10 +1,10 @@
 import React from 'react';
 import { AsinoClassReference } from './Class';
 import { AsinoObjectReference } from './Object';
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
+import { AsinoPuzzle } from './Puzzle';
 
 export interface AsinoCollection {
   id?: string; // id of this collection

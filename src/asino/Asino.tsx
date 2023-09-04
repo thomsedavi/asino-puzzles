@@ -1,6 +1,6 @@
 import React from 'react';
 import { User } from '../common/interfaces';
-import { AsinoPuzzle, Solution } from './interfaces';
+import { Solution } from './interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
 import { Button, ButtonGroup, Code, Container, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Tab, TabGroup } from '../common/styled';
@@ -23,6 +23,7 @@ import { AsinoClassReference, getClassReferenceRow } from './types/Class';
 import { AsinoObjectReference, getObjectReferenceRow } from './types/Object';
 import { AsinoGroupReference, getGroupReferenceRow } from './types/Group';
 import { AsinoSetReference, getSetReferenceRow } from './types/Set';
+import { AsinoPuzzle } from './types/Puzzle';
 
 interface AsinoProps {
   user?: User | null;

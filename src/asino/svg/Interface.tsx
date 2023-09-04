@@ -1,5 +1,5 @@
 import React from "react"
-import { AsinoPuzzle, Solution, StyleClass } from "../interfaces"
+import { Solution, StyleClass } from "../interfaces"
 import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected } from "../consts";
 import { drawLayer } from "./View";
@@ -9,6 +9,7 @@ import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";
 import { systemClassDefaults } from "../references/Classes";
+import { AsinoPuzzle } from "../types/Puzzle";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styleClasses: StyleClass[], selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;

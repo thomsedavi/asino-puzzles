@@ -1,9 +1,9 @@
 import React from 'react';
-import { AsinoPuzzle } from "../interfaces";
 import { AsinoObjects, getObjectsRow } from "./Object";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline, SelectInline } from '../../common/styled';
+import { AsinoPuzzle } from './Puzzle';
 
 export type SetsOperator = 'NONE' | 'SETS_CONTAINING_OBJECT';
 

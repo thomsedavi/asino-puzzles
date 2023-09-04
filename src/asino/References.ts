@@ -1,10 +1,10 @@
-import { AsinoPuzzle } from "./interfaces";
 import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBooleanReference } from "./types/Boolean";
 import { AsinoClassReference } from "./types/Class";
 import { AsinoObject, AsinoObjectReference } from "./types/Object";
 import { AsinoParameter } from "./types/Parameter";
 import { AsinoCommandReference } from "./types/Path";
+import { AsinoPuzzle } from "./types/Puzzle";
 import { AsinoSet, AsinoSetReference } from "./types/Set";
 
 export class References {

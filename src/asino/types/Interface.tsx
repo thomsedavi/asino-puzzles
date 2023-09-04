@@ -1,12 +1,12 @@
 import React from 'react';
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingBottomHeight, PaddingRightWidth, PaddingLeftWidth, AlignmentHorizontal, AlignmentVertical } from "../consts";
-import { AsinoPuzzle } from "../interfaces";
 import { AsinoColor } from "./Color";
 import { AsinoNumber, getNumberRow } from "./Number";
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoInterface = {
   objectId?: string; // id of the object for this interface

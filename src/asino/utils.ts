@@ -1,6 +1,6 @@
 import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
-import { AsinoPuzzle, Solution } from "./interfaces";
+import { Solution } from "./interfaces";
 import { systemClassDefaults } from "./references/Classes";
 import { systemColorDefaults } from "./references/Colors";
 import { systemNumberDefaults } from "./references/Numbers";
@@ -17,6 +17,7 @@ import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumb
 import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula, isObjectsObjects } from "./types/Object";
 import { AsinoParameter } from "./types/Parameter";
 import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
+import { AsinoPuzzle } from "./types/Puzzle";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
 import { AsinoMatrix, AsinoRotate, AsinoScale, AsinoTransform, AsinoTranslate } from "./types/Transform";

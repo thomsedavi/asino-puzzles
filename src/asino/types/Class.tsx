@@ -1,11 +1,11 @@
 import React from 'react';
 import { AsinoLayer } from "./Layer";
 import { AsinoObject } from "./Object";
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline, SelectInline } from '../../common/styled';
 import { systemClassDefaults } from '../references/Classes';
+import { AsinoPuzzle } from './Puzzle';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 

@@ -1,4 +1,4 @@
-import { AsinoPuzzle } from "../asino/interfaces";
+import { AsinoPuzzle } from "../asino/types/Puzzle";
 import { minifyAsino, unminifyAsino } from "../asino/utils";
 import { LexicologerGame, LexicologerSummary, AsinoSummary, User } from "./interfaces";
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoLayer, getLayerRow } from './Layer';
 import { AsinoTransform, getTransformRow } from './Transform';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoGroup = {
   layers?: AsinoLayer[]; // ids of layers

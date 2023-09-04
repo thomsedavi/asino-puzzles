@@ -1,10 +1,10 @@
 import React from 'react';
 import { AsinoClassReference } from "./Class";
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoCollection } from './Collection';
+import { AsinoPuzzle } from './Puzzle';
 
 export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { AsinoPuzzle } from "../interfaces";
 import { AsinoCircleReference } from "./Circle";
 import { AsinoInterface } from "./Interface";
 import { AsinoLineReference } from "./Line";
@@ -14,6 +13,7 @@ import { systemPathDefaults } from '../references/Paths';
 import { systemRectangleDefaults } from '../references/Rectangles';
 import { AsinoParameter, getParameterRow } from './Parameter';
 import { AsinoObjectReference } from './Object';
+import { AsinoPuzzle } from './Puzzle';
 
 export interface AsinoLayer {
   name?: { value?: string, editedValue?: string }; // name of this rectangle

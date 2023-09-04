@@ -2,11 +2,11 @@ import React from 'react';
 import { dx as DX, dx1 as DX1, dx2 as DX2, dy as DY, dy1 as DY1, dy2 as DY2, fill as Fill, stroke as Stroke, strokeWidth as StrokeWidth, x as X, x1 as X1, x2 as X2, y as Y, y1 as Y1, y2 as Y2 } from "../consts";
 import { AsinoColor } from "./Color";
 import { AsinoNumber } from "./Number";
-import { AsinoPuzzle } from '../interfaces';
 import Utils from '../../common/utils';
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type Letter = 'NONE' | 'C' | 'c' | 'H' | 'h' | 'L' | 'l' | 'M' | 'm' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'V' | 'v' | 'Z' | 'z';
 

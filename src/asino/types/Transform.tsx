@@ -1,8 +1,8 @@
 import React from 'react';
-import { AsinoPuzzle } from '../interfaces';
 import { AsinoNumber, getNumberRow } from './Number';
 import { a, b, c, d, e, f, x, y } from '../consts';
 import { Button, ButtonGroup } from '../../common/styled';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoTransform = {
   matrix?: AsinoMatrix;

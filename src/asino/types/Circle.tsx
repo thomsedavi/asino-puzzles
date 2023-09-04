@@ -2,11 +2,11 @@ import React from 'react';
 import { cx as CX, cy as CY, fill as Fill, r as R, stroke as Stroke, strokeWidth as StrokeWidth } from "../consts";
 import { AsinoColor } from "./Color";
 import { AsinoNumber, getNumberRow } from "./Number";
-import { AsinoPuzzle } from '../interfaces';
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
 import Utils from '../../common/utils';
 import { AsinoParameter } from './Parameter';
+import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoCircle = {
   [CX]?: AsinoNumber; // if this exists, draw cx here

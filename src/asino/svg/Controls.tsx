@@ -1,9 +1,10 @@
 import React from "react"
-import { AsinoPuzzle, Solution, StyleClass } from "../interfaces"
+import { Solution, StyleClass } from "../interfaces"
 import { AsinoClassReference } from "../types/Class";
 import { getClassFromAsinoClass, getClassFromClassReference } from "../utils";
 import { drawLayer } from "./View";
 import { References } from "../References";
+import { AsinoPuzzle } from "../types/Puzzle";
 
 export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClass: (classId: string) => void, selectedCollectionId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
