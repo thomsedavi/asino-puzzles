@@ -33,7 +33,7 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   });
 
   return <svg version="1.1"
-    viewBox='0 0 5040 560'
+    viewBox='0 0 1 0.1'
     xmlns="http://www.w3.org/2000/svg">
     {layers}
   </svg>;

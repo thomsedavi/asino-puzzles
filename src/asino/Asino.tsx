@@ -10,7 +10,7 @@ import Utils from '../common/utils';
 import { useState } from '../common/saveState';
 import { postAsino, putAsino } from '../common/fetchers';
 import { AsinoBooleanReference, getBooleanReferenceRow } from './types/Boolean';
-import { AsinoNumberReference, getNumberReferenceRow } from './types/Number';
+import { AsinoNumber, AsinoNumberReference, getNumberReferenceRow, getNumberRow } from './types/Number';
 import { AsinoRectangleReference, getRectangleReferenceRow } from './types/Rectangle';
 import { AsinoLayer, getLayerRow } from './types/Layer';
 import { AsinoCircleReference, getCircleReferenceRow } from './types/Circle';
@@ -38,7 +38,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | undefined>('layers');
+  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | 'view box' | undefined>('layers');
   const [inputValue, setInputValue] = React.useState<string | undefined>();
   const [solution, setSolution] = React.useState<Solution>({});
   const [editingValue, setEditingValue] = React.useState<string | undefined>();
@@ -205,6 +205,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
         <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
           <Tab selected={selectedTab === 'booleans'} onClick={() => setSelectedTab('booleans')}>Booleans</Tab>
           <Tab selected={selectedTab === 'numbers'} onClick={() => setSelectedTab('numbers')}>Numbers</Tab>
+          <Tab selected={selectedTab === 'view box'} onClick={() => setSelectedTab('view box')}>View Box</Tab>
         </TabGroup>
       </>}
       {mode !== 'read' && isEditable && selectedTab === 'layers' && <div>
@@ -285,6 +286,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` } }] })}>Add Number</Button>
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), {}] })}>Add Number Override</Button>
         </ButtonGroup>
+      </div>}
+      {mode !== 'read' && isEditable && selectedTab === 'view box' && <div>
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? 0 } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? 0 } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? 1 } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? 1 } }))}
       </div>}
       <div>
         {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}

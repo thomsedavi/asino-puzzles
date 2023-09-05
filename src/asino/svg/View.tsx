@@ -7,7 +7,7 @@ import { drawPath } from "./Path";
 import { Number } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
-import { getObjectFromAsinoObject } from "../utils";
+import { getNumberFromAsinoNumber, getObjectFromAsinoObject, getValueFromNumber } from "../utils";
 import { drawGroup } from "./Group";
 import { systemInterfaceDefaults } from "../references/Interfaces";
 import { systemPathDefaults } from "../references/Paths";
@@ -90,8 +90,13 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
 
   style = style + '}';
 
+  const minX = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minX, new References(puzzle)), new References(puzzle)) ?? 0;
+  const minY = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minY, new References(puzzle)), new References(puzzle)) ?? 0;
+  const width = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.width, new References(puzzle)), new References(puzzle)) ?? 1;
+  const height = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.height, new References(puzzle)), new References(puzzle)) ?? 1;
+
   return <svg version="1.1"
-    viewBox='0 0 5040 5040'
+    viewBox={`${minX} ${minY} ${width} ${height}`}
     xmlns="http://www.w3.org/2000/svg"
     shapeRendering='crispEdges'>
     <style>

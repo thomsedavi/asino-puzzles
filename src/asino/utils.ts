@@ -211,7 +211,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
   if (color !== undefined && 'red' in color) {
     const colorRed: AsinoNumber = isDark ? color?.redDark ?? color?.red ?? 0 : color?.lightness ?? 1;
     const colorRedNumber = getNumberFromAsinoNumber(colorRed, references.clone());
-    let red = getValueFromNumber(getProduct(colorRedNumber, 255, references.clone()), references.clone(), true);
+    let red = getValueFromNumber(getProduct(colorRedNumber, 255, references.clone()), references.clone());
 
     if (red === 'infinity') {
       red = 255;
@@ -225,7 +225,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
 
     const colorGreen: AsinoNumber = isDark ? color?.greenDark ?? color?.green ?? 0 : color?.green ?? 1;
     const colorGreenNumber = getNumberFromAsinoNumber(colorGreen, references.clone());
-    let green = getValueFromNumber(getProduct(colorGreenNumber, 255, references.clone()), references.clone(), true);
+    let green = getValueFromNumber(getProduct(colorGreenNumber, 255, references.clone()), references.clone());
 
     if (green === 'infinity') {
       green = 255;
@@ -239,7 +239,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
 
     const colorBlue: AsinoNumber = isDark ? color?.blueDark ?? color?.blue ?? 0 : color?.blue ?? 1;
     const colorBlueNumber = getNumberFromAsinoNumber(colorBlue, references.clone());
-    let blue = getValueFromNumber(getProduct(colorBlueNumber, 255, references.clone()), references.clone(), true);
+    let blue = getValueFromNumber(getProduct(colorBlueNumber, 255, references.clone()), references.clone());
 
     if (blue === 'infinity') {
       blue = 255;
@@ -255,7 +255,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
   } else {
     const colorHue: AsinoNumber = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? 0;
     const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone());
-    let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone(), true);
+    let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone());
 
     if (hue === 'infinity' || hue === 'negativeInfinity' || hue === 'potato' || hue === undefined) {
       hue = 0;
@@ -265,7 +265,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
 
     const colorSaturation: AsinoNumber = (isDark ? (color?.saturationDark ?? color?.saturation) : color?.saturation) ?? { numerator: 3, denominator: 4 };
     const colorSaturationNumber = getNumberFromAsinoNumber(colorSaturation, references.clone());
-    let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()), references.clone(), true);
+    let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()), references.clone());
 
     if (saturation === 'infinity') {
       saturation = 100;
@@ -279,7 +279,7 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
 
     const colorLightness: AsinoNumber = (isDark ? (color?.lightnessDark ?? color?.lightness) : color?.lightness) ?? { numerator: 1, denominator: 2 };
     const colorLightnessNumber = getNumberFromAsinoNumber(colorLightness, references.clone());
-    let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()), references.clone(), true);
+    let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()), references.clone());
 
     if (lightness === 'infinity') {
       lightness = 100;
@@ -295,20 +295,20 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
   }
 }
 
-export const getValueFromNumber = (number: Number | undefined, references: References, doNotMultiply?: boolean): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
+export const getValueFromNumber = (number: Number | undefined, references: References): number | 'infinity' | 'negativeInfinity' | 'potato' | undefined => {
   let result: number | 'infinity' | 'negativeInfinity' | 'potato' | undefined = undefined;
 
   if (number === undefined) {
     // do nothing
   } else if (typeof number === 'number') {
-    result = number * (doNotMultiply ? 1 : 5040);
+    result = number;
   } else if (number === 'infinity') {
     result = 'infinity';
   } else if (number === 'negativeInfinity') {
     result = 'negativeInfinity';
   } else {
-    const numerator = getValueFromNumber(getNumberFromAsinoNumber(number.numerator, references.clone()), references.clone(), true);
-    const denominator = getValueFromNumber(getNumberFromAsinoNumber(number.denominator, references.clone()), references.clone(), true);
+    const numerator = getValueFromNumber(getNumberFromAsinoNumber(number.numerator, references.clone()), references.clone());
+    const denominator = getValueFromNumber(getNumberFromAsinoNumber(number.denominator, references.clone()), references.clone());
 
     if (numerator === undefined || denominator === undefined) {
       // do nothing
@@ -342,7 +342,7 @@ export const getValueFromNumber = (number: Number | undefined, references: Refer
       } else if (denominator === 'potato') {
         result = 'potato';
       } else {
-        result = (numerator * (doNotMultiply ? 1 : 5040)) / denominator;
+        result = numerator / denominator;
       }
     }
   }
@@ -703,7 +703,7 @@ export const getNumberFromFormula = (formula: NumberFormula | undefined, referen
     if (formula?.operator !== undefined && formula.numberInputs?.[0] !== undefined) {
       let left = getNumberFromAsinoNumber(formula.numberInputs[0], references.clone());
 
-      let evall = getValueFromNumber(left, references.clone(), true);
+      let evall = getValueFromNumber(left, references.clone());
 
       if (formula.operator === 'FLOOR' && typeof evall === 'number') {
         result = Math.floor(evall);

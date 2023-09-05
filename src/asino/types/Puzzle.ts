@@ -12,6 +12,7 @@ import { AsinoObjectReference } from "./Object";
 import { AsinoCommandReference, AsinoPathReference } from "./Path";
 import { AsinoRectangleReference } from "./Rectangle";
 import { AsinoSetReference } from "./Set";
+import { ViewBox } from "./ViewBox";
 
 export type AsinoPuzzle = {
   id?: string; // id of this puzzle
@@ -33,6 +34,7 @@ export type AsinoPuzzle = {
   booleans?: AsinoBooleanReference[] // booleans
   colors?: AsinoColorReference[]; // colors
   commands?: AsinoCommandReference[]; // commands
+  viewBox?: ViewBox;
   dateCreated?: string;
   dateUpdated?: string;
 }
