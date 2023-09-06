@@ -2,14 +2,13 @@ import React from 'react';
 import { AsinoClassReference } from './Class';
 import { AsinoObjectReference } from './Object';
 import Utils from '../../common/utils';
-import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
+import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoCollection = {
   id?: string; // id of this collection
   name?: { value?: string, editedValue?: string }; // name of this collection
-  classes?: { classId?: string }[]; // classes
 }
 
 export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollection, key: string, depth: number, update: (value: AsinoCollection) => void): JSX.Element => {
@@ -34,10 +33,6 @@ export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollectio
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {collection.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...collection, name: { ...collection.name, editedValue: collection.name?.value } })}>{collection.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {collection.name?.editedValue !== undefined && <InputInline block autoFocus value={collection.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...collection, name: { ...collection.name, editedValue: event.target.value } })} />}
-    {collection.classes?.map((asinoClass: { classId?: string }, index: number) => getClassRow(puzzle, asinoClass, `${rowKey}class${index}`, (classId: string) => update({ ...collection, classes: [...(collection.classes?.slice(0, index) ?? []), { ...asinoClass, classId: classId }, ...(collection.classes?.slice(index + 1) ?? [])] })))}
-    <ButtonGroup>
-      <Button onClick={() => update({ ...collection, classes: [...(collection.classes ?? []), { classId: 'NONE' }] })}>Add Class</Button>
-    </ButtonGroup>
   </div>;
 }
 

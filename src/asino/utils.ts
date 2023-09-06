@@ -21,6 +21,7 @@ import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
 import { Solution } from "./types/Solution";
 import { AsinoMatrix, AsinoRotate, AsinoScale, AsinoTransform, AsinoTranslate } from "./types/Transform";
+import { ViewBox } from './types/ViewBox';
 
 export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
   if (left === undefined || right === undefined)
@@ -780,11 +781,7 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
       }
     });
   } else {
-    references.classes.forEach(classReference => {
-      if (classReference.id === asinoClass.id) {
-        result = getClassFromClassReference(classReference, references.clone());
-      }
-    });
+    console.log(asinoClass);
   }
 
   return result;
@@ -1046,6 +1043,18 @@ export const minifyAsino = (asino: AsinoPuzzle): any => {
   asino.groups !== undefined && (result[Groups] = asino.groups.map((g: AsinoGroupReference) => minifyGroupReference(g)));
   asino.sets !== undefined && (result[Sets] = asino.sets.map(((s: AsinoSetReference) => minifySetReference(s))));
   asino.commands !== undefined && (result[Commands] = asino.commands.map((c: AsinoCommandReference) => minifyCommandReference(c)));
+  asino.viewBox !== undefined && (result[ViewBoxx] = minifyViewBox(asino.viewBox));
+
+  return result;
+}
+
+const minifyViewBox = (viewBox: ViewBox): any => {
+  const result: any = {};
+
+  viewBox.minX !== undefined && (result[MinX] = minifyNumber(viewBox.minX));
+  viewBox.minY !== undefined && (result[MinY] = minifyNumber(viewBox.minY));
+  viewBox.width !== undefined && (result[Width] = minifyNumber(viewBox.width));
+  viewBox.height !== undefined && (result[Height] = minifyNumber(viewBox.height));
 
   return result;
 }
@@ -1102,7 +1111,6 @@ const minifyCollection = (collection: AsinoCollection): any => {
 
   collection.id !== undefined && (result[Id] = collection.id);
   collection.name !== undefined && collection.name.value !== undefined && (result[Name] = collection.name.value);
-  collection.classes !== undefined && (result[Classes] = collection.classes.map((c: AsinoClassReference) => minifyClassReference(c)));
 
   return result;
 }
@@ -1230,6 +1238,8 @@ const minifyClass = (asinoClass: AsinoClass): any => {
     const result: any = {};
 
     asinoClass.layers !== undefined && (result[Layers] = asinoClass.layers.map((l: AsinoLayer) => minifyLayer(l)));
+    asinoClass.collectionId !== undefined && asinoClass.collectionId !== 'NONE' && (result[CollectionId] = asinoClass.collectionId);
+    asinoClass.viewBox !== undefined && (result[ViewBoxx] = minifyViewBox(asinoClass.viewBox));
 
     return result;
   } else if (isClassFormula(asinoClass)) {
@@ -1586,6 +1596,7 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
   asino[Paths] !== undefined && (result.paths = asino[Paths].map((p: any) => unminifyPathReference(p)));
   asino[Groups] !== undefined && (result.groups = asino[Groups].map((g: any) => unminifyGroupReference(g)));
   asino[Sets] !== undefined && (result.sets = asino[Sets].map((s: any) => unminifySetReference(s)));
+  asino[ViewBoxx] !== undefined && (result.viewBox = unminifyViewBox(asino[ViewBoxx]));
 
   return result;
 }
@@ -1606,7 +1617,6 @@ const unminifyCollection = (collection: any): AsinoCollection => {
 
   collection[Id] !== undefined && (result.id = collection[Id]);
   collection[Name] !== undefined && (result.name = { value: collection[Name] });
-  collection[Classes] !== undefined && (result.classes = collection[Classes].map((c: any) => unminifyClassReference(c)));
 
   return result;
 }
@@ -1746,23 +1756,25 @@ const unminifyClassReference = (asinoClass: any): AsinoClassReference => {
   return result;
 }
 
-const unminifyClass = (asinoClass: any): AsinoClass => {
-  if (Operator in asinoClass) {
-    const result: ClassFormula = {};
+const unminifyClass = (asinoClass: any): Class => {
+  const result: Class = {};
 
-    asinoClass[Operator] !== undefined && asinoClass[Operator] !== 'NONE' && (result.operator = asinoClass[Operator]);
-    asinoClass[ObjectInputs] !== undefined && (result.objectInputs = asinoClass[ObjectInputs].map((o: any) => o !== undefined ? unminifyObject(o) : undefined));
+  asinoClass[Layers] !== undefined && (result.layers = asinoClass[Layers].map((l: any) => unminifyLayer(l)));
+  asinoClass[CollectionId] !== undefined && (result.collectionId = asinoClass[CollectionId]);
+  asinoClass[ViewBoxx] !== undefined && (result.viewBox = unminifyViewBox(asinoClass[ViewBoxx]));
 
-    return result;
-  } else if (Layers in asinoClass) {
-    const result: Class = {};
+  return result;
+}
 
-    asinoClass[Layers] !== undefined && (result.layers = asinoClass[Layers].map((l: any) => unminifyLayer(l)));
+const unminifyViewBox = (viewBox: any): ViewBox => {
+  const result: ViewBox = {};
 
-    return result;
-  } else {
-    return unminifyClassReference(asinoClass);
-  }
+  viewBox[MinX] !== undefined && (result.minX = unminifyNumber(viewBox[MinX]));
+  viewBox[MinY] !== undefined && (result.minY = unminifyNumber(viewBox[MinY]));
+  viewBox[Width] !== undefined && (result.width = unminifyNumber(viewBox[Width]));
+  viewBox[Height] !== undefined && (result.height = unminifyNumber(viewBox[Height]));
+
+  return result;
 }
 
 const unminifySet = (asinoSet: any): AsinoSet => {
@@ -2064,6 +2076,9 @@ const Layers = 'lrs';
 const Line = 'le';
 const Lines = 'les';
 
+const MinX = 'mnx';
+const MinY = 'mny';
+
 const Name = 'ne';
 const Numberr = 'nr';
 const NumberId = 'nrid';
@@ -2109,6 +2124,7 @@ const UserId = 'urid';
 const UserName = 'urne';
 
 const Value = 've';
+const ViewBoxx = 'vwbx';
 
 const Width = 'wh';
 

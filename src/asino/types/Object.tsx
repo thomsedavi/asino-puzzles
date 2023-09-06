@@ -37,24 +37,52 @@ export type AsinoObjectsReference = {
 
 export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: AsinoObjectReference, key: string, depth: number, update: (value: AsinoObjectReference) => void, collection?: AsinoCollection): JSX.Element => {
   const rowKey = `object${key}`;
-  let selectValue = 'NONE';
+  let selectClass = 'NONE';
+  let selectCollection = 'NONE';
 
   if (objectReference.object !== undefined) {
     if (isObjectObject(objectReference.object)) {
+      if (typeof objectReference.object.collectionId === 'string') {
+        selectCollection = objectReference.object.collectionId;
+      }
+
       if (typeof objectReference.object.classFixedId === 'string') {
-        selectValue = objectReference.object.classFixedId;
+        selectClass = objectReference.object.classFixedId;
       }
     }
   }
 
-  const onChangeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onChangeCollection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const objectReferenceUpdate: AsinoObjectReference = { ...objectReference };
+
+    if (event.target.value === 'NONE') {
+      if (objectReferenceUpdate.object !== undefined) {
+        if (isObjectObject(objectReferenceUpdate.object)) {
+          if (typeof objectReferenceUpdate.object.collectionId === 'string') {
+            delete objectReferenceUpdate.object.collectionId;
+            update(objectReferenceUpdate);
+          }
+        }
+      }
+    } else {
+      if (objectReferenceUpdate.object === undefined) {
+        objectReferenceUpdate.object = { collectionId: event.target.value };
+        update(objectReferenceUpdate);
+      } else if (isObjectObject(objectReferenceUpdate.object)) {
+        objectReferenceUpdate.object.collectionId = event.target.value;
+        update(objectReferenceUpdate);
+      }
+    }
+  }
+
+  const onChangeClass = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const objectReferenceUpdate: AsinoObjectReference = { ...objectReference };
 
     if (event.target.value === 'NONE') {
       if (objectReferenceUpdate.object !== undefined) {
         if (isObjectObject(objectReferenceUpdate.object)) {
           if (typeof objectReferenceUpdate.object.classFixedId === 'string') {
-            delete objectReferenceUpdate.object;
+            delete objectReferenceUpdate.object.classFixedId;
             update(objectReferenceUpdate);
           }
         }
@@ -64,10 +92,8 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
         objectReferenceUpdate.object = { classFixedId: event.target.value };
         update(objectReferenceUpdate);
       } else if (isObjectObject(objectReferenceUpdate.object)) {
-        if (typeof objectReferenceUpdate.object.classFixedId === 'string') {
-          objectReferenceUpdate.object.classFixedId = event.target.value;
-          update(objectReferenceUpdate);
-        }
+        objectReferenceUpdate.object.classFixedId = event.target.value;
+        update(objectReferenceUpdate);
       }
     }
   }
@@ -91,9 +117,13 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {objectReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...objectReference, name: { ...objectReference.name, editedValue: objectReference.name?.value } })}>{objectReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {objectReference.name?.editedValue !== undefined && <InputInline block autoFocus value={objectReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...objectReference, name: { ...objectReference.name, editedValue: event.target.value } })} />}
-    <SelectInline name={`Object {${rowKey}} Type`} id={`Object {${rowKey}} Class`} value={selectValue} onChange={onChangeType}>
+    <SelectInline name={`Object {${rowKey}} Collection`} id={`Object {${rowKey}} Collection`} value={selectCollection} onChange={onChangeCollection}>
+      <option value='NONE'>Select Collection</option>
+      {puzzle.collections?.map((c: AsinoCollection, index: number) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+    </SelectInline>
+    <SelectInline name={`Object {${rowKey}} Classs`} id={`Object {${rowKey}} Class`} value={selectClass} onChange={onChangeClass}>
       <option value='NONE'>No Fixed Class</option>
-      {collection?.classes?.map((c: AsinoClassReference, index: number) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      {puzzle.classes?.map((c: AsinoClassReference, index: number) => <option key={`${rowKey} Class ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
     </SelectInline>
   </div>;
 }
@@ -193,7 +223,7 @@ export const getObjectsRow = (puzzle: AsinoPuzzle, objects: AsinoObjects | undef
 }
 
 export const isObjectObject = (object: AsinoObject): object is Object => {
-  return typeof object !== 'string' && 'collectionId' in object;
+  return typeof object !== 'string' && !('id' in object);
 }
 
 export const isObjectsObjects = (objects: AsinoObjects): objects is AsinoObject[] => {

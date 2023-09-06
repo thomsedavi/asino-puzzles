@@ -6,11 +6,15 @@ import { Icon } from '../../common/icons';
 import { InputInline, SelectInline } from '../../common/styled';
 import { systemClassDefaults } from '../references/Classes';
 import { AsinoPuzzle } from './Puzzle';
+import { ViewBox } from './ViewBox';
+import { AsinoCollection } from './Collection';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 
 export type Class = {
   layers?: AsinoLayer[]; // layers to draw this class
+  viewBox?: ViewBox;
+  collectionId?: string; // collection that this class belongs to
 }
 
 export type AsinoClass = Class | ClassFormula | AsinoClassReference;
@@ -25,12 +29,35 @@ export type ClassFormula = {
 export type AsinoClassReference = {
   id?: string; // id of this class
   name?: { value?: string, editedValue?: string }; // name of this class
-  class?: AsinoClass; // value of this class
+  class?: Class; // value of this class
   classId?: string; // refer to the class with this id
 }
 
 export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoClassReference, key: string, depth: number, update: (value: AsinoClassReference) => void): JSX.Element => {
   const rowKey = `class${key}`;
+  let selectCollection = 'NONE';
+
+  if (classReference.class !== undefined) {
+    if (classReference.class.collectionId !== undefined) {
+      selectCollection = classReference.class.collectionId;
+    }
+  }
+
+  const onChangeCollection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const classReferenceUpdate: AsinoClassReference = { ...classReference };
+
+    if (event.target.value === 'NONE') {
+
+    } else {
+      if (classReferenceUpdate.class !== undefined) {
+        classReferenceUpdate.class.collectionId = event.target.value;
+        update(classReferenceUpdate);
+      } else {
+        classReferenceUpdate.class = { collectionId: event.target.value };
+        update(classReferenceUpdate);
+      }
+    }
+  }
 
   const updateName = () => {
     const updatedName = Utils.tidyString(classReference.name?.editedValue);
@@ -51,6 +78,10 @@ export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoC
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {classReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...classReference, name: { ...classReference.name, editedValue: classReference.name?.value } })}>{classReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {classReference.name?.editedValue !== undefined && <InputInline block autoFocus value={classReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...classReference, name: { ...classReference.name, editedValue: event.target.value } })} />}
+    <SelectInline name={`Object {${rowKey}} Collection`} id={`Object {${rowKey}} Collection`} value={selectCollection} onChange={onChangeCollection}>
+      <option value='NONE'>Select Collection</option>
+      {puzzle.collections?.map((c: AsinoCollection, index: number) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+    </SelectInline>
     <SelectInline name={`Class {${rowKey}} Id`} id={`Class {${rowKey}} Id`} value={classReference.classId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...classReference, classId: event.target.value })}>
       <option value='NONE'>Select Class</option>
       {puzzle.classes !== undefined && puzzle.classes.length !== 0 && <optgroup label="Custom Classes">
@@ -64,7 +95,7 @@ export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoC
 }
 
 export const isClassClass = (asinoClass: AsinoClass): asinoClass is Class => {
-  return typeof asinoClass !== 'string' && 'layers' in asinoClass;
+  return typeof asinoClass !== 'string' && !('id' in asinoClass);
 }
 
 export const isClassFormula = (asinoClass: AsinoClass): asinoClass is ClassFormula => {
