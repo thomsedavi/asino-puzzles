@@ -24,6 +24,7 @@ import { AsinoGroupReference, getGroupReferenceRow } from './types/Group';
 import { AsinoSetReference, getSetReferenceRow } from './types/Set';
 import { AsinoPuzzle } from './types/Puzzle';
 import { Solution } from './types/Solution';
+import { generateSudoku } from './utils/Generate';
 
 interface AsinoProps {
   user?: User | null;
@@ -38,7 +39,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
   } : undefined;
 
   const [mode, setMode] = React.useState<'create' | 'read' | 'update'>(props.mode);
-  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | 'view box' | undefined>('layers');
+  const [selectedTab, setSelectedTab] = React.useState<'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | 'view box' | 'generate' | undefined>('layers');
   const [inputValue, setInputValue] = React.useState<string | undefined>();
   const [solution, setSolution] = React.useState<Solution>({});
   const [editingValue, setEditingValue] = React.useState<string | undefined>();
@@ -206,6 +207,7 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Tab selected={selectedTab === 'booleans'} onClick={() => setSelectedTab('booleans')}>Booleans</Tab>
           <Tab selected={selectedTab === 'numbers'} onClick={() => setSelectedTab('numbers')}>Numbers</Tab>
           <Tab selected={selectedTab === 'view box'} onClick={() => setSelectedTab('view box')}>View Box</Tab>
+          <Tab selected={selectedTab === 'generate'} onClick={() => setSelectedTab('generate')}>Generate</Tab>
         </TabGroup>
       </>}
       {mode !== 'read' && isEditable && selectedTab === 'layers' && <div>
@@ -292,6 +294,11 @@ const Asino = (props: AsinoProps): JSX.Element => {
         {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? 0 } }))}
         {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? 1 } }))}
         {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? 1 } }))}
+      </div>}
+      {mode !== 'read' && isEditable && selectedTab === 'generate' && <div>
+        <ButtonGroup>
+          <Button onClick={() => generateSudoku(asinoPuzzle, setAsinoPuzzle)}>Generate Sudoku</Button>
+        </ButtonGroup>
       </div>}
       <div>
         {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
