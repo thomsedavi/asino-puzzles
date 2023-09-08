@@ -31,28 +31,28 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
     const rotate = group?.group?.transform?.rotate;
 
     if (matrix !== undefined) {
-      matrix[A] !== undefined && (aMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[A], references.clone()), references.clone()) ?? 1);
-      matrix[A] !== undefined && (bMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[B], references.clone()), references.clone()) ?? 0);
-      matrix[A] !== undefined && (cMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[C], references.clone()), references.clone()) ?? 0);
-      matrix[A] !== undefined && (dMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[D], references.clone()), references.clone()) ?? 1);
-      matrix[A] !== undefined && (eMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[E], references.clone()), references.clone()) ?? 0);
-      matrix[A] !== undefined && (fMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[F], references.clone()), references.clone()) ?? 0);
+      matrix[A] !== undefined && (aMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[A], references.clone()).number, references.clone()) ?? 1);
+      matrix[A] !== undefined && (bMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[B], references.clone()).number, references.clone()) ?? 0);
+      matrix[A] !== undefined && (cMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[C], references.clone()).number, references.clone()) ?? 0);
+      matrix[A] !== undefined && (dMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[D], references.clone()).number, references.clone()) ?? 1);
+      matrix[A] !== undefined && (eMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[E], references.clone()).number, references.clone()) ?? 0);
+      matrix[A] !== undefined && (fMatrix = getValueFromNumber(getNumberFromAsinoNumber(matrix[F], references.clone()).number, references.clone()) ?? 0);
     }
 
     if (translate !== undefined) {
-      translate[X] !== undefined && (xTranslate = getValueFromNumber(getNumberFromAsinoNumber(translate[X], references.clone()), references.clone()) ?? 1);
-      translate[Y] !== undefined && (yTranslate = getValueFromNumber(getNumberFromAsinoNumber(translate[Y], references.clone()), references.clone()) ?? 1);
+      translate[X] !== undefined && (xTranslate = getValueFromNumber(getNumberFromAsinoNumber(translate[X], references.clone()).number, references.clone()) ?? 1);
+      translate[Y] !== undefined && (yTranslate = getValueFromNumber(getNumberFromAsinoNumber(translate[Y], references.clone()).number, references.clone()) ?? 1);
     }
 
     if (scale !== undefined) {
-      scale[X] !== undefined && (xScale = getValueFromNumber(getNumberFromAsinoNumber(scale[X], references.clone()), references.clone()) ?? 1);
-      scale[Y] !== undefined && (yScale = getValueFromNumber(getNumberFromAsinoNumber(scale[Y], references.clone()), references.clone()) ?? 1);
+      scale[X] !== undefined && (xScale = getValueFromNumber(getNumberFromAsinoNumber(scale[X], references.clone()).number, references.clone()) ?? 1);
+      scale[Y] !== undefined && (yScale = getValueFromNumber(getNumberFromAsinoNumber(scale[Y], references.clone()).number, references.clone()) ?? 1);
     }
 
     if (rotate !== undefined) {
-      rotate[A] !== undefined && (aRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[A], references.clone()), references.clone()) ?? 0);
-      rotate[X] !== undefined && (xRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[X], references.clone()), references.clone()) ?? 0);
-      rotate[Y] !== undefined && (yRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[Y], references.clone()), references.clone()) ?? 0);
+      rotate[A] !== undefined && (aRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[A], references.clone()).number, references.clone()) ?? 0);
+      rotate[X] !== undefined && (xRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[X], references.clone()).number, references.clone()) ?? 0);
+      rotate[Y] !== undefined && (yRotate = getValueFromNumber(getNumberFromAsinoNumber(rotate[Y], references.clone()).number, references.clone()) ?? 0);
     }
 
     if (group?.group?.layers !== undefined) {

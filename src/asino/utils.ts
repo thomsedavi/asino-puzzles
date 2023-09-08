@@ -23,119 +23,119 @@ import { Solution } from "./types/Solution";
 import { AsinoMatrix, AsinoRotate, AsinoScale, AsinoTransform, AsinoTranslate } from "./types/Transform";
 import { ViewBox } from './types/ViewBox';
 
-export const getSum = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
+export const getSum = (left: Number | undefined, right: Number | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
   if (left === undefined || right === undefined)
-    return undefined;
+    return { number: undefined, usesSolution: false };
 
   if (typeof left === 'number') {
     if (typeof right === 'number') {
-      return left + right;
+      return { number: left + right, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else {
-      return { numerator: getSum(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
+      return { number: { numerator: getSum(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()).number, getNumberFromAsinoNumber(right.numerator, references.clone()).number, references.clone()), denominator: right.denominator }, usesSolution: false };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
-      return 0;
+      return { number: 0, usesSolution: false };
     } else {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     }
   } else if (left === 'negativeInfinity') {
     if (right === 'infinity') {
-      return 0;
+      return { number: 0, usesSolution: false };
     } else {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(left.numerator, references.clone()), references.clone()), denominator: left.denominator };
+      return { number: { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()).number, references.clone()).number, getNumberFromAsinoNumber(left.numerator, references.clone()).number, references.clone()), denominator: left.denominator }, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else {
-      return { numerator: getSum(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()), getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
+      return { number: { numerator: getSum(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()).number, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()).number, getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()).number, getNumberFromAsinoNumber(left.denominator, references.clone()).number, references.clone()).number, references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()).number, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()) }, usesSolution: false };
     }
   }
 }
 
-export const getDifference = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
+export const getDifference = (left: Number | undefined, right: Number | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
   if (left === undefined || right === undefined)
-    return undefined;
+    return { number: undefined, usesSolution: false };
 
   if (typeof left === 'number') {
     if (typeof right === 'number') {
-      return left - right;
+      return { number: left - right, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else {
-      return { numerator: getDifference(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
+      return { number: { numerator: getDifference(getProduct(left, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()).number, getNumberFromAsinoNumber(right.numerator, references.clone()).number, references.clone()), denominator: right.denominator }, usesSolution: false };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
-      return 0
+      return { number: 0, usesSolution: false };
     } else {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     }
   } else if (left === 'negativeInfinity') {
     if (right === 'infinity') {
-      return 0
+      return { number: 0, usesSolution: false };
     } else {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), getNumberFromAsinoNumber(left.numerator, references.clone()), references.clone()), denominator: left.denominator };
+      return { number: { numerator: getSum(getProduct(right, getNumberFromAsinoNumber(left.denominator, references.clone()).number, references.clone()).number, getNumberFromAsinoNumber(left.numerator, references.clone()).number, references.clone()), denominator: left.denominator }, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else {
-      return { numerator: getDifference(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()), getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()), getNumberFromAsinoNumber(left.denominator, references.clone()), references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
+      return { number: { numerator: getDifference(getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()).number, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()).number, getProduct(getNumberFromAsinoNumber(right.numerator, references.clone()).number, getNumberFromAsinoNumber(left.denominator, references.clone()).number, references.clone()).number, references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()).number, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()) }, usesSolution: false };
     }
   }
 }
 
-export const getProduct = (left: Number | undefined, right: Number | undefined, references: References): Number | undefined => {
+export const getProduct = (left: Number | undefined, right: Number | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
   if (left === undefined || right === undefined)
-    return undefined;
+    return { number: undefined, usesSolution: false };
 
   if (typeof left === 'number') {
     if (typeof right === 'number') {
-      return left * right;
+      return { number: left * right, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else {
-      return { numerator: getProduct(left, getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: right.denominator };
+      return { number: { numerator: getProduct(left, getNumberFromAsinoNumber(right.numerator, references.clone()).number, references.clone()), denominator: right.denominator }, usesSolution: false };
     }
   } else if (left === 'infinity') {
     if (right === 'negativeInfinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     }
   } else if (left === 'negativeInfinity') {
     if (right === 'negativeInfinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), right, references.clone()), denominator: left.denominator };
+      return { number: { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()).number, right, references.clone()), denominator: left.denominator }, usesSolution: false };
     } else if (right === 'infinity') {
-      return 'infinity';
+      return { number: 'infinity', usesSolution: false };
     } else if (right === 'negativeInfinity') {
-      return 'negativeInfinity';
+      return { number: 'negativeInfinity', usesSolution: false };
     } else {
-      return { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()), getNumberFromAsinoNumber(right.numerator, references.clone()), references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), getNumberFromAsinoNumber(right.denominator, references.clone()), references.clone()) };
+      return { number: { numerator: getProduct(getNumberFromAsinoNumber(left.numerator, references.clone()).number, getNumberFromAsinoNumber(right.numerator, references.clone()).number, references.clone()), denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()).number, getNumberFromAsinoNumber(right.denominator, references.clone()).number, references.clone()) }, usesSolution: false };
     }
   }
 }
@@ -172,7 +172,7 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined,
     }
   } else {
     if (typeof right === 'number') {
-      return { numerator: left.numerator, denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()), right, references.clone()) };
+      return { numerator: left.numerator, denominator: getProduct(getNumberFromAsinoNumber(left.denominator, references.clone()).number, right, references.clone()) };
     } else if (right === 'infinity') {
       return 0;
     } else if (right === 'negativeInfinity') {
@@ -211,8 +211,8 @@ export const getQuotient = (left: Number | undefined, right: Number | undefined,
 export const getValueFromColor = (color: Color | undefined, references: References, idPrefix: string, isDark: boolean): { key: string, value: string } | undefined => {
   if (color !== undefined && 'red' in color) {
     const colorRed: AsinoNumber = isDark ? color?.redDark ?? color?.red ?? 0 : color?.lightness ?? 1;
-    const colorRedNumber = getNumberFromAsinoNumber(colorRed, references.clone());
-    let red = getValueFromNumber(getProduct(colorRedNumber, 255, references.clone()), references.clone());
+    const colorRedNumber = getNumberFromAsinoNumber(colorRed, references.clone()).number;
+    let red = getValueFromNumber(getProduct(colorRedNumber, 255, references.clone()).number, references.clone());
 
     if (red === 'infinity') {
       red = 255;
@@ -225,8 +225,8 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
     red = Math.max(Math.min(Math.round(red), 255), 0);
 
     const colorGreen: AsinoNumber = isDark ? color?.greenDark ?? color?.green ?? 0 : color?.green ?? 1;
-    const colorGreenNumber = getNumberFromAsinoNumber(colorGreen, references.clone());
-    let green = getValueFromNumber(getProduct(colorGreenNumber, 255, references.clone()), references.clone());
+    const colorGreenNumber = getNumberFromAsinoNumber(colorGreen, references.clone()).number;
+    let green = getValueFromNumber(getProduct(colorGreenNumber, 255, references.clone()).number, references.clone());
 
     if (green === 'infinity') {
       green = 255;
@@ -239,8 +239,8 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
     green = Math.max(Math.min(Math.round(green), 255), 0);
 
     const colorBlue: AsinoNumber = isDark ? color?.blueDark ?? color?.blue ?? 0 : color?.blue ?? 1;
-    const colorBlueNumber = getNumberFromAsinoNumber(colorBlue, references.clone());
-    let blue = getValueFromNumber(getProduct(colorBlueNumber, 255, references.clone()), references.clone());
+    const colorBlueNumber = getNumberFromAsinoNumber(colorBlue, references.clone()).number;
+    let blue = getValueFromNumber(getProduct(colorBlueNumber, 255, references.clone()).number, references.clone());
 
     if (blue === 'infinity') {
       blue = 255;
@@ -255,8 +255,8 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
     return { key: `${idPrefix}r${red}g${green}b${blue}a1`, value: `rgba(${red},${green},${blue},1)` };
   } else {
     const colorHue: AsinoNumber = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? 0;
-    const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone());
-    let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()), references.clone());
+    const colorHueNumber = getNumberFromAsinoNumber(colorHue, references.clone()).number;
+    let hue = getValueFromNumber(getProduct(colorHueNumber, 360, references.clone()).number, references.clone());
 
     if (hue === 'infinity' || hue === 'negativeInfinity' || hue === 'potato' || hue === undefined) {
       hue = 0;
@@ -265,8 +265,8 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
     hue = Math.round(hue) % 360;
 
     const colorSaturation: AsinoNumber = (isDark ? (color?.saturationDark ?? color?.saturation) : color?.saturation) ?? { numerator: 3, denominator: 4 };
-    const colorSaturationNumber = getNumberFromAsinoNumber(colorSaturation, references.clone());
-    let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()), references.clone());
+    const colorSaturationNumber = getNumberFromAsinoNumber(colorSaturation, references.clone()).number;
+    let saturation = getValueFromNumber(getProduct(colorSaturationNumber, 100, references.clone()).number, references.clone());
 
     if (saturation === 'infinity') {
       saturation = 100;
@@ -279,8 +279,8 @@ export const getValueFromColor = (color: Color | undefined, references: Referenc
     saturation = Math.max(Math.min(Math.round(saturation), 100), 0);
 
     const colorLightness: AsinoNumber = (isDark ? (color?.lightnessDark ?? color?.lightness) : color?.lightness) ?? { numerator: 1, denominator: 2 };
-    const colorLightnessNumber = getNumberFromAsinoNumber(colorLightness, references.clone());
-    let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()), references.clone());
+    const colorLightnessNumber = getNumberFromAsinoNumber(colorLightness, references.clone()).number;
+    let lightness = getValueFromNumber(getProduct(colorLightnessNumber, 100, references.clone()).number, references.clone());
 
     if (lightness === 'infinity') {
       lightness = 100;
@@ -308,8 +308,8 @@ export const getValueFromNumber = (number: Number | undefined, references: Refer
   } else if (number === 'negativeInfinity') {
     result = 'negativeInfinity';
   } else {
-    const numerator = getValueFromNumber(getNumberFromAsinoNumber(number.numerator, references.clone()), references.clone());
-    const denominator = getValueFromNumber(getNumberFromAsinoNumber(number.denominator, references.clone()), references.clone());
+    const numerator = getValueFromNumber(getNumberFromAsinoNumber(number.numerator, references.clone()).number, references.clone());
+    const denominator = getValueFromNumber(getNumberFromAsinoNumber(number.denominator, references.clone()).number, references.clone());
 
     if (numerator === undefined || denominator === undefined) {
       // do nothing
@@ -351,8 +351,8 @@ export const getValueFromNumber = (number: Number | undefined, references: Refer
   return result;
 }
 
-export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): Color | undefined => {
-  let result: Color | undefined = undefined;
+export const getColorFromFormula = (formula: ColorFormula | undefined, references: References, solution: Solution): { color: Color | undefined, usesSolution: boolean } => {
+  let result: { color: Color | undefined, usesSolution: boolean } = { color: undefined, usesSolution: false };
 
   if (formula?.operator === 'IF_ELSE') {
     let index = 0;
@@ -360,7 +360,7 @@ export const getColorFromFormula = (formula: ColorFormula | undefined, reference
     while (!match && index < (formula.booleanInputs?.length ?? 0)) {
       const boolean = getBooleanFromAsinoBoolean(formula.booleanInputs![0], references.clone(), solution);
 
-      if (boolean) {
+      if (boolean.boolean) {
         match = true;
         result = getColorFromAsinoColor(formula.colorInputs?.[index], references.clone(), solution);
       } else {
@@ -394,13 +394,13 @@ export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, refe
   return result;
 }
 
-export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | string | undefined, references: References, solution: Solution): string | undefined => {
-  let result: string | undefined = undefined;
+export const getClassIdFromAsinoClass = (asinoClass: AsinoClass | string | undefined, references: References, solution: Solution): { string: string | undefined, usesSolution: boolean } => {
+  let result: { string: string | undefined, usesSolution: boolean } = { string: undefined, usesSolution: false };
 
   if (asinoClass === undefined) {
     // do nothing
   } else if (typeof asinoClass === 'string') {
-    result = asinoClass;
+    result.string = asinoClass;
 
     references.classes.forEach(referenceClass => {
       if (referenceClass.id === asinoClass) {
@@ -588,8 +588,8 @@ export const getSetsFromAsinoSets = (sets: AsinoSets | undefined, references: Re
   return result;
 }
 
-export const getClassIdFromFormula = (formula: ClassFormula | undefined, references: References, solution: Solution): string | undefined => {
-  let result: string | undefined = undefined;
+export const getClassIdFromFormula = (formula: ClassFormula | undefined, references: References, solution: Solution): { string: string | undefined, usesSolution: boolean } => {
+  let result: { string: string | undefined, usesSolution: boolean } = { string: undefined, usesSolution: false };
 
   if (formula?.operator === undefined) {
     // do nothing
@@ -624,8 +624,8 @@ export const getClassFromFormula = (formula: ClassFormula | undefined, reference
   return result;
 }
 
-export const getBooleanFromFormula = (formula: BooleanFormula | undefined, references: References, solution: Solution): boolean | undefined => {
-  let result: boolean | undefined = undefined;
+export const getBooleanFromFormula = (formula: BooleanFormula | undefined, references: References, solution: Solution): { boolean: boolean | undefined, usesSolution: boolean } => {
+  let result: { boolean: boolean | undefined, usesSolution: boolean } = { boolean: undefined, usesSolution: false };
 
   if (formula?.operator === undefined) {
     // do nothing
@@ -633,22 +633,24 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
     if (formula.operator === 'IS_EACH_SET') {
       const sets = getSetsFromAsinoSets(formula.setsInputs?.[0], references.clone());
 
-      result = true;
+      result.boolean = true;
 
       sets?.forEach((set: Set) => {
         const setResult = getBooleanFromAsinoBoolean(formula.boolean, references.clone().setSet(set), solution);
 
-        setResult !== true && (result = false);
+        setResult.boolean !== true && (result.boolean = false);
+        setResult.usesSolution ||= setResult.usesSolution;
       });
     } else if (formula.operator === 'IS_EACH_OBJECT') {
       const objects = getObjectIdsFromAsinoObjects(formula.objectsInputs?.[0], references.clone());
 
-      result = true;
+      result.boolean = true;
 
       objects?.forEach((object: string) => {
         const objectResult = getBooleanFromAsinoBoolean(formula.boolean, references.clone().setObject(object), solution);
 
-        objectResult !== true && (result = false);
+        objectResult.boolean !== true && (result.boolean = false);
+        objectResult.usesSolution ||= objectResult.usesSolution;
       });
     } else if (formula.operator === 'IS_OBJECT') {
       const newRefs = references.clone().addObjects([[{ id: getObjectIdFromAsinoObject(formula.objectOutput, references.clone()), object: references.object }]]);
@@ -664,7 +666,7 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
 
       result = getBooleanFromAsinoBoolean(formula.boolean, newReferences, solution);
     } else if (formula.operator === 'IS_EACH_CLASS_DIFFERENT') {
-      let classes: (string | undefined)[] = [];
+      let classes: { string: string | undefined, usesSolution: boolean }[] = [];
 
       const asinoClasses = getClassesFromAsinoClasses(formula.classesInputs?.[0], references.clone());
 
@@ -672,18 +674,18 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
         classes.push(getClassIdFromAsinoClass(asinoClass, references.clone(), solution));
       });
 
-      classes.push(references.fixedClassId);
+      classes.push({ string: references.fixedClassId, usesSolution: false });
 
       classes = classes.filter(asinoClass => asinoClass !== undefined);
 
-      result = true;
+      result.boolean = true;
       let index = 0;
 
-      while (result && index < classes.length - 1) {
+      while (result.boolean === true && index < classes.length - 1) {
         const class1 = classes[index]!;
         const class2 = classes[index + 1]!;
 
-        class1 === class2 && (result = false);
+        class1.string === class2.string && (result.boolean = false);
 
         index++;
       }
@@ -695,8 +697,8 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
   return result
 }
 
-export const getNumberFromFormula = (formula: NumberFormula | undefined, references: References): Number | undefined => {
-  let result: Number | undefined = undefined;
+export const getNumberFromFormula = (formula: NumberFormula | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
+  let result: { number: Number | undefined, usesSolution: boolean } = { number: undefined, usesSolution: false };
 
   if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
     // david, what are you doing, rewrite this better please
@@ -704,10 +706,10 @@ export const getNumberFromFormula = (formula: NumberFormula | undefined, referen
     if (formula?.operator !== undefined && formula.numberInputs?.[0] !== undefined) {
       let left = getNumberFromAsinoNumber(formula.numberInputs[0], references.clone());
 
-      let evall = getValueFromNumber(left, references.clone());
+      let evall = getValueFromNumber(left.number, references.clone());
 
       if (formula.operator === 'FLOOR' && typeof evall === 'number') {
-        result = Math.floor(evall);
+        result.number = Math.floor(evall);
       }
     }
   } else {
@@ -718,13 +720,13 @@ export const getNumberFromFormula = (formula: NumberFormula | undefined, referen
       // do nothing
     } else {
       if (formula.operator === Multiplication)
-        result = getProduct(left, right, references.clone());
+        result = getProduct(left.number, right.number, references.clone());
       else if (formula.operator === Subtraction)
-        result = getDifference(left, right, references.clone());
+        result = getDifference(left.number, right.number, references.clone());
       else if (formula.operator === Addition)
-        result = getSum(left, right, references.clone());
+        result = getSum(left.number, right.number, references.clone());
       else if (formula.operator === Division)
-        result = getQuotient(left, right, references.clone());
+        result.number = getQuotient(left.number, right.number, references.clone());
     }
   }
 
@@ -805,13 +807,13 @@ export const getCommandFromCommandReference = (command: AsinoCommandReference | 
   return result;
 }
 
-export const getBooleanFromAsinoBoolean = (boolean: AsinoBoolean | undefined, references: References, solution: Solution): boolean | undefined => {
-  let result: boolean | undefined = undefined;
+export const getBooleanFromAsinoBoolean = (boolean: AsinoBoolean | undefined, references: References, solution: Solution): { boolean: boolean | undefined, usesSolution: boolean } => {
+  let result: { boolean: boolean | undefined, usesSolution: boolean } = { boolean: undefined, usesSolution: false };
 
   if (boolean === undefined) {
     // do nothing
   } else if (typeof boolean === 'boolean') {
-    result = boolean;
+    result.boolean = boolean;
   } else if (typeof boolean === 'string') {
     references.booleans.forEach(booleanReference => {
       if (booleanReference.id === boolean) {
@@ -847,8 +849,8 @@ export const getCommandFromAsinoCommand = (command: AsinoCommand | undefined, re
   return result;
 }
 
-export const getColorFromAsinoColor = (color: AsinoColor | undefined, references: References, solution: Solution): Color | undefined => {
-  let result: Color | undefined = undefined;
+export const getColorFromAsinoColor = (color: AsinoColor | undefined, references: References, solution: Solution): { color: Color | undefined, usesSolution: boolean } => {
+  let result: { color: Color | undefined, usesSolution: boolean } = { color: undefined, usesSolution: false };
 
   if (color === undefined) {
     // do nothing
@@ -861,54 +863,54 @@ export const getColorFromAsinoColor = (color: AsinoColor | undefined, references
   } else if (isColorFormula(color)) {
     console.log('TODO', color);
   } else if (isColorColor(color)) {
-    result = {};
+    result.color = {};
 
     if (color.hue !== undefined) {
-      result.hue = getNumberFromAsinoNumber(color.hue, references.clone());
+      result.color.hue = getNumberFromAsinoNumber(color.hue, references.clone());
     }
 
     if (color.hueDark !== undefined) {
-      result.hueDark = getNumberFromAsinoNumber(color.hueDark, references.clone());
+      result.color.hueDark = getNumberFromAsinoNumber(color.hueDark, references.clone());
     }
 
     if (color.saturation !== undefined) {
-      result.saturation = getNumberFromAsinoNumber(color.saturation, references.clone());
+      result.color.saturation = getNumberFromAsinoNumber(color.saturation, references.clone());
     }
 
     if (color.saturationDark !== undefined) {
-      result.saturationDark = getNumberFromAsinoNumber(color.saturationDark, references.clone());
+      result.color.saturationDark = getNumberFromAsinoNumber(color.saturationDark, references.clone());
     }
 
     if (color.lightness !== undefined) {
-      result.lightness = getNumberFromAsinoNumber(color.lightness, references.clone());
+      result.color.lightness = getNumberFromAsinoNumber(color.lightness, references.clone());
     }
 
     if (color.lightnessDark !== undefined) {
-      result.lightnessDark = getNumberFromAsinoNumber(color.lightnessDark, references.clone());
+      result.color.lightnessDark = getNumberFromAsinoNumber(color.lightnessDark, references.clone());
     }
 
     if (color.red !== undefined) {
-      result.red = getNumberFromAsinoNumber(color.red, references.clone());
+      result.color.red = getNumberFromAsinoNumber(color.red, references.clone());
     }
 
     if (color.redDark !== undefined) {
-      result.redDark = getNumberFromAsinoNumber(color.redDark, references.clone());
+      result.color.redDark = getNumberFromAsinoNumber(color.redDark, references.clone());
     }
 
     if (color.green !== undefined) {
-      result.green = getNumberFromAsinoNumber(color.green, references.clone());
+      result.color.green = getNumberFromAsinoNumber(color.green, references.clone());
     }
 
     if (color.greenDark !== undefined) {
-      result.greenDark = getNumberFromAsinoNumber(color.greenDark, references.clone());
+      result.color.greenDark = getNumberFromAsinoNumber(color.greenDark, references.clone());
     }
 
     if (color.blue !== undefined) {
-      result.blue = getNumberFromAsinoNumber(color.blue, references.clone());
+      result.color.blue = getNumberFromAsinoNumber(color.blue, references.clone());
     }
 
     if (color.blueDark !== undefined) {
-      result.blueDark = getNumberFromAsinoNumber(color.blueDark, references.clone());
+      result.color.blueDark = getNumberFromAsinoNumber(color.blueDark, references.clone());
     }
   } else {
     if (color.id === undefined && color.color !== undefined) {
@@ -921,13 +923,13 @@ export const getColorFromAsinoColor = (color: AsinoColor | undefined, references
   return result;
 }
 
-export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, references: References): Number | undefined => {
-  let result: Number | undefined = undefined;
+export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
+  let result: { number: Number | undefined, usesSolution: boolean } = { number: undefined, usesSolution: false };
 
   if (number === undefined) {
     // do nothing
   } else if (typeof number === 'number') {
-    result = number;
+    result.number = number;
   } else if (typeof number === 'string') {
     systemNumberDefaults.forEach((numberReference: AsinoNumberReference) => {
       if (numberReference.id === number) {
@@ -941,11 +943,11 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
       }
     });
   } else if (isAsinoNumberFraction(number)) {
-    result = number;
+    result.number = number;
   } else if (isNumberFormula(number)) {
     result = getNumberFromFormula(number, references.clone());
   } else if (isNumberEditedNumber(number)) {
-    result = number.originalValue;
+    result.number = number.originalValue;
   } else {
     if (number.id === undefined && number.number !== undefined) {
       result = getNumberFromAsinoNumber(number.number, references.clone().addParameters([number.parameters]));
@@ -957,8 +959,8 @@ export const getNumberFromAsinoNumber = (number: AsinoNumber | undefined, refere
   return result;
 }
 
-export const getColorFromLayer = (array: (any | undefined)[], references: References, solution: Solution, valueName: string, valueNameAndId: string, colorDefault?: AsinoColorReference): Color | undefined => {
-  let result: Color | undefined = getColorFromAsinoColor(colorDefault, references.clone(), solution);
+export const getColorFromLayer = (array: (any | undefined)[], references: References, solution: Solution, valueName: string, valueNameAndId: string, colorDefault?: AsinoColorReference): { color: Color | undefined, usesSolution: boolean } => {
+  let result: { color: Color | undefined, usesSolution: boolean } = getColorFromAsinoColor(colorDefault, references.clone(), solution);
 
   array.forEach(value => {
     const valueColorValue: AsinoColor = value?.[valueName]?.[valueNameAndId];
@@ -973,7 +975,7 @@ export const getColorFromLayer = (array: (any | undefined)[], references: Refere
       } else if (isColorFormula(valueColorValue)) {
         result = getColorFromFormula(valueColorValue, references.clone(), solution);
       } else if (isColorColor(valueColorValue)) {
-        result = valueColorValue;
+        result.color = valueColorValue;
       } else {
         console.log('valColVal', valueColorValue);
       }
@@ -983,15 +985,15 @@ export const getColorFromLayer = (array: (any | undefined)[], references: Refere
   return result;
 }
 
-export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueName: string, valueNameAndId: string, numberDefault: AsinoNumberReference): Number | undefined => {
-  let result: Number | undefined = getNumberFromAsinoNumber(numberDefault, references.clone());
+export const getNumberFromLayer = (array: (any | undefined)[], references: References, valueName: string, valueNameAndId: string, numberDefault: AsinoNumberReference): { number: Number | undefined, usesSolution: boolean } => {
+  let result: { number: Number | undefined, usesSolution: boolean } = getNumberFromAsinoNumber(numberDefault, references.clone());
 
   array.forEach(value => {
     const valueNumberValue: number | string | AsinoNumber | undefined = value?.[valueName]?.[valueNameAndId];
 
     if (valueNumberValue !== undefined) {
       if (typeof valueNumberValue === 'number') {
-        result = valueNumberValue;
+        result.number = valueNumberValue;
       } else if (typeof valueNumberValue === 'string') {
         systemNumberDefaults.forEach((number: AsinoNumberReference) => {
           if (number.id === valueNumberValue) {
@@ -1005,11 +1007,11 @@ export const getNumberFromLayer = (array: (any | undefined)[], references: Refer
           }
         });
       } else if (isAsinoNumberFraction(valueNumberValue)) {
-        result = valueNumberValue;
+        result.number = valueNumberValue;
       } else if (isNumberFormula(valueNumberValue)) {
         result = getNumberFromFormula(valueNumberValue, references.clone());
       } else if (isNumberEditedNumber(valueNumberValue)) {
-        result = valueNumberValue.originalValue;
+        result.number = valueNumberValue.originalValue;
       } else {
         result = getNumberFromAsinoNumber(valueNumberValue, references.clone().addParameters([valueNumberValue.parameters]));
       }
@@ -1124,7 +1126,8 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.line !== undefined && (result[Line] = minifyLineReference(layer.line));
   layer.name !== undefined && layer.name.value !== undefined && (result[Name] = layer.name.value);
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
-  layer.path !== undefined && (result[Path] = minifyPathReference(layer.path));
+  layer.path !== undefined && (result[Path] = minifyPath(layer.path));
+  layer.pathId !== undefined && layer.pathId !== 'NONE' && (result[PathId] = layer.pathId);
   layer.group !== undefined && (result[Group] = minifyGroupReference(layer.group));
   layer.rectangle !== undefined && (result[Rectangle] = minifyRectangle(layer.rectangle));
   layer.rectangleId !== undefined && layer.rectangleId !== 'NONE' && (result[RectangleId] = layer.rectangleId)
@@ -1630,7 +1633,8 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   layer[InterfaceId] !== undefined && (result.interfaceId = layer[InterfaceId]);
   layer[Line] !== undefined && (result.line = unminifyLineReference(layer[Line]));
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
-  layer[Path] !== undefined && (result.path = unminifyPathReference(layer[Path]));
+  layer[Path] !== undefined && (result.path = unminifyPath(layer[Path]));
+  layer[PathId] !== undefined && (result.pathId = layer[PathId]);
   layer[Group] !== undefined && (result.group = unminifyGroupReference(layer[Group]));
   layer[Rectangle] !== undefined && (result.rectangle = unminifyRectangle(layer[Rectangle]));
   layer[RectangleId] !== undefined && (result.rectangleId = layer[RectangleId]);
@@ -2099,6 +2103,7 @@ const PaddingRightWidth = 'pgrtwh';
 const PaddingBottomHeight = 'pgbmht';
 const PaddingLeftWidth = 'pgltwh';
 const Path = 'ph';
+const PathId = 'phid';
 const Paths = 'phs';
 const Parameters = 'prs';
 

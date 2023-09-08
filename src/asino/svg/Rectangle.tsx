@@ -9,7 +9,7 @@ import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 
 export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
-  let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), 'rectangle', StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(rectangles, references.clone(), 'rectangle', StrokeWidth, defaultStrokeWidth).number;
 
   const x = getNumberFromLayer(rectangles, references.clone(), 'rectangle', X, { number: 0 });
   const y = getNumberFromLayer(rectangles, references.clone(), 'rectangle', Y, { number: 0 });
@@ -19,11 +19,11 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
   const fill = getColorFromLayer(rectangles, references.clone(), solution, 'rectangle', Fill);
   const stroke = getColorFromLayer(rectangles, references.clone(), solution, 'rectangle', Stroke);
 
-  const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
-  const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);
+  const fillClass = getValueFromColor(fill.color, references.clone(), 'f', false);
+  const strokeClass = getValueFromColor(stroke.color, references.clone(), 's', false);
 
-  const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
-  const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
+  const fillDarkClass = getValueFromColor(fill.color, references.clone(), 'fd', true);
+  const strokeDarkClass = getValueFromColor(stroke.color, references.clone(), 'sd', true);
 
   styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
   styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
@@ -33,10 +33,10 @@ export const drawRectangle = (rectangles: (AsinoRectangleReference | undefined)[
 
   return <rect
     key={key}
-    x={getValueFromNumber(x, references.clone())}
-    y={getValueFromNumber(y, references.clone())}
-    width={getValueFromNumber(width, references.clone())}
-    height={getValueFromNumber(height, references.clone())}
+    x={getValueFromNumber(x.number, references.clone())}
+    y={getValueFromNumber(y.number, references.clone())}
+    width={getValueFromNumber(width.number, references.clone())}
+    height={getValueFromNumber(height.number, references.clone())}
     className={Utils.tidyString(`${fillClass?.key ?? ''} ${fillDarkClass?.key ?? ''} ${strokeClass?.key ?? ''} ${strokeDarkClass?.key ?? ''}`)}
     strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;

@@ -10,10 +10,10 @@ import { getNumberFromAsinoNumber, getValueFromNumber } from "../utils";
 export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle) => void) => {
   const collectionId = Utils.getRandomId(puzzle.collections?.filter(c => c.id !== undefined).map(c => c.id!) ?? []);
 
-  const outerHorizontalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(OuterHorizontalDivisionCount, new References(puzzle)), new References(puzzle));
-  const innerHorizontalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(InnerHorizontalDivisionCount, new References(puzzle)), new References(puzzle));
-  const outerVerticalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(OuterVerticalDivisionCount, new References(puzzle)), new References(puzzle));
-  const innerVerticalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(InnerVerticalDivisionCount, new References(puzzle)), new References(puzzle));
+  const outerHorizontalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(OuterHorizontalDivisionCount, new References(puzzle)).number, new References(puzzle));
+  const innerHorizontalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(InnerHorizontalDivisionCount, new References(puzzle)).number, new References(puzzle));
+  const outerVerticalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(OuterVerticalDivisionCount, new References(puzzle)).number, new References(puzzle));
+  const innerVerticalDivisionCount = getValueFromNumber(getNumberFromAsinoNumber(InnerVerticalDivisionCount, new References(puzzle)).number, new References(puzzle));
 
   const objectIds: string[] = [...puzzle.objects?.filter(o => o.id !== undefined).map(o => o.id!) ?? []];
   const objects: AsinoObjectReference[] = [];

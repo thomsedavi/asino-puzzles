@@ -2,7 +2,7 @@ import React from 'react';
 import { AsinoCircleReference } from "./Circle";
 import { AsinoInterface } from "./Interface";
 import { AsinoLineReference } from "./Line";
-import { AsinoPathReference } from "./Path";
+import { AsinoPath } from "./Path";
 import { AsinoRectangle } from "./Rectangle";
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
@@ -23,7 +23,8 @@ export type AsinoLayer = {
   rectangleId?: string; // draw the rectangle with this id
   line?: AsinoLineReference; // draw the layer with these attributes
   circle?: AsinoCircleReference; // draw the circle with these attributes
-  path?: AsinoPathReference; // draw the path with these attributes
+  path?: AsinoPath; // draw this path
+  pathId?: string; // draw the path with this id
   group?: AsinoGroupReference; // draw the group with these attributes
   objectId?: string; // id of the interface of this layer
   parameters?: AsinoParameter[]; // number and color parameters
@@ -41,12 +42,14 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     selectValue = 'LINE';
   } else if (layer.rectangle !== undefined) {
     selectValue = 'RECTANGLE';
-  } else if (layer.rectangle !== undefined) {
+  } else if (layer.rectangleId !== undefined) {
     selectValue = 'RECTANGLE_ID';
   } else if (layer.circle !== undefined) {
     selectValue = 'CIRCLE';
   } else if (layer.path !== undefined) {
     selectValue = 'PATH';
+  } else if (layer.pathId !== undefined) {
+    selectValue = 'PATH_ID';
   } else if (layer.group !== undefined) {
     selectValue = 'GROUP';
   }
@@ -68,6 +71,8 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       update({ name: layer.name, circle: {} });
     } else if (event.target.value === 'PATH') {
       update({ name: layer.name, path: {} });
+    } else if (event.target.value === 'PATH_ID') {
+      update({ name: layer.name, pathId: 'NONE' });
     } else if (event.target.value === 'GROUP') {
       update({ name: layer.name, group: {} });
     }
@@ -101,6 +106,7 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='RECTANGLE_ID'>Rectangle Select</option>
       <option value='CIRCLE'>Circle</option>
       <option value='PATH'>Path</option>
+      <option value='PATH_ID'>Path Select</option>
       <option value='GROUP'>Group</option>
     </SelectInline>
     {layer.interfaceId !== undefined && <SelectInline name={`Interface {${rowKey}} Id`} id={`Interface {${rowKey}} Id`} value={layer.interfaceId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, interfaceId: event.target.value })}>
@@ -129,10 +135,14 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Circle</option>
       {puzzle.circles?.map((c, index) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
     </SelectInline>}
-    {layer.path !== undefined && <SelectInline name={`Path {${rowKey}} Id`} id={`Path {${rowKey}} Id`} value={layer.path.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, path: { ...layer.path, id: event.target.value } })}>
+    {layer.pathId !== undefined && <SelectInline name={`Path {${rowKey}} Id`} id={`Path {${rowKey}} Id`} value={layer.pathId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, pathId: event.target.value })}>
       <option value='NONE'>Select Path</option>
-      {puzzle.paths?.map((p, index) => <option key={`${rowKey} Id ${index}`} value={p.id}>{p.name?.value ?? ''}</option>)}
-      {systemPathDefaults.map((p, index) => <option key={`${rowKey} Id ${index}`} value={p.id}>{p.name?.value ?? ''}</option>)}
+      {puzzle.paths !== undefined && puzzle.paths.length !== 0 && <optgroup label="Custom Path">
+        {puzzle.paths?.map((p, index) => <option key={`${rowKey} Id ${index}`} value={p.id}>{p.name?.value ?? ''}</option>)}
+      </optgroup>}
+      <optgroup label="System Defaults">
+        {systemPathDefaults.map((p, index) => <option key={`${rowKey} Default Id ${index}`} value={p.id}>{p.name?.value ?? 'undefined'}</option>)}
+      </optgroup>
     </SelectInline>}
     {layer.group !== undefined && <SelectInline name={`Group {${rowKey}} Id`} id={`Group {${rowKey}} Id`} value={layer.group.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, group: { ...layer.group, id: event.target.value } })}>
       <option value='NONE'>Select Group</option>

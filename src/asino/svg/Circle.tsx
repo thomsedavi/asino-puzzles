@@ -9,14 +9,14 @@ import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 
 export const drawCircle = (circles: (AsinoCircleReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
-  let strokeWidth: Number | undefined = getNumberFromLayer(circles, references.clone(), 'circle', StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(circles, references.clone(), 'circle', StrokeWidth, defaultStrokeWidth).number;
 
-  const cx = getNumberFromLayer(circles, references.clone(), 'circle', CX, { number: 0 });
-  const cy = getNumberFromLayer(circles, references.clone(), 'circle', CY, { number: 0 });
-  const r = getNumberFromLayer(circles, references.clone(), 'circl', R, { number: 0 });
+  const cx = getNumberFromLayer(circles, references.clone(), 'circle', CX, { number: 0 }).number;
+  const cy = getNumberFromLayer(circles, references.clone(), 'circle', CY, { number: 0 }).number;
+  const r = getNumberFromLayer(circles, references.clone(), 'circl', R, { number: 0 }).number;
 
-  const fill = getColorFromLayer(circles, references.clone(), solution, 'circle', Fill);
-  const stroke = getColorFromLayer(circles, references.clone(), solution, 'circle', Stroke);
+  const fill = getColorFromLayer(circles, references.clone(), solution, 'circle', Fill).color;
+  const stroke = getColorFromLayer(circles, references.clone(), solution, 'circle', Stroke).color;
 
   const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
   const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);

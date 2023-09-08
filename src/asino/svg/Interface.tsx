@@ -46,17 +46,17 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderBottomFill);
   const borderLeftFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderLeftFill);
 
-  const fillClass = getValueFromColor(fill, references.clone(), 'f', false);
-  const borderTopFillClass = getValueFromColor(borderTopFill, references.clone(), 'f', false);
-  const borderRightFillClass = getValueFromColor(borderRightFill, references.clone(), 'f', false);
-  const borderBottomFillClass = getValueFromColor(borderBottomFill, references.clone(), 'f', false);
-  const borderLeftFillClass = getValueFromColor(borderLeftFill, references.clone(), 'f', false);
+  const fillClass = getValueFromColor(fill.color, references.clone(), 'f', false);
+  const borderTopFillClass = getValueFromColor(borderTopFill.color, references.clone(), 'f', false);
+  const borderRightFillClass = getValueFromColor(borderRightFill.color, references.clone(), 'f', false);
+  const borderBottomFillClass = getValueFromColor(borderBottomFill.color, references.clone(), 'f', false);
+  const borderLeftFillClass = getValueFromColor(borderLeftFill.color, references.clone(), 'f', false);
 
-  const fillDarkClass = getValueFromColor(fill, references.clone(), 'fd', true);
-  const borderTopFillDarkClass = getValueFromColor(borderTopFill, references.clone(), 'fd', true);
-  const borderRightFillDarkClass = getValueFromColor(borderRightFill, references.clone(), 'fd', true);
-  const borderBottomFillDarkClass = getValueFromColor(borderBottomFill, references.clone(), 'fd', true);
-  const borderLeftFillDarkClass = getValueFromColor(borderLeftFill, references.clone(), 'fd', true);
+  const fillDarkClass = getValueFromColor(fill.color, references.clone(), 'fd', true);
+  const borderTopFillDarkClass = getValueFromColor(borderTopFill.color, references.clone(), 'fd', true);
+  const borderRightFillDarkClass = getValueFromColor(borderRightFill.color, references.clone(), 'fd', true);
+  const borderBottomFillDarkClass = getValueFromColor(borderBottomFill.color, references.clone(), 'fd', true);
+  const borderLeftFillDarkClass = getValueFromColor(borderLeftFill.color, references.clone(), 'fd', true);
 
   styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
   styles.filter(s => s.id === borderTopFillClass?.key).length === 0 && (styles.push({ id: borderTopFillClass?.key, fill: borderTopFillClass?.value }));
@@ -93,23 +93,23 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   }
 
   const outerTop = `0`;
-  const outerRight = `${getValueFromNumber(width, references.clone())}`;
-  const outerBottom = `${getValueFromNumber(height, references.clone())}`;
+  const outerRight = `${getValueFromNumber(width.number, references.clone())}`;
+  const outerBottom = `${getValueFromNumber(height.number, references.clone())}`;
   const outerLeft = `0`;
 
-  const innerTop = `${getValueFromNumber(getProduct(borderTopHeight, height, references.clone()), references.clone())}`;
-  const innerRight = `${getValueFromNumber(getDifference(width, getProduct(borderRightWidth, width, references.clone()), references.clone()), references.clone())}`;
-  const innerBottom = `${getValueFromNumber(getDifference(height, getProduct(borderBottomHeight, height, references.clone()), references.clone()), references.clone())}`;
-  const innerLeft = `${getValueFromNumber(getProduct(borderLeftWidth, width, references.clone()), references.clone())}`;
+  const innerTop = `${getValueFromNumber(getProduct(borderTopHeight.number, height.number, references.clone()).number, references.clone())}`;
+  const innerRight = `${getValueFromNumber(getDifference(width.number, getProduct(borderRightWidth.number, width.number, references.clone()).number, references.clone()).number, references.clone())}`;
+  const innerBottom = `${getValueFromNumber(getDifference(height.number, getProduct(borderBottomHeight.number, height.number, references.clone()).number, references.clone()).number, references.clone())}`;
+  const innerLeft = `${getValueFromNumber(getProduct(borderLeftWidth.number, width.number, references.clone()).number, references.clone())}`;
 
   return <g
     id={`layer${key}`}
     key={`layer${key}`}
-    transform={`translate(${getValueFromNumber(x, references.clone()) ?? 0},${getValueFromNumber(y, references.clone()) ?? 0})`}
+    transform={`translate(${getValueFromNumber(x.number, references.clone()) ?? 0},${getValueFromNumber(y.number, references.clone()) ?? 0})`}
   >
     <rect
-      width={getValueFromNumber(width, references.clone())}
-      height={getValueFromNumber(height, references.clone())}
+      width={getValueFromNumber(width.number, references.clone())}
+      height={getValueFromNumber(height.number, references.clone())}
       className={Utils.tidyString(`${fillClass?.key ?? ''} ${fillDarkClass?.key ?? ''}`)}
     />
     <path
@@ -151,10 +151,10 @@ export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | 
   return <rect
     id={`layerInteractive${index}`}
     key={`layerInteractive${index}`}
-    x={getValueFromNumber(x, references.clone())}
-    y={getValueFromNumber(y, references.clone())}
-    width={getValueFromNumber(width, references.clone())}
-    height={getValueFromNumber(height, references.clone())}
+    x={getValueFromNumber(x.number, references.clone())}
+    y={getValueFromNumber(y.number, references.clone())}
+    width={getValueFromNumber(width.number, references.clone())}
+    height={getValueFromNumber(height.number, references.clone())}
     stroke='none'
     fill='transparent'
     cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}

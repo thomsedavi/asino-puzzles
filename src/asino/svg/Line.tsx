@@ -9,7 +9,7 @@ import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 
 export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
-  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'line', StrokeWidth, defaultStrokeWidth);
+  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'line', StrokeWidth, defaultStrokeWidth).number;
 
   const x1 = getNumberFromLayer(lines, references.clone(), 'line', X1, { number: 0 });
   const y1 = getNumberFromLayer(lines, references.clone(), 'line', Y1, { number: 0 });
@@ -18,9 +18,9 @@ export const drawLine = (lines: (AsinoLineReference | undefined)[], references: 
 
   const stroke = getColorFromLayer(lines, references.clone(), solution, 'line', Stroke);
 
-  const strokeClass = getValueFromColor(stroke, references.clone(), 's', false);
+  const strokeClass = getValueFromColor(stroke.color, references.clone(), 's', false);
 
-  const strokeDarkClass = getValueFromColor(stroke, references.clone(), 'sd', true);
+  const strokeDarkClass = getValueFromColor(stroke.color, references.clone(), 'sd', true);
 
   styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
 
@@ -31,10 +31,10 @@ export const drawLine = (lines: (AsinoLineReference | undefined)[], references: 
   }
 
   return <line key={key}
-    x1={getValueFromNumber(x1, references.clone())}
-    y1={getValueFromNumber(y1, references.clone())}
-    x2={getValueFromNumber(x2, references.clone())}
-    y2={getValueFromNumber(y2, references.clone())}
+    x1={getValueFromNumber(x1.number, references.clone())}
+    y1={getValueFromNumber(y1.number, references.clone())}
+    x2={getValueFromNumber(x2.number, references.clone())}
+    y2={getValueFromNumber(y2.number, references.clone())}
     className={Utils.tidyString(`${strokeClass?.key ?? ''} ${strokeDarkClass?.key ?? ''}`)}
     strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
   />;

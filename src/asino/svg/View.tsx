@@ -42,11 +42,11 @@ export const drawLayer = (puzzle: AsinoPuzzle, solution: Solution, layer: AsinoL
     const layerRectangle = puzzle.rectangles?.filter(rectangle => rectangle.id === layer.rectangleId)[0];
 
     return drawRectangle([defaultLayerRectangle, layerRectangle], references.clone().addParameters([defaultLayerRectangle?.parameters, layerRectangle?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, key, styles);
-  } else if (layer.path !== undefined) {
-    const defaultLayerPath = systemPathDefaults.filter(path => path.id === layer.path?.id)[0];
-    const layerPath = puzzle.paths?.filter(path => path.id === layer.path?.id)[0];
+  } else if (layer.pathId !== undefined) {
+    const defaultLayerPath = systemPathDefaults.filter(path => path.id === layer.pathId)[0];
+    const layerPath = puzzle.paths?.filter(path => path.id === layer.pathId)[0];
 
-    return drawPath([defaultLayerPath, layerPath, layer.path], references.clone().addParameters([defaultLayerPath?.parameters, layerPath?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, scale, key, styles);
+    return drawPath([defaultLayerPath, layerPath], references.clone().addParameters([defaultLayerPath?.parameters, layerPath?.parameters, layer?.parameters]).addClasses([puzzle.classes]), solution, { number: { numerator: 1, denominator: 200 } }, scale, key, styles);
   } else if (layer.group !== undefined) {
     const layerGroup = puzzle.groups?.filter(group => group.id === layer.group?.id)[0];
 
@@ -90,10 +90,10 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
 
   style = style + '}';
 
-  const minX = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minX, new References(puzzle)), new References(puzzle)) ?? 0;
-  const minY = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minY, new References(puzzle)), new References(puzzle)) ?? 0;
-  const width = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.width, new References(puzzle)), new References(puzzle)) ?? 1;
-  const height = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.height, new References(puzzle)), new References(puzzle)) ?? 1;
+  const minX = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minX, new References(puzzle)).number, new References(puzzle)) ?? 0;
+  const minY = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.minY, new References(puzzle)).number, new References(puzzle)) ?? 0;
+  const width = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.width, new References(puzzle)).number, new References(puzzle)) ?? 1;
+  const height = getValueFromNumber(getNumberFromAsinoNumber(puzzle.viewBox?.height, new References(puzzle)).number, new References(puzzle)) ?? 1;
 
   return <svg version="1.1"
     viewBox={`${minX} ${minY} ${width} ${height}`}

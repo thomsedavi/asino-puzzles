@@ -7,10 +7,10 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'f-ee' }
+          pathId: 'f-ee'
         },
         {
-          path: { id: 'f-eb' }
+          pathId: 'f-eb'
         }
       ]
     }
@@ -21,7 +21,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'f-ee' }
+          pathId: 'f-ee'
         }
       ]
     }
@@ -32,7 +32,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'f-eb' }
+          pathId: 'f-eb'
         }
       ]
     }
@@ -43,10 +43,10 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'b-ff' }
+          pathId: 'b-ff'
         },
         {
-          path: { id: 'b-bc' }
+          pathId: 'b-bc'
         }
       ]
     }
@@ -57,10 +57,10 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'c-fb' }
+          pathId: 'c-fb'
         },
         {
-          path: { id: 'a-ee' }
+          pathId: 'a-ee'
         }
       ]
     }
@@ -71,7 +71,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'c-fb' }
+          pathId: 'c-fb'
         }
       ]
     }
@@ -82,7 +82,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'b-ff' }
+          pathId: 'b-ff'
         }
       ]
     }
@@ -93,7 +93,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'b-bc' }
+          pathId: 'b-bc'
         }
       ]
     }
@@ -104,7 +104,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
     class: {
       layers: [
         {
-          path: { id: 'a-ee' }
+          pathId: 'a-ee'
         }
       ]
     }
