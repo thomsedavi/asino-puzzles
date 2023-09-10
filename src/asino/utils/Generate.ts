@@ -1,6 +1,7 @@
 import Utils from "../../common/utils";
 import { References } from "../References";
 import { InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceColumnIndex, InterfaceRowIndex, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionCount, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionCount } from "../consts";
+import { AsinoClassReference } from "../types/Class";
 import { AsinoLayer } from "../types/Layer";
 import { AsinoObjectReference } from "../types/Object";
 import { AsinoParameter } from "../types/Parameter";
@@ -17,6 +18,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
 
   const objectIds: string[] = [...puzzle.objects?.filter(o => o.id !== undefined).map(o => o.id!) ?? []];
   const objects: AsinoObjectReference[] = [];
+  const classes: AsinoClassReference[] = []
   const layers: AsinoLayer[] = [];
 
   if (typeof outerHorizontalDivisionCount === 'number') {
@@ -60,12 +62,19 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
     }
   }
 
+  const classIds = ['b-de', 'f-de'];
+
+  classIds.forEach(asinoClass => {
+    classes.push({ classId: asinoClass, class: { collectionId: collectionId } });
+  });
+
   update(
     {
       ...puzzle,
       collections: [...(puzzle.collections ?? []), { id: collectionId, name: { value: 'Sudoku Collection' } }],
       objects: [...(puzzle.objects ?? []), ...objects],
-      layers: [...(puzzle.layers ?? []), ...layers]
+      layers: [...(puzzle.layers ?? []), ...layers],
+      classes: [...(puzzle.classes ?? []), ...classes]
     }
   );
 }

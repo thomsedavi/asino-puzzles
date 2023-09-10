@@ -763,14 +763,10 @@ export const getBooleanFromBooleanReference = (asinoBoolean: AsinoBooleanReferen
   return result;
 }
 
-export const getClassFromClassReference = (asinoClass: AsinoClassReference | undefined, references: References): AsinoClass | undefined => {
-  let result: AsinoClass | undefined = undefined;
+export const getClassFromClassReference = (asinoClass: AsinoClassReference | undefined, references: References): Class | undefined => {
+  let result: Class | undefined = undefined;
 
-  if (asinoClass === undefined) {
-    // do nothing
-  } else if (asinoClass.class !== undefined) {
-    result = asinoClass.class;
-  } else if (asinoClass.classId !== undefined) {
+  if (asinoClass?.classId !== undefined) {
     systemClassDefaults.forEach(classReference => {
       if (classReference.id === asinoClass.classId) {
         result = getClassFromClassReference(classReference, references.clone());
@@ -782,8 +778,14 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
         result = getClassFromClassReference(classReference, references.clone());
       }
     });
-  } else {
-    console.log(asinoClass);
+  }
+
+  if (asinoClass?.class !== undefined) {
+    result === undefined && (result = {});
+
+    asinoClass.class.collectionId !== undefined && (result.collectionId = asinoClass.class.collectionId);
+    asinoClass.class.layers !== undefined && (result.layers = asinoClass.class.layers);
+    asinoClass.class.viewBox !== undefined && (result.viewBox = asinoClass.class.viewBox);
   }
 
   return result;

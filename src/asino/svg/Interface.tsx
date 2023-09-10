@@ -30,6 +30,9 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     references.setFixedClassId(fixedClassId);
   });
 
+  const solutionClass = solution.selectedClasses?.filter(c => c.objectId === interfaceObjectId)[0]?.classId;
+  solutionClass !== undefined && (interfaceClassId = solutionClass);
+
   const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { number: 0 });
   const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { number: 0 });
   const width = getNumberFromLayer(interfaces, references.clone(), 'interface', Width, defaultInterfaceWidthValue);
@@ -72,23 +75,19 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
 
   const innards: (JSX.Element | undefined)[] = [];
 
-  const collection = puzzle.collections?.filter(collection => collection.id === interfaceCollectionId)[0];
+  interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
 
-  if (collection !== undefined) {
-    interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
+  if (interfaceClassId !== undefined) {
+    const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
 
-    if (interfaceClassId !== undefined) {
-      const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+    const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
 
-      const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
+    if (selectedClass !== undefined) {
+      const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
 
-      if (selectedClass !== undefined) {
-        const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
-
-        asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-          innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId));
-        });
-      }
+      asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
+        innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId));
+      });
     }
   }
 

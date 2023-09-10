@@ -72,7 +72,7 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
       const object2 = getObjectFromAsinoObject(layerInterface?.interface?.objectId, new References(puzzle).addParameters([layer?.parameters]).addObjects([puzzle.objects]));
       const object3 = getObjectFromAsinoObject(layer.objectId, new References(puzzle).addParameters([layer?.parameters]).addObjects([puzzle.objects]));
 
-      object1?.classFixedId === undefined && object2?.classFixedId === undefined && object3?.classFixedId === undefined && layers.push(drawInterfaceInteractive([defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], new References(puzzle).addParameters([layer?.parameters]), { number: { numerator: 1, denominator: 9 } }, { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+      object1?.classFixedId === undefined && object2?.classFixedId === undefined && object3?.classFixedId === undefined && layers.push(drawInterfaceInteractive([defaultLayerInterface, layerInterface], [defaultLayerInterface?.interface?.collectionId, layerInterface?.interface?.collectionId, object3?.collectionId], [defaultLayerInterface?.interface?.objectId, layerInterface?.interface?.objectId, layer.objectId], new References(puzzle).addParameters([layer?.parameters]), { number: { numerator: 1, denominator: 9 } }, { number: { numerator: 1, denominator: 9 } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     }
   });
 
