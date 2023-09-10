@@ -1,4 +1,4 @@
-import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth } from "../consts";
+import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth, FontPathWidth, FontPathHeight, FontHorizontalSerifWidth, FontVerticalSerifHeight, FontWidth, FontHalfHeight } from "../consts";
 import { AsinoNumberReference } from "../types/Number";
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
@@ -398,5 +398,35 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     id: InterfaceRowIndex,
     name: { value: 'Interface Row Index' },
     number: 1
+  },
+  {
+    id: FontWidth,
+    name: { value: 'Font Width' },
+    number: { numerator: 1, denominator: 3 }
+  },
+  {
+    id: FontPathWidth,
+    name: { value: 'Font Path Width' },
+    number: { numerator: 1, denominator: 10 }
+  },
+  {
+    id: FontPathHeight,
+    name: { value: 'Font Path Height' },
+    number: { numerator: 1, denominator: 10 }
+  },
+  {
+    id: FontHorizontalSerifWidth,
+    name: { value: 'Font Horizontal Serif Width' },
+    number: { numerator: 1, denominator: 12 }
+  },
+  {
+    id: FontVerticalSerifHeight,
+    name: { value: 'Font Vertical Serif Height' },
+    number: { numerator: 1, denominator: 12 }
+  },
+  {
+    id: FontHalfHeight,
+    name: { value: 'Font Half Height' },
+    number: { numerator: 1, denominator: 2 }
   }
 ];

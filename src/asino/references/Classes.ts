@@ -1,3 +1,4 @@
+import { FontHorizontalSerifWidth, FontPathWidth, FontWidth } from "../consts";
 import { AsinoClassReference } from "../types/Class";
 
 export const systemClassDefaults: AsinoClassReference[] = [
@@ -107,6 +108,55 @@ export const systemClassDefaults: AsinoClassReference[] = [
           pathId: 'a-ee'
         }
       ]
+    }
+  },
+  {
+    id: 'b-de',
+    name: { value: '1' },
+    class: {
+      layers: [
+        {
+          pathId: 'f-ef'
+        },
+        {
+          pathId: 'd-de'
+        }
+      ],
+      viewBox: {
+        minX: 0,
+        minY: 0,
+        width: {
+          operator: '+',
+          numberInputs: [
+            FontPathWidth,
+            FontHorizontalSerifWidth
+          ]
+        },
+        height: 1
+      }
+    }
+  },
+  {
+    id: 'f-de',
+    name: { value: '2' },
+    class: {
+      layers: [
+        {
+          pathId: 'f-ba'
+        }
+      ],
+      viewBox: {
+        minX: 0,
+        minY: 0,
+        width: {
+          operator: '+',
+          numberInputs: [
+            FontWidth,
+            FontPathWidth
+          ]
+        },
+        height: 1
+      }
     }
   }
 ]
