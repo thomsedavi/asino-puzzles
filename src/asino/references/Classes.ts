@@ -150,6 +150,43 @@ export const systemClassDefaults: AsinoClassReference[] = [
       layers: [
         {
           pathId: 'f-cd'
+        },
+        {
+          pathId: 'e-ba'
+        }
+      ],
+      viewBox: {
+        minX: 0,
+        minY: 0,
+        width: 1,
+        height: 1
+      }
+    }
+  },
+  {
+    id: 'a-ae',
+    name: { value: '4' },
+    class: {
+      layers: [
+        {
+          pathId: 'c-bc'
+        }
+      ],
+      viewBox: {
+        minX: 0,
+        minY: 0,
+        width: 1,
+        height: 1
+      }
+    }
+  },
+  {
+    id: 'f-ce',
+    name: { value: '7' },
+    class: {
+      layers: [
+        {
+          pathId: 'f-ec'
         }
       ],
       viewBox: {

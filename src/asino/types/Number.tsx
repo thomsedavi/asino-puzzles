@@ -6,7 +6,7 @@ import { systemNumberDefaults } from '../references/Numbers';
 import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
 
-export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING';
+export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING' | 'TOTAL';
 
 export type Fraction = { numerator?: AsinoNumber, denominator?: AsinoNumber };
 export type EditedNumber = { originalValue: number, editedValue: string };

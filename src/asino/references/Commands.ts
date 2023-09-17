@@ -821,5 +821,384 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       },
       dy: FontCurveVertical1
     }
+  },
+  {
+    id: 'd-dd',
+    name: { value: 'Font Outer Curve Left To Right 2 Top To Bottom 3' },
+    command: {
+      letter: 'c',
+      dx1: {
+        operator: '*',
+        numberInputs: [
+          CurveFraction,
+          {
+            operator: '+',
+            numberInputs: [
+              FontCurveHorizontal2,
+              FontSizeHorizontal2
+            ]
+          }
+        ]
+      },
+      dy1: 0,
+      dx2: {
+        operator: '+',
+        numberInputs: [
+          FontCurveHorizontal2,
+          FontSizeHorizontal2
+        ]
+      },
+      dy2: {
+        operator: '-',
+        numberInputs: [
+          {
+            operator: '+',
+            numberInputs: [
+              FontSizeVertical2,
+              FontCurveVertical3
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontSizeVertical2,
+                  FontCurveVertical3
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dx: {
+        operator: '+',
+        numberInputs: [
+          FontCurveHorizontal2,
+          FontSizeHorizontal2
+        ]
+      },
+      dy: {
+        operator: '+',
+        numberInputs: [
+          FontSizeVertical2,
+          FontCurveVertical3
+        ]
+      }
+    }
+  },
+  {
+    id: 'b-ee',
+    name: { value: 'Font Outer Curve Top To Bottom 4 Right To Left 2' },
+    command: {
+      letter: 'c',
+      dx1: 0,
+      dy1: {
+        operator: '*',
+        numberInputs: [
+          CurveFraction,
+          {
+            operator: '+',
+            numberInputs: [
+              FontCurveVertical4,
+              FontSizeVertical3
+            ]
+          }
+        ]
+      },
+      dx2: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              0,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveHorizontal2,
+                  FontSizeHorizontal2
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveHorizontal2,
+                  FontSizeHorizontal2
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dy2: {
+        operator: '+',
+        numberInputs: [
+          FontCurveVertical4,
+          FontSizeVertical3
+        ]
+      },
+      dx: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontCurveHorizontal2,
+              FontSizeHorizontal2
+            ]
+          }
+        ]
+      },
+      dy: {
+        operator: '+',
+        numberInputs: [
+          FontCurveVertical4,
+          FontSizeVertical3
+        ]
+      }
+    }
+  },
+  {
+    id: 'e-fa',
+    name: { value: 'Font Outer Curve Right To Left 1 Bottom To Top 4' },
+    command: {
+      letter: 'c',
+      dx1: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontSizeHorizontal1,
+                  FontCurveHorizontal1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dy1: 0,
+      dx2: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontSizeHorizontal1,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy2: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              0,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveVertical4,
+                  FontSizeVertical3
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveVertical4,
+                  FontSizeVertical3
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dx: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontSizeHorizontal1,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontCurveVertical4,
+              FontSizeVertical3
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    id: 'a-bd',
+    name: { value: 'Font Inner Curve Top To Bottom 4 Left To Right 1' },
+    command: {
+      letter: 'c',
+      dx1: 0,
+      dy1: {
+        operator: '*',
+        numberInputs: [
+          CurveFraction,
+          FontCurveVertical4
+        ]
+      },
+      dx2: {
+        operator: '-',
+        numberInputs: [
+          FontCurveHorizontal1,
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy2: FontCurveVertical4,
+      dx: FontCurveHorizontal1,
+      dy: FontCurveVertical4
+    }
+  },
+  {
+    id: 'e-fc',
+    name: { value: 'Font Inner Curve Left To Right 2 Bottom To Top 4' },
+    command: {
+      letter: 'c',
+      dx1: {
+        operator: '*',
+        numberInputs: [
+          CurveFraction,
+          FontCurveHorizontal2
+        ]
+      },
+      dy1: 0,
+      dx2: FontCurveHorizontal2,
+      dy2: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              0,
+              FontCurveVertical4
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              FontCurveVertical4
+
+            ]
+          }
+        ]
+      },
+      dx: FontCurveHorizontal2,
+      dy: {
+        operator: '-',
+        numberInputs: [
+          0,
+          FontCurveVertical4
+        ]
+      }
+    }
+  },
+  {
+    id: 'e-aa',
+    name: { value: 'Font Inner Curve Bottom To Top 3 Right To Left 2' },
+    command: {
+      letter: 'c',
+      dx1: 0,
+      dy1: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              FontCurveVertical3
+            ]
+          }
+        ]
+      },
+      dx2: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              0,
+              FontCurveHorizontal2
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              FontCurveHorizontal2
+            ]
+          }
+        ]
+      },
+      dy2: {
+        operator: '-',
+        numberInputs: [
+          0,
+          FontCurveVertical3
+        ]
+      },
+      dx: {
+        operator: '-',
+        numberInputs: [
+          0,
+          FontCurveHorizontal2
+        ]
+      },
+      dy: {
+        operator: '-',
+        numberInputs: [
+          0,
+          FontCurveVertical3
+        ]
+      }
+    }
   }
 ]

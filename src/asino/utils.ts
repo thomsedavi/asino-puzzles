@@ -1,5 +1,5 @@
 import { References } from "./References";
-import { Addition, Division, Multiplication, Subtraction } from "./consts";
+import { Addition, Division, Multiplication, Subtraction, Total } from "./consts";
 import { systemClassDefaults } from "./references/Classes";
 import { systemColorDefaults } from "./references/Colors";
 import { systemCommandDefaults } from "./references/Commands";
@@ -701,7 +701,21 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
 export const getNumberFromFormula = (formula: NumberFormula | undefined, references: References): { number: Number | undefined, usesSolution: boolean } => {
   let result: { number: Number | undefined, usesSolution: boolean } = { number: undefined, usesSolution: false };
 
-  if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
+  if (formula?.operator === Total) {
+    formula.numberInputs?.forEach((number: AsinoNumber | undefined) => {
+      const thisResult = getNumberFromAsinoNumber(number, references.clone());
+
+      result.usesSolution ||= thisResult.usesSolution;
+
+      if (thisResult.number !== undefined) {
+        if (result.number === undefined) {
+          result.number = thisResult.number;
+        } else {
+          result.number = getSum(result.number, thisResult.number, references.clone()).number;
+        }
+      }
+    });
+  } else if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
     // david, what are you doing, rewrite this better please
 
     if (formula?.operator !== undefined && formula.numberInputs?.[0] !== undefined) {

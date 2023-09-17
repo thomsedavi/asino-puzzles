@@ -44,6 +44,7 @@ export const Multiplication = '*';
 export const Division = '/';
 export const Subtraction = '-';
 export const Addition = '+';
+export const Total = 'TOTAL'
 
 export const C = 'C';
 export const h = 'h';
