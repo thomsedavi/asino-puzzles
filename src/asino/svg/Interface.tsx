@@ -11,20 +11,14 @@ import { systemClassDefaults } from "../references/Classes";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
-import { ViewBox } from "../types/ViewBox";
 import { Class } from "../types/Class";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styles: Style[], selectedObjectId?: string): JSX.Element => {
-  let interfaceCollectionId: string | undefined = undefined;
   let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
 
   objectIds.forEach((objectId: string | undefined) => {
     objectId !== undefined && (interfaceObjectId = objectId);
-  });
-
-  collectionIds.forEach((collectionId: string | undefined) => {
-    collectionId !== undefined && (interfaceCollectionId = collectionId);
   });
 
   fixedClassIds.forEach((fixedClassId: string | undefined) => {

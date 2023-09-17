@@ -640,7 +640,7 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
         const setResult = getBooleanFromAsinoBoolean(formula.boolean, references.clone().setSet(set), solution);
 
         setResult.boolean !== true && (result.boolean = false);
-        setResult.usesSolution ||= setResult.usesSolution;
+        result.usesSolution ||= setResult.usesSolution;
       });
     } else if (formula.operator === 'IS_EACH_OBJECT') {
       const objects = getObjectIdsFromAsinoObjects(formula.objectsInputs?.[0], references.clone());
@@ -651,7 +651,7 @@ export const getBooleanFromFormula = (formula: BooleanFormula | undefined, refer
         const objectResult = getBooleanFromAsinoBoolean(formula.boolean, references.clone().setObject(object), solution);
 
         objectResult.boolean !== true && (result.boolean = false);
-        objectResult.usesSolution ||= objectResult.usesSolution;
+        result.usesSolution ||= objectResult.usesSolution;
       });
     } else if (formula.operator === 'IS_OBJECT') {
       const newRefs = references.clone().addObjects([[{ id: getObjectIdFromAsinoObject(formula.objectOutput, references.clone()), object: references.object }]]);
@@ -2025,7 +2025,6 @@ const ClassOutput = 'csot';
 const ClassFixedId = 'csfdid';
 const ClassesInputs = 'cssits';
 const Classes = 'css';
-const Commandd = 'cd';
 const Commands = 'cds';
 const CollectionId = 'cnid';
 const Collections = 'cns';
@@ -2037,12 +2036,6 @@ const CX = 'cx';
 const CY = 'cy';
 
 const D = 'd';
-const DX = 'dx';
-const DX1 = 'dx1';
-const DX2 = 'dx2';
-const DY = 'dy';
-const DY1 = 'dy1';
-const DY2 = 'dy2';
 const Denominator = 'dr';
 const DateCreated = 'decd';
 const DateUpdated = 'deud';
@@ -2117,7 +2110,6 @@ const TransformTranslate = 'tmte';
 const UserId = 'urid';
 const UserName = 'urne';
 
-const Value = 've';
 const ViewBoxx = 'vwbx';
 
 const Width = 'wh';
