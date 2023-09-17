@@ -1,6 +1,6 @@
 import React from "react"
-import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
-import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected } from "../consts";
+import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
+import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingRightWidth, PaddingBottomHeight, PaddingLeftWidth } from "../consts";
 import { drawLayer } from "./View";
 import { AsinoInterfaceReference } from "../types/Interface";
 import { AsinoNumberReference } from "../types/Number";
@@ -11,6 +11,8 @@ import { systemClassDefaults } from "../references/Classes";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
+import { ViewBox } from "../types/ViewBox";
+import { Class } from "../types/Class";
 
 export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styles: Style[], selectedObjectId?: string): JSX.Element => {
   let interfaceCollectionId: string | undefined = undefined;
@@ -43,6 +45,11 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderBottomHeight, { number: 0 });
   const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderLeftWidth, { number: 0 });
 
+  const paddingTopHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingTopHeight, { number: 0 });
+  const paddingRightWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingRightWidth, { number: 0 });
+  const paddingBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingBottomHeight, { number: 0 });
+  const paddingLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingLeftWidth, { number: 0 });
+
   const fill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
   const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderTopFill);
   const borderRightFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderRightFill);
@@ -73,24 +80,6 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   styles.filter(s => s.id === borderBottomFillDarkClass?.key).length === 0 && (styles.push({ id: borderBottomFillDarkClass?.key, fillDark: borderBottomFillDarkClass?.value }));
   styles.filter(s => s.id === borderLeftFillDarkClass?.key).length === 0 && (styles.push({ id: borderLeftFillDarkClass?.key, fillDark: borderLeftFillDarkClass?.value }));
 
-  const innards: (JSX.Element | undefined)[] = [];
-
-  interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
-
-  if (interfaceClassId !== undefined) {
-    const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
-
-    const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
-
-    if (selectedClass !== undefined) {
-      const asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
-
-      asinoClass?.layers?.forEach((layer: AsinoLayer, classLayerIndex: number) => {
-        innards.push(drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId));
-      });
-    }
-  }
-
   const outerTop = `0`;
   const outerRight = `${getValueFromNumber(width.number, references.clone())}`;
   const outerBottom = `${getValueFromNumber(height.number, references.clone())}`;
@@ -100,6 +89,55 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
   const innerRight = `${getValueFromNumber(getDifference(width.number, getProduct(borderRightWidth.number, width.number, references.clone()).number, references.clone()).number, references.clone())}`;
   const innerBottom = `${getValueFromNumber(getDifference(height.number, getProduct(borderBottomHeight.number, height.number, references.clone()).number, references.clone()).number, references.clone())}`;
   const innerLeft = `${getValueFromNumber(getProduct(borderLeftWidth.number, width.number, references.clone()).number, references.clone())}`;
+
+  const paddingInnerTopScaled = `${getValueFromNumber(getProduct(paddingTopHeight.number, height.number, references.clone()).number, references.clone())}`;
+  const paddingInnerRightScaled = `${getValueFromNumber(getDifference(width.number, getProduct(paddingRightWidth.number, width.number, references.clone()).number, references.clone()).number, references.clone())}`;
+  const paddingInnerBottomScaled = `${getValueFromNumber(getDifference(height.number, getProduct(paddingBottomHeight.number, height.number, references.clone()).number, references.clone()).number, references.clone())}`;
+  const paddingInnerLeftScaled = `${getValueFromNumber(getProduct(paddingLeftWidth.number, width.number, references.clone()).number, references.clone())}`;
+
+  const paddingInnerTopRaw = `${getValueFromNumber(paddingTopHeight.number, references.clone())}`;
+  const paddingInnerRightRaw = `${getValueFromNumber(getDifference(1, paddingRightWidth.number, references.clone()).number, references.clone())}`;
+  const paddingInnerBottomRaw = `${getValueFromNumber(getDifference(1, paddingBottomHeight.number, references.clone()).number, references.clone())}`;
+  const paddingInnerLeftRaw = `${getValueFromNumber(paddingLeftWidth.number, references.clone())}`;
+
+  console.log(innerTop);
+  console.log(innerRight);
+  console.log(innerBottom);
+  console.log(innerLeft);
+
+  console.log(paddingInnerTopScaled);
+  console.log(paddingInnerRightScaled);
+  console.log(paddingInnerBottomScaled);
+  console.log(paddingInnerLeftScaled);
+
+  console.log(paddingInnerTopRaw);
+  console.log(paddingInnerRightRaw);
+  console.log(paddingInnerBottomRaw);
+  console.log(paddingInnerLeftRaw);
+
+  interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
+
+  let asinoClass: Class | undefined = undefined
+
+  if (interfaceClassId !== undefined) {
+    const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+
+    const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
+
+    if (selectedClass !== undefined) {
+      asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
+    }
+  }
+
+  const viewBoxThing1 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.minX, references.clone()).number, references.clone())}`;
+  const viewBoxThing2 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.minY, references.clone()).number, references.clone())}`;
+  const viewBoxThing3 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.width, references.clone()).number, references.clone())}`;
+  const viewBoxThing4 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.height, references.clone()).number, references.clone())}`;
+
+  console.log(viewBoxThing1);
+  console.log(viewBoxThing2);
+  console.log(viewBoxThing3);
+  console.log(viewBoxThing4);
 
   return <g
     id={`layer${key}`}
@@ -127,7 +165,9 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
       d={`M${outerLeft},${outerBottom}L${outerLeft},${outerTop}L${innerLeft},${innerTop}L${innerLeft},${innerBottom}Z`}
       className={Utils.tidyString(`${borderLeftFillClass?.key ?? ''} ${borderLeftFillDarkClass?.key ?? ''}`)}
     />
-    {innards}
+    {asinoClass !== undefined && <g transform={`translate(${paddingInnerLeftScaled},${paddingInnerTopScaled}) scale(${(Number(paddingInnerRightRaw) ?? 1) - (Number(paddingInnerLeftRaw) ?? 1)},${(Number(paddingInnerBottomRaw) ?? 1) - (Number(paddingInnerTopRaw) ?? 1)})`}>
+      {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId) })}
+    </g>}
   </g>;
 }
 

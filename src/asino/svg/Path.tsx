@@ -1,6 +1,6 @@
 import React from "react"
 import { getColorFromLayer, getCommandFromAsinoCommand, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
-import { C, L, M, S, strokeWidth as StrokeWidth, Z, fill as Fill, stroke as Stroke } from "../consts";
+import { C, L, M, S, strokeWidth as StrokeWidth, Z, fill as Fill, stroke as Stroke, m, h, v, z, c } from "../consts";
 import { AsinoCommand, AsinoPathReference } from "../types/Path";
 import { AsinoNumberReference, Number } from "../types/Number";
 import { References } from "../References";
@@ -21,14 +21,12 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
 
         if (command === undefined) {
           // do nothing
-        } else if (command.letter === M) {
-          let x: Number | undefined = undefined;
-          let y: Number | undefined = undefined;
+        } else if (command.letter === h) {
+          let dx: Number | undefined = undefined;
 
-          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, references.clone()).number, scale, references.clone()).number);
-          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, references.clone()).number, scale, references.clone()).number);
+          command.dx !== undefined && (dx = getProduct(getNumberFromAsinoNumber(command.dx, references.clone()).number, scale, references.clone()).number);
 
-          d += `M${getValueFromNumber(x, references.clone())},${getValueFromNumber(y, references.clone())}`;
+          d += `h${getValueFromNumber(dx, references.clone())}`;
         } else if (command.letter === L) {
           let x: Number | undefined = undefined;
           let y: Number | undefined = undefined;
@@ -37,6 +35,38 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
           command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, references.clone()).number, scale, references.clone()).number);
 
           d += `L${getValueFromNumber(x, references.clone())},${getValueFromNumber(y, references.clone())}`;
+        } else if (command.letter === m) {
+          let dx: Number | undefined = undefined;
+          let dy: Number | undefined = undefined;
+
+          command.dx !== undefined && (dx = getProduct(getNumberFromAsinoNumber(command.dx, references.clone()).number, scale, references.clone()).number);
+          command.dy !== undefined && (dy = getProduct(getNumberFromAsinoNumber(command.dy, references.clone()).number, scale, references.clone()).number);
+
+          d += `m${getValueFromNumber(dx, references.clone())},${getValueFromNumber(dy, references.clone())}`;
+        } else if (command.letter === M) {
+          let x: Number | undefined = undefined;
+          let y: Number | undefined = undefined;
+
+          command.x !== undefined && (x = getProduct(getNumberFromAsinoNumber(command.x, references.clone()).number, scale, references.clone()).number);
+          command.y !== undefined && (y = getProduct(getNumberFromAsinoNumber(command.y, references.clone()).number, scale, references.clone()).number);
+
+          d += `M${getValueFromNumber(x, references.clone())},${getValueFromNumber(y, references.clone())}`;
+        } else if (command.letter === c) {
+          let dx: Number | undefined = undefined;
+          let dx1: Number | undefined = undefined;
+          let dx2: Number | undefined = undefined;
+          let dy: Number | undefined = undefined;
+          let dy1: Number | undefined = undefined;
+          let dy2: Number | undefined = undefined;
+
+          command.dx !== undefined && (dx = getProduct(getNumberFromAsinoNumber(command.dx, references.clone()).number, scale, references.clone()).number);
+          command.dx1 !== undefined && (dx1 = getProduct(getNumberFromAsinoNumber(command.dx1, references.clone()).number, scale, references.clone()).number);
+          command.dx2 !== undefined && (dx2 = getProduct(getNumberFromAsinoNumber(command.dx2, references.clone()).number, scale, references.clone()).number);
+          command.dy !== undefined && (dy = getProduct(getNumberFromAsinoNumber(command.dy, references.clone()).number, scale, references.clone()).number);
+          command.dy1 !== undefined && (dy1 = getProduct(getNumberFromAsinoNumber(command.dy1, references.clone()).number, scale, references.clone()).number);
+          command.dy2 !== undefined && (dy2 = getProduct(getNumberFromAsinoNumber(command.dy2, references.clone()).number, scale, references.clone()).number);
+
+          d += `c${getValueFromNumber(dx1, references.clone())},${getValueFromNumber(dy1, references.clone())},${getValueFromNumber(dx2, references.clone())},${getValueFromNumber(dy2, references.clone())},${getValueFromNumber(dx, references.clone())},${getValueFromNumber(dy, references.clone())}`;
         } else if (command.letter === C) {
           let x: Number | undefined = undefined;
           let x1: Number | undefined = undefined;
@@ -65,6 +95,14 @@ export const drawPath = (paths: (AsinoPathReference | undefined)[], references: 
           command.y2 !== undefined && (y2 = getProduct(getNumberFromAsinoNumber(command.y2, references.clone()).number, scale, references.clone()).number);
 
           d += `S${x2},${y2},${x},${y}`;
+        } else if (command.letter === v) {
+          let dy: Number | undefined = undefined;
+
+          command.dy !== undefined && (dy = getProduct(getNumberFromAsinoNumber(command.dy, references.clone()).number, scale, references.clone()).number);
+
+          d += `v${getValueFromNumber(dy, references.clone())}`;
+        } else if (command.letter === z) {
+          d += 'z';
         } else if (command.letter === Z) {
           d += 'Z';
         }

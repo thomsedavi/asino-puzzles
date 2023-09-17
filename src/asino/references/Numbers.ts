@@ -1,4 +1,4 @@
-import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth, FontPathWidth, FontPathHeight, FontHorizontalSerifWidth, FontVerticalSerifHeight, FontWidth, FontHalfHeight } from "../consts";
+import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth, InterfacePaddingTopHeight, InterfacePaddingRightWidth, InterfacePaddingBottomHeight, InterfacePaddingLeftWidth, InterfacePaddingSize, FontSize, FontSizeHorizontal, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical, FontSizeVertical3, FontSizeVertical2, FontSizeVertical1, FontCurve, FontCurveHorizontal, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLength, FontLengthHorizontal, FontLengthVertical, FontLengthVertical1, FontLengthVertical2 } from "../consts";
 import { AsinoNumberReference } from "../types/Number";
 
 export const systemNumberDefaults: AsinoNumberReference[] = [
@@ -58,6 +58,11 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     number: { numerator: 1, denominator: 40 }
   },
   {
+    id: InterfacePaddingSize,
+    name: { value: 'Interface Padding Size' },
+    number: { numerator: 1, denominator: 10 }
+  },
+  {
     id: InterfaceBorderTopHeight,
     name: { value: 'Interface Border Top Height' },
     number: InterfaceBorderSize
@@ -76,6 +81,26 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     id: InterfaceBorderLeftWidth,
     name: { value: 'Interface Border Left Width' },
     number: InterfaceBorderSize
+  },
+  {
+    id: InterfacePaddingTopHeight,
+    name: { value: 'Interface Padding Top Height' },
+    number: InterfacePaddingSize
+  },
+  {
+    id: InterfacePaddingRightWidth,
+    name: { value: 'Interface Padding Right Width' },
+    number: InterfacePaddingSize
+  },
+  {
+    id: InterfacePaddingBottomHeight,
+    name: { value: 'Interface Padding Bottom Height' },
+    number: InterfacePaddingSize
+  },
+  {
+    id: InterfacePaddingLeftWidth,
+    name: { value: 'Interface Padding Left Width' },
+    number: InterfacePaddingSize
   },
   {
     id: PathSize,
@@ -400,33 +425,113 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
     number: 1
   },
   {
-    id: FontWidth,
-    name: { value: 'Font Width' },
-    number: { numerator: 1, denominator: 3 }
+    id: FontSize,
+    name: { value: 'Font Size' },
+    number: { numerator: 1, denominator: 9 }
   },
   {
-    id: FontPathWidth,
-    name: { value: 'Font Path Width' },
-    number: { numerator: 1, denominator: 10 }
+    id: FontSizeHorizontal,
+    name: { value: 'Font Size Horizontal' },
+    number: FontSize
   },
   {
-    id: FontPathHeight,
-    name: { value: 'Font Path Height' },
-    number: { numerator: 1, denominator: 10 }
+    id: FontSizeHorizontal1,
+    name: { value: 'Font Size Horizontal 1' },
+    number: FontSizeHorizontal
   },
   {
-    id: FontHorizontalSerifWidth,
-    name: { value: 'Font Horizontal Serif Width' },
-    number: { numerator: 1, denominator: 12 }
+    id: FontSizeHorizontal2,
+    name: { value: 'Font Size Horizontal 2' },
+    number: FontSizeHorizontal
   },
   {
-    id: FontVerticalSerifHeight,
-    name: { value: 'Font Vertical Serif Height' },
-    number: { numerator: 1, denominator: 12 }
+    id: FontSizeVertical,
+    name: { value: 'Font Size Vertical' },
+    number: FontSize
   },
   {
-    id: FontHalfHeight,
-    name: { value: 'Font Half Height' },
-    number: { numerator: 1, denominator: 2 }
+    id: FontSizeVertical1,
+    name: { value: 'Font Size Vertical 1' },
+    number: FontSizeVertical
+  },
+  {
+    id: FontSizeVertical2,
+    name: { value: 'Font Size Vertical 2' },
+    number: FontSizeVertical
+  },
+  {
+    id: FontSizeVertical3,
+    name: { value: 'Font Size Vertical 3' },
+    number: FontSizeVertical
+  },
+  {
+    id: FontCurve,
+    name: { value: 'Font Curve' },
+    number: { numerator: 1, denominator: 9 }
+  },
+  {
+    id: FontCurveHorizontal,
+    name: { value: 'Font Curve Horizontal' },
+    number: FontCurve
+  },
+  {
+    id: FontCurveHorizontal1,
+    name: { value: 'Font Curve Horizontal 1' },
+    number: FontCurveHorizontal
+  },
+  {
+    id: FontCurveHorizontal2,
+    name: { value: 'Font Curve Horizontal 2' },
+    number: FontCurveHorizontal
+  },
+  {
+    id: FontCurveVertical,
+    name: { value: 'Font Curve Vertical' },
+    number: FontCurve
+  },
+  {
+    id: FontCurveVertical1,
+    name: { value: 'Font Curve Vertical 1' },
+    number: FontCurveVertical
+  },
+  {
+    id: FontCurveVertical2,
+    name: { value: 'Font Curve Vertical 2' },
+    number: FontCurveVertical
+  },
+  {
+    id: FontCurveVertical3,
+    name: { value: 'Font Curve Vertical 3' },
+    number: FontCurveVertical
+  },
+  {
+    id: FontCurveVertical4,
+    name: { value: 'Font Curve Vertical 4' },
+    number: FontCurveVertical
+  },
+  {
+    id: FontLength,
+    name: { value: 'Font Length' },
+    number: { numerator: 1, denominator: 9 }
+  },
+  {
+    id: FontLengthHorizontal,
+    name: { value: 'Font Length Horizontal' },
+    number: FontLength
+  },
+  {
+    id: FontLengthVertical,
+    name: { value: 'Font Length Vertical' },
+    number: FontLength
+  },
+  {
+    id: FontLengthVertical1,
+    name: { value: 'Font Length Vertical 1' },
+    number: FontLengthVertical
+  },
+  {
+    id: FontLengthVertical2,
+    name: { value: 'Font Length Vertical 2' },
+    number: FontLengthVertical
   }
 ];

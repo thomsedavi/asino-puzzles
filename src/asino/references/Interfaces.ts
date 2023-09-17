@@ -1,4 +1,4 @@
-import { InterfaceX, InterfaceY, InterfaceWidth, InterfaceHeight, InterfaceBorderTopHeight, InterfaceBorderRightWidth, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderTopColor, InterfaceBorderRightColor, InterfaceBorderBottomColor, InterfaceBorderLeftColor, InterfaceColor, InterfaceSelectedColor } from "../consts";
+import { InterfaceX, InterfaceY, InterfaceWidth, InterfaceHeight, InterfaceBorderTopHeight, InterfaceBorderRightWidth, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderTopColor, InterfaceBorderRightColor, InterfaceBorderBottomColor, InterfaceBorderLeftColor, InterfaceColor, InterfaceSelectedColor, InterfacePaddingTopHeight, InterfacePaddingRightWidth, InterfacePaddingBottomHeight, InterfacePaddingLeftWidth } from "../consts";
 import { AsinoInterfaceReference } from "../types/Interface";
 
 export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
@@ -18,6 +18,10 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
       borderRightFill: InterfaceBorderRightColor,
       borderBottomFill: InterfaceBorderBottomColor,
       borderLeftFill: InterfaceBorderLeftColor,
+      paddingTopHeight: InterfacePaddingTopHeight,
+      paddingRightWidth: InterfacePaddingRightWidth,
+      paddingBottomHeight: InterfacePaddingBottomHeight,
+      paddingLeftWidth: InterfacePaddingLeftWidth,
       fill: InterfaceColor,
       fillSelected: InterfaceSelectedColor
     }

@@ -17,7 +17,10 @@ export type AsinoPath = {
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
 }
 
-export type AsinoCommand = Command | string | AsinoCommandReference;
+export type AsinoCommand = {
+  command?: Command; // value of this rectangle
+  commandId?: string; // refer to the rectangle with this id
+};
 
 export type AsinoPathReference = {
   id?: string; // id of this path
@@ -45,7 +48,7 @@ export type Command = {
 export type AsinoCommandReference = {
   id?: string; // id of this command
   name?: { value?: string, editedValue?: string }; // name of this command
-  value?: AsinoCommand; // value of this command
+  command?: Command; // value of this command
 }
 
 export const getPathReferenceRow = (puzzle: AsinoPuzzle, pathReference: AsinoPathReference, key: string, depth: number, update: (value: AsinoPathReference) => void): JSX.Element => {
@@ -71,12 +74,4 @@ export const getPathReferenceRow = (puzzle: AsinoPuzzle, pathReference: AsinoPat
     {pathReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...pathReference, name: { ...pathReference.name, editedValue: pathReference.name?.value } })}>{pathReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {pathReference.name?.editedValue !== undefined && <InputInline block autoFocus value={pathReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...pathReference, name: { ...pathReference.name, editedValue: event.target.value } })} />}
   </div>;
-}
-
-export const isCommandCommand = (command: AsinoCommand): command is Command => {
-  return typeof command !== 'string' && 'letter' in command;
-}
-
-export const isCommandReference = (command: AsinoCommand): command is AsinoCommandReference => {
-  return typeof command !== 'string' && 'id' in command;
 }

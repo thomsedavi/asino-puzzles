@@ -2,6 +2,7 @@ import { References } from "./References";
 import { Addition, Division, Multiplication, Subtraction } from "./consts";
 import { systemClassDefaults } from "./references/Classes";
 import { systemColorDefaults } from "./references/Colors";
+import { systemCommandDefaults } from "./references/Commands";
 import { systemNumberDefaults } from "./references/Numbers";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula, isBooleanFormula } from "./types/Boolean";
 import { AsinoCircle, AsinoCircleReference } from "./types/Circle";
@@ -15,7 +16,7 @@ import { AsinoLine, AsinoLineReference } from "./types/Line";
 import { AsinoNumber, AsinoNumberReference, Number, isNumberFormula, isAsinoNumberFraction, NumberFormula, isNumberEditedNumber, Fraction } from "./types/Number";
 import { AsinoObject, AsinoObjectReference, AsinoObjects, Object, isObjectObject, isObjectsFormula, isObjectsObjects } from "./types/Object";
 import { AsinoParameter } from "./types/Parameter";
-import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, isCommandReference, Command, isCommandCommand } from "./types/Path";
+import { AsinoCommand, AsinoCommandReference, AsinoPath, AsinoPathReference, Command } from "./types/Path";
 import { AsinoPuzzle } from "./types/Puzzle";
 import { AsinoRectangle, AsinoRectangleReference } from "./types/Rectangle";
 import { AsinoSet, AsinoSetReference, AsinoSets, AsinoSetsReference, Set, SetsFormula, isSetSet, isSetsFormula, isSetsReference } from "./types/Set";
@@ -791,14 +792,20 @@ export const getClassFromClassReference = (asinoClass: AsinoClassReference | und
   return result;
 }
 
-export const getCommandFromCommandReference = (command: AsinoCommandReference | undefined, references: References): AsinoCommand | undefined => {
-  let result: AsinoCommand | undefined = undefined;
+export const getCommandFromCommandReference = (command: AsinoCommandReference | undefined, references: References): Command | undefined => {
+  let result: Command | undefined = undefined;
 
   if (command === undefined) {
     // do nothing
-  } else if (command.value) {
-    result = command.value;
+  } else if (command.command) {
+    result = command.command;
   } else {
+    systemCommandDefaults.forEach(commandReference => {
+      if (commandReference.id === command.id) {
+        result = getCommandFromCommandReference(commandReference, references.clone());
+      }
+    });
+
     references.commands.forEach(commandReference => {
       if (commandReference.id === command.id) {
         result = getCommandFromCommandReference(commandReference, references.clone());
@@ -834,18 +841,20 @@ export const getCommandFromAsinoCommand = (command: AsinoCommand | undefined, re
 
   if (command === undefined) {
     // do nothing
-  } else if (typeof command === 'string') {
-    references.commands.forEach(commandReference => {
-      if (commandReference.id === command) {
-        command = getCommandFromAsinoCommand(commandReference.value, references.clone(), solution);
+  } else if (command.commandId !== undefined) {
+    systemCommandDefaults.forEach(commandReference => {
+      if (commandReference.id === command.commandId) {
+        result = commandReference.command;
       }
     });
-  } else if (isCommandCommand(command)) {
-    result = command;
-  } else {
-    const newCommand = getCommandFromCommandReference(command, references.clone());
 
-    result = getCommandFromAsinoCommand(newCommand, references.clone(), solution);
+    references.commands.forEach(commandReference => {
+      if (commandReference.id === command.commandId) {
+        result = commandReference.command;
+      }
+    });
+  } else if (command.command !== undefined) {
+    result = command.command;
   }
 
   return result;
@@ -1494,35 +1503,13 @@ const minifyCommandReference = (command: AsinoCommandReference): any => {
 
   command.id !== undefined && (result[Id] = command.id);
   command.name !== undefined && command.name.value !== undefined && (result[Name] = command.name.value);
-  command.value !== undefined && (result[Value] = minifyCommand(command.value));
-
+  console.log('todo', command);
+  
   return result;
 }
 
 const minifyCommand = (command: AsinoCommand): any => {
-  if (typeof command === 'string') {
-    return command;
-  } else if (isCommandReference(command)) {
-    return minifyCommandReference(command);
-  } else {
-    const result: any = {};
-
-    command.letter !== undefined && command.letter !== 'NONE' && (result[Commandd] = command.letter);
-    command.x !== undefined && (result[X] = minifyNumber(command.x));
-    command.x1 !== undefined && (result[X1] = minifyNumber(command.x1));
-    command.x2 !== undefined && (result[X2] = minifyNumber(command.x2));
-    command.y !== undefined && (result[Y] = minifyNumber(command.y));
-    command.y1 !== undefined && (result[Y1] = minifyNumber(command.y1));
-    command.y2 !== undefined && (result[Y2] = minifyNumber(command.y2));
-    command.dx !== undefined && (result[DX] = minifyNumber(command.dx));
-    command.dx1 !== undefined && (result[DX1] = minifyNumber(command.dx1));
-    command.dx2 !== undefined && (result[DX2] = minifyNumber(command.dx2));
-    command.dy !== undefined && (result[DY] = minifyNumber(command.dy));
-    command.dy1 !== undefined && (result[DY1] = minifyNumber(command.dy1));
-    command.dy2 !== undefined && (result[DY2] = minifyNumber(command.dy2));
-
-    return result;
-  }
+  console.log('todo', command);
 }
 
 const minifySetReference = (set: AsinoSetReference): any => {
