@@ -1,4 +1,4 @@
-import { PathSize, CurveFraction, Color, FontSizeHorizontal2, FontSizeVertical1, FontCurveVertical1, FontSizeHorizontal1, FontCurveHorizontal1, FontLengthHorizontal, FontLengthVertical1, FontCurveVertical2, FontCurveHorizontal2, FontSizeVertical2, FontCurveVertical3 } from "../consts";
+import { PathSize, CurveFraction, Color, FontSizeHorizontal2, FontSizeVertical1, FontCurveVertical1, FontSizeHorizontal1, FontCurveHorizontal1, FontLengthHorizontal, FontLengthVertical1, FontCurveVertical2, FontCurveHorizontal2, FontSizeVertical2, FontCurveVertical3, FontLengthVertical2 } from "../consts";
 import { AsinoPathReference } from "../types/Path";
 
 export const systemPathDefaults: AsinoPathReference[] = [
@@ -958,6 +958,131 @@ export const systemPathDefaults: AsinoPathReference[] = [
         },
         {
           commandId: 'f-bd'
+        },
+        {
+          command: {
+            letter: 'z'
+          }
+        }
+      ],
+      fill: Color
+    }
+  },
+  {
+    id: 'f-db',
+    name: { value: '9' },
+    path: {
+      commands: [
+        {
+          command: {
+            letter: 'm',
+            dx: FontSizeHorizontal1,
+            dy: {
+              operator: 'TOTAL',
+              numberInputs: [
+                FontSizeVertical1,
+                FontCurveVertical1,
+                FontLengthVertical1,
+                FontCurveVertical2,
+                FontSizeVertical2,
+                FontCurveVertical3,
+                FontLengthVertical2
+              ]
+            }
+          }
+        },
+        {
+          commandId: 'a-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'e-fc'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'a-de'
+        },
+        {
+          commandId: 'd-bc'
+        },
+        {
+          commandId: 'a-ca'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'b-cb'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'a-fc'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'd-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'a-be'
+        },
+        {
+          commandId: 'd-fb'
+        },
+        {
+          commandId: 'f-fa'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-bb'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'e-ea'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'f-ef'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'e-ee'
+        },
+        {
+          commandId: 'd-cd'
+        },
+        {
+          commandId: 'f-da'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'b-ee'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-fa'
         },
         {
           command: {

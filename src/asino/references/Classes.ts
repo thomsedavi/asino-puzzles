@@ -250,5 +250,23 @@ export const systemClassDefaults: AsinoClassReference[] = [
         height: 1
       }
     }
+  },
+  {
+    id: 'e-ff',
+    name: { value: '9' },
+    class: {
+      layers: [
+        {
+          pathId: 'f-db'
+        }
+      ],
+      viewBox: {
+        minX: 0,
+        minY: 0,
+        width: 1,
+        height: 1
+      }
+    }
   }
+
 ]
