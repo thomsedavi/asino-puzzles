@@ -1,4 +1,4 @@
-import { PathSize, CurveFraction, Color, FontSizeHorizontal2, FontSizeVertical1, FontCurveVertical1, FontSizeHorizontal1, FontCurveHorizontal1, FontLengthHorizontal, FontLengthVertical1, FontCurveVertical2 } from "../consts";
+import { PathSize, CurveFraction, Color, FontSizeHorizontal2, FontSizeVertical1, FontCurveVertical1, FontSizeHorizontal1, FontCurveHorizontal1, FontLengthHorizontal, FontLengthVertical1, FontCurveVertical2, FontCurveHorizontal2, FontSizeVertical2, FontCurveVertical3 } from "../consts";
 import { AsinoPathReference } from "../types/Path";
 
 export const systemPathDefaults: AsinoPathReference[] = [
@@ -450,6 +450,263 @@ export const systemPathDefaults: AsinoPathReference[] = [
     }
   },
   {
+    id: 'f-cf',
+    name: { value: '5' },
+    path: {
+      commands: [
+        {
+          command: {
+            letter: 'm',
+            dx: {
+              operator: 'TOTAL',
+              numberInputs: [
+                FontSizeHorizontal1,
+                FontCurveHorizontal1,
+                FontLengthHorizontal,
+                FontCurveHorizontal2,
+                FontSizeHorizontal2
+              ]
+            },
+            dy: FontSizeVertical1
+          }
+        },
+        {
+          commandId: 'c-bb'
+        },
+        {
+          commandId: 'd-fd'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'a-fa'
+        },
+        {
+          commandId: 'e-df'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'e-ee'
+        },
+        {
+          commandId: 'b-cf'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'd-dd'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'b-ee'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-fa'
+        },
+        {
+          commandId: 'f-cb'
+        },
+        {
+          commandId: 'a-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'e-fc'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'e-aa'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'a-fa'
+        },
+        {
+          commandId: 'd-ba'
+        },
+        {
+          commandId: 'd-bc'
+        },
+        {
+          commandId: 'a-ca'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'c-ed'
+        },
+        {
+          commandId: 'd-bf'
+        },
+        {
+          commandId: 'f-cb'
+        },
+        {
+          commandId: 'b-cf'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'a-bf'
+        },
+        {
+          commandId: 'd-fb'
+        },
+        {
+          command: {
+            letter: 'z'
+          }
+        }
+      ],
+      fill: Color
+    }
+  },
+  {
+    id: 'e-ca',
+    name: { value: '6' },
+    path: {
+      commands: [
+        {
+          command: {
+            letter: 'm',
+            dx: {
+              operator: 'TOTAL',
+              numberInputs: [
+                FontSizeHorizontal1,
+                FontCurveHorizontal1,
+                FontLengthHorizontal,
+                FontCurveHorizontal2
+              ]
+            },
+            dy: {
+              operator: '+',
+              numberInputs: [
+                FontSizeVertical1,
+                FontCurveHorizontal1
+              ]
+            }
+          }
+        },
+        {
+          commandId: 'b-cb'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'a-fc'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'e-ee'
+        },
+        {
+          commandId: 'd-cd'
+        },
+        {
+          commandId: 'f-da'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'a-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'e-fc'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'e-aa'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'f-bd'
+        },
+        {
+          commandId: 'd-ba'
+        },
+        {
+          commandId: 'b-ae'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'd-dd'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'b-ee'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-fa'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'a-de'
+        },
+        {
+          commandId: 'd-bc'
+        },
+        {
+          commandId: 'a-ca'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'e-ea'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'f-ef'
+        },
+        {
+          command: {
+            letter: 'z'
+          }
+        }
+      ],
+      fill: Color
+    }
+  },
+  {
     id: 'f-ec',
     name: { value: '7' },
     path: {
@@ -541,6 +798,166 @@ export const systemPathDefaults: AsinoPathReference[] = [
         },
         {
           commandId: 'd-ba'
+        },
+        {
+          command: {
+            letter: 'z'
+          }
+        }
+      ],
+      fill: Color
+    }
+  },
+  {
+    id: 'c-ab',
+    name: { value: '8a' },
+    path: {
+      commands: [
+        {
+          command: {
+            letter: 'm',
+            dx: 0,
+            dy: {
+              operator: '+',
+              numberInputs: [
+                FontSizeVertical1,
+                FontCurveVertical1
+              ]
+            }
+          }
+        },
+        {
+          commandId: 'e-ea'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'f-ef'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'f-fa'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-bb'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'f-cb'
+        },
+        {
+          commandId: 'f-ad'
+        },
+        {
+          commandId: 'd-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'a-be'
+        },
+        {
+          commandId: 'b-ec'
+        },
+        {
+          commandId: 'b-cb'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'a-fc'
+        },
+        {
+          command: {
+            letter: 'z'
+          }
+        }
+      ],
+      fill: Color
+    }
+  },
+  {
+    id: 'b-be',
+    name: { value: '8b' },
+    path: {
+      commands: [
+        {
+          command: {
+            letter: 'm',
+            dx: 0,
+            dy: {
+              operator: 'TOTAL',
+              numberInputs: [
+                FontSizeVertical1,
+                FontCurveVertical1,
+                FontLengthVertical1,
+                FontCurveVertical2,
+                FontSizeVertical2,
+                FontCurveVertical3
+              ]
+            }
+          }
+        },
+        {
+          commandId: 'b-ae'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'd-dd'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'b-ee'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'e-fa'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'f-cb'
+        },
+        {
+          commandId: 'c-ec'
+        },
+        {
+          commandId: 'a-bd'
+        },
+        {
+          commandId: 'd-ef'
+        },
+        {
+          commandId: 'e-fc'
+        },
+        {
+          commandId: 'f-df'
+        },
+        {
+          commandId: 'e-aa'
+        },
+        {
+          commandId: 'd-af'
+        },
+        {
+          commandId: 'f-bd'
         },
         {
           command: {

@@ -62,7 +62,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
     }
   }
 
-  const classIds = ['b-de', 'f-de', 'e-eb', 'a-ae', 'f-ce'];
+  const classIds = ['b-de', 'f-de', 'e-eb', 'a-ae', 'c-ee', 'd-df', 'f-ce', 'f-ed'];
 
   classIds.forEach(asinoClass => {
     classes.push({ classId: asinoClass, class: { collectionId: collectionId } });

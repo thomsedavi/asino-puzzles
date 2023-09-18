@@ -781,7 +781,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'a-fc',
-    name: { value: 'Font Inner Curve Right To Left 1 Top To Bottom 1' },
+    name: { value: 'Font Inner Curve Right To Left 1 Up To Down 1' },
     command: {
       letter: 'c',
       dx1: {
@@ -824,7 +824,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'd-dd',
-    name: { value: 'Font Outer Curve Left To Right 2 Top To Bottom 3' },
+    name: { value: 'Font Outer Curve Left To Right 2 Up To Down 3' },
     command: {
       letter: 'c',
       dx1: {
@@ -891,7 +891,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'b-ee',
-    name: { value: 'Font Outer Curve Top To Bottom 4 Right To Left 2' },
+    name: { value: 'Font Outer Curve Up To Down 4 Right To Left 2' },
     command: {
       letter: 'c',
       dx1: 0,
@@ -970,7 +970,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'e-fa',
-    name: { value: 'Font Outer Curve Right To Left 1 Bottom To Top 4' },
+    name: { value: 'Font Outer Curve Right To Left 1 Down To Up 4' },
     command: {
       letter: 'c',
       dx1: {
@@ -1067,7 +1067,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'a-bd',
-    name: { value: 'Font Inner Curve Top To Bottom 4 Left To Right 1' },
+    name: { value: 'Font Inner Curve Up To Down 4 Left To Right 1' },
     command: {
       letter: 'c',
       dx1: 0,
@@ -1098,7 +1098,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'e-fc',
-    name: { value: 'Font Inner Curve Left To Right 2 Bottom To Top 4' },
+    name: { value: 'Font Inner Curve Left To Right 2 Down To Up 4' },
     command: {
       letter: 'c',
       dx1: {
@@ -1142,7 +1142,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
   },
   {
     id: 'e-aa',
-    name: { value: 'Font Inner Curve Bottom To Top 3 Right To Left 2' },
+    name: { value: 'Font Inner Curve Down To Up 3 Right To Left 2' },
     command: {
       letter: 'c',
       dx1: 0,
@@ -1199,6 +1199,134 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
           FontCurveVertical3
         ]
       }
+    }
+  },
+  {
+    id: 'e-bb',
+    name: { value: 'Font Outer Curve Right To Left 1 Down To Up 2' },
+    command: {
+      letter: 'c',
+      dx1: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontSizeHorizontal1,
+                  FontCurveHorizontal1
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dy1: 0,
+      dx2: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontSizeHorizontal1,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy2: {
+        operator: '+',
+        numberInputs: [
+          {
+            operator: '-',
+            numberInputs: [
+              0,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveVertical2,
+                  FontSizeVertical2
+                ]
+              }
+            ]
+          },
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              {
+                operator: '+',
+                numberInputs: [
+                  FontCurveVertical2,
+                  FontSizeVertical2
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      dx: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontSizeHorizontal1,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy: {
+        operator: '-',
+        numberInputs: [
+          0,
+          {
+            operator: '+',
+            numberInputs: [
+              FontCurveVertical2,
+              FontSizeVertical2
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    id: 'd-bd',
+    name: { value: 'Font Inner Curve Up To Down 2 Left To Right 1' },
+    command: {
+      letter: 'c',
+      dx1: 0,
+      dy1: {
+        operator: '*',
+        numberInputs: [
+          CurveFraction,
+          FontCurveVertical2
+        ]
+      },
+      dx2: {
+        operator: '-',
+        numberInputs: [
+          FontCurveHorizontal1,
+          {
+            operator: '*',
+            numberInputs: [
+              CurveFraction,
+              FontCurveHorizontal1
+            ]
+          }
+        ]
+      },
+      dy2: FontCurveVertical2,
+      dx: FontCurveHorizontal1,
+      dy: FontCurveVertical2
     }
   }
 ]
