@@ -1,8 +1,7 @@
 import { AsinoClassReference } from "../types/Class";
 
-export const systemClassDefaults: AsinoClassReference[] = [
-  {
-    id: 'e-af',
+export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
+  'e-af': {
     name: { value: 'Curve Right To Bottom And Left To Top' },
     class: {
       layers: [
@@ -15,8 +14,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'b-dd',
+  'b-dd': {
     name: { value: 'Curve Right To Bottom' },
     class: {
       layers: [
@@ -26,8 +24,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'e-be',
+  'e-be': {
     name: { value: 'Curve Left To Top' },
     class: {
       layers: [
@@ -37,8 +34,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'd-ab',
+  'd-ab': {
     name: { value: 'Curve Top To Right And Bottom To Left' },
     class: {
       layers: [
@@ -51,8 +47,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'e-cd',
+  'e-cd': {
     name: { value: 'Curve Top To Bottom And Right To Left' },
     class: {
       layers: [
@@ -65,8 +60,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'e-da',
+  'e-da': {
     name: { value: 'Curve Right To Left' },
     class: {
       layers: [
@@ -76,8 +70,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'a-cf',
+  'a-cf': {
     name: { value: 'Curve Top To Right' },
     class: {
       layers: [
@@ -87,8 +80,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'a-df',
+  'a-df': {
     name: { value: 'Curve Bottom To Left' },
     class: {
       layers: [
@@ -98,8 +90,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'd-ce',
+  'd-ce': {
     name: { value: 'Curve Top To Bottom' },
     class: {
       layers: [
@@ -109,8 +100,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       ]
     }
   },
-  {
-    id: 'b-de',
+  'b-de': {
     name: { value: '1' },
     class: {
       layers: [
@@ -126,8 +116,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'f-de',
+  'f-de': {
     name: { value: '2' },
     class: {
       layers: [
@@ -143,8 +132,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'e-eb',
+  'e-eb': {
     name: { value: '3' },
     class: {
       layers: [
@@ -163,8 +151,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'a-ae',
+  'a-ae': {
     name: { value: '4' },
     class: {
       layers: [
@@ -180,8 +167,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'c-ee',
+  'c-ee': {
     name: { value: '5' },
     class: {
       layers: [
@@ -197,8 +183,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'd-df',
+  'd-df': {
     name: { value: '6' },
     class: {
       layers: [
@@ -214,8 +199,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'f-ce',
+  'f-ce': {
     name: { value: '7' },
     class: {
       layers: [
@@ -231,8 +215,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'f-ed',
+  'f-ed': {
     name: { value: '8' },
     class: {
       layers: [
@@ -251,8 +234,7 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   },
-  {
-    id: 'e-ff',
+  'e-ff': {
     name: { value: '9' },
     class: {
       layers: [
@@ -268,5 +250,4 @@ export const systemClassDefaults: AsinoClassReference[] = [
       }
     }
   }
-
-]
+}

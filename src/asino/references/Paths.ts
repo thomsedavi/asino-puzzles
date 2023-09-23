@@ -1,9 +1,8 @@
 import { PathSize, CurveFraction, Color, FontSizeHorizontal2, FontSizeVertical1, FontCurveVertical1, FontSizeHorizontal1, FontCurveHorizontal1, FontLengthHorizontal, FontLengthVertical1, FontCurveVertical2, FontCurveHorizontal2, FontSizeVertical2, FontCurveVertical3, FontLengthVertical2 } from "../consts";
 import { AsinoPathReference } from "../types/Path";
 
-export const systemPathDefaults: AsinoPathReference[] = [
-  {
-    id: 'd-de',
+export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
+  'd-de': {
     name: { value: '1' },
     path: {
       commands: [
@@ -80,8 +79,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-ba',
+  'f-ba': {
     name: { value: '2' },
     path: {
       commands: [
@@ -194,8 +192,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-cd',
+  'f-cd': {
     name: { value: '3a' },
     path: {
       commands: [
@@ -254,8 +251,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'e-ba',
+  'e-ba': {
     name: { value: '3b' },
     path: {
       commands: [
@@ -323,8 +319,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'c-bc',
+  'c-bc': {
     name: { value: '4' },
     path: {
       commands: [
@@ -449,8 +444,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-cf',
+  'f-cf': {
     name: { value: '5' },
     path: {
       commands: [
@@ -578,8 +572,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'e-ca',
+  'e-ca': {
     name: { value: '6' },
     path: {
       commands: [
@@ -706,8 +699,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-ec',
+  'f-ec': {
     name: { value: '7' },
     path: {
       commands: [
@@ -808,8 +800,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'c-ab',
+  'c-ab': {
     name: { value: '8a' },
     path: {
       commands: [
@@ -886,8 +877,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'b-be',
+  'b-be': {
     name: { value: '8b' },
     path: {
       commands: [
@@ -968,8 +958,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-db',
+  'f-db': {
     name: { value: '9' },
     path: {
       commands: [
@@ -1093,8 +1082,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-ee',
+  'f-ee': {
     name: { value: 'Curve Right To Bottom' },
     path: {
       commands: [
@@ -1335,8 +1323,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'f-eb',
+  'f-eb': {
     name: { value: 'Curve Left To Top' },
     path: {
       commands: [
@@ -1553,8 +1540,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'b-ff',
+  'b-ff': {
     name: { value: 'Curve Top To Right' },
     path: {
       commands: [
@@ -1783,8 +1769,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'c-fb',
+  'c-fb': {
     name: { value: 'Curve Right To Left' },
     path: {
       commands: [
@@ -1873,8 +1858,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'a-ee',
+  'a-ee': {
     name: { value: 'Curve Top To Bottom' },
     path: {
       commands: [
@@ -1963,8 +1947,7 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   },
-  {
-    id: 'b-bc',
+  'b-bc': {
     name: { value: 'Curve Bottom To Left' },
     path: {
       commands: [
@@ -2193,4 +2176,4 @@ export const systemPathDefaults: AsinoPathReference[] = [
       fill: Color
     }
   }
-]
+}

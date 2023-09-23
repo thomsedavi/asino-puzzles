@@ -1,11 +1,10 @@
 import React from 'react';
 import { stroke as Stroke, strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2 } from "../consts";
 import { AsinoColor } from "./Color";
-import { AsinoNumber, getNumberRow } from "./Number";
+import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
-import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoLine = {
@@ -18,10 +17,9 @@ export type AsinoLine = {
 }
 
 export type AsinoLineReference = {
-  id?: string; // id of this line
   name?: { value?: string, editedValue?: string }; // name of this line
   line?: AsinoLine; // value of this line
-  parameters?: AsinoParameter[]; // number and color parameters
+  numbers?: { [id: string]: AsinoNumberReference }; // number parameters
 }
 
 export const getLineReferenceRow = (puzzle: AsinoPuzzle, lineReference: AsinoLineReference, key: string, depth: number, update: (value: AsinoLineReference) => void): JSX.Element => {

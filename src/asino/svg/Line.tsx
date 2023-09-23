@@ -8,34 +8,34 @@ import Utils from "../../common/utils";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 
-export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: Style[]): JSX.Element => {
-  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references.clone(), 'line', StrokeWidth, defaultStrokeWidth).number;
+export const drawLine = (lines: (AsinoLineReference | undefined)[], references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: { [id: string]: Style }): JSX.Element => {
+  let strokeWidth: Number | undefined = getNumberFromLayer(lines, references, 'line', StrokeWidth, defaultStrokeWidth).number;
 
-  const x1 = getNumberFromLayer(lines, references.clone(), 'line', X1, { number: 0 });
-  const y1 = getNumberFromLayer(lines, references.clone(), 'line', Y1, { number: 0 });
-  const x2 = getNumberFromLayer(lines, references.clone(), 'line', X2, { number: 0 });
-  const y2 = getNumberFromLayer(lines, references.clone(), 'line', Y2, { number: 0 });
+  const x1 = getNumberFromLayer(lines, references, 'line', X1, { number: 0 });
+  const y1 = getNumberFromLayer(lines, references, 'line', Y1, { number: 0 });
+  const x2 = getNumberFromLayer(lines, references, 'line', X2, { number: 0 });
+  const y2 = getNumberFromLayer(lines, references, 'line', Y2, { number: 0 });
 
-  const stroke = getColorFromLayer(lines, references.clone(), solution, 'line', Stroke);
+  const stroke = getColorFromLayer(lines, references, solution, 'line', Stroke);
 
-  const strokeClass = getValueFromColor(stroke.color, references.clone(), 's', false);
+  const strokeClass = getValueFromColor(stroke.color, references, 's', false);
 
-  const strokeDarkClass = getValueFromColor(stroke.color, references.clone(), 'sd', true);
+  const strokeDarkClass = getValueFromColor(stroke.color, references, 'sd', true);
 
-  styles.filter(s => s.id === strokeClass?.key).length === 0 && (styles.push({ id: strokeClass?.key, stroke: strokeClass?.value }));
+  strokeClass?.key !== undefined && styles[strokeClass?.key] === undefined && (styles[strokeClass?.key].fill = strokeClass?.value );
 
-  styles.filter(s => s.id === strokeDarkClass?.key).length === 0 && (styles.push({ id: strokeDarkClass?.key, strokeDark: strokeDarkClass?.value }));
+  strokeDarkClass?.key !== undefined && styles[strokeDarkClass?.key] === undefined && (styles[strokeDarkClass?.key].fill = strokeDarkClass?.value );
 
   if (stroke === undefined) {
     strokeWidth = undefined;
   }
 
   return <line key={key}
-    x1={getValueFromNumber(x1.number, references.clone())}
-    y1={getValueFromNumber(y1.number, references.clone())}
-    x2={getValueFromNumber(x2.number, references.clone())}
-    y2={getValueFromNumber(y2.number, references.clone())}
+    x1={getValueFromNumber(x1.number, references)}
+    y1={getValueFromNumber(y1.number, references)}
+    x2={getValueFromNumber(x2.number, references)}
+    y2={getValueFromNumber(y2.number, references)}
     className={Utils.tidyString(`${strokeClass?.key ?? ''} ${strokeDarkClass?.key ?? ''}`)}
-    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references.clone()) : undefined}
+    strokeWidth={strokeWidth !== undefined ? getValueFromNumber(strokeWidth, references) : undefined}
   />;
 }

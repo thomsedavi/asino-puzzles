@@ -1,119 +1,96 @@
 import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth, InterfacePaddingTopHeight, InterfacePaddingRightWidth, InterfacePaddingBottomHeight, InterfacePaddingLeftWidth, InterfacePaddingSize, FontSize, FontSizeHorizontal, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical, FontSizeVertical3, FontSizeVertical2, FontSizeVertical1, FontCurve, FontCurveHorizontal, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLength, FontLengthHorizontal, FontLengthVertical, FontLengthVertical1, FontLengthVertical2 } from "../consts";
 import { AsinoNumberReference } from "../types/Number";
 
-export const systemNumberDefaults: AsinoNumberReference[] = [
-  {
-    id: ViewBoxMinimumX,
+export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
+  [ViewBoxMinimumX]: {
     name: { value: 'View Box Minimum X' },
     number: 0
   },
-  {
-    id: ViewBoxMinimumY,
+  [ViewBoxMinimumY]: {
     name: { value: 'View Box Minimum Y' },
     number: 0
   },
-  {
-    id: ViewBoxWidth,
+  [ViewBoxWidth]: {
     name: { value: 'View Box Width' },
     number: 1
   },
-  {
-    id: ViewBoxHeight,
+  [ViewBoxHeight]: {
     name: { value: 'View Box Height' },
     number: 1
   },
-  {
-    id: OuterHorizontalBorderWidth,
+  [OuterHorizontalBorderWidth]: {
     name: { value: 'Outer Horizontal Border Width' },
     number: { numerator: 1, denominator: 200 }
   },
-  {
-    id: OuterVerticalBorderHeight,
+  [OuterVerticalBorderHeight]: {
     name: { value: 'Outer Vertical Border Height' },
     number: { numerator: 1, denominator: 200 }
   },
-  {
-    id: OuterHorizontalDivisionCount,
+  [OuterHorizontalDivisionCount]: {
     name: { value: 'Outer Horizontal Division Count' },
     number: 3
   },
-  {
-    id: InnerHorizontalDivisionCount,
+  [InnerHorizontalDivisionCount]: {
     name: { value: 'Inner Horizontal Division Count' },
     number: 3
   },
-  {
-    id: OuterVerticalDivisionCount,
+  [OuterVerticalDivisionCount]: {
     name: { value: 'Outer Vertical Division Count' },
     number: 3
   },
-  {
-    id: InnerVerticalDivisionCount,
+  [InnerVerticalDivisionCount]: {
     name: { value: 'Inner Vertical Division Count' },
     number: 3
   },
-  {
-    id: InterfaceBorderSize,
+  [InterfaceBorderSize]: {
     name: { value: 'Interface Border Size' },
     number: { numerator: 1, denominator: 40 }
   },
-  {
-    id: InterfacePaddingSize,
+  [InterfacePaddingSize]: {
     name: { value: 'Interface Padding Size' },
     number: { numerator: 1, denominator: 10 }
   },
-  {
-    id: InterfaceBorderTopHeight,
+  [InterfaceBorderTopHeight]: {
     name: { value: 'Interface Border Top Height' },
     number: InterfaceBorderSize
   },
-  {
-    id: InterfaceBorderRightWidth,
+  [InterfaceBorderRightWidth]: {
     name: { value: 'Interface Border Right Width' },
     number: InterfaceBorderSize
   },
-  {
-    id: InterfaceBorderBottomHeight,
+  [InterfaceBorderBottomHeight]: {
     name: { value: 'Interface Border Bottom Height' },
     number: InterfaceBorderSize
   },
-  {
-    id: InterfaceBorderLeftWidth,
+  [InterfaceBorderLeftWidth]: {
     name: { value: 'Interface Border Left Width' },
     number: InterfaceBorderSize
   },
-  {
-    id: InterfacePaddingTopHeight,
+  [InterfacePaddingTopHeight]: {
     name: { value: 'Interface Padding Top Height' },
     number: InterfacePaddingSize
   },
-  {
-    id: InterfacePaddingRightWidth,
+  [InterfacePaddingRightWidth]: {
     name: { value: 'Interface Padding Right Width' },
     number: InterfacePaddingSize
   },
-  {
-    id: InterfacePaddingBottomHeight,
+  [InterfacePaddingBottomHeight]: {
     name: { value: 'Interface Padding Bottom Height' },
     number: InterfacePaddingSize
   },
-  {
-    id: InterfacePaddingLeftWidth,
+  [InterfacePaddingLeftWidth]: {
     name: { value: 'Interface Padding Left Width' },
     number: InterfacePaddingSize
   },
-  {
-    id: PathSize,
+  [PathSize]: {
     name: { value: 'Path Size' },
     number: { numerator: 1, denominator: 10 }
   },
-  {
-    id: CurveFraction,
+  [CurveFraction]: {
     name: { value: 'Curve Fraction' },
     number: { numerator: 11, denominator: 20 }
   },
-  {
-    id: InterfaceX,
+  [InterfaceX]: {
     name: { value: 'Interface X' },
     number: {
       operator: '+',
@@ -158,8 +135,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: InterfaceY,
+  [InterfaceY]: {
     name: { value: 'Interface Y' },
     number: {
       operator: '+',
@@ -204,8 +180,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: InterfaceWidth,
+  [InterfaceWidth]: {
     name: { value: 'Interface Width' },
     number: {
       operator: '/',
@@ -239,8 +214,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: InterfaceHeight,
+  [InterfaceHeight]: {
     name: { value: 'Interface Height' },
     number: {
       operator: '/',
@@ -274,8 +248,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: OuterHorizontalDivisionBorderX,
+  [OuterHorizontalDivisionBorderX]: {
     name: { value: 'Outer Horizontal Division Border X' },
     number: {
       operator: '+',
@@ -309,8 +282,7 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: OuterVerticalDivisionBorderY,
+  [OuterVerticalDivisionBorderY]: {
     name: { value: 'Outer Horizontal Division Border Y' },
     number: {
       operator: '+',
@@ -344,194 +316,156 @@ export const systemNumberDefaults: AsinoNumberReference[] = [
       ]
     }
   },
-  {
-    id: HueRed,
+  [HueRed]: {
     name: { value: 'Hue Red' },
     number: 0
   },
-  {
-    id: HueOrange,
+  [HueOrange]: {
     name: { value: 'Hue Orange' },
     number: { numerator: 1, denominator: 12 }
   },
-  {
-    id: HueYellow,
+  [HueYellow]: {
     name: { value: 'Hue Yellow' },
     number: { numerator: 1, denominator: 6 }
   },
-  {
-    id: HueChartreuse,
+  [HueChartreuse]: {
     name: { value: 'Hue Chartreuse' },
     number: { numerator: 1, denominator: 4 }
   },
-  {
-    id: HueGreen,
+  [HueGreen]: {
     name: { value: 'Hue Green' },
     number: { numerator: 1, denominator: 3 }
   },
-  {
-    id: HueMint,
+  [HueMint]: {
     name: { value: 'Hue Mint' },
     number: { numerator: 5, denominator: 12 }
   },
-  {
-    id: HueCyan,
+  [HueCyan]: {
     name: { value: 'Hue Cyan' },
     number: { numerator: 1, denominator: 2 }
   },
-  {
-    id: HueAzure,
+  [HueAzure]: {
     name: { value: 'Hue Azure' },
     number: { numerator: 7, denominator: 12 }
   },
-  {
-    id: HueBlue,
+  [HueBlue]: {
     name: { value: 'Hue Blue' },
     number: { numerator: 2, denominator: 3 }
   },
-  {
-    id: HueViolet,
+  [HueViolet]: {
     name: { value: 'Hue Violet' },
     number: { numerator: 3, denominator: 4 }
   },
-  {
-    id: HueMagenta,
+  [HueMagenta]: {
     name: { value: 'Hue Magenta' },
     number: { numerator: 5, denominator: 6 }
   },
-  {
-    id: HuePink,
+  [HuePink]: {
     name: { value: 'Hue Pink' },
     number: { numerator: 11, denominator: 12 }
   },
-  {
-    id: OuterHorizontalDivisionBorderIndex,
+  [OuterHorizontalDivisionBorderIndex]: {
     name: { value: 'Outer Horizontal Division Border Index' },
     number: 1
   },
-  {
-    id: OuterVerticalDivisionBorderIndex,
+  [OuterVerticalDivisionBorderIndex]: {
     name: { value: 'Outer Vertical Division Border Index' },
     number: 1
   },
-  {
-    id: InterfaceColumnIndex,
+  [InterfaceColumnIndex]: {
     name: { value: 'Interface Column Index' },
     number: 1
   },
-  {
-    id: InterfaceRowIndex,
+  [InterfaceRowIndex]: {
     name: { value: 'Interface Row Index' },
     number: 1
   },
-  {
-    id: FontSize,
+  [FontSize]: {
     name: { value: 'Font Size' },
     number: { numerator: 1, denominator: 9 }
   },
-  {
-    id: FontSizeHorizontal,
+  [FontSizeHorizontal]: {
     name: { value: 'Font Size Horizontal' },
     number: FontSize
   },
-  {
-    id: FontSizeHorizontal1,
+  [FontSizeHorizontal1]: {
     name: { value: 'Font Size Horizontal 1' },
     number: FontSizeHorizontal
   },
-  {
-    id: FontSizeHorizontal2,
+  [FontSizeHorizontal2]: {
     name: { value: 'Font Size Horizontal 2' },
     number: FontSizeHorizontal
   },
-  {
-    id: FontSizeVertical,
+  [FontSizeVertical]: {
     name: { value: 'Font Size Vertical' },
     number: FontSize
   },
-  {
-    id: FontSizeVertical1,
+  [FontSizeVertical1]: {
     name: { value: 'Font Size Vertical 1' },
     number: FontSizeVertical
   },
-  {
-    id: FontSizeVertical2,
+  [FontSizeVertical2]: {
     name: { value: 'Font Size Vertical 2' },
     number: FontSizeVertical
   },
-  {
-    id: FontSizeVertical3,
+  [FontSizeVertical3]: {
     name: { value: 'Font Size Vertical 3' },
     number: FontSizeVertical
   },
-  {
-    id: FontCurve,
+  [FontCurve]: {
     name: { value: 'Font Curve' },
     number: { numerator: 1, denominator: 9 }
   },
-  {
-    id: FontCurveHorizontal,
+  [FontCurveHorizontal]: {
     name: { value: 'Font Curve Horizontal' },
     number: FontCurve
   },
-  {
-    id: FontCurveHorizontal1,
+  [FontCurveHorizontal1]: {
     name: { value: 'Font Curve Horizontal 1' },
     number: FontCurveHorizontal
   },
-  {
-    id: FontCurveHorizontal2,
+  [FontCurveHorizontal2]: {
     name: { value: 'Font Curve Horizontal 2' },
     number: FontCurveHorizontal
   },
-  {
-    id: FontCurveVertical,
+  [FontCurveVertical]: {
     name: { value: 'Font Curve Vertical' },
     number: FontCurve
   },
-  {
-    id: FontCurveVertical1,
+  [FontCurveVertical1]: {
     name: { value: 'Font Curve Vertical 1' },
     number: FontCurveVertical
   },
-  {
-    id: FontCurveVertical2,
+  [FontCurveVertical2]: {
     name: { value: 'Font Curve Vertical 2' },
     number: FontCurveVertical
   },
-  {
-    id: FontCurveVertical3,
+  [FontCurveVertical3]: {
     name: { value: 'Font Curve Vertical 3' },
     number: FontCurveVertical
   },
-  {
-    id: FontCurveVertical4,
+  [FontCurveVertical4]: {
     name: { value: 'Font Curve Vertical 4' },
     number: FontCurveVertical
   },
-  {
-    id: FontLength,
+  [FontLength]: {
     name: { value: 'Font Length' },
     number: { numerator: 1, denominator: 9 }
   },
-  {
-    id: FontLengthHorizontal,
+  [FontLengthHorizontal]: {
     name: { value: 'Font Length Horizontal' },
     number: FontLength
   },
-  {
-    id: FontLengthVertical,
+  [FontLengthVertical]: {
     name: { value: 'Font Length Vertical' },
     number: FontLength
   },
-  {
-    id: FontLengthVertical1,
+  [FontLengthVertical1]: {
     name: { value: 'Font Length Vertical 1' },
     number: FontLengthVertical
   },
-  {
-    id: FontLengthVertical2,
+  [FontLengthVertical2]: {
     name: { value: 'Font Length Vertical 2' },
     number: FontLengthVertical
   }
-];
+};

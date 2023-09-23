@@ -1,3 +1,3 @@
 export type Solution = {
-  selectedClasses?: { objectId: string, classId: string }[]; // keep track of user selections
+  selectedObjectClasses?: { [id: string]: string }[]; // keep track of user selections
 }

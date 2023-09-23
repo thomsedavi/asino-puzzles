@@ -1,9 +1,8 @@
 import { OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderColor, OuterHorizontalDivisionBorderX, OuterVerticalBorderHeight, OuterVerticalDivisionBorderColor, OuterVerticalDivisionBorderY, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth } from "../consts";
 import { AsinoRectangleReference } from "../types/Rectangle";
 
-export const systemRectangleDefaults: AsinoRectangleReference[] = [
-  {
-    id: 'a-db',
+export const systemRectangleDefaults: { [id: string]: AsinoRectangleReference; } = {
+  'a-db': {
     name: { value: 'Outer Horizontal Division Border' },
     rectangle: {
       x: OuterHorizontalDivisionBorderX,
@@ -13,8 +12,7 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
       fill: OuterHorizontalDivisionBorderColor
     }
   },
-  {
-    id: 'e-cb',
+  'e-cb': {
     name: { value: 'Outer Vertical Division Border' },
     rectangle: {
       y: OuterVerticalDivisionBorderY,
@@ -24,4 +22,4 @@ export const systemRectangleDefaults: AsinoRectangleReference[] = [
       fill: OuterVerticalDivisionBorderColor
     }
   }
-]
+}

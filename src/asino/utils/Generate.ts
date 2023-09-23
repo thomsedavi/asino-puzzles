@@ -3,8 +3,8 @@ import { References } from "../References";
 import { InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceColumnIndex, InterfaceRowIndex, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionCount, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionCount } from "../consts";
 import { AsinoClassReference } from "../types/Class";
 import { AsinoLayer } from "../types/Layer";
+import { AsinoNumberReference } from "../types/Number";
 import { AsinoObjectReference } from "../types/Object";
-import { AsinoParameter } from "../types/Parameter";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { getNumberFromAsinoNumber, getValueFromNumber } from "../utils";
 
@@ -26,35 +26,48 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
       if (typeof outerVerticalDivisionCount === 'number') {
         if (typeof innerVerticalDivisionCount === 'number') {
           for (let r = 1; r < outerHorizontalDivisionCount; r++) {
-            const parameters: AsinoParameter[] = [];
+            const layer: AsinoLayer = { rectangleId: 'a-db' };
 
-            r !== 1 && (parameters.push({ numberId: OuterHorizontalDivisionBorderIndex, number: r }));
+            const numbers: { [id: string]: AsinoNumberReference } = {};
+            r !== 1 && (numbers[OuterHorizontalDivisionBorderIndex] = { number: r });
 
-            layers.push({ rectangleId: 'a-db', parameters: parameters.length === 0 ? undefined : parameters });
+            Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+
+            layers.push(layer);
           }
 
           for (let c = 1; c < outerHorizontalDivisionCount; c++) {
-            const parameters: AsinoParameter[] = [];
+            const layer: AsinoLayer = { rectangleId: 'e-cb' };
 
-            c !== 1 && (parameters.push({ numberId: OuterVerticalDivisionBorderIndex, number: c }));
+            const numbers: { [id: string]: AsinoNumberReference } = {};
+            c !== 1 && (numbers[OuterVerticalDivisionBorderIndex] = { number: c });
 
-            layers.push({ rectangleId: 'e-cb', parameters: parameters.length === 0 ? undefined : parameters });
+            Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+
+            layers.push(layer);
           }
 
           for (let r = 1; r <= (outerHorizontalDivisionCount * innerHorizontalDivisionCount); r++) {
             for (let c = 1; c <= (outerVerticalDivisionCount * innerVerticalDivisionCount); c++) {
               const objectId = Utils.getRandomId(objectIds);
-              const objectName = `Object R${r}C${c}`;
-
               objectIds.push(objectId);
+
+              const layer: AsinoLayer = {
+                interfaceId: 'c-fe',
+                objectId: objectId
+              };
+
+              const objectName = `Object R${r}C${c}`;
               objects.push({ id: objectId, name: { value: objectName }, object: { collectionId: collectionId } });
 
-              const parameters: AsinoParameter[] = [];
+              const numbers: { [id: string]: AsinoNumberReference } = {};
 
-              c !== 1 && (parameters.push({ numberId: InterfaceColumnIndex, number: c }));
-              r !== 1 && (parameters.push({ numberId: InterfaceRowIndex, number: r }));
+              c !== 1 && (numbers[InterfaceColumnIndex] = { number: c });
+              r !== 1 && (numbers[InterfaceRowIndex] = { number: r });
 
-              layers.push({ interfaceId: 'c-fe', objectId: objectId, parameters: parameters.length === 0 ? undefined : parameters });
+              Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+
+              layers.push(layer);
             }
           }
         }

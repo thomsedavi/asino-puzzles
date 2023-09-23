@@ -9,14 +9,14 @@ import { Style } from "../types/Style";
 
 export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClass: (classId: string) => void, selectedCollectionId?: string): JSX.Element => {
   const layers: JSX.Element[] = [];
-  const styles: Style[] = [];
+  const styles: { [id: string]: Style } = {};
 
-  const classes = puzzle.classes?.filter(c => c.class?.collectionId === selectedCollectionId);
+  const classes = puzzle.classes !== undefined ? Object.entries(puzzle.classes).filter(asinoClass => asinoClass[1].class?.collectionId === selectedCollectionId).map(asinoClass => asinoClass[1]) : [];
 
   classes?.forEach((asinoClass: AsinoClassReference, classIndex: number) => {
-    const result = getClassFromClassReference(asinoClass, new References(puzzle).addClasses([puzzle.classes]));
+    const result = getClassFromClassReference(asinoClass, new References(puzzle));
 
-    const classResult = getClassFromAsinoClass(result, new References(puzzle).addClasses([puzzle.classes]), solution);
+    const classResult = getClassFromAsinoClass(result, new References(puzzle), solution);
 
     classResult?.layers?.forEach((layer, layerIndex) => {
       layers.push(

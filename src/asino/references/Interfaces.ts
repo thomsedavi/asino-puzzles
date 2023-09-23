@@ -1,9 +1,8 @@
 import { InterfaceX, InterfaceY, InterfaceWidth, InterfaceHeight, InterfaceBorderTopHeight, InterfaceBorderRightWidth, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderTopColor, InterfaceBorderRightColor, InterfaceBorderBottomColor, InterfaceBorderLeftColor, InterfaceColor, InterfaceSelectedColor, InterfacePaddingTopHeight, InterfacePaddingRightWidth, InterfacePaddingBottomHeight, InterfacePaddingLeftWidth } from "../consts";
 import { AsinoInterfaceReference } from "../types/Interface";
 
-export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
-  {
-    id: 'c-fe',
+export const systemInterfaceDefaults: { [id: string]: AsinoInterfaceReference; } = {
+  'c-fe': {
     name: { value: 'Interface' },
     interface: {
       x: InterfaceX,
@@ -26,4 +25,4 @@ export const systemInterfaceDefaults: AsinoInterfaceReference[] = [
       fillSelected: InterfaceSelectedColor
     }
   }
-];
+};

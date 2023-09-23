@@ -1,17 +1,15 @@
 import { CurveFraction, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLengthHorizontal, FontLengthVertical1, FontLengthVertical2, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical1, FontSizeVertical2, FontSizeVertical3 } from "../consts";
 import { AsinoCommandReference } from "../types/Path";
 
-export const systemCommandDefaults: AsinoCommandReference[] = [
-  {
-    id: 'f-cb',
+export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
+  'f-cb': {
     name: { value: 'Font Size Left To Right 1' },
     command: {
       letter: 'h',
       dx: FontSizeHorizontal1
     }
   },
-  {
-    id: 'd-ba',
+  'd-ba': {
     name: { value: 'Font Size Right To Left 1' },
     command: {
       letter: 'h',
@@ -24,16 +22,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'b-cf',
+  'b-cf': {
     name: { value: 'Font Curve Left To Right 1' },
     command: {
       letter: 'h',
       dx: FontCurveHorizontal1
     }
   },
-  {
-    id: 'a-fa',
+  'a-fa': {
     name: { value: 'Font Curve Right To Left 1' },
     command: {
       letter: 'h',
@@ -46,16 +42,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'd-ef',
+  'd-ef': {
     name: { value: 'Font Length Left To Right' },
     command: {
       letter: 'h',
       dx: FontLengthHorizontal
     }
   },
-  {
-    id: 'd-af',
+  'd-af': {
     name: { value: 'Font Length Right To Left' },
     command: {
       letter: 'h',
@@ -68,16 +62,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'a-bf',
+  'a-bf': {
     name: { value: 'Font Curve Left To Right 2' },
     command: {
       letter: 'h',
       dx: FontCurveHorizontal2
     }
   },
-  {
-    id: 'd-fd',
+  'd-fd': {
     name: { value: 'Font Curve Right To Left 2' },
     command: {
       letter: 'h',
@@ -90,16 +82,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'd-fb',
+  'd-fb': {
     name: { value: 'Font Size Left To Right 2' },
     command: {
       letter: 'h',
       dx: FontSizeHorizontal2
     }
   },
-  {
-    id: 'c-bb',
+  'c-bb': {
     name: { value: 'Font Size Right To Left 2' },
     command: {
       letter: 'h',
@@ -112,16 +102,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'c-dd',
+  'c-dd': {
     name: { value: 'Font Line Up To Down 1' },
     command: {
       letter: 'v',
       dy: FontSizeVertical1
     }
   },
-  {
-    id: 'd-bf',
+  'd-bf': {
     name: { value: 'Font Line Down To Up 1' },
     command: {
       letter: 'v',
@@ -134,16 +122,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-df',
+  'e-df': {
     name: { value: 'Font Curve Up To Down 1' },
     command: {
       letter: 'v',
       dy: FontCurveVertical1
     }
   },
-  {
-    id: 'c-ed',
+  'c-ed': {
     name: { value: 'Font Curve Down To Up 1' },
     command: {
       letter: 'v',
@@ -156,16 +142,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'f-ad',
+  'f-ad': {
     name: { value: 'Font Length Up To Down 1' },
     command: {
       letter: 'v',
       dy: FontLengthVertical1
     }
   },
-  {
-    id: 'b-ec',
+  'b-ec': {
     name: { value: 'Font Length Down To Up 1' },
     command: {
       letter: 'v',
@@ -178,16 +162,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-ee',
+  'e-ee': {
     name: { value: 'Font Curve Up To Down 2' },
     command: {
       letter: 'v',
       dy: FontCurveVertical2
     }
   },
-  {
-    id: 'a-ca',
+  'a-ca': {
     name: { value: 'Font Curve Down To Up 2' },
     command: {
       letter: 'v',
@@ -200,16 +182,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'd-cd',
+  'd-cd': {
     name: { value: 'Font Line Up To Down 2' },
     command: {
       letter: 'v',
       dy: FontSizeVertical2
     }
   },
-  {
-    id: 'd-bc',
+  'd-bc': {
     name: { value: 'Font Line Down To Up 2' },
     command: {
       letter: 'v',
@@ -222,16 +202,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'f-da',
+  'f-da': {
     name: { value: 'Font Curve Up To Down 3' },
     command: {
       letter: 'v',
       dy: FontCurveVertical3
     }
   },
-  {
-    id: 'a-de',
+  'a-de': {
     name: { value: 'Font Curve Down To Up 3' },
     command: {
       letter: 'v',
@@ -244,16 +222,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'c-ec',
+  'c-ec': {
     name: { value: 'Font Length Up To Down 2' },
     command: {
       letter: 'v',
       dy: FontLengthVertical2
     }
   },
-  {
-    id: 'f-df',
+  'f-df': {
     name: { value: 'Font Length Down To Up 2' },
     command: {
       letter: 'v',
@@ -266,16 +242,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'b-eb',
+  'b-eb': {
     name: { value: 'Font Curve Up To Down 4' },
     command: {
       letter: 'v',
       dy: FontCurveVertical4
     }
   },
-  {
-    id: 'f-fd',
+  'f-fd': {
     name: { value: 'Font Curve Down To Up 4' },
     command: {
       letter: 'v',
@@ -288,16 +262,14 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'd-ca',
+  'd-ca': {
     name: { value: 'Font Line Up To Down 3' },
     command: {
       letter: 'v',
       dy: FontSizeVertical3
     }
   },
-  {
-    id: 'a-ce',
+  'a-ce': {
     name: { value: 'Font Line Down To Up 3' },
     command: {
       letter: 'v',
@@ -310,8 +282,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-ea',
+  'e-ea': {
     name: { value: 'Font Outer Curve Down To Up 1 Left To Right 1' },
     command: {
       letter: 'c',
@@ -395,8 +366,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'f-ef',
+  'f-ef': {
     name: { value: 'Font Outer Curve Left To Right 2 Up To Down 1' },
     command: {
       letter: 'c',
@@ -462,8 +432,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'f-fa',
+  'f-fa': {
     name: { value: 'Font Outer Curve Up To Down 2 Right To Left 2' },
     command: {
       letter: 'c',
@@ -541,8 +510,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'f-bd',
+  'f-bd': {
     name: { value: 'Font Inner Curve Right To Left 1 Up To Down 3' },
     command: {
       letter: 'c',
@@ -590,8 +558,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       dy: FontCurveVertical3
     }
   },
-  {
-    id: 'b-ae',
+  'b-ae': {
     name: { value: 'Font Outer Curve Down To Up 3 Left To Right 1' },
     command: {
       letter: 'c',
@@ -675,8 +642,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'a-be',
+  'a-be': {
     name: { value: 'Font Inner Curve Left To Right 2 Down To Up 2' },
     command: {
       letter: 'c',
@@ -718,8 +684,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'b-cb',
+  'b-cb': {
     name: { value: 'Font Inner Curve Down To Up 1 Right To Left 2' },
     command: {
       letter: 'c',
@@ -779,8 +744,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'a-fc',
+  'a-fc': {
     name: { value: 'Font Inner Curve Right To Left 1 Up To Down 1' },
     command: {
       letter: 'c',
@@ -822,8 +786,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       dy: FontCurveVertical1
     }
   },
-  {
-    id: 'd-dd',
+  'd-dd': {
     name: { value: 'Font Outer Curve Left To Right 2 Up To Down 3' },
     command: {
       letter: 'c',
@@ -889,8 +852,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'b-ee',
+  'b-ee': {
     name: { value: 'Font Outer Curve Up To Down 4 Right To Left 2' },
     command: {
       letter: 'c',
@@ -968,8 +930,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-fa',
+  'e-fa': {
     name: { value: 'Font Outer Curve Right To Left 1 Down To Up 4' },
     command: {
       letter: 'c',
@@ -1065,8 +1026,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'a-bd',
+  'a-bd': {
     name: { value: 'Font Inner Curve Up To Down 4 Left To Right 1' },
     command: {
       letter: 'c',
@@ -1096,8 +1056,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       dy: FontCurveVertical4
     }
   },
-  {
-    id: 'e-fc',
+  'e-fc': {
     name: { value: 'Font Inner Curve Left To Right 2 Down To Up 4' },
     command: {
       letter: 'c',
@@ -1140,8 +1099,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-aa',
+  'e-aa': {
     name: { value: 'Font Inner Curve Down To Up 3 Right To Left 2' },
     command: {
       letter: 'c',
@@ -1201,8 +1159,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'e-bb',
+  'e-bb': {
     name: { value: 'Font Outer Curve Right To Left 1 Down To Up 2' },
     command: {
       letter: 'c',
@@ -1298,8 +1255,7 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       }
     }
   },
-  {
-    id: 'd-bd',
+  'd-bd': {
     name: { value: 'Font Inner Curve Up To Down 2 Left To Right 1' },
     command: {
       letter: 'c',
@@ -1329,4 +1285,4 @@ export const systemCommandDefaults: AsinoCommandReference[] = [
       dy: FontCurveVertical2
     }
   }
-]
+}
