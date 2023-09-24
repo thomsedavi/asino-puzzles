@@ -5,7 +5,6 @@ import { AsinoNumber, getNumberRow } from "./Number";
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
 import Utils from '../../common/utils';
-import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
 
 export type AsinoCircle = {
@@ -18,10 +17,10 @@ export type AsinoCircle = {
 }
 
 export type AsinoCircleReference = {
-  id?: string; // id of this circle
   name?: { value?: string, editedValue?: string }; // name of this circle
   circle?: AsinoCircle; // value of this circle
-  parameters?: AsinoParameter[]; // number and color parameters
+  circleId?: string; // refer to the circle with this id
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getCircleReferenceRow = (puzzle: AsinoPuzzle, circleReference: AsinoCircleReference, key: string, depth: number, update: (value: AsinoCircleReference) => void): JSX.Element => {
