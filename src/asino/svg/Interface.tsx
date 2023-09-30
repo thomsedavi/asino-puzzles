@@ -11,7 +11,7 @@ import { systemClassDefaults } from "../references/Classes";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { Class } from "../types/Class";
-import { getDifference, getNumberResultFromAsinoNumber, getProduct, getValueFromNumberResult } from "../utils/Number";
+import { getDifference, getProduct, getValueFromNumberResult } from "../utils/Number";
 
 export const drawInterface = (asinoInterface: Interface, objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], references: References, solution: Solution, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element => {
   let interfaceObjectId: string | undefined = undefined;
