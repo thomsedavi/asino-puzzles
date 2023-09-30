@@ -38,8 +38,8 @@ import { getObjectFromObjectId } from "./utils/Object";
 
 export const getValueFromColor = (color: ColorResult, references: References, idPrefix: string, isDark: boolean): { key: string, value: string } | undefined => {
   if (color !== undefined && 'red' in color) {
-    const colorRed: NumberResult = isDark ? color?.redDark ?? color?.red ?? { number: 0 } : color?.lightness ?? { number: 1 };
-    let red = getValueFromNumberResult(getProduct(colorRed, { number: 255 }, references));
+    const colorRed: NumberResult = isDark ? color?.redDark ?? color?.red ?? { integer: 0 } : color?.lightness ?? { integer: 1 };
+    let red = getValueFromNumberResult(getProduct(colorRed, { integer: 255 }, references));
 
     if (red === 'infinity') {
       red = 255;
@@ -51,8 +51,8 @@ export const getValueFromColor = (color: ColorResult, references: References, id
 
     red = Math.max(Math.min(Math.round(red), 255), 0);
 
-    const colorGreen: NumberResult = isDark ? color?.greenDark ?? color?.green ?? { number: 0 } : color?.green ?? { number: 1 };
-    let green = getValueFromNumberResult(getProduct(colorGreen, { number: 255 }, references));
+    const colorGreen: NumberResult = isDark ? color?.greenDark ?? color?.green ?? { integer: 0 } : color?.green ?? { integer: 1 };
+    let green = getValueFromNumberResult(getProduct(colorGreen, { integer: 255 }, references));
 
     if (green === 'infinity') {
       green = 255;
@@ -64,8 +64,8 @@ export const getValueFromColor = (color: ColorResult, references: References, id
 
     green = Math.max(Math.min(Math.round(green), 255), 0);
 
-    const colorBlue: NumberResult = isDark ? color?.blueDark ?? color?.blue ?? { number: 0 } : color?.blue ?? { number: 1 };
-    let blue = getValueFromNumberResult(getProduct(colorBlue, { number: 255 }, references));
+    const colorBlue: NumberResult = isDark ? color?.blueDark ?? color?.blue ?? { integer: 0 } : color?.blue ?? { integer: 1 };
+    let blue = getValueFromNumberResult(getProduct(colorBlue, { integer: 255 }, references));
 
     if (blue === 'infinity') {
       blue = 255;
@@ -79,8 +79,8 @@ export const getValueFromColor = (color: ColorResult, references: References, id
 
     return { key: `${idPrefix}r${red}g${green}b${blue}a1`, value: `rgba(${red},${green},${blue},1)` };
   } else {
-    const colorHue: NumberResult = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? { number: 0 };
-    let hue = getValueFromNumberResult(getProduct(colorHue, { number: 360 }, references));
+    const colorHue: NumberResult = (isDark ? (color?.hueDark ?? color?.hue) : color?.hue) ?? { integer: 0 };
+    let hue = getValueFromNumberResult(getProduct(colorHue, { integer: 360 }, references));
 
     if (hue === 'infinity' || hue === 'negativeInfinity' || hue === 'potato' || hue === undefined) {
       hue = 0;
@@ -89,7 +89,7 @@ export const getValueFromColor = (color: ColorResult, references: References, id
     hue = Math.round(hue) % 360;
 
     const colorSaturation: NumberResult = (isDark ? (color?.saturationDark ?? color?.saturation) : color?.saturation) ?? { fraction: { numerator: 3, denominator: 4 } };
-    let saturation = getValueFromNumberResult(getProduct(colorSaturation, { number: 100 }, references));
+    let saturation = getValueFromNumberResult(getProduct(colorSaturation, { integer: 100 }, references));
 
     if (saturation === 'infinity') {
       saturation = 100;
@@ -102,7 +102,7 @@ export const getValueFromColor = (color: ColorResult, references: References, id
     saturation = Math.max(Math.min(Math.round(saturation), 100), 0);
 
     const colorLightness: NumberResult = (isDark ? (color?.lightnessDark ?? color?.lightness) : color?.lightness) ?? { fraction: { numerator: 1, denominator: 2 } };
-    let lightness = getValueFromNumberResult(getProduct(colorLightness, { number: 100 }, references));
+    let lightness = getValueFromNumberResult(getProduct(colorLightness, { integer: 100 }, references));
 
     if (lightness === 'infinity') {
       lightness = 100;
@@ -514,8 +514,8 @@ export const getNumberFromLayer = (layer: any, references: References, valueName
   const valueNumberValue: AsinoNumber | undefined = layer?.[valueNameAndId];
 
   if (valueNumberValue !== undefined) {
-    if (valueNumberValue.number !== undefined) {
-      result.number = valueNumberValue.number.value;
+    if (valueNumberValue.integer !== undefined) {
+      result.integer = valueNumberValue.integer.value;
     } else if (valueNumberValue.formula !== undefined) {
       result = getNumberResultFromFormula(valueNumberValue.formula, references);
     } else {

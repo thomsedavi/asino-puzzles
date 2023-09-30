@@ -11,7 +11,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
             command: {
               letter: 'm',
               dx: { numberId: FontSizeHorizontal2 },
-              dy: { number: { value: 0 } }
+              dy: { integer: { value: 0 } }
             }
           },
           {
@@ -89,7 +89,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'm',
-              dx: { number: { value: 0 } },
+              dx: { integer: { value: 0 } },
               dy: {
                 formula: {
                   operator: '+',
@@ -206,7 +206,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'm',
-              dx: { number: { value: 0 } },
+              dx: { integer: { value: 0 } },
               dy: {
                 formula: {
                   operator: '+',
@@ -344,7 +344,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
             command: {
               letter: 'm',
               dx: { numberId: FontSizeHorizontal1 },
-              dy: { number: { value: 0 } }
+              dy: { integer: { value: 0 } }
             }
           },
           {
@@ -735,8 +735,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'm',
-              dx: { number: { value: 0 } },
-              dy: { number: { value: 0 } }
+              dx: { integer: { value: 0 } },
+              dy: { integer: { value: 0 } }
             }
           },
           {
@@ -838,7 +838,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'm',
-              dx: { number: { value: 0 } },
+              dx: { integer: { value: 0 } },
               dy: {
                 formula: {
                   operator: '+',
@@ -919,7 +919,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'm',
-              dx: { number: { value: 0 } },
+              dx: { integer: { value: 0 } },
               dy: {
                 formula: {
                   operator: 'TOTAL',
@@ -1132,15 +1132,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'M',
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       },
                     },
                     {
@@ -1148,7 +1148,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1164,7 +1164,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -1176,8 +1176,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   },
                                 },
                                 {
@@ -1185,7 +1185,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -1204,8 +1204,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1213,7 +1213,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1226,8 +1226,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1235,7 +1235,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1246,7 +1246,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -1258,8 +1258,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -1267,7 +1267,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -1286,8 +1286,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1295,14 +1295,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -1314,8 +1314,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1323,14 +1323,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -1342,8 +1342,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1351,7 +1351,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1362,7 +1362,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -1374,8 +1374,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -1383,7 +1383,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -1400,7 +1400,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -1412,8 +1412,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -1421,7 +1421,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -1440,8 +1440,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1449,22 +1449,22 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1472,7 +1472,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1505,8 +1505,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1514,14 +1514,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -1533,8 +1533,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1542,7 +1542,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1560,8 +1560,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -1569,7 +1569,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -1590,8 +1590,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -1599,7 +1599,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -1615,8 +1615,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1624,22 +1624,22 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1647,7 +1647,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1659,15 +1659,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'L',
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1675,7 +1675,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1698,8 +1698,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -1707,7 +1707,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -1723,8 +1723,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1732,7 +1732,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1745,8 +1745,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1754,7 +1754,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1772,8 +1772,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -1781,7 +1781,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -1797,8 +1797,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1806,14 +1806,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -1840,8 +1840,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1849,14 +1849,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -1868,8 +1868,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1877,7 +1877,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -1895,8 +1895,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -1904,7 +1904,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -1918,7 +1918,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -1930,8 +1930,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -1939,7 +1939,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -1958,8 +1958,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1967,22 +1967,22 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -1990,7 +1990,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2002,15 +2002,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'L',
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2018,7 +2018,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2034,7 +2034,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -2046,8 +2046,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -2055,7 +2055,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -2074,8 +2074,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2083,7 +2083,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2096,8 +2096,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2105,7 +2105,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2123,8 +2123,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -2132,7 +2132,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -2148,8 +2148,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2157,14 +2157,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -2185,15 +2185,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'M',
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2201,7 +2201,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2213,15 +2213,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'L',
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2229,7 +2229,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2241,15 +2241,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'L',
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2257,7 +2257,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2269,15 +2269,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'L',
-              x: { number: { value: 1 } },
+              x: { integer: { value: 1 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2285,7 +2285,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2318,8 +2318,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2327,14 +2327,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -2346,8 +2346,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2355,14 +2355,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 0 } }
+              y: { integer: { value: 0 } }
             }
           },
           {
@@ -2374,8 +2374,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2383,14 +2383,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -2402,8 +2402,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2411,14 +2411,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -2439,15 +2439,15 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
           {
             command: {
               letter: 'M',
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '-',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2455,7 +2455,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2478,8 +2478,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -2487,7 +2487,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -2503,8 +2503,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2512,7 +2512,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2525,8 +2525,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2534,7 +2534,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2545,7 +2545,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -2557,8 +2557,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -2566,7 +2566,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -2585,8 +2585,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2594,14 +2594,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -2613,8 +2613,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2622,14 +2622,14 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              y: { number: { value: 1 } }
+              y: { integer: { value: 1 } }
             }
           },
           {
@@ -2641,8 +2641,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2650,7 +2650,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
@@ -2661,7 +2661,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                 formula: {
                   operator: '-',
                   numberInputs: [
-                    { number: { value: 1 } },
+                    { integer: { value: 1 } },
                     {
                       formula: {
                         operator: '*',
@@ -2673,8 +2673,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               numberInputs: [
                                 {
                                   fraction: {
-                                    numerator: { number: { value: 1 } },
-                                    denominator: { number: { value: 2 } }
+                                    numerator: { integer: { value: 1 } },
+                                    denominator: { integer: { value: 2 } }
                                   }
                                 },
                                 {
@@ -2682,7 +2682,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                                     operator: '/',
                                     numberInputs: [
                                       { numberId: PathSize },
-                                      { number: { value: 2 } }
+                                      { integer: { value: 2 } }
                                     ]
                                   }
                                 }
@@ -2706,8 +2706,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         numberInputs: [
                           {
                             fraction: {
-                              numerator: { number: { value: 1 } },
-                              denominator: { number: { value: 2 } }
+                              numerator: { integer: { value: 1 } },
+                              denominator: { integer: { value: 2 } }
                             }
                           },
                           {
@@ -2715,7 +2715,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                               operator: '/',
                               numberInputs: [
                                 { numberId: PathSize },
-                                { number: { value: 2 } }
+                                { integer: { value: 2 } }
                               ]
                             }
                           }
@@ -2731,8 +2731,8 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2740,22 +2740,22 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }
                   ]
                 }
               },
-              x: { number: { value: 0 } },
+              x: { integer: { value: 0 } },
               y: {
                 formula: {
                   operator: '+',
                   numberInputs: [
                     {
                       fraction: {
-                        numerator: { number: { value: 1 } },
-                        denominator: { number: { value: 2 } }
+                        numerator: { integer: { value: 1 } },
+                        denominator: { integer: { value: 2 } }
                       }
                     },
                     {
@@ -2763,7 +2763,7 @@ export const systemPathDefaults: { [id: string]: AsinoPathReference; } = {
                         operator: '/',
                         numberInputs: [
                           { numberId: PathSize },
-                          { number: { value: 2 } }
+                          { integer: { value: 2 } }
                         ]
                       }
                     }

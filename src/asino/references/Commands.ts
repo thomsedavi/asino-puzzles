@@ -18,7 +18,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontSizeHorizontal1 }
           ]
         }
@@ -40,7 +40,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal1 }
           ]
         }
@@ -62,7 +62,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontLengthHorizontal }
           ]
         }
@@ -84,7 +84,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal2 }
           ]
         }
@@ -106,7 +106,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontSizeHorizontal2 }
           ]
         }
@@ -128,7 +128,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontSizeVertical1 }
           ]
         }
@@ -150,7 +150,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical1 }
           ]
         }
@@ -172,7 +172,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontLengthVertical1 }
           ]
         }
@@ -194,7 +194,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical2 }
           ]
         }
@@ -216,7 +216,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontSizeVertical2 }
           ]
         }
@@ -238,7 +238,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical3 }
           ]
         }
@@ -260,7 +260,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontLengthVertical2 }
           ]
         }
@@ -282,7 +282,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical4 }
           ]
         }
@@ -304,7 +304,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontSizeVertical3 }
           ]
         }
@@ -315,12 +315,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Down To Up 1 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -378,7 +378,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -404,7 +404,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -440,7 +440,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '+',
@@ -507,7 +507,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Up To Down 2 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '*',
@@ -533,7 +533,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   {
                     formula: {
                       operator: '+',
@@ -579,7 +579,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -611,7 +611,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -624,12 +624,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal1 }
           ]
         }
@@ -655,7 +655,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal1 }
           ]
         }
@@ -667,12 +667,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Down To Up 3 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -730,7 +730,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -756,7 +756,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -784,7 +784,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: { numberId: FontCurveHorizontal2 },
       dy2: {
         formula: {
@@ -794,7 +794,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   { numberId: FontCurveVertical2 }
                 ]
               }
@@ -816,7 +816,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical2 }
           ]
         }
@@ -827,12 +827,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Down To Up 1 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -853,7 +853,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   { numberId: FontCurveHorizontal2 }
                 ]
               }
@@ -874,7 +874,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical1 }
           ]
         }
@@ -883,7 +883,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal2 }
           ]
         }
@@ -892,7 +892,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical1 }
           ]
         }
@@ -907,7 +907,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -920,12 +920,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal1 }
           ]
         }
@@ -943,7 +943,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal1 }
           ]
         }
@@ -972,7 +972,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '+',
@@ -1039,7 +1039,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Up To Down 4 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '*',
@@ -1065,7 +1065,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   {
                     formula: {
                       operator: '+',
@@ -1111,7 +1111,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1143,7 +1143,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -1164,12 +1164,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1190,7 +1190,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   {
                     formula: {
                       operator: '+',
@@ -1227,7 +1227,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1244,7 +1244,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1263,7 +1263,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Up To Down 4 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '*',
@@ -1308,7 +1308,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: { numberId: FontCurveHorizontal2 },
       dy2: {
         formula: {
@@ -1318,7 +1318,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   { numberId: FontCurveVertical4 }
                 ]
               }
@@ -1340,7 +1340,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical4 }
           ]
         }
@@ -1351,12 +1351,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Down To Up 3 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -1377,7 +1377,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   { numberId: FontCurveHorizontal2 }
                 ]
               }
@@ -1398,7 +1398,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical3 }
           ]
         }
@@ -1407,7 +1407,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveHorizontal2 }
           ]
         }
@@ -1416,7 +1416,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             { numberId: FontCurveVertical3 }
           ]
         }
@@ -1431,7 +1431,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '*',
@@ -1452,12 +1452,12 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
           ]
         }
       },
-      dy1: { number: { value: 0 } },
+      dy1: { integer: { value: 0 } },
       dx2: {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1478,7 +1478,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
               formula: {
                 operator: '-',
                 numberInputs: [
-                  { number: { value: 0 } },
+                  { integer: { value: 0 } },
                   {
                     formula: {
                       operator: '+',
@@ -1515,7 +1515,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1532,7 +1532,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
         formula: {
           operator: '-',
           numberInputs: [
-            { number: { value: 0 } },
+            { integer: { value: 0 } },
             {
               formula: {
                 operator: '+',
@@ -1551,7 +1551,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Up To Down 2 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: { number: { value: 0 } },
+      dx1: { integer: { value: 0 } },
       dy1: {
         formula: {
           operator: '*',

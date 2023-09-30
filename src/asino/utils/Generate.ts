@@ -32,7 +32,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
             const layer: AsinoLayer = { rectangleId: 'a-db' };
 
             const numbers: { [id: string]: AsinoNumber } = {};
-            r !== 1 && (numbers[OuterHorizontalDivisionBorderIndex] = { number: { value: r } });
+            r !== 1 && (numbers[OuterHorizontalDivisionBorderIndex] = { integer: { value: r } });
 
             Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
 
@@ -43,7 +43,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
             const layer: AsinoLayer = { rectangleId: 'e-cb' };
 
             const numbers: { [id: string]: AsinoNumber } = {};
-            c !== 1 && (numbers[OuterVerticalDivisionBorderIndex] = { number: { value: c } });
+            c !== 1 && (numbers[OuterVerticalDivisionBorderIndex] = { integer: { value: c } });
 
             Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
 
@@ -65,8 +65,8 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
 
               const numbers: { [id: string]: AsinoNumber } = {};
 
-              c !== 1 && (numbers[InterfaceColumnIndex] = { number: { value: c } });
-              r !== 1 && (numbers[InterfaceRowIndex] = { number: { value: r } });
+              c !== 1 && (numbers[InterfaceColumnIndex] = { integer: { value: c } });
+              r !== 1 && (numbers[InterfaceRowIndex] = { integer: { value: r } });
 
               Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
 

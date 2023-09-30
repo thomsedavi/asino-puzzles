@@ -12,9 +12,9 @@ import { getValueFromNumberResult } from "../utils/Number";
 export const drawCircle = (circle: Circle, references: References, solution: Solution, defaultStrokeWidth: AsinoNumber, key: string, styles: { [id: string]: Style }): JSX.Element => {
   let strokeWidth: NumberResult | undefined = getNumberFromLayer(circle, references, 'circle', StrokeWidth, defaultStrokeWidth);
 
-  const cx = getNumberFromLayer(circle, references, 'circle', CX, { number: { value: 0 } });
-  const cy = getNumberFromLayer(circle, references, 'circle', CY, { number: { value: 0 } });
-  const r = getNumberFromLayer(circle, references, 'circl', R, { number: { value: 0 } });
+  const cx = getNumberFromLayer(circle, references, 'circle', CX, { integer: { value: 0 } });
+  const cy = getNumberFromLayer(circle, references, 'circle', CY, { integer: { value: 0 } });
+  const r = getNumberFromLayer(circle, references, 'circl', R, { integer: { value: 0 } });
 
   const fill = getColorResultFromLayer(circle, references, solution, 'circle', Fill);
   const stroke = getColorResultFromLayer(circle, references, solution, 'circle', Stroke);

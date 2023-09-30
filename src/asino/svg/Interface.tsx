@@ -29,20 +29,20 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
   const solutionClass = (interfaceObjectId !== undefined && solution.selectedObjectClasses !== undefined) ? solution.selectedObjectClasses[interfaceObjectId] : undefined;
   solutionClass !== undefined && (interfaceClassId = solutionClass);
 
-  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { number: { value: 0 } });
-  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { number: { value: 0 } });
+  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { integer: { value: 0 } });
+  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { integer: { value: 0 } });
   const width = getNumberFromLayer(asinoInterface, references, 'interface', Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(asinoInterface, references, 'interface', Height, defaultInterfaceHeightValue);
 
-  const borderTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderTopHeight, { number: { value: 0 } });
-  const borderRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderRightWidth, { number: { value: 0 } });
-  const borderBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderBottomHeight, { number: { value: 0 } });
-  const borderLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderLeftWidth, { number: { value: 0 } });
+  const borderTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderTopHeight, { integer: { value: 0 } });
+  const borderRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderRightWidth, { integer: { value: 0 } });
+  const borderBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderBottomHeight, { integer: { value: 0 } });
+  const borderLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderLeftWidth, { integer: { value: 0 } });
 
-  const paddingTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingTopHeight, { number: { value: 0 } });
-  const paddingRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingRightWidth, { number: { value: 0 } });
-  const paddingBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingBottomHeight, { number: { value: 0 } });
-  const paddingLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingLeftWidth, { number: { value: 0 } });
+  const paddingTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingTopHeight, { integer: { value: 0 } });
+  const paddingRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingRightWidth, { integer: { value: 0 } });
+  const paddingBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingBottomHeight, { integer: { value: 0 } });
+  const paddingLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingLeftWidth, { integer: { value: 0 } });
 
   const fill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
   const borderTopFill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', BorderTopFill);
@@ -92,8 +92,8 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
   const paddingInnerLeftScaled = `${getValueFromNumberResult(getProduct(paddingLeftWidth, width, references))}`;
 
   const paddingInnerTopRaw = `${getValueFromNumberResult(paddingTopHeight)}`;
-  const paddingInnerRightRaw = `${getValueFromNumberResult(getDifference({ number: 1 }, paddingRightWidth, references))}`;
-  const paddingInnerBottomRaw = `${getValueFromNumberResult(getDifference({ number: 1 }, paddingBottomHeight, references))}`;
+  const paddingInnerRightRaw = `${getValueFromNumberResult(getDifference({ integer: 1 }, paddingRightWidth, references))}`;
+  const paddingInnerBottomRaw = `${getValueFromNumberResult(getDifference({ integer: 1 }, paddingBottomHeight, references))}`;
   const paddingInnerLeftRaw = `${getValueFromNumberResult(paddingLeftWidth)}`;
 
   //console.log(innerTop);
@@ -125,10 +125,10 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
     }
   }
 
-  //const viewBoxThing1 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minX ?? { number: { value: 0 } }, references))}`;
-  //const viewBoxThing2 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minY ?? { number: { value: 0 } }, references))}`;
-  //const viewBoxThing3 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.width ?? { number: { value: 1 } }, references))}`;
-  //const viewBoxThing4 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.height ?? { number: { value: 1 } }, references))}`;
+  //const viewBoxThing1 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minX ?? { integer: { value: 0 } }, references))}`;
+  //const viewBoxThing2 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minY ?? { integer: { value: 0 } }, references))}`;
+  //const viewBoxThing3 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.width ?? { integer: { value: 1 } }, references))}`;
+  //const viewBoxThing4 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.height ?? { integer: { value: 1 } }, references))}`;
 
   //console.log(viewBoxThing1);
   //console.log(viewBoxThing2);
@@ -168,8 +168,8 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
 }
 
 export const drawInterfaceInteractive = (asinoInterface: Interface, collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { number: { value: 0 } });
-  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { number: { value: 0 } });
+  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { integer: { value: 0 } });
+  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { integer: { value: 0 } });
   const width = getNumberFromLayer(asinoInterface, references, 'interface', Width, defaultInterfaceWidthValue);
   const height = getNumberFromLayer(asinoInterface, references, 'interface', Height, defaultInterfaceHeightValue);
 

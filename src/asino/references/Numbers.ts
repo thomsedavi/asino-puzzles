@@ -4,51 +4,51 @@ import { AsinoNumberReference } from "../types/Number";
 export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   [ViewBoxMinimumX]: {
     name: { value: 'View Box Minimum X' },
-    value: { number: { value: 0 } },
+    value: { integer: { value: 0 } },
   },
   [ViewBoxMinimumY]: {
     name: { value: 'View Box Minimum Y' },
-    value: { number: { value: 0 } },
+    value: { integer: { value: 0 } },
   },
   [ViewBoxWidth]: {
     name: { value: 'View Box Width' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [ViewBoxHeight]: {
     name: { value: 'View Box Height' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [OuterHorizontalBorderWidth]: {
     name: { value: 'Outer Horizontal Border Width' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }
   },
   [OuterVerticalBorderHeight]: {
     name: { value: 'Outer Vertical Border Height' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }
   },
   [OuterHorizontalDivisionCount]: {
     name: { value: 'Outer Horizontal Division Count' },
-    value: { number: { value: 3 } }
+    value: { integer: { value: 3 } }
   },
   [InnerHorizontalDivisionCount]: {
     name: { value: 'Inner Horizontal Division Count' },
-    value: { number: { value: 3 } }
+    value: { integer: { value: 3 } }
   },
   [OuterVerticalDivisionCount]: {
     name: { value: 'Outer Vertical Division Count' },
-    value: { number: { value: 3 } }
+    value: { integer: { value: 3 } }
   },
   [InnerVerticalDivisionCount]: {
     name: { value: 'Inner Vertical Division Count' },
-    value: { number: { value: 3 } }
+    value: { integer: { value: 3 } }
   },
   [InterfaceBorderSize]: {
     name: { value: 'Interface Border Size' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 40 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 40 } } } }
   },
   [InterfacePaddingSize]: {
     name: { value: 'Interface Padding Size' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 10 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 10 } } } }
   },
   [InterfaceBorderTopHeight]: {
     name: { value: 'Interface Border Top Height' },
@@ -84,11 +84,11 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   },
   [PathSize]: {
     name: { value: 'Path Size' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 10 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 10 } } } }
   },
   [CurveFraction]: {
     name: { value: 'Curve Fraction' },
-    value: { fraction: { numerator: { number: { value: 11 } }, denominator: { number: { value: 20 } } } }
+    value: { fraction: { numerator: { integer: { value: 11 } }, denominator: { integer: { value: 20 } } } }
   },
   [InterfaceX]: {
     name: { value: 'Interface X' },
@@ -105,7 +105,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                     operator: '-',
                     numberInputs: [
                       { numberId: InterfaceColumnIndex },
-                      { number: { value: 1 } }
+                      { integer: { value: 1 } }
                     ]
                   }
                 },
@@ -130,7 +130,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                                 operator: '-',
                                 numberInputs: [
                                   { numberId: InterfaceColumnIndex },
-                                  { number: { value: 1 } }
+                                  { integer: { value: 1 } }
                                 ]
                               }
                             },
@@ -164,7 +164,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                     operator: '-',
                     numberInputs: [
                       { numberId: InterfaceRowIndex },
-                      { number: { value: 1 } }
+                      { integer: { value: 1 } }
                     ]
                   }
                 },
@@ -189,7 +189,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                                 operator: '-',
                                 numberInputs: [
                                   { numberId: InterfaceRowIndex },
-                                  { number: { value: 1 } }
+                                  { integer: { value: 1 } }
                                 ]
                               }
                             },
@@ -229,7 +229,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                           operator: '-',
                           numberInputs: [
                             { numberId: OuterHorizontalDivisionCount },
-                            { number: { value: 1 } }
+                            { integer: { value: 1 } }
                           ]
                         }
                       }
@@ -273,7 +273,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                           operator: '-',
                           numberInputs: [
                             { numberId: OuterVerticalDivisionCount },
-                            { number: { value: 1 } }
+                            { integer: { value: 1 } }
                           ]
                         }
                       }
@@ -329,7 +329,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                     operator: '-',
                     numberInputs: [
                       { numberId: OuterHorizontalDivisionBorderIndex },
-                      { number: { value: 1 } }
+                      { integer: { value: 1 } }
                     ]
                   }
                 }
@@ -373,7 +373,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
                     operator: '-',
                     numberInputs: [
                       { numberId: OuterVerticalDivisionBorderIndex },
-                      { number: { value: 1 } }
+                      { integer: { value: 1 } }
                     ]
                   }
                 }
@@ -386,71 +386,71 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   },
   [HueRed]: {
     name: { value: 'Hue Red' },
-    value: { number: { value: 0 } }
+    value: { integer: { value: 0 } }
   },
   [HueOrange]: {
     name: { value: 'Hue Orange' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 12 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 12 } } } }
   },
   [HueYellow]: {
     name: { value: 'Hue Yellow' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 6 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 6 } } } }
   },
   [HueChartreuse]: {
     name: { value: 'Hue Chartreuse' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 4 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 4 } } } }
   },
   [HueGreen]: {
     name: { value: 'Hue Green' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 3 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 3 } } } }
   },
   [HueMint]: {
     name: { value: 'Hue Mint' },
-    value: { fraction: { numerator: { number: { value: 5 } }, denominator: { number: { value: 12 } } } }
+    value: { fraction: { numerator: { integer: { value: 5 } }, denominator: { integer: { value: 12 } } } }
   },
   [HueCyan]: {
     name: { value: 'Hue Cyan' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 2 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 2 } } } }
   },
   [HueAzure]: {
     name: { value: 'Hue Azure' },
-    value: { fraction: { numerator: { number: { value: 7 } }, denominator: { number: { value: 12 } } } }
+    value: { fraction: { numerator: { integer: { value: 7 } }, denominator: { integer: { value: 12 } } } }
   },
   [HueBlue]: {
     name: { value: 'Hue Blue' },
-    value: { fraction: { numerator: { number: { value: 2 } }, denominator: { number: { value: 3 } } } }
+    value: { fraction: { numerator: { integer: { value: 2 } }, denominator: { integer: { value: 3 } } } }
   },
   [HueViolet]: {
     name: { value: 'Hue Violet' },
-    value: { fraction: { numerator: { number: { value: 3 } }, denominator: { number: { value: 4 } } } }
+    value: { fraction: { numerator: { integer: { value: 3 } }, denominator: { integer: { value: 4 } } } }
   },
   [HueMagenta]: {
     name: { value: 'Hue Magenta' },
-    value: { fraction: { numerator: { number: { value: 5 } }, denominator: { number: { value: 6 } } } }
+    value: { fraction: { numerator: { integer: { value: 5 } }, denominator: { integer: { value: 6 } } } }
   },
   [HuePink]: {
     name: { value: 'Hue Pink' },
-    value: { fraction: { numerator: { number: { value: 11 } }, denominator: { number: { value: 12 } } } }
+    value: { fraction: { numerator: { integer: { value: 11 } }, denominator: { integer: { value: 12 } } } }
   },
   [OuterHorizontalDivisionBorderIndex]: {
     name: { value: 'Outer Horizontal Division Border Index' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [OuterVerticalDivisionBorderIndex]: {
     name: { value: 'Outer Vertical Division Border Index' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [InterfaceColumnIndex]: {
     name: { value: 'Interface Column Index' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [InterfaceRowIndex]: {
     name: { value: 'Interface Row Index' },
-    value: { number: { value: 1 } }
+    value: { integer: { value: 1 } }
   },
   [FontSize]: {
     name: { value: 'Font Size' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
   },
   [FontSizeHorizontal]: {
     name: { value: 'Font Size Horizontal' },
@@ -482,7 +482,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   },
   [FontCurve]: {
     name: { value: 'Font Curve' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
   },
   [FontCurveHorizontal]: {
     name: { value: 'Font Curve Horizontal' },
@@ -518,7 +518,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   },
   [FontLength]: {
     name: { value: 'Font Length' },
-    value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
   },
   [FontLengthHorizontal]: {
     name: { value: 'Font Length Horizontal' },

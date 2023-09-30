@@ -15,12 +15,12 @@ import { getObjectFromObjectId } from "../utils/Object";
 
 export const drawLayer = (solution: Solution, layer: AsinoLayer, references: References, scale: NumberResult, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
-    return drawLine(layer.line, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, key, styles);
+    return drawLine(layer.line, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, key, styles);
   } else if (layer.lineId !== undefined) {
     const line = references.lines[layer.lineId];
 
     if (line.value?.line !== undefined)
-      return drawLine(line.value.line, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, key, styles);
+      return drawLine(line.value.line, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, key, styles);
   } else if (layer.interface !== undefined) {
     const object1 = getObjectFromObjectId(layer.interface.objectId ?? '', references.clone().addParameters(layer));
     const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
@@ -28,7 +28,7 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, references: Ref
     const class1 = object1?.classFixedId;
     const class2 = object2?.classFixedId;
 
-    return drawInterface(layer.interface, [layer.interface.objectId, layer.objectId], [class1, class2], references.clone().addParameters(layer), solution, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, key, styles, selectedObjectId);
+    return drawInterface(layer.interface, [layer.interface.objectId, layer.objectId], [class1, class2], references.clone().addParameters(layer), solution, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, key, styles, selectedObjectId);
   } else if (layer.interfaceId !== undefined) {
     const asinoInterface = references.interfaces[layer.interfaceId];
 
@@ -39,29 +39,29 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, references: Ref
       const class1 = object1?.classFixedId;
       const class2 = object2?.classFixedId;
 
-      return drawInterface(asinoInterface.value.interface, [asinoInterface.value.interface.objectId, layer.objectId], [class1, class2], references.clone().addParameters(layer), solution, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, key, styles, selectedObjectId);
+      return drawInterface(asinoInterface.value.interface, [asinoInterface.value.interface.objectId, layer.objectId], [class1, class2], references.clone().addParameters(layer), solution, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, key, styles, selectedObjectId);
     }
   } else if (layer.circle !== undefined) {
-    return drawCircle(layer.circle, references.clone().addParameters(layer), solution, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } }, key, styles);
+    return drawCircle(layer.circle, references.clone().addParameters(layer), solution, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }, key, styles);
   } else if (layer.circleId !== undefined) {
     const circle = references.circles[layer.circleId];
 
     if (circle.value?.circle !== undefined)
-      return drawCircle(circle.value.circle, references.clone().addParameters(layer), solution, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } }, key, styles);
+      return drawCircle(circle.value.circle, references.clone().addParameters(layer), solution, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }, key, styles);
   } else if (layer.rectangle !== undefined) {
-    return drawRectangle(layer.rectangle, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, key, styles);
+    return drawRectangle(layer.rectangle, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, key, styles);
   } else if (layer.rectangleId !== undefined) {
     const rectangle = references.rectangles[layer.rectangleId];
 
     if (rectangle.value?.rectangle !== undefined)
-      return drawRectangle(rectangle.value.rectangle, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, key, styles);
+      return drawRectangle(rectangle.value.rectangle, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, key, styles);
   } else if (layer.path !== undefined) {
-    return drawPath(layer.path, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, scale, key, styles);
+    return drawPath(layer.path, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, scale, key, styles);
   } else if (layer.pathId !== undefined) {
     const path = references.paths[layer.pathId];
 
     if (path.value?.path !== undefined)
-      return drawPath(path.value.path, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, scale, key, styles);
+      return drawPath(path.value.path, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } } }, scale, key, styles);
   }
 
   return undefined;
@@ -73,7 +73,7 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
   const references = new References(puzzle);
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
-    layers.push(drawLayer(solution, layer, references, { number: 1 }, `layer${layerIndex}`, styles, selectedObjectId));
+    layers.push(drawLayer(solution, layer, references, { integer: 1 }, `layer${layerIndex}`, styles, selectedObjectId));
   });
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
@@ -81,7 +81,7 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
       const object1 = getObjectFromObjectId(layer.interface.objectId ?? '', references.clone().addParameters(layer));
       const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
-      object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(layer.interface, [object1?.collectionId, object2?.collectionId], [layer.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+      object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(layer.interface, [object1?.collectionId, object2?.collectionId], [layer.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     } else if (layer.interfaceId !== undefined) {
       const asinoInterface = references.interfaces[layer.interfaceId];
 
@@ -89,7 +89,7 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
         const object1 = getObjectFromObjectId(asinoInterface.value.interface.objectId ?? '', references.clone().addParameters(layer));
         const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
-        object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(asinoInterface.value.interface, [object1?.collectionId, object2?.collectionId], [asinoInterface.value.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
+        object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(asinoInterface.value.interface, [object1?.collectionId, object2?.collectionId], [asinoInterface.value.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
       }
     }
   });
@@ -108,10 +108,10 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
 
   style = style + '}';
 
-  const minX = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.minX ?? { number: { value: 0 } }, references));
-  const minY = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.minY ?? { number: { value: 0 } }, references));
-  const width = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.width ?? { number: { value: 1 } }, references));
-  const height = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.height ?? { number: { value: 1 } }, references));
+  const minX = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.minX ?? { integer: { value: 0 } }, references));
+  const minY = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.minY ?? { integer: { value: 0 } }, references));
+  const width = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.width ?? { integer: { value: 1 } }, references));
+  const height = getValueFromNumberResult(getNumberResultFromAsinoNumber(puzzle.viewBox?.height ?? { integer: { value: 1 } }, references));
 
   return <svg version="1.1"
     viewBox={`${minX} ${minY} ${width} ${height}`}

@@ -155,6 +155,6 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
       <option value='NONE'>Select Object</option>
       {Object.entries(puzzle.objects ?? {}).map((object: [string, AsinoObjectReference], index: number) => <option key={`${rowKey} Object ${index}`} value={object[0]}>{object[1].name?.value}</option>)}
     </SelectInline>}
-    {Object.entries(layer.numbers ?? {}).map((number: [string, AsinoNumber], index: number) => getNumberRow(puzzle, number[1], `${index}`, depth + 1, (value: AsinoNumber | undefined) => { const numbers = layer.numbers ?? {}; numbers[number[0]] = value ?? { number: { value: 0 } }; update({ ...layer, numbers: numbers }) }))}
+    {Object.entries(layer.numbers ?? {}).map((number: [string, AsinoNumber], index: number) => getNumberRow(puzzle, number[1], `${index}`, depth + 1, (value: AsinoNumber | undefined) => { const numbers = layer.numbers ?? {}; numbers[number[0]] = value ?? { integer: { value: 0 } }; update({ ...layer, numbers: numbers }) }))}
   </div>;
 }

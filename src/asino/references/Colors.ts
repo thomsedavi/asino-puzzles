@@ -8,9 +8,9 @@ export const systemColorDefaults: { [id: string]: AsinoColorReference; } = {
       color: {
         hue: { numberId: HueAzure },
         hueDark: { numberId: HuePink },
-        saturation: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 4 } } } },
-        lightness: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 20 } } } },
-        lightnessDark: { fraction: { numerator: { number: { value: 19 } }, denominator: { number: { value: 20 } } } }
+        saturation: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 4 } } } },
+        lightness: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 20 } } } },
+        lightnessDark: { fraction: { numerator: { integer: { value: 19 } }, denominator: { integer: { value: 20 } } } }
       }
     }
   },
@@ -46,12 +46,12 @@ export const systemColorDefaults: { [id: string]: AsinoColorReference; } = {
     name: { value: 'Input Background' },
     value: {
       color: {
-        red: { number: { value: 1 } },
-        green: { number: { value: 1 } },
-        blue: { number: { value: 1 } },
-        redDark: { number: { value: 0 } },
-        greenDark: { number: { value: 0 } },
-        blueDark: { number: { value: 0 } }
+        red: { integer: { value: 1 } },
+        green: { integer: { value: 1 } },
+        blue: { integer: { value: 1 } },
+        redDark: { integer: { value: 0 } },
+        greenDark: { integer: { value: 0 } },
+        blueDark: { integer: { value: 0 } }
       }
     }
   },

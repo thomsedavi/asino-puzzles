@@ -4,7 +4,7 @@ import { AsinoLayer } from "../types/Layer";
 import { AsinoNumber } from "../types/Number";
 import { AsinoObject, AsinoObjectReference } from "../types/Object";
 import { AsinoPuzzle } from "../types/Puzzle";
-import { ClassFixedId, ClassId, Classes, CollectionId, Collections, DateCreated, DateUpdated, Id, InterfaceId, Layers, Name, Numberr, Numbers, ObjectId, Objects, RectangleId, UserId, UserName, Value } from "./MinifyConsts";
+import { ClassFixedId, ClassId, Classes, CollectionId, Collections, DateCreated, DateUpdated, Id, Integer, InterfaceId, Layers, Name, Numberr, Numbers, ObjectId, Objects, RectangleId, UserId, UserName, Value } from "./MinifyConsts";
 
 export const minifyAsino = (asino: AsinoPuzzle): any => {
   const result: any = {};
@@ -36,6 +36,7 @@ const minifyLayers = (layers: AsinoLayer[]): any => {
 const minifyLayer = (layer: AsinoLayer): any => {
   const result: any = {};
 
+  layer.name !== undefined && (result[Name] = layer.name.value);
   layer.interfaceId !== undefined && (result[InterfaceId] = layer.interfaceId);
   layer.rectangleId !== undefined && (result[RectangleId] = layer.rectangleId);
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
@@ -57,7 +58,7 @@ const minifyNumbers = (numbers: { [id: string]: AsinoNumber }): any => {
 const minifyAsinoNumber = (number: AsinoNumber) => {
   const result: any = {};
 
-  number.number !== undefined && (result[Numberr] = number.number.value);
+  number.integer !== undefined && (result[Integer] = number.integer.value);
 
   return result;
 }

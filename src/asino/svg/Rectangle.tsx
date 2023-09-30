@@ -12,10 +12,10 @@ import { getValueFromNumberResult } from "../utils/Number";
 export const drawRectangle = (rectangle: Rectangle, references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: { [id: string]: Style }): JSX.Element => {
   let strokeWidth: NumberResult | undefined = getNumberFromLayer(rectangle, references, 'rectangle', StrokeWidth, defaultStrokeWidth.value ?? {});
 
-  const x = getNumberFromLayer(rectangle, references, 'rectangle', X, { number: { value: 0 } });
-  const y = getNumberFromLayer(rectangle, references, 'rectangle', Y, { number: { value: 0 } });
-  const width = getNumberFromLayer(rectangle, references, 'rectangle', Width, { number: { value: 0 } });
-  const height = getNumberFromLayer(rectangle, references, 'rectangle', Height, { number: { value: 0 } });
+  const x = getNumberFromLayer(rectangle, references, 'rectangle', X, { integer: { value: 0 } });
+  const y = getNumberFromLayer(rectangle, references, 'rectangle', Y, { integer: { value: 0 } });
+  const width = getNumberFromLayer(rectangle, references, 'rectangle', Width, { integer: { value: 0 } });
+  const height = getNumberFromLayer(rectangle, references, 'rectangle', Height, { integer: { value: 0 } });
 
   const fill = getColorResultFromLayer(rectangle, references, solution, 'rectangle', Fill);
   const stroke = getColorResultFromLayer(rectangle, references, solution, 'rectangle', Stroke);

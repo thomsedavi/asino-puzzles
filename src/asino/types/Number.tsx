@@ -6,7 +6,7 @@ import { systemNumberDefaults } from '../references/Numbers';
 import { AsinoPuzzle } from './Puzzle';
 
 export type NumberResult = {
-  number?: number;
+  integer?: number;
   fraction?: FractionResult;
   isInfinity?: boolean;
   isNegativeInfinity?: boolean;
@@ -25,7 +25,7 @@ export type Fraction = {
 };
 
 export type AsinoNumber = {
-  number?: { value?: number, editedValue?: number };
+  integer?: { value?: number, editedValue?: number };
   numberId?: string;
   formula?: NumberFormula;
   fraction?: Fraction;

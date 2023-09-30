@@ -128,10 +128,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -146,10 +146,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -167,10 +167,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -185,10 +185,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -203,10 +203,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -221,10 +221,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -239,10 +239,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }
@@ -260,10 +260,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
 
       }
@@ -279,10 +279,10 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
           }
         ],
         viewBox: {
-          minX: { number: { value: 0 } },
-          minY: { number: { value: 0 } },
-          width: { number: { value: 1 } },
-          height: { number: { value: 1 } }
+          minX: { integer: { value: 0 } },
+          minY: { integer: { value: 0 } },
+          width: { integer: { value: 1 } },
+          height: { integer: { value: 1 } }
         }
       }
     }

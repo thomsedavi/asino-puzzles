@@ -203,10 +203,10 @@ const Asino = (props: AsinoProps): JSX.Element => {
         {asinoPuzzle.numbers !== undefined && Object.entries(asinoPuzzle.numbers).map((value: [string, AsinoNumberReference], index: number) => getNumberReferenceRow(asinoPuzzle, value[0], value[1], `${index}`, 0, (id: string, number: AsinoNumberReference) => { const numbers = asinoPuzzle.numbers ?? {}; numbers[id] = number; setAsinoPuzzle({ ...asinoPuzzle, numbers: numbers }); }))}
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'view box' && <div>
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? { number: { value: 0 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? { number: { value: 0 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? { number: { value: 1 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? { number: { value: 1 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? { integer: { value: 0 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? { integer: { value: 0 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? { integer: { value: 1 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? { integer: { value: 1 } } } }))}
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'generate' && <div>
         <ButtonGroup>

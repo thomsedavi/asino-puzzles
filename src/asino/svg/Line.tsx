@@ -12,10 +12,10 @@ import { getValueFromNumberResult } from "../utils/Number";
 export const drawLine = (line: Line, references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: { [id: string]: Style }): JSX.Element => {
   let strokeWidth: NumberResult | undefined = getNumberFromLayer(line, references, 'line', StrokeWidth, defaultStrokeWidth.value ?? {});
 
-  const x1 = getNumberFromLayer(line, references, 'line', X1, { number: { value: 0 } });
-  const y1 = getNumberFromLayer(line, references, 'line', Y1, { number: { value: 0 } });
-  const x2 = getNumberFromLayer(line, references, 'line', X2, { number: { value: 0 } });
-  const y2 = getNumberFromLayer(line, references, 'line', Y2, { number: { value: 0 } });
+  const x1 = getNumberFromLayer(line, references, 'line', X1, { integer: { value: 0 } });
+  const y1 = getNumberFromLayer(line, references, 'line', Y1, { integer: { value: 0 } });
+  const x2 = getNumberFromLayer(line, references, 'line', X2, { integer: { value: 0 } });
+  const y2 = getNumberFromLayer(line, references, 'line', Y2, { integer: { value: 0 } });
 
   const stroke = getColorResultFromLayer(line, references, solution, 'line', Stroke);
 
