@@ -1,5 +1,5 @@
 import React from "react"
-import { getClassFromAsinoClass, getClassFromClassReference, getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
+import { getClassFromClassReference, getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingRightWidth, PaddingBottomHeight, PaddingLeftWidth } from "../consts";
 import { drawLayer } from "./View";
 import { Interface } from "../types/Interface";
@@ -87,8 +87,8 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
   const innerLeft = `${getValueFromNumberResult(getProduct(borderLeftWidth, width, references))}`;
 
   const paddingInnerTopScaled = `${getValueFromNumberResult(getProduct(paddingTopHeight, height, references))}`;
-  const paddingInnerRightScaled = `${getValueFromNumberResult(getDifference(width, getProduct(paddingRightWidth, width, references), references))}`;
-  const paddingInnerBottomScaled = `${getValueFromNumberResult(getDifference(height, getProduct(paddingBottomHeight, height, references), references))}`;
+  //const paddingInnerRightScaled = `${getValueFromNumberResult(getDifference(width, getProduct(paddingRightWidth, width, references), references))}`;
+  //const paddingInnerBottomScaled = `${getValueFromNumberResult(getDifference(height, getProduct(paddingBottomHeight, height, references), references))}`;
   const paddingInnerLeftScaled = `${getValueFromNumberResult(getProduct(paddingLeftWidth, width, references))}`;
 
   const paddingInnerTopRaw = `${getValueFromNumberResult(paddingTopHeight)}`;
@@ -125,10 +125,10 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
     }
   }
 
-  const viewBoxThing1 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minX ?? { number: { value: 0 } }, references))}`;
-  const viewBoxThing2 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minY ?? { number: { value: 0 } }, references))}`;
-  const viewBoxThing3 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.width ?? { number: { value: 1 } }, references))}`;
-  const viewBoxThing4 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.height ?? { number: { value: 1 } }, references))}`;
+  //const viewBoxThing1 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minX ?? { number: { value: 0 } }, references))}`;
+  //const viewBoxThing2 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minY ?? { number: { value: 0 } }, references))}`;
+  //const viewBoxThing3 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.width ?? { number: { value: 1 } }, references))}`;
+  //const viewBoxThing4 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.height ?? { number: { value: 1 } }, references))}`;
 
   //console.log(viewBoxThing1);
   //console.log(viewBoxThing2);

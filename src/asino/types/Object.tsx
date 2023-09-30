@@ -32,18 +32,18 @@ export type AsinoObjectsReference = {
 
 export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: AsinoObjectReference, key: string, depth: number, update: (value: AsinoObjectReference) => void, collection?: AsinoCollectionReference): JSX.Element => {
   const rowKey = `object${key}`;
-  let selectClass = 'NONE';
-  let selectCollection = 'NONE';
+  //let selectClass = 'NONE';
+  //let selectCollection = 'NONE';
 
-  if (objectReference.value !== undefined) {
-    if (objectReference.value.collectionId !== undefined) {
-      selectCollection = objectReference.value.collectionId;
-    }
+  //if (objectReference.value !== undefined) {
+  //  if (objectReference.value.collectionId !== undefined) {
+  //    selectCollection = objectReference.value.collectionId;
+  //  }
 
-    if (objectReference.value.classFixedId !== undefined) {
-      selectClass = objectReference.value.classFixedId;
-    }
-  }
+  //  if (objectReference.value.classFixedId !== undefined) {
+  //    selectClass = objectReference.value.classFixedId;
+  //  }
+  //}
 
   const updateName = () => {
     const updatedName = Utils.tidyString(objectReference.name?.editedValue);
@@ -69,13 +69,6 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
 
 export const getObjectRow = (puzzle: AsinoPuzzle, object: AsinoObject | undefined, key: string, depth: number, update: (value: AsinoObject | undefined) => void): JSX.Element => {
   const rowKey = `object${key}`;
-  let selectValue = 'NONE';
-
-  if (object !== undefined) {
-    if (typeof object === 'string') {
-      selectValue = 'ID';
-    }
-  }
 
   return <div key={rowKey}>
   </div>
