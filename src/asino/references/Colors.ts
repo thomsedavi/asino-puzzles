@@ -4,62 +4,68 @@ import { AsinoColorReference } from "../types/Color";
 export const systemColorDefaults: { [id: string]: AsinoColorReference; } = {
   [Color]: {
     name: { value: 'Color' },
-    color: {
-      hue: HueAzure,
-      hueDark: HuePink,
-      saturation: { numerator: 1, denominator: 4 },
-      lightness: { numerator: 1, denominator: 20 },
-      lightnessDark: { numerator: 19, denominator: 20 }
+    value: {
+      color: {
+        hue: { numberId: HueAzure },
+        hueDark: { numberId: HuePink },
+        saturation: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 4 } } } },
+        lightness: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 20 } } } },
+        lightnessDark: { fraction: { numerator: { number: { value: 19 } }, denominator: { number: { value: 20 } } } }
+      }
     }
   },
   [BorderColor]: {
     name: { value: 'Interface Border Color' },
-    color: Color
+    value: { colorId: Color }
   },
   [InterfaceBorderTopColor]: {
     name: { value: 'Interface Border Top Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [InterfaceBorderRightColor]: {
     name: { value: 'Interface Border Right Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [InterfaceBorderBottomColor]: {
     name: { value: 'Interface Border Bottom Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [InterfaceBorderLeftColor]: {
     name: { value: 'Interface Border Left Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [OuterHorizontalDivisionBorderColor]: {
     name: { value: 'Outer Horizontal Division Border Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [OuterVerticalDivisionBorderColor]: {
     name: { value: 'Outer Vertical Division Border Color' },
-    color: BorderColor
+    value: { colorId: BorderColor }
   },
   [InputBackground]: {
     name: { value: 'Input Background' },
-    color: {
-      red: 1,
-      green: 1,
-      blue: 1,
-      redDark: 0,
-      greenDark: 0,
-      blueDark: 0
+    value: {
+      color: {
+        red: { number: { value: 1 } },
+        green: { number: { value: 1 } },
+        blue: { number: { value: 1 } },
+        redDark: { number: { value: 0 } },
+        greenDark: { number: { value: 0 } },
+        blueDark: { number: { value: 0 } }
+      }
     }
   },
   [InterfaceColor]: {
     name: { value: 'Interface Color' },
-    color: InputBackground
+    value: { colorId: InputBackground }
   },
   [InterfaceSelectedColor]: {
     name: { value: 'Interface Selected Color' },
-    color: {
-      hue: HueChartreuse,
-      hueDark: HuePink
+    value: {
+      color: {
+        hue: { numberId: HueChartreuse },
+        hueDark: { numberId: HuePink }
+      }
     }
   }
 };

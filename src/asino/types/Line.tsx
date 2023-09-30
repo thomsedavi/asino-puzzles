@@ -1,13 +1,13 @@
 import React from 'react';
 import { stroke as Stroke, strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2 } from "../consts";
 import { AsinoColor } from "./Color";
-import { AsinoNumber, AsinoNumberReference, getNumberRow } from "./Number";
+import { AsinoNumber, getNumberRow } from "./Number";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline } from '../../common/styled';
 import { AsinoPuzzle } from './Puzzle';
 
-export type AsinoLine = {
+export type Line = {
   [X1]?: AsinoNumber; // if this exists, draw x1 here
   [X2]?: AsinoNumber; // if this exists, draw x2 here
   [Y1]?: AsinoNumber; // if this exists, draw y1 here
@@ -16,10 +16,15 @@ export type AsinoLine = {
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
 }
 
+export type AsinoLine = {
+  line?: Line;
+  lineId?: string;
+}
+
 export type AsinoLineReference = {
   name?: { value?: string, editedValue?: string }; // name of this line
-  line?: AsinoLine; // value of this line
-  numbers?: { [id: string]: AsinoNumberReference }; // number parameters
+  value?: AsinoLine; // value of this line
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getLineReferenceRow = (puzzle: AsinoPuzzle, lineReference: AsinoLineReference, key: string, depth: number, update: (value: AsinoLineReference) => void): JSX.Element => {
@@ -44,9 +49,5 @@ export const getLineReferenceRow = (puzzle: AsinoPuzzle, lineReference: AsinoLin
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {lineReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...lineReference, name: { ...lineReference.name, editedValue: lineReference.name?.value } })}>{lineReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {lineReference.name?.editedValue !== undefined && <InputInline block autoFocus value={lineReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...lineReference, name: { ...lineReference.name, editedValue: event.target.value } })} />}
-    {getNumberRow(puzzle, lineReference.line?.[X1], `${rowKey}x1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [X1]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.line?.[Y1], `${rowKey}y1`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [Y1]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.line?.[X2], `${rowKey}x2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [X2]: value ?? 1 } }))}
-    {getNumberRow(puzzle, lineReference.line?.[Y2], `${rowKey}y2`, depth + 1, (value: AsinoNumber | undefined) => update({ ...lineReference, line: { ...lineReference.line, [Y2]: value ?? 1 } }))}
   </div>;
 }

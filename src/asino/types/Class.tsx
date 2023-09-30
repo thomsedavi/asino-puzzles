@@ -4,20 +4,24 @@ import { AsinoObject } from "./Object";
 import Utils from '../../common/utils';
 import { Icon } from '../../common/icons';
 import { InputInline, SelectInline } from '../../common/styled';
-import { systemClassDefaults } from '../references/Classes';
 import { AsinoPuzzle } from './Puzzle';
 import { ViewBox } from './ViewBox';
-import { AsinoCollection } from './Collection';
+import { systemClassDefaults } from '../references/Classes';
+import { AsinoCollectionReference } from './Collection';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 
 export type Class = {
   layers?: AsinoLayer[]; // layers to draw this class
   viewBox?: ViewBox;
-  collectionId?: string; // collection that this class belongs to
 }
 
-export type AsinoClass = Class | ClassFormula | AsinoClassReference;
+export type AsinoClass = {
+  class?: Class;
+  classId?: string;
+  formula?: ClassFormula;
+  collectionId?: string; // collection of this class
+}
 
 export type AsinoClasses = AsinoClass[] | string;
 
@@ -27,19 +31,17 @@ export type ClassFormula = {
 }
 
 export type AsinoClassReference = {
-  id?: string; // id of this class
   name?: { value?: string, editedValue?: string }; // name of this class
-  class?: Class; // value of this class
-  classId?: string; // refer to the class with this id
+  value?: AsinoClass; // value of this class
 }
 
 export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoClassReference, key: string, depth: number, update: (value: AsinoClassReference) => void): JSX.Element => {
   const rowKey = `class${key}`;
   let selectCollection = 'NONE';
 
-  if (classReference.class !== undefined) {
-    if (classReference.class.collectionId !== undefined) {
-      selectCollection = classReference.class.collectionId;
+  if (classReference.value !== undefined) {
+    if (classReference.value.collectionId !== undefined) {
+      selectCollection = classReference.value.collectionId;
     }
   }
 
@@ -49,13 +51,8 @@ export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoC
     if (event.target.value === 'NONE') {
 
     } else {
-      if (classReferenceUpdate.class !== undefined) {
-        classReferenceUpdate.class.collectionId = event.target.value;
-        update(classReferenceUpdate);
-      } else {
-        classReferenceUpdate.class = { collectionId: event.target.value };
-        update(classReferenceUpdate);
-      }
+      console.log(event.target.value);
+      update(classReferenceUpdate);
     }
   }
 
@@ -80,24 +77,16 @@ export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoC
     {classReference.name?.editedValue !== undefined && <InputInline block autoFocus value={classReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...classReference, name: { ...classReference.name, editedValue: event.target.value } })} />}
     <SelectInline name={`Object {${rowKey}} Collection`} id={`Object {${rowKey}} Collection`} value={selectCollection} onChange={onChangeCollection}>
       <option value='NONE'>Select Collection</option>
-      {puzzle.collections?.map((c: AsinoCollection, index: number) => <option key={`${rowKey} Collection ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      {Object.entries(puzzle.collections ?? {}).map((c: [string, AsinoCollectionReference], index: number) => <option key={`${rowKey} Collection ${index}`} value={c[0]}>{c[1].name?.value ?? 'undefined'}</option>)}
     </SelectInline>
-    <SelectInline name={`Class {${rowKey}} Id`} id={`Class {${rowKey}} Id`} value={classReference.classId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...classReference, classId: event.target.value })}>
+    <SelectInline name={`Class {${rowKey}} Id`} id={`Class {${rowKey}} Id`} value={classReference.value?.classId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...classReference, value: { classId: event.target.value } })}>
       <option value='NONE'>Select Class</option>
-      {puzzle.classes !== undefined && puzzle.classes.length !== 0 && <optgroup label="Custom Classes">
-        {puzzle.classes?.map((c, index) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+      {Object.entries(puzzle.classes ?? {}).length !== 0 && <optgroup label="Custom Classes">
+        {Object.entries(puzzle.classes ?? {}).map((c: [string, AsinoClassReference], index) => <option key={`${rowKey} Id ${index}`} value={c[0]}>{c[1].name?.value ?? 'undefined'}</option>)}
       </optgroup>}
       <optgroup label="System Defaults">
-        {systemClassDefaults.map((c, index) => <option key={`${rowKey} Default Id ${index}`} value={c.id}>{c.name?.value ?? 'undefined'}</option>)}
+        {Object.entries(systemClassDefaults).map((c: [string, AsinoClassReference], index) => <option key={`${rowKey} Default Id ${index}`} value={c[0]}>{c[1].name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>
   </div>;
-}
-
-export const isClassClass = (asinoClass: AsinoClass): asinoClass is Class => {
-  return typeof asinoClass !== 'string' && !('id' in asinoClass);
-}
-
-export const isClassFormula = (asinoClass: AsinoClass): asinoClass is ClassFormula => {
-  return typeof asinoClass !== 'string' && 'operator' in asinoClass;
 }

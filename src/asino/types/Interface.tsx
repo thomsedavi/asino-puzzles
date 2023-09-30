@@ -5,10 +5,9 @@ import { AsinoNumber, getNumberRow } from "./Number";
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
-import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
 
-export type AsinoInterface = {
+export type Interface = {
   objectId?: string; // id of the object for this interface
   [Width]?: AsinoNumber; // if this exists, draw the interface this wide
   [Height]?: AsinoNumber; // if this exists, draw the interface this high
@@ -34,12 +33,15 @@ export type AsinoInterface = {
   [FillSelected]?: AsinoColor;
 }
 
+export type AsinoInterface = {
+  interface?: Interface;
+  interfaceId?: string;
+}
+
 export type AsinoInterfaceReference = {
-  id?: string; // id of this interface
   name?: { value?: string, editedValue?: string }; // name of this interface
-  interface?: AsinoInterface; // value of this interface
-  interfaceId?: string; // refer to the interface with this id
-  parameters?: AsinoParameter[]; // number and color parameters
+  value?: AsinoInterface; // value of this interface
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getInterfaceReferenceRow = (puzzle: AsinoPuzzle, interaceReference: AsinoInterfaceReference, key: string, depth: number, update: (value: AsinoInterfaceReference) => void): JSX.Element => {
@@ -64,9 +66,5 @@ export const getInterfaceReferenceRow = (puzzle: AsinoPuzzle, interaceReference:
   return <div key={rowKey} style={{ marginBottom: '1em' }}>
     {interaceReference.name?.editedValue === undefined && <div style={{ cursor: 'pointer' }} onClick={() => update({ ...interaceReference, name: { ...interaceReference.name, editedValue: interaceReference.name?.value } })}>{interaceReference.name?.value}<Icon title='edit' type='pencil' fillSecondary='--accent' /></div>}
     {interaceReference.name?.editedValue !== undefined && <InputInline block autoFocus value={interaceReference.name.editedValue} onBlur={updateName} onKeyDown={onKeyDownName} onChange={(event: React.ChangeEvent<HTMLInputElement>) => update({ ...interaceReference, name: { ...interaceReference.name, editedValue: event.target.value } })} />}
-    {getNumberRow(puzzle, interaceReference.interface?.[X], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...interaceReference, interface: { ...interaceReference.interface, [X]: value ?? 1 } }))}
-    {getNumberRow(puzzle, interaceReference.interface?.[Y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...interaceReference, interface: { ...interaceReference.interface, [Y]: value ?? 1 } }))}
-    {getNumberRow(puzzle, interaceReference.interface?.[Width], `${rowKey}width`, depth + 1, (value: AsinoNumber | undefined) => update({ ...interaceReference, interface: { ...interaceReference.interface, [Width]: value ?? 1 } }))}
-    {getNumberRow(puzzle, interaceReference.interface?.[Height], `${rowKey}height`, depth + 1, (value: AsinoNumber | undefined) => update({ ...interaceReference, interface: { ...interaceReference.interface, [Height]: value ?? 1 } }))}
   </div>;
 }

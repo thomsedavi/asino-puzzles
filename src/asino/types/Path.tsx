@@ -5,16 +5,20 @@ import { AsinoNumber } from "./Number";
 import Utils from '../../common/utils';
 import { InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
-import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
 
 export type Letter = 'NONE' | 'C' | 'c' | 'H' | 'h' | 'L' | 'l' | 'M' | 'm' | 'Q' | 'q' | 'S' | 's' | 'T' | 't' | 'V' | 'v' | 'Z' | 'z';
 
-export type AsinoPath = {
+export type Path = {
   commands?: AsinoCommand[]; // list of commands
   [Fill]?: AsinoColor; // the fill for this path
   [Stroke]?: string; // the stroke for this path
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
+}
+
+export type AsinoPath = {
+  path?: Path;
+  pathId?: string;
 }
 
 export type AsinoCommand = {
@@ -23,10 +27,9 @@ export type AsinoCommand = {
 };
 
 export type AsinoPathReference = {
-  id?: string; // id of this path
   name?: { value?: string, editedValue?: string }; // name of this path
-  path?: AsinoPath; // value of this path
-  parameters?: AsinoParameter[]; // number and color parameters
+  value?: AsinoPath; // value of this path
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export type Command = {
@@ -46,7 +49,6 @@ export type Command = {
 }
 
 export type AsinoCommandReference = {
-  id?: string; // id of this command
   name?: { value?: string, editedValue?: string }; // name of this command
   command?: Command; // value of this command
 }

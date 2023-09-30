@@ -3,250 +3,287 @@ import { AsinoClassReference } from "../types/Class";
 export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
   'e-af': {
     name: { value: 'Curve Right To Bottom And Left To Top' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-ee'
-        },
-        {
-          pathId: 'f-eb'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-ee'
+          },
+          {
+            pathId: 'f-eb'
+          }
+        ]
+      }
     }
   },
   'b-dd': {
     name: { value: 'Curve Right To Bottom' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-ee'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-ee'
+          }
+        ]
+      }
     }
   },
   'e-be': {
     name: { value: 'Curve Left To Top' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-eb'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-eb'
+          }
+        ]
+      }
     }
   },
   'd-ab': {
     name: { value: 'Curve Top To Right And Bottom To Left' },
-    class: {
-      layers: [
-        {
-          pathId: 'b-ff'
-        },
-        {
-          pathId: 'b-bc'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'b-ff'
+          },
+          {
+            pathId: 'b-bc'
+          }
+        ]
+      }
     }
   },
   'e-cd': {
     name: { value: 'Curve Top To Bottom And Right To Left' },
-    class: {
-      layers: [
-        {
-          pathId: 'c-fb'
-        },
-        {
-          pathId: 'a-ee'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'c-fb'
+          },
+          {
+            pathId: 'a-ee'
+          }
+        ]
+      }
     }
   },
   'e-da': {
     name: { value: 'Curve Right To Left' },
-    class: {
-      layers: [
-        {
-          pathId: 'c-fb'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'c-fb'
+          }
+        ]
+      }
     }
   },
   'a-cf': {
     name: { value: 'Curve Top To Right' },
-    class: {
-      layers: [
-        {
-          pathId: 'b-ff'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'b-ff'
+          }
+        ]
+      }
     }
   },
   'a-df': {
     name: { value: 'Curve Bottom To Left' },
-    class: {
-      layers: [
-        {
-          pathId: 'b-bc'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'b-bc'
+          }
+        ]
+      }
     }
   },
   'd-ce': {
     name: { value: 'Curve Top To Bottom' },
-    class: {
-      layers: [
-        {
-          pathId: 'a-ee'
-        }
-      ]
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'a-ee'
+          }
+        ]
+      }
     }
   },
   'b-de': {
     name: { value: '1' },
-    class: {
-      layers: [
-        {
-          pathId: 'd-de'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'd-de'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'f-de': {
     name: { value: '2' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-ba'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-ba'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'e-eb': {
     name: { value: '3' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-cd'
-        },
-        {
-          pathId: 'e-ba'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-cd'
+          },
+          {
+            pathId: 'e-ba'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'a-ae': {
     name: { value: '4' },
-    class: {
-      layers: [
-        {
-          pathId: 'c-bc'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'c-bc'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'c-ee': {
     name: { value: '5' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-cf'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-cf'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'd-df': {
     name: { value: '6' },
-    class: {
-      layers: [
-        {
-          pathId: 'e-ca'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'e-ca'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'f-ce': {
     name: { value: '7' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-ec'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-ec'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   },
   'f-ed': {
     name: { value: '8' },
-    class: {
-      layers: [
-        {
-          pathId: 'c-ab'
-        },
-        {
-          pathId: 'b-be'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'c-ab'
+          },
+          {
+            pathId: 'b-be'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
+
       }
     }
   },
   'e-ff': {
     name: { value: '9' },
-    class: {
-      layers: [
-        {
-          pathId: 'f-db'
+    value: {
+      class: {
+        layers: [
+          {
+            pathId: 'f-db'
+          }
+        ],
+        viewBox: {
+          minX: { number: { value: 0 } },
+          minY: { number: { value: 0 } },
+          width: { number: { value: 1 } },
+          height: { number: { value: 1 } }
         }
-      ],
-      viewBox: {
-        minX: 0,
-        minY: 0,
-        width: 1,
-        height: 1
       }
     }
   }

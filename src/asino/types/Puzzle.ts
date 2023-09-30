@@ -1,7 +1,7 @@
 import { AsinoBooleanReference } from "./Boolean";
 import { AsinoCircleReference } from "./Circle";
 import { AsinoClassReference } from "./Class";
-import { AsinoCollection } from "./Collection";
+import { AsinoCollectionReference } from "./Collection";
 import { AsinoColorReference } from "./Color";
 import { AsinoGroupReference } from "./Group";
 import { AsinoInterfaceReference } from "./Interface";
@@ -20,20 +20,20 @@ export type AsinoPuzzle = {
   userId?: string; // id of the creator of this puzzle
   userName?: string; // name of the creator of this puzzle
   layers?: AsinoLayer[]; // ids of layers
-  interfaces?: AsinoInterfaceReference[]; // interfaces
-  rectangles?: AsinoRectangleReference[]; // rectangles
-  collections?: AsinoCollection[]; // collections
-  objects?: AsinoObjectReference[]; // objects
-  classes?: AsinoClassReference[]; // classes
-  sets?: AsinoSetReference[]; // sets
-  lines?: AsinoLineReference[]; // lines
-  circles?: AsinoCircleReference[]; // circles
-  paths?: AsinoPathReference[]; // paths
-  groups?: AsinoGroupReference[]; // groups
-  numbers?: AsinoNumberReference[]; // numbers
-  booleans?: AsinoBooleanReference[] // booleans
-  colors?: AsinoColorReference[]; // colors
-  commands?: AsinoCommandReference[]; // commands
+  interfaces?: { [id: string]: AsinoInterfaceReference; }; // interfaces
+  rectangles?: { [id: string]: AsinoRectangleReference; }; // rectangles
+  collections?: { [id: string]: AsinoCollectionReference; }; // collections
+  objects?: { [id: string]: AsinoObjectReference; }; // objects
+  classes?: { [id: string]: AsinoClassReference; }; // classes
+  sets?: { [id: string]: AsinoSetReference; }; // sets
+  lines?: { [id: string]: AsinoLineReference; }; // lines
+  circles?: { [id: string]: AsinoCircleReference; }; // circles
+  paths?: { [id: string]: AsinoPathReference; }; // paths
+  groups?: { [id: string]: AsinoGroupReference; }; // groups
+  numbers?: { [id: string]: AsinoNumberReference; }; // numbers
+  booleans?: { [id: string]: AsinoBooleanReference; }; // booleans
+  colors?: { [id: string]: AsinoColorReference; }; // colors
+  commands?: { [id: string]: AsinoCommandReference; }; // commands
   viewBox?: ViewBox;
   dateCreated?: string;
   dateUpdated?: string;

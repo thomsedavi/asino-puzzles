@@ -17,7 +17,7 @@ import { AsinoCircleReference, getCircleReferenceRow } from './types/Circle';
 import { AsinoInterfaceReference, getInterfaceReferenceRow } from './types/Interface';
 import { AsinoLineReference, getLineReferenceRow } from './types/Line';
 import { AsinoPathReference, getPathReferenceRow } from './types/Path';
-import { AsinoCollection, getCollectionRow } from './types/Collection';
+import { AsinoCollectionReference, getCollectionRow } from './types/Collection';
 import { AsinoClassReference, getClassReferenceRow } from './types/Class';
 import { AsinoObjectReference, getObjectReferenceRow } from './types/Object';
 import { AsinoGroupReference, getGroupReferenceRow } from './types/Group';
@@ -82,18 +82,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
     if (selectedClassId !== undefined) {
       const currentSolution = { ...solution };
 
-      if (currentSolution.selectedClasses === undefined) {
-        currentSolution.selectedClasses = [];
+      if (currentSolution.selectedObjectClasses === undefined) {
+        currentSolution.selectedObjectClasses = {};
       }
 
-      const currentObject = currentSolution.selectedClasses.filter(selectedClass => selectedClass.objectId === selectedObjectId)[0];
-
       if (selectedObjectId !== undefined) {
-        if (currentObject === undefined) {
-          currentSolution.selectedClasses.push({ objectId: selectedObjectId, classId: selectedClassId });
-        } else {
-          currentObject.classId = selectedClassId;
-        }
+        currentSolution.selectedObjectClasses[selectedObjectId] = selectedClassId
 
         setSolution(currentSolution);
       }
@@ -216,84 +210,14 @@ const Asino = (props: AsinoProps): JSX.Element => {
           <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, layers: [...(asinoPuzzle.layers ?? []), { name: { value: `Layer ${(asinoPuzzle.layers?.length ?? 0) + 1}` } }] })}>Add Layer</Button>
         </ButtonGroup>
       </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'collections' && <div>
-        {asinoPuzzle.collections?.map((collection: AsinoCollection, index: number) => getCollectionRow(asinoPuzzle, collection, `${index}`, 0, (value: AsinoCollection) => { setAsinoPuzzle({ ...asinoPuzzle, collections: [...asinoPuzzle.collections!.slice(0, index), value, ...asinoPuzzle.collections!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, collections: [...(asinoPuzzle.collections ?? []), { id: Utils.getRandomId(asinoPuzzle.collections?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Collection ${(asinoPuzzle.collections?.length ?? 0) + 1}` } }] })}>Add Collection</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'classes' && <div>
-        {asinoPuzzle.classes?.map((classReference: AsinoClassReference, index: number) => getClassReferenceRow(asinoPuzzle, classReference, `${index}`, 0, (value: AsinoClassReference) => { setAsinoPuzzle({ ...asinoPuzzle, classes: [...asinoPuzzle.classes!.slice(0, index), value, ...asinoPuzzle.classes!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, classes: [...(asinoPuzzle.classes ?? []), { id: Utils.getRandomId(asinoPuzzle.classes?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Class ${(asinoPuzzle.classes?.length ?? 0) + 1}` } }] })}>Add Class</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'objects' && <div>
-        {asinoPuzzle.objects?.map((objectReference: AsinoObjectReference, index: number) => getObjectReferenceRow(asinoPuzzle, objectReference, `${index}`, 0, (value: AsinoObjectReference) => { setAsinoPuzzle({ ...asinoPuzzle, objects: [...asinoPuzzle.objects!.slice(0, index), value, ...asinoPuzzle.objects!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, objects: [...(asinoPuzzle.objects ?? []), { id: Utils.getRandomId(asinoPuzzle.objects?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Object ${(asinoPuzzle.objects?.length ?? 0) + 1}` } }] })}>Add Object</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'sets' && <div>
-        {asinoPuzzle.sets?.map((setReference: AsinoSetReference, index: number) => getSetReferenceRow(asinoPuzzle, setReference, `${index}`, 0, (value: AsinoSetReference) => { setAsinoPuzzle({ ...asinoPuzzle, sets: [...asinoPuzzle.sets!.slice(0, index), value, ...asinoPuzzle.sets!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, sets: [...(asinoPuzzle.sets ?? []), { id: Utils.getRandomId(asinoPuzzle.sets?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Set ${(asinoPuzzle.sets?.length ?? 0) + 1}` }, set: { objects: [] } }] })}>Add Set</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'interfaces' && <div>
-        {asinoPuzzle.interfaces?.map((interfaceReference: AsinoInterfaceReference, index: number) => getInterfaceReferenceRow(asinoPuzzle, interfaceReference, `${index}`, 0, (value: AsinoInterfaceReference) => { setAsinoPuzzle({ ...asinoPuzzle, interfaces: [...asinoPuzzle.interfaces!.slice(0, index), value, ...asinoPuzzle.interfaces!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, interfaces: [...(asinoPuzzle.interfaces ?? []), { id: Utils.getRandomId(asinoPuzzle.interfaces?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Interface ${(asinoPuzzle.interfaces?.length ?? 0) + 1}` } }] })}>Add Interface</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'lines' && <div>
-        {asinoPuzzle.lines?.map((lineReference: AsinoLineReference, index: number) => getLineReferenceRow(asinoPuzzle, lineReference, `${index}`, 0, (value: AsinoLineReference) => { setAsinoPuzzle({ ...asinoPuzzle, lines: [...asinoPuzzle.lines!.slice(0, index), value, ...asinoPuzzle.lines!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, lines: [...(asinoPuzzle.lines ?? []), { id: Utils.getRandomId(asinoPuzzle.lines?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Line ${(asinoPuzzle.lines?.length ?? 0) + 1}` } }] })}>Add Line</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'rectangles' && <div>
-        {asinoPuzzle.rectangles?.map((rectangleReference: AsinoRectangleReference, index: number) => getRectangleReferenceRow(asinoPuzzle, rectangleReference, `${index}`, 0, (value: AsinoRectangleReference) => { setAsinoPuzzle({ ...asinoPuzzle, rectangles: [...asinoPuzzle.rectangles!.slice(0, index), value, ...asinoPuzzle.rectangles!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, rectangles: [...(asinoPuzzle.rectangles ?? []), { id: Utils.getRandomId(asinoPuzzle.rectangles?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Rectangle ${(asinoPuzzle.rectangles?.length ?? 0) + 1}` } }] })}>Add Rectangle</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'circles' && <div>
-        {asinoPuzzle.circles?.map((circleReference: AsinoCircleReference, index: number) => getCircleReferenceRow(asinoPuzzle, circleReference, `${index}`, 0, (value: AsinoCircleReference) => { setAsinoPuzzle({ ...asinoPuzzle, circles: [...asinoPuzzle.circles!.slice(0, index), value, ...asinoPuzzle.circles!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, circles: [...(asinoPuzzle.circles ?? []), { id: Utils.getRandomId(asinoPuzzle.circles?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Circle ${(asinoPuzzle.circles?.length ?? 0) + 1}` } }] })}>Add Circle</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'paths' && <div>
-        {asinoPuzzle.paths?.map((pathReference: AsinoPathReference, index: number) => getPathReferenceRow(asinoPuzzle, pathReference, `${index}`, 0, (value: AsinoPathReference) => { setAsinoPuzzle({ ...asinoPuzzle, paths: [...asinoPuzzle.paths!.slice(0, index), value, ...asinoPuzzle.paths!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, paths: [...(asinoPuzzle.paths ?? []), { id: Utils.getRandomId(asinoPuzzle.paths?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Path ${(asinoPuzzle.paths?.length ?? 0) + 1}` } }] })}>Add Path</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'groups' && <div>
-        {asinoPuzzle.groups?.map((groupReference: AsinoGroupReference, index: number) => getGroupReferenceRow(asinoPuzzle, groupReference, `${index}`, 0, (value: AsinoGroupReference) => { setAsinoPuzzle({ ...asinoPuzzle, groups: [...asinoPuzzle.groups!.slice(0, index), value, ...asinoPuzzle.groups!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, groups: [...(asinoPuzzle.groups ?? []), { id: Utils.getRandomId(asinoPuzzle.groups?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Group ${(asinoPuzzle.groups?.length ?? 0) + 1}` } }] })}>Add Group</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'booleans' && <div>
-        {asinoPuzzle.booleans?.map((booleanReference: AsinoBooleanReference, index: number) => getBooleanReferenceRow(asinoPuzzle, booleanReference, `${index}`, 0, (value: AsinoBooleanReference) => { setAsinoPuzzle({ ...asinoPuzzle, booleans: [...asinoPuzzle.booleans!.slice(0, index), value, ...asinoPuzzle.booleans!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, booleans: [...(asinoPuzzle.booleans ?? []), { id: Utils.getRandomId(asinoPuzzle.booleans?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Boolean ${(asinoPuzzle.booleans?.length ?? 0) + 1}` } }] })}>Add Boolean</Button>
-        </ButtonGroup>
-      </div>}
       {mode !== 'read' && isEditable && selectedTab === 'numbers' && <div>
-        {asinoPuzzle.numbers?.map((numberReference: AsinoNumberReference, index: number) => getNumberReferenceRow(asinoPuzzle, numberReference, `${index}`, 0, (value: AsinoNumberReference) => { setAsinoPuzzle({ ...asinoPuzzle, numbers: [...asinoPuzzle.numbers!.slice(0, index), value, ...asinoPuzzle.numbers!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), { id: Utils.getRandomId(asinoPuzzle.numbers?.filter(b => b.id !== undefined).map(b => b.id!) ?? []), name: { value: `Number ${(asinoPuzzle.numbers?.length ?? 0) + 1}` } }] })}>Add Number</Button>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, numbers: [...(asinoPuzzle.numbers ?? []), {}] })}>Add Number Override</Button>
-        </ButtonGroup>
+        {asinoPuzzle.numbers !== undefined && Object.entries(asinoPuzzle.numbers).map((value: [string, AsinoNumberReference], index: number) => getNumberReferenceRow(asinoPuzzle, value[0], value[1], `${index}`, 0, (id: string, number: AsinoNumberReference) => { const numbers = asinoPuzzle.numbers ?? {}; numbers[id] = number; setAsinoPuzzle({ ...asinoPuzzle, numbers: numbers }); }))}
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'view box' && <div>
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? 0 } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? 0 } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? 1 } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? 1 } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? { number: { value: 0 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? { number: { value: 0 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? { number: { value: 1 } } } }))}
+        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? { number: { value: 1 } } } }))}
       </div>}
       {mode !== 'read' && isEditable && selectedTab === 'generate' && <div>
         <ButtonGroup>

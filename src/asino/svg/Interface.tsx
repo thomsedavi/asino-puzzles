@@ -1,19 +1,19 @@
 import React from "react"
-import { getClassFromAsinoClass, getClassFromClassReference, getColorFromLayer, getDifference, getNumberFromAsinoNumber, getNumberFromLayer, getProduct, getValueFromColor, getValueFromNumber } from "../utils";
+import { getClassFromAsinoClass, getClassFromClassReference, getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingRightWidth, PaddingBottomHeight, PaddingLeftWidth } from "../consts";
 import { drawLayer } from "./View";
-import { AsinoInterfaceReference } from "../types/Interface";
-import { AsinoNumberReference } from "../types/Number";
+import { Interface } from "../types/Interface";
+import { AsinoNumber } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";
 import { systemClassDefaults } from "../references/Classes";
-import { AsinoPuzzle } from "../types/Puzzle";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { Class } from "../types/Class";
+import { getDifference, getNumberResultFromAsinoNumber, getProduct, getValueFromNumberResult } from "../utils/Number";
 
-export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], solution: Solution, references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, key: string, styles: Style[], selectedObjectId?: string): JSX.Element => {
+export const drawInterface = (asinoInterface: Interface, objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], references: References, solution: Solution, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element => {
   let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
 
@@ -26,121 +26,123 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
     references.setFixedClassId(fixedClassId);
   });
 
-  const solutionClass = solution.selectedClasses?.filter(c => c.objectId === interfaceObjectId)[0]?.classId;
+  const solutionClass = (interfaceObjectId !== undefined && solution.selectedObjectClasses !== undefined) ? solution.selectedObjectClasses[interfaceObjectId] : undefined;
   solutionClass !== undefined && (interfaceClassId = solutionClass);
 
-  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { number: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { number: 0 });
-  const width = getNumberFromLayer(interfaces, references.clone(), 'interface', Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, references.clone(), 'interface', Height, defaultInterfaceHeightValue);
+  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { number: { value: 0 } });
+  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { number: { value: 0 } });
+  const width = getNumberFromLayer(asinoInterface, references, 'interface', Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(asinoInterface, references, 'interface', Height, defaultInterfaceHeightValue);
 
-  const borderTopHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderTopHeight, { number: 0 });
-  const borderRightWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderRightWidth, { number: 0 });
-  const borderBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderBottomHeight, { number: 0 });
-  const borderLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', BorderLeftWidth, { number: 0 });
+  const borderTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderTopHeight, { number: { value: 0 } });
+  const borderRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderRightWidth, { number: { value: 0 } });
+  const borderBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', BorderBottomHeight, { number: { value: 0 } });
+  const borderLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', BorderLeftWidth, { number: { value: 0 } });
 
-  const paddingTopHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingTopHeight, { number: 0 });
-  const paddingRightWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingRightWidth, { number: 0 });
-  const paddingBottomHeight = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingBottomHeight, { number: 0 });
-  const paddingLeftWidth = getNumberFromLayer(interfaces, references.clone(), 'interface', PaddingLeftWidth, { number: 0 });
+  const paddingTopHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingTopHeight, { number: { value: 0 } });
+  const paddingRightWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingRightWidth, { number: { value: 0 } });
+  const paddingBottomHeight = getNumberFromLayer(asinoInterface, references, 'interface', PaddingBottomHeight, { number: { value: 0 } });
+  const paddingLeftWidth = getNumberFromLayer(asinoInterface, references, 'interface', PaddingLeftWidth, { number: { value: 0 } });
 
-  const fill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
-  const borderTopFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderTopFill);
-  const borderRightFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderRightFill);
-  const borderBottomFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderBottomFill);
-  const borderLeftFill = getColorFromLayer(interfaces, references.clone(), solution, 'interface', BorderLeftFill);
+  const fill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', interfaceObjectId === selectedObjectId ? FillSelected : Fill);
+  const borderTopFill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', BorderTopFill);
+  const borderRightFill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', BorderRightFill);
+  const borderBottomFill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', BorderBottomFill);
+  const borderLeftFill = getColorResultFromLayer(asinoInterface, references, solution, 'interface', BorderLeftFill);
 
-  const fillClass = getValueFromColor(fill.color, references.clone(), 'f', false);
-  const borderTopFillClass = getValueFromColor(borderTopFill.color, references.clone(), 'f', false);
-  const borderRightFillClass = getValueFromColor(borderRightFill.color, references.clone(), 'f', false);
-  const borderBottomFillClass = getValueFromColor(borderBottomFill.color, references.clone(), 'f', false);
-  const borderLeftFillClass = getValueFromColor(borderLeftFill.color, references.clone(), 'f', false);
+  const fillClass = getValueFromColor(fill, references, 'f', false);
+  const borderTopFillClass = getValueFromColor(borderTopFill, references, 'f', false);
+  const borderRightFillClass = getValueFromColor(borderRightFill, references, 'f', false);
+  const borderBottomFillClass = getValueFromColor(borderBottomFill, references, 'f', false);
+  const borderLeftFillClass = getValueFromColor(borderLeftFill, references, 'f', false);
 
-  const fillDarkClass = getValueFromColor(fill.color, references.clone(), 'fd', true);
-  const borderTopFillDarkClass = getValueFromColor(borderTopFill.color, references.clone(), 'fd', true);
-  const borderRightFillDarkClass = getValueFromColor(borderRightFill.color, references.clone(), 'fd', true);
-  const borderBottomFillDarkClass = getValueFromColor(borderBottomFill.color, references.clone(), 'fd', true);
-  const borderLeftFillDarkClass = getValueFromColor(borderLeftFill.color, references.clone(), 'fd', true);
+  const fillDarkClass = getValueFromColor(fill, references, 'fd', true);
+  const borderTopFillDarkClass = getValueFromColor(borderTopFill, references, 'fd', true);
+  const borderRightFillDarkClass = getValueFromColor(borderRightFill, references, 'fd', true);
+  const borderBottomFillDarkClass = getValueFromColor(borderBottomFill, references, 'fd', true);
+  const borderLeftFillDarkClass = getValueFromColor(borderLeftFill, references, 'fd', true);
 
-  styles.filter(s => s.id === fillClass?.key).length === 0 && (styles.push({ id: fillClass?.key, fill: fillClass?.value }));
-  styles.filter(s => s.id === borderTopFillClass?.key).length === 0 && (styles.push({ id: borderTopFillClass?.key, fill: borderTopFillClass?.value }));
-  styles.filter(s => s.id === borderRightFillClass?.key).length === 0 && (styles.push({ id: borderRightFillClass?.key, fill: borderRightFillClass?.value }));
-  styles.filter(s => s.id === borderBottomFillClass?.key).length === 0 && (styles.push({ id: borderBottomFillClass?.key, fill: borderBottomFillClass?.value }));
-  styles.filter(s => s.id === borderLeftFillClass?.key).length === 0 && (styles.push({ id: borderLeftFillClass?.key, fill: borderLeftFillClass?.value }));
+  fillClass?.key !== undefined && styles[fillClass?.key] !== undefined && (styles[fillClass?.key].fill = fillClass?.value);
+  fillClass?.key !== undefined && styles[fillClass.key] === undefined && (styles[fillClass?.key] = { fill: fillClass?.value });
+  borderTopFillClass?.key !== undefined && styles[borderTopFillClass?.key] !== undefined && (styles[borderTopFillClass?.key].fill = borderTopFillClass?.value);
+  borderRightFillClass?.key !== undefined && styles[borderRightFillClass?.key] !== undefined && (styles[borderRightFillClass?.key].fill = borderRightFillClass?.value);
+  borderBottomFillClass?.key !== undefined && styles[borderBottomFillClass?.key] !== undefined && (styles[borderBottomFillClass?.key].fill = borderBottomFillClass?.value);
+  borderLeftFillClass?.key !== undefined && styles[borderLeftFillClass?.key] !== undefined && (styles[borderLeftFillClass?.key].fill = borderLeftFillClass?.value);
 
-  styles.filter(s => s.id === fillDarkClass?.key).length === 0 && (styles.push({ id: fillDarkClass?.key, fillDark: fillDarkClass?.value }));
-  styles.filter(s => s.id === borderTopFillDarkClass?.key).length === 0 && (styles.push({ id: borderTopFillDarkClass?.key, fillDark: borderTopFillDarkClass?.value }));
-  styles.filter(s => s.id === borderRightFillDarkClass?.key).length === 0 && (styles.push({ id: borderRightFillDarkClass?.key, fillDark: borderRightFillDarkClass?.value }));
-  styles.filter(s => s.id === borderBottomFillDarkClass?.key).length === 0 && (styles.push({ id: borderBottomFillDarkClass?.key, fillDark: borderBottomFillDarkClass?.value }));
-  styles.filter(s => s.id === borderLeftFillDarkClass?.key).length === 0 && (styles.push({ id: borderLeftFillDarkClass?.key, fillDark: borderLeftFillDarkClass?.value }));
+  fillDarkClass?.key !== undefined && styles[fillDarkClass?.key] !== undefined && (styles[fillDarkClass?.key].fillDark = fillDarkClass?.value);
+  fillDarkClass?.key !== undefined && styles[fillDarkClass.key] === undefined && (styles[fillDarkClass?.key] = { fillDark: fillDarkClass?.value });
+  borderTopFillDarkClass?.key !== undefined && styles[borderTopFillDarkClass?.key] !== undefined && (styles[borderTopFillDarkClass?.key].fillDark = borderTopFillDarkClass?.value);
+  borderRightFillDarkClass?.key !== undefined && styles[borderRightFillDarkClass?.key] !== undefined && (styles[borderRightFillDarkClass?.key].fillDark = borderRightFillDarkClass?.value);
+  borderBottomFillDarkClass?.key !== undefined && styles[borderBottomFillDarkClass?.key] !== undefined && (styles[borderBottomFillDarkClass?.key].fillDark = borderBottomFillDarkClass?.value);
+  borderLeftFillDarkClass?.key !== undefined && styles[borderLeftFillDarkClass?.key] !== undefined && (styles[borderLeftFillDarkClass?.key].fillDark = borderLeftFillDarkClass?.value);
 
   const outerTop = `0`;
-  const outerRight = `${getValueFromNumber(width.number, references.clone())}`;
-  const outerBottom = `${getValueFromNumber(height.number, references.clone())}`;
+  const outerRight = `${getValueFromNumberResult(width)}`;
+  const outerBottom = `${getValueFromNumberResult(height)}`;
   const outerLeft = `0`;
 
-  const innerTop = `${getValueFromNumber(getProduct(borderTopHeight.number, height.number, references.clone()).number, references.clone())}`;
-  const innerRight = `${getValueFromNumber(getDifference(width.number, getProduct(borderRightWidth.number, width.number, references.clone()).number, references.clone()).number, references.clone())}`;
-  const innerBottom = `${getValueFromNumber(getDifference(height.number, getProduct(borderBottomHeight.number, height.number, references.clone()).number, references.clone()).number, references.clone())}`;
-  const innerLeft = `${getValueFromNumber(getProduct(borderLeftWidth.number, width.number, references.clone()).number, references.clone())}`;
+  const innerTop = `${getValueFromNumberResult(getProduct(borderTopHeight, height, references))}`;
+  const innerRight = `${getValueFromNumberResult(getDifference(width, getProduct(borderRightWidth, width, references), references))}`;
+  const innerBottom = `${getValueFromNumberResult(getDifference(height, getProduct(borderBottomHeight, height, references), references))}`;
+  const innerLeft = `${getValueFromNumberResult(getProduct(borderLeftWidth, width, references))}`;
 
-  const paddingInnerTopScaled = `${getValueFromNumber(getProduct(paddingTopHeight.number, height.number, references.clone()).number, references.clone())}`;
-  const paddingInnerRightScaled = `${getValueFromNumber(getDifference(width.number, getProduct(paddingRightWidth.number, width.number, references.clone()).number, references.clone()).number, references.clone())}`;
-  const paddingInnerBottomScaled = `${getValueFromNumber(getDifference(height.number, getProduct(paddingBottomHeight.number, height.number, references.clone()).number, references.clone()).number, references.clone())}`;
-  const paddingInnerLeftScaled = `${getValueFromNumber(getProduct(paddingLeftWidth.number, width.number, references.clone()).number, references.clone())}`;
+  const paddingInnerTopScaled = `${getValueFromNumberResult(getProduct(paddingTopHeight, height, references))}`;
+  const paddingInnerRightScaled = `${getValueFromNumberResult(getDifference(width, getProduct(paddingRightWidth, width, references), references))}`;
+  const paddingInnerBottomScaled = `${getValueFromNumberResult(getDifference(height, getProduct(paddingBottomHeight, height, references), references))}`;
+  const paddingInnerLeftScaled = `${getValueFromNumberResult(getProduct(paddingLeftWidth, width, references))}`;
 
-  const paddingInnerTopRaw = `${getValueFromNumber(paddingTopHeight.number, references.clone())}`;
-  const paddingInnerRightRaw = `${getValueFromNumber(getDifference(1, paddingRightWidth.number, references.clone()).number, references.clone())}`;
-  const paddingInnerBottomRaw = `${getValueFromNumber(getDifference(1, paddingBottomHeight.number, references.clone()).number, references.clone())}`;
-  const paddingInnerLeftRaw = `${getValueFromNumber(paddingLeftWidth.number, references.clone())}`;
+  const paddingInnerTopRaw = `${getValueFromNumberResult(paddingTopHeight)}`;
+  const paddingInnerRightRaw = `${getValueFromNumberResult(getDifference({ number: 1 }, paddingRightWidth, references))}`;
+  const paddingInnerBottomRaw = `${getValueFromNumberResult(getDifference({ number: 1 }, paddingBottomHeight, references))}`;
+  const paddingInnerLeftRaw = `${getValueFromNumberResult(paddingLeftWidth)}`;
 
-  console.log(innerTop);
-  console.log(innerRight);
-  console.log(innerBottom);
-  console.log(innerLeft);
+  //console.log(innerTop);
+  //console.log(innerRight);
+  //console.log(innerBottom);
+  //console.log(innerLeft);
 
-  console.log(paddingInnerTopScaled);
-  console.log(paddingInnerRightScaled);
-  console.log(paddingInnerBottomScaled);
-  console.log(paddingInnerLeftScaled);
+  //console.log(paddingInnerTopScaled);
+  //console.log(paddingInnerRightScaled);
+  //console.log(paddingInnerBottomScaled);
+  //console.log(paddingInnerLeftScaled);
 
-  console.log(paddingInnerTopRaw);
-  console.log(paddingInnerRightRaw);
-  console.log(paddingInnerBottomRaw);
-  console.log(paddingInnerLeftRaw);
+  //console.log(paddingInnerTopRaw);
+  //console.log(paddingInnerRightRaw);
+  //console.log(paddingInnerBottomRaw);
+  //console.log(paddingInnerLeftRaw);
 
-  interfaceClassId === undefined && (interfaceClassId = solution.selectedClasses?.filter(aClass => aClass.objectId === interfaceObjectId)[0]?.classId);
+  interfaceClassId === undefined && interfaceObjectId !== undefined && (interfaceClassId = solution.selectedObjectClasses?.[interfaceObjectId]);
 
   let asinoClass: Class | undefined = undefined
 
   if (interfaceClassId !== undefined) {
-    const selectedClassReference = systemClassDefaults.filter(asinoClass => asinoClass.id === interfaceClassId)[0];
+    const selectedClassReference = systemClassDefaults[interfaceClassId];
 
-    const selectedClass = getClassFromClassReference(selectedClassReference, references.clone().addClasses([puzzle.classes]));
+    const selectedClass = getClassFromClassReference(selectedClassReference, references, solution);
 
     if (selectedClass !== undefined) {
-      asinoClass = getClassFromAsinoClass(selectedClass, references.clone().addClasses([puzzle.classes]), solution);
+      asinoClass = selectedClass;
     }
   }
 
-  const viewBoxThing1 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.minX, references.clone()).number, references.clone())}`;
-  const viewBoxThing2 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.minY, references.clone()).number, references.clone())}`;
-  const viewBoxThing3 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.width, references.clone()).number, references.clone())}`;
-  const viewBoxThing4 = `${getValueFromNumber(getNumberFromAsinoNumber(asinoClass?.viewBox?.height, references.clone()).number, references.clone())}`;
+  const viewBoxThing1 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minX ?? { number: { value: 0 } }, references))}`;
+  const viewBoxThing2 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.minY ?? { number: { value: 0 } }, references))}`;
+  const viewBoxThing3 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.width ?? { number: { value: 1 } }, references))}`;
+  const viewBoxThing4 = `${getValueFromNumberResult(getNumberResultFromAsinoNumber(asinoClass?.viewBox?.height ?? { number: { value: 1 } }, references))}`;
 
-  console.log(viewBoxThing1);
-  console.log(viewBoxThing2);
-  console.log(viewBoxThing3);
-  console.log(viewBoxThing4);
+  //console.log(viewBoxThing1);
+  //console.log(viewBoxThing2);
+  //console.log(viewBoxThing3);
+  //console.log(viewBoxThing4);
 
   return <g
     id={`layer${key}`}
     key={`layer${key}`}
-    transform={`translate(${getValueFromNumber(x.number, references.clone()) ?? 0},${getValueFromNumber(y.number, references.clone()) ?? 0})`}
+    transform={`translate(${getValueFromNumberResult(x) ?? 0},${getValueFromNumberResult(y) ?? 0})`}
   >
     <rect
-      width={getValueFromNumber(width.number, references.clone())}
-      height={getValueFromNumber(height.number, references.clone())}
+      width={getValueFromNumberResult(width)}
+      height={getValueFromNumberResult(height)}
       className={Utils.tidyString(`${fillClass?.key ?? ''} ${fillDarkClass?.key ?? ''}`)}
     />
     <path
@@ -160,16 +162,16 @@ export const drawInterface = (puzzle: AsinoPuzzle, interfaces: (AsinoInterfaceRe
       className={Utils.tidyString(`${borderLeftFillClass?.key ?? ''} ${borderLeftFillDarkClass?.key ?? ''}`)}
     />
     {asinoClass !== undefined && <g transform={`translate(${paddingInnerLeftScaled},${paddingInnerTopScaled}) scale(${(Number(paddingInnerRightRaw) ?? 1) - (Number(paddingInnerLeftRaw) ?? 1)},${(Number(paddingInnerBottomRaw) ?? 1) - (Number(paddingInnerTopRaw) ?? 1)})`}>
-      {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(puzzle, solution, layer, references.clone().addParameters([layer?.parameters]).setObject(interfaceObjectId), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId) })}
+      {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(solution, layer, references.clone().addParameters(layer).setObject({ objectId: interfaceObjectId }), { fraction: { numerator: 1, denominator: 9 } }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId) })}
     </g>}
   </g>;
 }
 
-export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | undefined)[], collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumberReference, defaultInterfaceHeightValue: AsinoNumberReference, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
-  const x = getNumberFromLayer(interfaces, references.clone(), 'interface', X, { number: 0 });
-  const y = getNumberFromLayer(interfaces, references.clone(), 'interface', Y, { number: 0 });
-  const width = getNumberFromLayer(interfaces, references.clone(), 'interface', Width, defaultInterfaceWidthValue);
-  const height = getNumberFromLayer(interfaces, references.clone(), 'interface', Height, defaultInterfaceHeightValue);
+export const drawInterfaceInteractive = (asinoInterface: Interface, collectionIds: (string | undefined)[], objectIds: (string | undefined)[], references: References, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, index: number, setSelectedCollectionId: (objectId: string) => void, setSelectedObjectId: (objectId: string) => void): JSX.Element => {
+  const x = getNumberFromLayer(asinoInterface, references, 'interface', X, { number: { value: 0 } });
+  const y = getNumberFromLayer(asinoInterface, references, 'interface', Y, { number: { value: 0 } });
+  const width = getNumberFromLayer(asinoInterface, references, 'interface', Width, defaultInterfaceWidthValue);
+  const height = getNumberFromLayer(asinoInterface, references, 'interface', Height, defaultInterfaceHeightValue);
 
   let interfaceObjectId: string | undefined = undefined;
   let interfaceCollectionId: string | undefined = undefined;
@@ -184,14 +186,14 @@ export const drawInterfaceInteractive = (interfaces: (AsinoInterfaceReference | 
   return <rect
     id={`layerInteractive${index}`}
     key={`layerInteractive${index}`}
-    x={getValueFromNumber(x.number, references.clone())}
-    y={getValueFromNumber(y.number, references.clone())}
-    width={getValueFromNumber(width.number, references.clone())}
-    height={getValueFromNumber(height.number, references.clone())}
+    x={getValueFromNumberResult(x)}
+    y={getValueFromNumberResult(y)}
+    width={getValueFromNumberResult(width)}
+    height={getValueFromNumberResult(height)}
     stroke='none'
     fill='transparent'
     cursor={interfaceObjectId === undefined ? 'auto' : 'pointer'}
-    strokeWidth={getValueFromNumber({ numerator: 1, denominator: 200 }, references.clone())}
+    strokeWidth={getValueFromNumberResult({ fraction: { numerator: 1, denominator: 200 } })}
     onClick={() => {
       interfaceObjectId !== undefined && setSelectedObjectId(interfaceObjectId);
       interfaceCollectionId !== undefined && setSelectedCollectionId(interfaceCollectionId);

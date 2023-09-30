@@ -4,25 +4,27 @@ import { AsinoInterfaceReference } from "../types/Interface";
 export const systemInterfaceDefaults: { [id: string]: AsinoInterfaceReference; } = {
   'c-fe': {
     name: { value: 'Interface' },
-    interface: {
-      x: InterfaceX,
-      y: InterfaceY,
-      width: InterfaceWidth,
-      height: InterfaceHeight,
-      borderTopHeight: InterfaceBorderTopHeight,
-      borderRightWidth: InterfaceBorderRightWidth,
-      borderBottomHeight: InterfaceBorderBottomHeight,
-      borderLeftWidth: InterfaceBorderLeftWidth,
-      borderTopFill: InterfaceBorderTopColor,
-      borderRightFill: InterfaceBorderRightColor,
-      borderBottomFill: InterfaceBorderBottomColor,
-      borderLeftFill: InterfaceBorderLeftColor,
-      paddingTopHeight: InterfacePaddingTopHeight,
-      paddingRightWidth: InterfacePaddingRightWidth,
-      paddingBottomHeight: InterfacePaddingBottomHeight,
-      paddingLeftWidth: InterfacePaddingLeftWidth,
-      fill: InterfaceColor,
-      fillSelected: InterfaceSelectedColor
+    value: {
+      interface: {
+        x: { numberId: InterfaceX },
+        y: { numberId: InterfaceY },
+        width: { numberId: InterfaceWidth },
+        height: { numberId: InterfaceHeight },
+        borderTopHeight: { numberId: InterfaceBorderTopHeight },
+        borderRightWidth: { numberId: InterfaceBorderRightWidth },
+        borderBottomHeight: { numberId: InterfaceBorderBottomHeight },
+        borderLeftWidth: { numberId: InterfaceBorderLeftWidth },
+        borderTopFill: { colorId: InterfaceBorderTopColor },
+        borderRightFill: { colorId: InterfaceBorderRightColor },
+        borderBottomFill: { colorId: InterfaceBorderBottomColor },
+        borderLeftFill: { colorId: InterfaceBorderLeftColor },
+        paddingTopHeight: { numberId: InterfacePaddingTopHeight },
+        paddingRightWidth: { numberId: InterfacePaddingRightWidth },
+        paddingBottomHeight: { numberId: InterfacePaddingBottomHeight },
+        paddingLeftWidth: { numberId: InterfacePaddingLeftWidth },
+        fill: { colorId: InterfaceColor },
+        fillSelected: { colorId: InterfaceSelectedColor }
+      }
     }
   }
 };

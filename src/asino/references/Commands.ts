@@ -1,4 +1,5 @@
-import { CurveFraction, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLengthHorizontal, FontLengthVertical1, FontLengthVertical2, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical1, FontSizeVertical2, FontSizeVertical3 } from "../consts";
+import { FontSizeHorizontal1 } from "../consts";
+import { CurveFraction, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLengthHorizontal, FontLengthVertical1, FontLengthVertical2, FontSizeHorizontal2, FontSizeVertical1, FontSizeVertical2, FontSizeVertical3 } from "../consts";
 import { AsinoCommandReference } from "../types/Path";
 
 export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
@@ -6,7 +7,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Size Left To Right 1' },
     command: {
       letter: 'h',
-      dx: FontSizeHorizontal1
+      dx: { numberId: FontSizeHorizontal1 }
     }
   },
   'd-ba': {
@@ -14,11 +15,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'h',
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontSizeHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontSizeHorizontal1 }
+          ]
+        }
       }
     }
   },
@@ -26,7 +29,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Left To Right 1' },
     command: {
       letter: 'h',
-      dx: FontCurveHorizontal1
+      dx: { numberId: FontCurveHorizontal1 }
     }
   },
   'a-fa': {
@@ -34,11 +37,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'h',
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       }
     }
   },
@@ -46,7 +51,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Length Left To Right' },
     command: {
       letter: 'h',
-      dx: FontLengthHorizontal
+      dx: { numberId: FontLengthHorizontal }
     }
   },
   'd-af': {
@@ -54,11 +59,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'h',
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontLengthHorizontal
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontLengthHorizontal }
+          ]
+        }
       }
     }
   },
@@ -66,7 +73,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Left To Right 2' },
     command: {
       letter: 'h',
-      dx: FontCurveHorizontal2
+      dx: { numberId: FontCurveHorizontal2 }
     }
   },
   'd-fd': {
@@ -74,11 +81,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'h',
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
       }
     }
   },
@@ -86,7 +95,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Size Left To Right 2' },
     command: {
       letter: 'h',
-      dx: FontSizeHorizontal2
+      dx: { numberId: FontSizeHorizontal2 }
     }
   },
   'c-bb': {
@@ -94,11 +103,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'h',
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontSizeHorizontal2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
       }
     }
   },
@@ -106,7 +117,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Line Up To Down 1' },
     command: {
       letter: 'v',
-      dy: FontSizeVertical1
+      dy: { numberId: FontSizeVertical1 }
     }
   },
   'd-bf': {
@@ -114,11 +125,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontSizeVertical1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontSizeVertical1 }
+          ]
+        }
       }
     }
   },
@@ -126,7 +139,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Up To Down 1' },
     command: {
       letter: 'v',
-      dy: FontCurveVertical1
+      dy: { numberId: FontCurveVertical1 }
     }
   },
   'c-ed': {
@@ -134,11 +147,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
       }
     }
   },
@@ -146,7 +161,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Length Up To Down 1' },
     command: {
       letter: 'v',
-      dy: FontLengthVertical1
+      dy: { numberId: FontLengthVertical1 }
     }
   },
   'b-ec': {
@@ -154,11 +169,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontLengthVertical1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontLengthVertical1 }
+          ]
+        }
       }
     }
   },
@@ -166,7 +183,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Up To Down 2' },
     command: {
       letter: 'v',
-      dy: FontCurveVertical2
+      dy: { numberId: FontCurveVertical2 }
     }
   },
   'a-ca': {
@@ -174,11 +191,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical2 }
+          ]
+        }
       }
     }
   },
@@ -186,7 +205,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Line Up To Down 2' },
     command: {
       letter: 'v',
-      dy: FontSizeVertical2
+      dy: { numberId: FontSizeVertical2 }
     }
   },
   'd-bc': {
@@ -194,11 +213,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontSizeVertical2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontSizeVertical2 }
+          ]
+        }
       }
     }
   },
@@ -206,7 +227,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Up To Down 3' },
     command: {
       letter: 'v',
-      dy: FontCurveVertical3
+      dy: { numberId: FontCurveVertical3 }
     }
   },
   'a-de': {
@@ -214,11 +235,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical3
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical3 }
+          ]
+        }
       }
     }
   },
@@ -226,7 +249,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Length Up To Down 2' },
     command: {
       letter: 'v',
-      dy: FontLengthVertical2
+      dy: { numberId: FontLengthVertical2 }
     }
   },
   'f-df': {
@@ -234,11 +257,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontLengthVertical2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontLengthVertical2 }
+          ]
+        }
       }
     }
   },
@@ -246,7 +271,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Curve Up To Down 4' },
     command: {
       letter: 'v',
-      dy: FontCurveVertical4
+      dy: { numberId: FontCurveVertical4 }
     }
   },
   'f-fd': {
@@ -254,11 +279,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical4
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical4 }
+          ]
+        }
       }
     }
   },
@@ -266,7 +293,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Line Up To Down 3' },
     command: {
       letter: 'v',
-      dy: FontSizeVertical3
+      dy: { numberId: FontSizeVertical3 }
     }
   },
   'a-ce': {
@@ -274,11 +301,13 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'v',
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontSizeVertical3
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontSizeVertical3 }
+          ]
+        }
       }
     }
   },
@@ -286,83 +315,107 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Down To Up 1 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontSizeVertical1,
-                  FontCurveVertical1
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeVertical1 },
+                        { numberId: FontCurveVertical1 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
+        formula: {
+          operator: '-',
+          numberInputs: [
+            {
+              formula: {
                 operator: '+',
                 numberInputs: [
-                  FontSizeHorizontal1,
-                  FontCurveHorizontal1
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
                 ]
               }
-            ]
-          }
-        ]
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeHorizontal1 },
+                        { numberId: FontCurveHorizontal1 }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical1,
-              FontCurveVertical1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical1 },
+                  { numberId: FontCurveVertical1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx: {
-        operator: '+',
-        numberInputs: [
-          FontSizeHorizontal1,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical1,
-              FontCurveVertical1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical1 },
+                  { numberId: FontCurveVertical1 }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   },
@@ -371,64 +424,82 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveHorizontal2,
-              FontSizeHorizontal2
-            ]
-          }
-        ]
-      },
-      dy1: 0,
-      dx2: {
-        operator: '+',
-        numberInputs: [
-          FontCurveHorizontal2,
-          FontSizeHorizontal2
-        ]
-      },
-      dy2: {
-        operator: '-',
-        numberInputs: [
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical1,
-              FontCurveVertical1
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            {
+              formula: {
                 operator: '+',
                 numberInputs: [
-                  FontSizeVertical1,
-                  FontCurveVertical1
+                  { numberId: FontCurveHorizontal2 },
+                  { numberId: FontSizeHorizontal2 }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
+      },
+      dy1: { number: { value: 0 } },
+      dx2: {
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
+      },
+      dy2: {
+        formula: {
+          operator: '-',
+          numberInputs: [
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical1 },
+                  { numberId: FontCurveVertical1 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeVertical1 },
+                        { numberId: FontCurveVertical1 }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx: {
-        operator: '+',
-        numberInputs: [
-          FontCurveHorizontal2,
-          FontSizeHorizontal2
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
       },
       dy: {
-        operator: '+',
-        numberInputs: [
-          FontSizeVertical1,
-          FontCurveVertical1
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontSizeVertical1 },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
       }
     }
   },
@@ -436,77 +507,99 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Up To Down 2 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveVertical2,
-              FontSizeVertical2
-            ]
-          }
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveVertical2 },
+                  { numberId: FontSizeVertical2 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              {
-                operator: '+',
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
                 numberInputs: [
-                  FontCurveHorizontal2,
-                  FontSizeHorizontal2
+                  { number: { value: 0 } },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveHorizontal2 },
+                        { numberId: FontSizeHorizontal2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+            },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontCurveHorizontal2,
-                  FontSizeHorizontal2
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveHorizontal2 },
+                        { numberId: FontSizeHorizontal2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          FontCurveVertical2,
-          FontSizeVertical2
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveVertical2 },
+            { numberId: FontSizeVertical2 }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveHorizontal2,
-              FontSizeHorizontal2
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveHorizontal2 },
+                  { numberId: FontSizeHorizontal2 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy: {
-        operator: '+',
-        numberInputs: [
-          FontCurveVertical2,
-          FontSizeVertical2
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveVertical2 },
+            { numberId: FontSizeVertical2 }
+          ]
+        }
       }
     }
   },
@@ -515,130 +608,166 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dy1: 0,
+      dy1: { number: { value: 0 } },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
       dy2: {
-        operator: '-',
-        numberInputs: [
-          FontCurveVertical3,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { numberId: FontCurveVertical3 },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
-      dy: FontCurveVertical3
+      dy: { numberId: FontCurveVertical3 }
     }
   },
   'b-ae': {
     name: { value: 'Font Outer Curve Down To Up 3 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontSizeVertical2,
-                  FontCurveVertical3
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeVertical2 },
+                        { numberId: FontCurveVertical3 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
+        formula: {
+          operator: '-',
+          numberInputs: [
+            {
+              formula: {
                 operator: '+',
                 numberInputs: [
-                  FontSizeHorizontal1,
-                  FontCurveHorizontal1
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
                 ]
               }
-            ]
-          }
-        ]
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeHorizontal1 },
+                        { numberId: FontCurveHorizontal1 }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical2,
-              FontCurveVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical2 },
+                  { numberId: FontCurveVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx: {
-        operator: '+',
-        numberInputs: [
-          FontSizeHorizontal1,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical2,
-              FontCurveVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical2 },
+                  { numberId: FontCurveVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   },
@@ -647,40 +776,50 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          FontCurveHorizontal2
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
       },
-      dy1: 0,
-      dx2: FontCurveHorizontal2,
+      dy1: { number: { value: 0 } },
+      dx2: { numberId: FontCurveHorizontal2 },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              FontCurveVertical2
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveVertical2
-            ]
-          }
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
+                numberInputs: [
+                  { number: { value: 0 } },
+                  { numberId: FontCurveVertical2 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveVertical2 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dx: FontCurveHorizontal2,
+      dx: { numberId: FontCurveHorizontal2 },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical2 }
+          ]
+        }
       }
     }
   },
@@ -688,59 +827,75 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Down To Up 1 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveVertical1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveVertical1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              FontCurveHorizontal2
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal2
-            ]
-          }
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
+                numberInputs: [
+                  { number: { value: 0 } },
+                  { numberId: FontCurveHorizontal2 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal2 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
       }
     }
   },
@@ -749,41 +904,51 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dy1: 0,
+      dy1: { number: { value: 0 } },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
       dy2: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          FontCurveVertical1
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal1
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
       },
-      dy: FontCurveVertical1
+      dy: { numberId: FontCurveVertical1 }
     }
   },
   'd-dd': {
@@ -791,64 +956,82 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveHorizontal2,
-              FontSizeHorizontal2
-            ]
-          }
-        ]
-      },
-      dy1: 0,
-      dx2: {
-        operator: '+',
-        numberInputs: [
-          FontCurveHorizontal2,
-          FontSizeHorizontal2
-        ]
-      },
-      dy2: {
-        operator: '-',
-        numberInputs: [
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeVertical2,
-              FontCurveVertical3
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            {
+              formula: {
                 operator: '+',
                 numberInputs: [
-                  FontSizeVertical2,
-                  FontCurveVertical3
+                  { numberId: FontCurveHorizontal2 },
+                  { numberId: FontSizeHorizontal2 }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
+      },
+      dy1: { number: { value: 0 } },
+      dx2: {
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
+      },
+      dy2: {
+        formula: {
+          operator: '-',
+          numberInputs: [
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeVertical2 },
+                  { numberId: FontCurveVertical3 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeVertical2 },
+                        { numberId: FontCurveVertical3 }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx: {
-        operator: '+',
-        numberInputs: [
-          FontCurveHorizontal2,
-          FontSizeHorizontal2
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
       },
       dy: {
-        operator: '+',
-        numberInputs: [
-          FontSizeVertical2,
-          FontCurveVertical3
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontSizeVertical2 },
+            { numberId: FontCurveVertical3 }
+          ]
+        }
       }
     }
   },
@@ -856,77 +1039,99 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Outer Curve Up To Down 4 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveVertical4,
-              FontSizeVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveVertical4 },
+                  { numberId: FontSizeVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              {
-                operator: '+',
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
                 numberInputs: [
-                  FontCurveHorizontal2,
-                  FontSizeHorizontal2
+                  { number: { value: 0 } },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveHorizontal2 },
+                        { numberId: FontSizeHorizontal2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+            },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontCurveHorizontal2,
-                  FontSizeHorizontal2
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveHorizontal2 },
+                        { numberId: FontSizeHorizontal2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          FontCurveVertical4,
-          FontSizeVertical3
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveVertical4 },
+            { numberId: FontSizeVertical3 }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveHorizontal2,
-              FontSizeHorizontal2
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveHorizontal2 },
+                  { numberId: FontSizeHorizontal2 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy: {
-        operator: '+',
-        numberInputs: [
-          FontCurveVertical4,
-          FontSizeVertical3
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            { numberId: FontCurveVertical4 },
+            { numberId: FontSizeVertical3 }
+          ]
+        }
       }
     }
   },
@@ -935,94 +1140,122 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontSizeHorizontal1,
-                  FontCurveHorizontal1
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeHorizontal1 },
+                        { numberId: FontCurveHorizontal1 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
-      dy1: 0,
+      dy1: { number: { value: 0 } },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              {
-                operator: '+',
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
                 numberInputs: [
-                  FontCurveVertical4,
-                  FontSizeVertical3
+                  { number: { value: 0 } },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveVertical4 },
+                        { numberId: FontSizeVertical3 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+            },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontCurveVertical4,
-                  FontSizeVertical3
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveVertical4 },
+                        { numberId: FontSizeVertical3 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveVertical4,
-              FontSizeVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveVertical4 },
+                  { numberId: FontSizeVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   },
@@ -1030,30 +1263,36 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Up To Down 4 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          FontCurveVertical4
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical4 }
+          ]
+        }
       },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          FontCurveHorizontal1,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { numberId: FontCurveHorizontal1 },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dy2: FontCurveVertical4,
-      dx: FontCurveHorizontal1,
-      dy: FontCurveVertical4
+      dy2: { numberId: FontCurveVertical4 },
+      dx: { numberId: FontCurveHorizontal1 },
+      dy: { numberId: FontCurveVertical4 }
     }
   },
   'e-fc': {
@@ -1061,41 +1300,50 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          FontCurveHorizontal2
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
       },
-      dy1: 0,
-      dx2: FontCurveHorizontal2,
+      dy1: { number: { value: 0 } },
+      dx2: { numberId: FontCurveHorizontal2 },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              FontCurveVertical4
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveVertical4
-
-            ]
-          }
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
+                numberInputs: [
+                  { number: { value: 0 } },
+                  { numberId: FontCurveVertical4 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveVertical4 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dx: FontCurveHorizontal2,
+      dx: { numberId: FontCurveHorizontal2 },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical4
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical4 }
+          ]
+        }
       }
     }
   },
@@ -1103,59 +1351,75 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Down To Up 3 Right To Left 2' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveVertical3
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveVertical3 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dx2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              FontCurveHorizontal2
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal2
-            ]
-          }
-        ]
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
+                numberInputs: [
+                  { number: { value: 0 } },
+                  { numberId: FontCurveHorizontal2 }
+                ]
+              }
+            },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal2 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical3
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical3 }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveHorizontal2
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          FontCurveVertical3
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            { numberId: FontCurveVertical3 }
+          ]
+        }
       }
     }
   },
@@ -1164,94 +1428,122 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     command: {
       letter: 'c',
       dx1: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontSizeHorizontal1,
-                  FontCurveHorizontal1
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontSizeHorizontal1 },
+                        { numberId: FontCurveHorizontal1 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
-      dy1: 0,
+      dy1: { number: { value: 0 } },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy2: {
-        operator: '+',
-        numberInputs: [
-          {
-            operator: '-',
-            numberInputs: [
-              0,
-              {
-                operator: '+',
+        formula: {
+          operator: '+',
+          numberInputs: [
+            {
+              formula: {
+                operator: '-',
                 numberInputs: [
-                  FontCurveVertical2,
-                  FontSizeVertical2
+                  { number: { value: 0 } },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveVertical2 },
+                        { numberId: FontSizeVertical2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          },
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              {
-                operator: '+',
+            },
+            {
+              formula: {
+                operator: '*',
                 numberInputs: [
-                  FontCurveVertical2,
-                  FontSizeVertical2
+                  { numberId: CurveFraction },
+                  {
+                    formula: {
+                      operator: '+',
+                      numberInputs: [
+                        { numberId: FontCurveVertical2 },
+                        { numberId: FontSizeVertical2 }
+                      ]
+                    }
+                  }
                 ]
               }
-            ]
-          }
-        ]
+            }
+          ]
+        }
       },
       dx: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontSizeHorizontal1,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontSizeHorizontal1 },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
       dy: {
-        operator: '-',
-        numberInputs: [
-          0,
-          {
-            operator: '+',
-            numberInputs: [
-              FontCurveVertical2,
-              FontSizeVertical2
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { number: { value: 0 } },
+            {
+              formula: {
+                operator: '+',
+                numberInputs: [
+                  { numberId: FontCurveVertical2 },
+                  { numberId: FontSizeVertical2 }
+                ]
+              }
+            }
+          ]
+        }
       }
     }
   },
@@ -1259,30 +1551,36 @@ export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
     name: { value: 'Font Inner Curve Up To Down 2 Left To Right 1' },
     command: {
       letter: 'c',
-      dx1: 0,
+      dx1: { number: { value: 0 } },
       dy1: {
-        operator: '*',
-        numberInputs: [
-          CurveFraction,
-          FontCurveVertical2
-        ]
+        formula: {
+          operator: '*',
+          numberInputs: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical2 }
+          ]
+        }
       },
       dx2: {
-        operator: '-',
-        numberInputs: [
-          FontCurveHorizontal1,
-          {
-            operator: '*',
-            numberInputs: [
-              CurveFraction,
-              FontCurveHorizontal1
-            ]
-          }
-        ]
+        formula: {
+          operator: '-',
+          numberInputs: [
+            { numberId: FontCurveHorizontal1 },
+            {
+              formula: {
+                operator: '*',
+                numberInputs: [
+                  { numberId: CurveFraction },
+                  { numberId: FontCurveHorizontal1 }
+                ]
+              }
+            }
+          ]
+        }
       },
-      dy2: FontCurveVertical2,
-      dx: FontCurveHorizontal1,
-      dy: FontCurveVertical2
+      dy2: { numberId: FontCurveVertical2 },
+      dx: { numberId: FontCurveHorizontal1 },
+      dy: { numberId: FontCurveVertical2 }
     }
   }
 }

@@ -6,12 +6,11 @@ import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoPuzzle } from './Puzzle';
 
-export type AsinoCollection = {
-  id?: string; // id of this collection
+export type AsinoCollectionReference = {
   name?: { value?: string, editedValue?: string }; // name of this collection
 }
 
-export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollection, key: string, depth: number, update: (value: AsinoCollection) => void): JSX.Element => {
+export const getCollectionRow = (puzzle: AsinoPuzzle, collection: AsinoCollectionReference, key: string, depth: number, update: (value: AsinoCollectionReference) => void): JSX.Element => {
   const rowKey = `collection${key}`;
 
   const updateName = () => {
@@ -42,7 +41,6 @@ export const getClassRow = (puzzle: AsinoPuzzle, asinoClass: { classId?: string 
   return <div key={rowKey}>
     <SelectInline value={asinoClass.classId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
       <option value='NONE'>Select Class</option>
-      {puzzle.classes?.map((asinoClassReference: AsinoClassReference, index: number) => <option key={`${rowKey} Class ${index}`} value={asinoClassReference.id}>{asinoClassReference.name?.value}</option>)}
     </SelectInline>
   </div>;
 }
@@ -53,7 +51,6 @@ export const getObjectRow = (puzzle: AsinoPuzzle, object: { objectId?: string },
   return <div key={rowKey}>
     <SelectInline value={object.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update(event.target.value)}>
       <option value='NONE'>Select Object</option>
-      {puzzle.objects?.map((object: AsinoObjectReference, index: number) => <option key={`${rowKey} Object ${index}`} value={object.id}>{object.name?.value}</option>)}
     </SelectInline>
   </div>;
 }

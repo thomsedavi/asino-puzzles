@@ -1,33 +1,36 @@
 import React from 'react';
-import { AsinoCircleReference } from "./Circle";
-import { AsinoInterface } from "./Interface";
-import { AsinoLineReference } from "./Line";
-import { AsinoPath } from "./Path";
-import { AsinoRectangle } from "./Rectangle";
+import { AsinoCircle, Circle } from "./Circle";
+import { AsinoInterface, Interface } from "./Interface";
+import { AsinoLine, Line } from "./Line";
+import { AsinoPath, Path } from "./Path";
+import { AsinoRectangle, Rectangle } from "./Rectangle";
 import Utils from '../../common/utils';
 import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
-import { AsinoGroupReference } from './Group';
-import { systemInterfaceDefaults } from '../references/Interfaces';
-import { systemPathDefaults } from '../references/Paths';
-import { systemRectangleDefaults } from '../references/Rectangles';
-import { AsinoParameter, getParameterRow } from './Parameter';
-import { AsinoObjectReference } from './Object';
+import { AsinoGroup, Group } from './Group';
 import { AsinoPuzzle } from './Puzzle';
+import { AsinoNumber, AsinoNumberReference, getNumberRow } from './Number';
+import { systemInterfaceDefaults } from '../references/Interfaces';
+import { systemRectangleDefaults } from '../references/Rectangles';
+import { systemPathDefaults } from '../references/Paths';
+import { AsinoObjectReference } from './Object';
 
 export type AsinoLayer = {
   name?: { value?: string, editedValue?: string }; // name of this rectangle
-  interface?: AsinoInterface; // draw this interface
+  interface?: Interface; // draw this interface
   interfaceId?: string; // draw the interface with this id
-  rectangle?: AsinoRectangle; // draw this rectangle
+  rectangle?: Rectangle; // draw this rectangle
   rectangleId?: string; // draw the rectangle with this id
-  line?: AsinoLineReference; // draw the layer with these attributes
-  circle?: AsinoCircleReference; // draw the circle with these attributes
-  path?: AsinoPath; // draw this path
+  line?: Line; // draw this line
+  lineId?: string; // draw the line with this id
+  circle?: Circle; // draw this circle
+  circleId?: string; // draw the circle with this id
+  path?: Path; // draw this path
   pathId?: string; // draw the path with this id
-  group?: AsinoGroupReference; // draw the group with these attributes
+  group?: Group; // draw this group
+  groupId?: string; // draw the group with this id
   objectId?: string; // id of the interface of this layer
-  parameters?: AsinoParameter[]; // number and color parameters
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string, depth: number, update: (value: AsinoLayer) => void): JSX.Element => {
@@ -111,50 +114,47 @@ export const getLayerRow = (puzzle: AsinoPuzzle, layer: AsinoLayer, key: string,
     </SelectInline>
     {layer.interfaceId !== undefined && <SelectInline name={`Interface {${rowKey}} Id`} id={`Interface {${rowKey}} Id`} value={layer.interfaceId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, interfaceId: event.target.value })}>
       <option value='NONE'>Select Interface</option>
-      {puzzle.interfaces !== undefined && puzzle.interfaces.length !== 0 && <optgroup label="Custom Interfaces">
-        {puzzle.interfaces?.map((i, index) => <option key={`${rowKey} Id ${index}`} value={i.id}>{i.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.interfaces ?? {}).length !== 0 && <optgroup label="Custom Interfaces">
+        {Object.entries(puzzle.interfaces ?? {}).map((i, index) => <option key={`${rowKey} Id ${index}`} value={i[0]}>{i[1].name?.value ?? ''}</option>)}
       </optgroup>}
       <optgroup label="System Defaults">
-        {systemInterfaceDefaults.map((i, index) => <option key={`${rowKey} Default Id ${index}`} value={i.id}>{i.name?.value ?? 'undefined'}</option>)}
+        {Object.entries(systemInterfaceDefaults).map((i, index) => <option key={`${rowKey} Default Id ${index}`} value={i[0]}>{i[1].name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
-    {layer.line !== undefined && <SelectInline name={`Line {${rowKey}} Id`} id={`Line {${rowKey}} Id`} value={layer.line.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, line: { ...layer.line, id: event.target.value } })}>
+    {layer.lineId !== undefined && <SelectInline name={`Line {${rowKey}} Id`} id={`Line {${rowKey}} Id`} value={layer.lineId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, lineId: event.target.value })}>
       <option value='NONE'>Select Line</option>
-      {puzzle.lines?.map((l, index) => <option key={`${rowKey} Id ${index}`} value={l.id}>{l.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.lines ?? {}).map((l, index) => <option key={`${rowKey} Id ${index}`} value={l[0]}>{l[1].name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.rectangleId !== undefined && <SelectInline name={`Rectangle {${rowKey}} Id`} id={`Rectangle {${rowKey}} Id`} value={layer.rectangleId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, rectangleId: event.target.value })}>
       <option value='NONE'>Select Rectangle</option>
-      {puzzle.rectangles !== undefined && puzzle.rectangles.length !== 0 && <optgroup label="Custom Rectangles">
-        {puzzle.rectangles?.map((r, index) => <option key={`${rowKey} Id ${index}`} value={r.id}>{r.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.rectangles ?? {}).length !== 0 && <optgroup label="Custom Rectangles">
+        {Object.entries(puzzle.rectangles ?? {}).map((r, index) => <option key={`${rowKey} Id ${index}`} value={r[0]}>{r[1].name?.value ?? ''}</option>)}
       </optgroup>}
       <optgroup label="System Defaults">
-        {systemRectangleDefaults.map((r, index) => <option key={`${rowKey} Default Id ${index}`} value={r.id}>{r.name?.value ?? 'undefined'}</option>)}
+        {Object.entries(systemRectangleDefaults).map((r, index) => <option key={`${rowKey} Default Id ${index}`} value={r[0]}>{r[1].name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
-    {layer.circle !== undefined && <SelectInline name={`Circle {${rowKey}} Id`} id={`Circle {${rowKey}} Id`} value={layer.circle.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, circle: { ...layer.circle, id: event.target.value } })}>
+    {layer.circle !== undefined && <SelectInline name={`Circle {${rowKey}} Id`} id={`Circle {${rowKey}} Id`} value={layer.circleId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, circleId: event.target.value })}>
       <option value='NONE'>Select Circle</option>
-      {puzzle.circles?.map((c, index) => <option key={`${rowKey} Id ${index}`} value={c.id}>{c.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.circles ?? {}).map((c, index) => <option key={`${rowKey} Id ${index}`} value={c[0]}>{c[1].name?.value ?? ''}</option>)}
     </SelectInline>}
     {layer.pathId !== undefined && <SelectInline name={`Path {${rowKey}} Id`} id={`Path {${rowKey}} Id`} value={layer.pathId} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, pathId: event.target.value })}>
       <option value='NONE'>Select Path</option>
-      {puzzle.paths !== undefined && puzzle.paths.length !== 0 && <optgroup label="Custom Path">
-        {puzzle.paths?.map((p, index) => <option key={`${rowKey} Id ${index}`} value={p.id}>{p.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.paths ?? {}).length !== 0 && <optgroup label="Custom Path">
+        {Object.entries(puzzle.paths ?? {}).map((p, index) => <option key={`${rowKey} Id ${index}`} value={p[0]}>{p[1].name?.value ?? ''}</option>)}
       </optgroup>}
       <optgroup label="System Defaults">
-        {systemPathDefaults.map((p, index) => <option key={`${rowKey} Default Id ${index}`} value={p.id}>{p.name?.value ?? 'undefined'}</option>)}
+        {Object.entries(systemPathDefaults).map((p, index) => <option key={`${rowKey} Default Id ${index}`} value={p[0]}>{p[1].name?.value ?? 'undefined'}</option>)}
       </optgroup>
     </SelectInline>}
-    {layer.group !== undefined && <SelectInline name={`Group {${rowKey}} Id`} id={`Group {${rowKey}} Id`} value={layer.group.id ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, group: { ...layer.group, id: event.target.value } })}>
+    {layer.group !== undefined && <SelectInline name={`Group {${rowKey}} Id`} id={`Group {${rowKey}} Id`} value={layer.groupId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, groupId: event.target.value })}>
       <option value='NONE'>Select Group</option>
-      {puzzle.groups?.map((g, index) => <option key={`${rowKey} Id ${index}`} value={g.id}>{g.name?.value ?? ''}</option>)}
+      {Object.entries(puzzle.groups ?? {}).map((g, index) => <option key={`${rowKey} Id ${index}`} value={g[0]}>{g[1].name?.value ?? ''}</option>)}
     </SelectInline>}
     {(layer.interface !== undefined || layer.interfaceId !== undefined) && <SelectInline value={layer.objectId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...layer, objectId: event.target.value !== 'NONE' ? event.target.value : undefined })}>
       <option value='NONE'>Select Object</option>
-      {puzzle.objects?.map((object: AsinoObjectReference, index: number) => <option key={`${rowKey} Object ${index}`} value={object.id}>{object.name?.value}</option>)}
+      {Object.entries(puzzle.objects ?? {}).map((object: [string, AsinoObjectReference], index: number) => <option key={`${rowKey} Object ${index}`} value={object[0]}>{object[1].name?.value}</option>)}
     </SelectInline>}
-    {layer.parameters?.map((parameter: AsinoParameter, index: number) => getParameterRow(puzzle, parameter, `${index}`, depth + 1, (parameter: AsinoParameter) => update({ ...layer, parameters: [...(layer.parameters?.slice(0, index) ?? []), parameter, ...(layer.parameters?.slice(index + 1) ?? [])] })))}
-    <ButtonGroup>
-      <Button onClick={() => update({ ...layer, parameters: [...(layer.parameters ?? []), {}] })}>Add Parameter</Button>
-    </ButtonGroup>
+    {Object.entries(layer.numbers ?? {}).map((number: [string, AsinoNumber], index: number) => getNumberRow(puzzle, number[1], `${index}`, depth + 1, (value: AsinoNumber | undefined) => { const numbers = layer.numbers ?? {}; numbers[number[0]] = value ?? { number: { value: 0 } }; update({ ...layer, numbers: numbers }) }))}
   </div>;
 }

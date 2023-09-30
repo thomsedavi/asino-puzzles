@@ -5,12 +5,10 @@ import { AsinoSets } from './Set';
 import { SelectInline, InputInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import Utils from '../../common/utils';
-import { AsinoParameter } from './Parameter';
 import { AsinoPuzzle } from './Puzzle';
+import { AsinoNumber } from './Number';
 
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' | 'IS_EACH_CLASS_DIFFERENT';
-
-export type AsinoBoolean = boolean | string | BooleanFormula | AsinoBooleanReference;
 
 export type BooleanFormula = {
   operator?: BooleanOperator;
@@ -23,30 +21,29 @@ export type BooleanFormula = {
   collapsed?: boolean; // collapse in editor
 }
 
-export type AsinoBooleanReference = {
-  id?: string; // id of this boolean
-  name?: { value?: string, editedValue?: string }; // name of this boolean
-  boolean?: AsinoBoolean; // value of this boolean
-  parameters?: AsinoParameter[]; // number and color parameters
+export type AsinoBoolean = {
+  boolean?: { value?: boolean, editedValue?: boolean };
+  booleanId?: string;
+  formula?: BooleanFormula;
 }
 
-export const isBooleanFormula = (boolean: AsinoBoolean): boolean is BooleanFormula => {
-  return typeof boolean !== 'string' && typeof boolean !== 'boolean' && 'operator' in boolean;
+export type AsinoBooleanReference = {
+  name?: { value?: string, editedValue?: string }; // name of this boolean
+  value?: AsinoBoolean; // value of this boolean
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: AsinoBooleanReference, key: string, depth: number, update: (value: AsinoBooleanReference) => void): JSX.Element => {
   const rowKey = `boolean${key}`;
   let selectValue = 'NONE';
 
-  if (booleanReference.boolean !== undefined) {
-    if (typeof booleanReference.boolean === 'string') {
+  if (booleanReference.value !== undefined) {
+    if (booleanReference.value.booleanId !== undefined) {
       selectValue = 'ID';
-    } else if (typeof booleanReference.boolean === 'boolean') {
+    } else if (booleanReference.value.boolean !== undefined) {
       selectValue = 'BOOLEAN';
-    } else if (isBooleanFormula(booleanReference.boolean)) {
+    } else if (booleanReference.value.formula !== undefined) {
       selectValue = 'FORMULA';
-    } else {
-      selectValue = 'REFERENCE'
     }
   }
 
@@ -54,16 +51,16 @@ export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: As
     const booleanReferenceUpdate: AsinoBooleanReference = { ...booleanReference };
 
     if (event.target.value === 'NONE') {
-      delete booleanReferenceUpdate.boolean;
+      delete booleanReferenceUpdate.value;
       update(booleanReferenceUpdate);
     } else if (event.target.value === 'BOOLEAN') {
-      booleanReferenceUpdate.boolean = false;
+      booleanReferenceUpdate.value = { boolean: { value: false } };
       update(booleanReferenceUpdate);
     } else if (event.target.value === 'ID') {
-      booleanReferenceUpdate.boolean = 'NONE';
+      booleanReferenceUpdate.value = { booleanId: 'NONE' };
       update(booleanReferenceUpdate);
     } else {
-      booleanReferenceUpdate.boolean = { operator: 'NONE' };
+      booleanReferenceUpdate.value = { formula: { operator: 'NONE' } };
       update(booleanReferenceUpdate);
     }
   }
@@ -93,18 +90,17 @@ export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: As
       <option value='ID'>Id</option>
       <option value='FORMULA'>Formula</option>
     </SelectInline>
-    {typeof booleanReference.boolean === 'boolean' && <>
-      <input type='radio' id={`${rowKey} True`} name={`${rowKey} True`} checked={typeof booleanReference.boolean === 'boolean' && booleanReference.boolean} onChange={() => update({ ...booleanReference, boolean: true })} />
+    {booleanReference.value?.boolean !== undefined && <>
+      <input type='radio' id={`${rowKey} True`} name={`${rowKey} True`} checked={booleanReference.value.boolean !== undefined && booleanReference.value.boolean.value} onChange={() => update({ ...booleanReference, value: { boolean: { value: true } } })} />
       <label htmlFor={`${rowKey} True`}>True</label>
-      <input type='radio' id={`${rowKey} False`} name={`${rowKey} False`} checked={typeof booleanReference.boolean === 'boolean' && !booleanReference.boolean} onChange={() => update({ ...booleanReference, boolean: false })} />
+      <input type='radio' id={`${rowKey} False`} name={`${rowKey} False`} checked={booleanReference.value.boolean !== undefined && !booleanReference.value.boolean.value} onChange={() => update({ ...booleanReference, value: { boolean: { value: true } } })} />
       <label htmlFor={`${rowKey} False`}>False</label>
     </>}
-    {typeof booleanReference.boolean === 'string' && <SelectInline name={`Boolean {${rowKey}} Id`} id={`Boolean {${rowKey}} Id`} value={booleanReference.boolean ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, boolean: event.target.value })}>
+    {booleanReference.value?.booleanId !== undefined && <SelectInline name={`Boolean {${rowKey}} Id`} id={`Boolean {${rowKey}} Id`} value={booleanReference.value.booleanId ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: { booleanId: event.target.value } })}>
       <option value='NONE'>Select Boolean</option>
-      {puzzle.booleans?.filter(b => b.id !== booleanReference.id).map((b, index) => <option key={`${rowKey} Id ${index}`} value={b.id}>{b.name?.value ?? ''}</option>)}
     </SelectInline>}
-    {booleanReference.boolean !== undefined && isBooleanFormula(booleanReference.boolean) && <>
-      <SelectInline name={`Boolean {${rowKey}} Formula`} id={`Boolean {${rowKey}} Forumla`} value={booleanReference.boolean.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, boolean: { operator: getBooleanOperator(event.target.value) } })}>
+    {booleanReference.value?.formula !== undefined && <>
+      <SelectInline name={`Boolean {${rowKey}} Formula`} id={`Boolean {${rowKey}} Forumla`} value={booleanReference.value.formula.operator ?? 'NONE'} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => update({ ...booleanReference, value: { formula: { operator: getBooleanOperator(event.target.value) } } })}>
         <option value='NONE'>Select Formula</option>
         <option value='IS_OBJECT'>Is Object ...</option>
         <option value='IS_EACH_OBJECT'>Is Each Object ...</option>
@@ -112,7 +108,7 @@ export const getBooleanReferenceRow = (puzzle: AsinoPuzzle, booleanReference: As
         <option value='IS_OBJECT_CLASS'>Is Object Class ...</option>
         <option value='IS_EACH_CLASS_DIFFERENT'>Is Each Class Different</option>
       </SelectInline>
-      <span onClick={() => booleanReference.boolean !== undefined && isBooleanFormula(booleanReference.boolean) && update({ ...booleanReference, boolean: { ...booleanReference.boolean, collapsed: !booleanReference.boolean.collapsed ?? undefined } })} style={{ cursor: 'pointer' }}>{booleanReference.boolean.collapsed ? '>' : 'v'}</span>
+      <span onClick={() => booleanReference.value?.formula !== undefined && update({ ...booleanReference, value: { formula: { ...booleanReference.value.formula, collapsed: !booleanReference.value.formula.collapsed ?? undefined } } })} style={{ cursor: 'pointer' }}>{booleanReference.value.formula.collapsed ? '>' : 'v'}</span>
     </>}
   </div>;
 }
