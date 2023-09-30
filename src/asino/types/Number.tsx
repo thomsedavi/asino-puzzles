@@ -47,7 +47,6 @@ export type AsinoNumberReference = {
 
 export const getNumberReferenceRow = (puzzle: AsinoPuzzle, id: string, numberReference: AsinoNumberReference, key: string, depth: number, update: (id: string, value: AsinoNumberReference) => void): JSX.Element => {
   const rowKey = `numberReference${key}`;
-  let selectValue = 'NONE';
 
   const updateName = () => {
     const updatedName = Utils.tidyString(numberReference.name?.editedValue);
@@ -79,43 +78,42 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, id: string, numberRef
 
 export const getNumberRow = (puzzle: AsinoPuzzle, number: AsinoNumber | undefined, key: string, layer: number, update: (value: AsinoNumber | undefined) => void): JSX.Element => {
   const rowKey = `number${key}`;
-  let selectValue = 'NONE';
 
   return <div key={rowKey}>
   </div>;
 }
 
-const getNumberOperator = (value: string): NumberOperator => {
-  switch (value) {
-    case '*':
-      return '*';
-    case '-':
-      return '-';
-    case '+':
-      return '+';
-    case '/':
-      return '/';
-    default:
-      return 'NONE';
-  }
-}
+//const getNumberOperator = (value: string): NumberOperator => {
+//  switch (value) {
+//    case '*':
+//      return '*';
+//    case '-':
+//      return '-';
+//    case '+':
+//      return '+';
+//    case '/':
+//      return '/';
+//    default:
+//      return 'NONE';
+//  }
+//}
 
-const getTopBracket = (layer: number): JSX.Element => {
-  return <div>
-    <svg version="1.1"
-      viewBox='0 0 1 0.02'
-      xmlns="http://www.w3.org/2000/svg">
-      <path d='M0,0.02C0,0,0,0,0.5,0C1,0,1,0,1,0.02' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
-    </svg>
-  </div>;
-}
+//const getTopBracket = (layer: number): JSX.Element => {
+//  return <div>
+//    <svg version="1.1"
+//      viewBox='0 0 1 0.02'
+//      xmlns="http://www.w3.org/2000/svg">
+//      <path d='M0,0.02C0,0,0,0,0.5,0C1,0,1,0,1,0.02' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
+//    </svg>
+//  </div>;
+//}
 
-const getBottomBracket = (layer: number): JSX.Element => {
-  return <div>
-    <svg version="1.1"
-      viewBox='0 0 1 0.02'
-      xmlns="http://www.w3.org/2000/svg">
-      <path d='M0,0C0.0.02,0,0.02,0.5,0.02C1,0.02,1,0.02,1,0' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
-    </svg>
-  </div>;
-}
+//const getBottomBracket = (layer: number): JSX.Element => {
+//  return <div>
+//    <svg version="1.1"
+//      viewBox='0 0 1 0.02'
+//      xmlns="http://www.w3.org/2000/svg">
+//      <path d='M0,0C0.0.02,0,0.02,0.5,0.02C1,0.02,1,0.02,1,0' stroke={Utils.getRowColor(layer)} fill='none' strokeWidth='0.005' />
+//    </svg>
+//  </div>;
+//}

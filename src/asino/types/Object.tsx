@@ -1,6 +1,6 @@
 import React from 'react';
 import Utils from '../../common/utils';
-import { Button, ButtonGroup, InputInline, SelectInline } from '../../common/styled';
+import { InputInline, SelectInline } from '../../common/styled';
 import { Icon } from '../../common/icons';
 import { AsinoCollectionReference } from './Collection';
 import { AsinoPuzzle } from './Puzzle';
