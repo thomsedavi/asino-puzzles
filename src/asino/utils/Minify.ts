@@ -4,7 +4,7 @@ import { AsinoLayer } from "../types/Layer";
 import { AsinoNumber } from "../types/Number";
 import { AsinoObject, AsinoObjectReference } from "../types/Object";
 import { AsinoPuzzle } from "../types/Puzzle";
-import { ClassFixedId, ClassId, Classes, CollectionId, Collections, DateCreated, DateUpdated, Id, Integer, InterfaceId, Layers, Name, Numberr, Numbers, ObjectId, Objects, RectangleId, UserId, UserName, Value } from "./MinifyConsts";
+import { ClassFixedId, ClassId, Classes, CollectionId, Collections, DateCreated, DateUpdated, Id, Integer, InterfaceId, Layers, Name, Numbers, ObjectId, Objects, RectangleId, UserId, UserName, Value } from "./MinifyConsts";
 
 export const minifyAsino = (asino: AsinoPuzzle): any => {
   const result: any = {};
