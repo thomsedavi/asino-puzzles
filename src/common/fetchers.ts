@@ -1,5 +1,6 @@
 import { AsinoPuzzle } from "../asino/types/Puzzle";
-import { minifyAsino, unminifyAsino } from "../asino/utils";
+import { minifyAsino } from "../asino/utils/Minify";
+import { unminifyAsino } from "../asino/utils/Unminify";
 import { LexicologerGame, LexicologerSummary, AsinoSummary, User } from "./interfaces";
 
 export const isLocalhost = (): boolean => {

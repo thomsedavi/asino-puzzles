@@ -35,7 +35,7 @@ export class References {
   paths: { [id: string]: AsinoPathReference };
 
   classId: string | undefined;
-  object: AsinoObject | undefined;
+  objectId: string | undefined;
   set: AsinoSet | undefined;
 
   fixedClassId: string | undefined;
@@ -142,7 +142,7 @@ export class References {
     refClone.commands = { ...this.commands };
 
     refClone.classId = this.classId;
-    refClone.object = this.object;
+    refClone.objectId = this.objectId;
     refClone.set = this.set;
 
     refClone.fixedClassId = this.fixedClassId;
@@ -178,8 +178,8 @@ export class References {
     return this;
   }
 
-  setObject = (object: AsinoObject | undefined): References => {
-    object !== undefined && (this.object = object);
+  setObjectId = (objectId: string | undefined): References => {
+    objectId !== undefined && (this.objectId = objectId);
 
     return this;
   }

@@ -7,14 +7,9 @@ import { AsinoPuzzle } from './Puzzle';
 
 export type ObjectsOperator = 'NONE' | '-' | 'OBJECTS_IN_SET';
 
-export type ObjectThing = {
+export type AsinoObject = {
   classFixedId?: string; // fixed class of this object
   collectionId?: string; // collection that this object belongs to
-}
-
-export type AsinoObject = {
-  object?: ObjectThing;
-  objectId?: string;
 }
 
 export type AsinoObjects = (AsinoObject | undefined)[] | string | AsinoObjectsFormula | AsinoObjectsReference;
@@ -41,14 +36,12 @@ export const getObjectReferenceRow = (puzzle: AsinoPuzzle, objectReference: Asin
   let selectCollection = 'NONE';
 
   if (objectReference.value !== undefined) {
-    if (objectReference.value.object !== undefined) {
-      if (typeof objectReference.value.object.collectionId === 'string') {
-        selectCollection = objectReference.value.object.collectionId;
-      }
+    if (objectReference.value.collectionId !== undefined) {
+      selectCollection = objectReference.value.collectionId;
+    }
 
-      if (typeof objectReference.value.object.classFixedId === 'string') {
-        selectClass = objectReference.value.object.classFixedId;
-      }
+    if (objectReference.value.classFixedId !== undefined) {
+      selectClass = objectReference.value.classFixedId;
     }
   }
 

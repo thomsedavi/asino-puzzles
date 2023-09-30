@@ -162,7 +162,7 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
       className={Utils.tidyString(`${borderLeftFillClass?.key ?? ''} ${borderLeftFillDarkClass?.key ?? ''}`)}
     />
     {asinoClass !== undefined && <g transform={`translate(${paddingInnerLeftScaled},${paddingInnerTopScaled}) scale(${(Number(paddingInnerRightRaw) ?? 1) - (Number(paddingInnerLeftRaw) ?? 1)},${(Number(paddingInnerBottomRaw) ?? 1) - (Number(paddingInnerTopRaw) ?? 1)})`}>
-      {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(solution, layer, references.clone().addParameters(layer).setObject({ objectId: interfaceObjectId }), { fraction: { numerator: 1, denominator: 9 } }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId) })}
+      {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(solution, layer, references.clone().addParameters(layer).setObjectId(interfaceObjectId), { fraction: { numerator: 1, denominator: 9 } }, `${key}clasLayer${classLayerIndex}`, styles, selectedObjectId) })}
     </g>}
   </g>;
 }

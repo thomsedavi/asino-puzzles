@@ -78,7 +78,6 @@ export const getNumberReferenceRow = (puzzle: AsinoPuzzle, id: string, numberRef
 }
 
 export const getNumberRow = (puzzle: AsinoPuzzle, number: AsinoNumber | undefined, key: string, layer: number, update: (value: AsinoNumber | undefined) => void): JSX.Element => {
-  console.log(number);
   const rowKey = `number${key}`;
   let selectValue = 'NONE';
 

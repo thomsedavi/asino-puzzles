@@ -5,13 +5,13 @@ import { drawCircle } from "./Circle";
 import { drawRectangle } from "./Rectangle";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
-import { getObjectFromAsinoObject } from "../utils";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { drawPath } from "./Path";
 import { getNumberResultFromAsinoNumber, getValueFromNumberResult } from "../utils/Number";
 import { NumberResult } from "../types/Number";
+import { getObjectFromObjectId } from "../utils/Object";
 
 export const drawLayer = (solution: Solution, layer: AsinoLayer, references: References, scale: NumberResult, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element | undefined => {
   if (layer.line !== undefined) {
@@ -22,8 +22,8 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, references: Ref
     if (line.value?.line !== undefined)
       return drawLine(line.value.line, references.clone().addParameters(layer), solution, { value: { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 200 } } } } }, key, styles);
   } else if (layer.interface !== undefined) {
-    const object1 = getObjectFromAsinoObject({ objectId: layer.interface.objectId }, references.clone().addParameters(layer));
-    const object2 = getObjectFromAsinoObject({ objectId: layer.objectId }, references.clone().addParameters(layer));
+    const object1 = getObjectFromObjectId(layer.interface.objectId ?? '', references.clone().addParameters(layer));
+    const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
     const class1 = object1?.classFixedId;
     const class2 = object2?.classFixedId;
@@ -33,8 +33,8 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, references: Ref
     const asinoInterface = references.interfaces[layer.interfaceId];
 
     if (asinoInterface.value?.interface !== undefined) {
-      const object1 = getObjectFromAsinoObject({ objectId: asinoInterface.value.interface.objectId }, references.clone().addParameters(layer));
-      const object2 = getObjectFromAsinoObject({ objectId: layer.objectId }, references.clone().addParameters(layer));
+      const object1 = getObjectFromObjectId(asinoInterface.value.interface.objectId ?? '', references.clone().addParameters(layer));
+      const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
       const class1 = object1?.classFixedId;
       const class2 = object2?.classFixedId;
@@ -78,16 +78,16 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
 
   puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
     if (layer.interface !== undefined) {
-      const object1 = getObjectFromAsinoObject({ objectId: layer.interface.objectId }, references.clone().addParameters(layer));
-      const object2 = getObjectFromAsinoObject({ objectId: layer.objectId }, references.clone().addParameters(layer));
+      const object1 = getObjectFromObjectId(layer.interface.objectId ?? '', references.clone().addParameters(layer));
+      const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
       object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(layer.interface, [object1?.collectionId, object2?.collectionId], [layer.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     } else if (layer.interfaceId !== undefined) {
       const asinoInterface = references.interfaces[layer.interfaceId];
 
       if (asinoInterface.value?.interface !== undefined) {
-        const object1 = getObjectFromAsinoObject({ objectId: asinoInterface.value.interface.objectId }, references.clone().addParameters(layer));
-        const object2 = getObjectFromAsinoObject({ objectId: layer.objectId }, references.clone().addParameters(layer));
+        const object1 = getObjectFromObjectId(asinoInterface.value.interface.objectId ?? '', references.clone().addParameters(layer));
+        const object2 = getObjectFromObjectId(layer.objectId ?? '', references.clone().addParameters(layer));
 
         object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(asinoInterface.value.interface, [object1?.collectionId, object2?.collectionId], [asinoInterface.value.interface.objectId, layer.objectId], references.clone().addParameters(layer), { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, { fraction: { numerator: { number: { value: 1 } }, denominator: { number: { value: 9 } } } }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
       }

@@ -1,6 +1,7 @@
 import Utils from "../../common/utils";
 import { References } from "../References";
 import { InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceColumnIndex, InterfaceRowIndex, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionCount, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionCount } from "../consts";
+import { systemClassDefaults } from "../references/Classes";
 import { AsinoClassReference } from "../types/Class";
 import { AsinoLayer } from "../types/Layer";
 import { AsinoNumber } from "../types/Number";
@@ -60,7 +61,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
               };
 
               const objectName = `Object R${r}C${c}`;
-              objects[objectId] = { name: { value: objectName }, value: { object: { collectionId: collectionId } } };
+              objects[objectId] = { name: { value: objectName }, value: { collectionId: collectionId } };
 
               const numbers: { [id: string]: AsinoNumber } = {};
 
@@ -83,7 +84,7 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
     const classId = Utils.getRandomId(classIds);
     classIds.push(classId);
 
-    classes[classId] = { value: { classId: classRefId, collectionId: collectionId } };
+    classes[classId] = { name: systemClassDefaults[classRefId].name, value: { classId: classRefId, collectionId: collectionId } };
   });
 
   update(
@@ -91,8 +92,8 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
       ...puzzle,
       collections: { ...puzzle.collections, ...{ [collectionId]: { name: { value: 'Sudoku Collection' } } } },
       objects: { ...puzzle.objects, ...objects },
+      classes: { ...puzzle.classes, ...classes },
       layers: [...(puzzle.layers ?? []), ...layers],
-      classes: { ...puzzle.classes, ...classes }
     }
   );
 }
