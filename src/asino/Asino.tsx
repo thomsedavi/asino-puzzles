@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from '../common/interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Button, ButtonGroup, Code, Container, Editor, EditorList, EditorListItem, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Select, Tab, TabGroup, View, ViewContainer } from '../common/styled';
+import { Button, ButtonGroup, Code, Container, Editor, EditorList, EditorListItem, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Select, View, ViewContainer } from '../common/styled';
 import { EditToggleButton, EditableElementHeading1 } from '../common/components';
 import { drawView } from './svg/View';
 import { drawControls } from './svg/Controls';
