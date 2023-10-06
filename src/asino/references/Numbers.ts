@@ -48,7 +48,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
   },
   [InterfacePaddingSize]: {
     name: { value: 'Interface Padding Size' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 10 } } } }
+    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 5 } } } }
   },
   [InterfaceBorderTopHeight]: {
     name: { value: 'Interface Border Top Height' },

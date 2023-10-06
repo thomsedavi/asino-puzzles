@@ -1,3 +1,4 @@
+import { FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLengthHorizontal, FontLengthVertical1, FontLengthVertical2, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical1, FontSizeVertical2, FontSizeVertical3 } from "../consts";
 import { AsinoClassReference } from "../types/Class";
 
 export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
@@ -130,8 +131,23 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: { numberId: FontSizeHorizontal1 },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -148,8 +164,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -169,8 +211,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -187,8 +255,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -205,8 +299,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -223,8 +343,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -241,8 +387,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
@@ -262,10 +434,35 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
-
       }
     }
   },
@@ -281,8 +478,34 @@ export const systemClassDefaults: { [id: string]: AsinoClassReference; } = {
         viewBox: {
           minX: { integer: { value: 0 } },
           minY: { integer: { value: 0 } },
-          width: { integer: { value: 1 } },
-          height: { integer: { value: 1 } }
+          width: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontSizeHorizontal2 },
+                { numberId: FontCurveHorizontal1 },
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontLengthHorizontal }
+              ]
+            }
+          },
+          height: {
+            formula: {
+              operator: 'TOTAL',
+              numberInputs: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontSizeVertical2 },
+                { numberId: FontSizeVertical3 },
+                { numberId: FontCurveVertical1 },
+                { numberId: FontCurveVertical2 },
+                { numberId: FontCurveVertical3 },
+                { numberId: FontCurveVertical4 },
+                { numberId: FontLengthVertical1 },
+                { numberId: FontLengthVertical2 }
+              ]
+            }
+          }
         }
       }
     }
