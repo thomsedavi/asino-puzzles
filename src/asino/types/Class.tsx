@@ -8,6 +8,7 @@ import { AsinoPuzzle } from './Puzzle';
 import { ViewBox } from './ViewBox';
 import { systemClassDefaults } from '../references/Classes';
 import { AsinoCollectionReference } from './Collection';
+import { AsinoNumber } from './Number';
 
 export type ClassOperator = 'NONE' | 'CLASS_OF_OBJECT';
 
@@ -33,6 +34,7 @@ export type ClassFormula = {
 export type AsinoClassReference = {
   name?: { value?: string, editedValue?: string }; // name of this class
   value?: AsinoClass; // value of this class
+  numbers?: { [id: string]: AsinoNumber }; // number parameters
 }
 
 export const getClassReferenceRow = (puzzle: AsinoPuzzle, classReference: AsinoClassReference, key: string, depth: number, update: (value: AsinoClassReference) => void): JSX.Element => {

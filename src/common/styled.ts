@@ -84,6 +84,36 @@ export const ButtonGroup = styled.div`
   text-align: center;
 `;
 
+export const ViewContainer = styled.div`
+  display: flex;
+`;
+
+export const View = styled.div`
+  width: 100%;
+`;
+
+export const Editor = styled.div`
+  width: 10em;
+
+  @media (max-width: 1199.98px) {
+    display: none;
+  }
+`;
+
+export const EditorList = styled.div`
+  height: 20em;
+  overflow-y: scroll;
+`;
+
+interface EditorListItemProps {
+  selected?: boolean;
+}
+
+export const EditorListItem = styled.div<EditorListItemProps>`
+  cursor: pointer;
+  background-color: ${props => props.selected ? "var(--accent-pale)" : "var(--accent-faded)"};
+`;
+
 export const TabGroup = styled.div`
   text-align: center;
   margin: 0.25em 0;
@@ -288,8 +318,12 @@ export const Container = styled.div`
     width: 35em;
   }
 
-  @media (min-width: 768px) {
-    width: 37em;
+  @media (min-width: 768px) and (max-width: 1199.98px) {
+    width: 39em;
+  }
+
+  @media (min-width: 1200px) {
+    width: 53em;
   }
 `;
 
@@ -491,7 +525,7 @@ interface TableCellActionProps {
 
 export const TableCellAction = styled.span<TableCellActionProps>`
   cursor: pointer;
-  margin-right: ${props => props.marginRight ? '0.5em' :'0'};
+  margin-right: ${props => props.marginRight ? '0.5em' : '0'};
 `;
 
 export const SpanAction = styled.span`
@@ -506,7 +540,7 @@ export const TableCellLink = styled.a<TableCellLinkProps>`
   text-decoration: none;
   color: var(--accent-pale);
   font-weight: 700;
-  margin-right: ${props => props.marginRight ? '0.5em' :'0'};
+  margin-right: ${props => props.marginRight ? '0.5em' : '0'};
 `;
 
 export const TableCellInput = styled.input`

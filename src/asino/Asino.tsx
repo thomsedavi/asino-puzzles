@@ -2,18 +2,17 @@ import React from 'react';
 import { User } from '../common/interfaces';
 import { useLoaderData } from 'react-router-dom';
 import Layout from '../pages/Layout';
-import { Button, ButtonGroup, Code, Container, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Tab, TabGroup } from '../common/styled';
+import { Button, ButtonGroup, Code, Container, Editor, EditorList, EditorListItem, ErrorMessage, Flash, Heading1, Overlay, Paragraph, Placeholder, Select, Tab, TabGroup, View, ViewContainer } from '../common/styled';
 import { EditToggleButton, EditableElementHeading1 } from '../common/components';
 import { drawView } from './svg/View';
 import { drawControls } from './svg/Controls';
 import Utils from '../common/utils';
 import { useState } from '../common/saveState';
 import { postAsino, putAsino } from '../common/fetchers';
-import { AsinoNumber, AsinoNumberReference, getNumberReferenceRow, getNumberRow } from './types/Number';
-import { AsinoLayer, getLayerRow } from './types/Layer';
 import { AsinoPuzzle } from './types/Puzzle';
 import { Solution } from './types/Solution';
-import { generateSudoku } from './utils/Generate';
+import { AsinoObjectReference } from './types/Object';
+import { AsinoClassReference } from './types/Class';
 
 interface AsinoProps {
   user?: User | null;
@@ -59,6 +58,21 @@ const Asino = (props: AsinoProps): JSX.Element => {
       <Layout userId={props.user?.id} isBurgerOpen={isBurgerOpen} setIsBurgerOpen={setIsBurgerOpen} onClickLoader={onClickLoader} />
       <Heading1>401</Heading1>
     </>
+  }
+
+  const getSelectedTab = (tab: string): 'layers' | 'collections' | 'classes' | 'objects' | 'sets' | 'interfaces' | 'lines' | 'rectangles' | 'circles' | 'paths' | 'groups' | 'booleans' | 'numbers' | 'view box' | 'generate' | undefined => {
+    switch (tab) {
+      case 'layers':
+        return 'layers';
+      case 'collections':
+        return 'collections';
+      case 'classes':
+        return 'classes';
+      case 'objects':
+        return 'objects';
+      default:
+        return undefined;
+    }
   }
 
   const saveName = () => {
@@ -170,52 +184,28 @@ const Asino = (props: AsinoProps): JSX.Element => {
         placeholder='Asino Puzzle Title'
         isWorking={isWorking}
       />
-      {mode !== 'read' && isEditable && <>
-        <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
-          <Tab selected={selectedTab === 'layers'} onClick={() => setSelectedTab('layers')}>Layers</Tab>
-          <Tab selected={selectedTab === 'collections'} onClick={() => setSelectedTab('collections')}>Collections</Tab>
-          <Tab selected={selectedTab === 'classes'} onClick={() => setSelectedTab('classes')}>Classes</Tab>
-          <Tab selected={selectedTab === 'objects'} onClick={() => setSelectedTab('objects')}>Objects</Tab>
-          <Tab selected={selectedTab === 'sets'} onClick={() => setSelectedTab('sets')}>Sets</Tab>
-        </TabGroup>
-        <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
-          <Tab selected={selectedTab === 'interfaces'} onClick={() => setSelectedTab('interfaces')}>Interfaces</Tab>
-          <Tab selected={selectedTab === 'lines'} onClick={() => setSelectedTab('lines')}>Lines</Tab>
-          <Tab selected={selectedTab === 'rectangles'} onClick={() => setSelectedTab('rectangles')}>Rectangles</Tab>
-          <Tab selected={selectedTab === 'circles'} onClick={() => setSelectedTab('circles')}>Circles</Tab>
-          <Tab selected={selectedTab === 'paths'} onClick={() => setSelectedTab('paths')}>Paths</Tab>
-          <Tab selected={selectedTab === 'groups'} onClick={() => setSelectedTab('groups')}>Groups</Tab>
-        </TabGroup>
-        <TabGroup id="TabGroup" style={{ textAlign: 'center' }}>
-          <Tab selected={selectedTab === 'booleans'} onClick={() => setSelectedTab('booleans')}>Booleans</Tab>
-          <Tab selected={selectedTab === 'numbers'} onClick={() => setSelectedTab('numbers')}>Numbers</Tab>
-          <Tab selected={selectedTab === 'view box'} onClick={() => setSelectedTab('view box')}>View Box</Tab>
-          <Tab selected={selectedTab === 'generate'} onClick={() => setSelectedTab('generate')}>Generate</Tab>
-        </TabGroup>
-      </>}
-      {mode !== 'read' && isEditable && selectedTab === 'layers' && <div>
-        {asinoPuzzle.layers?.map((layer: AsinoLayer, index: number) => getLayerRow(asinoPuzzle, layer, `${index}`, 0, (value: AsinoLayer) => { setAsinoPuzzle({ ...asinoPuzzle, layers: [...asinoPuzzle.layers!.slice(0, index), value, ...asinoPuzzle.layers!.slice(index + 1)] }) }))}
-        <ButtonGroup>
-          <Button onClick={() => setAsinoPuzzle({ ...asinoPuzzle, layers: [...(asinoPuzzle.layers ?? []), { name: { value: `Layer ${(asinoPuzzle.layers?.length ?? 0) + 1}` } }] })}>Add Layer</Button>
-        </ButtonGroup>
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'numbers' && <div>
-        {asinoPuzzle.numbers !== undefined && Object.entries(asinoPuzzle.numbers).map((value: [string, AsinoNumberReference], index: number) => getNumberReferenceRow(asinoPuzzle, value[0], value[1], `${index}`, 0, (id: string, number: AsinoNumberReference) => { const numbers = asinoPuzzle.numbers ?? {}; numbers[id] = number; setAsinoPuzzle({ ...asinoPuzzle, numbers: numbers }); }))}
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'view box' && <div>
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minX, `minX`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minX: value ?? { integer: { value: 0 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.minY, `minY`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, minY: value ?? { integer: { value: 0 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.width, `width`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, width: value ?? { integer: { value: 1 } } } }))}
-        {getNumberRow(asinoPuzzle, asinoPuzzle.viewBox?.height, `height`, 0, (value: AsinoNumber | undefined) => setAsinoPuzzle({ ...asinoPuzzle, viewBox: { ...asinoPuzzle.viewBox, height: value ?? { integer: { value: 1 } } } }))}
-      </div>}
-      {mode !== 'read' && isEditable && selectedTab === 'generate' && <div>
-        <ButtonGroup>
-          <Button onClick={() => generateSudoku(asinoPuzzle, setAsinoPuzzle)}>Generate Sudoku</Button>
-        </ButtonGroup>
-      </div>}
-      <div>
-        {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
-      </div>
+      <ViewContainer>
+        <View>
+          {drawView(asinoPuzzle, solution, setSelectedCollectionId, setSelectedObjectId, selectedObjectId)}
+        </View>
+        <Editor>
+          <Select value={selectedTab} onChange={event => setSelectedTab(getSelectedTab(event.target.value))}>
+            <option value='layers'>Layers</option>
+            <option value='collections'>Collections</option>
+            <option value='classes'>Classes</option>
+            <option value='objects'>Objects</option>
+          </Select>
+          {selectedTab === 'objects' && <>
+            <EditorList>
+              {(Object.entries(asinoPuzzle.objects ?? {})).map((object: [string, AsinoObjectReference]) => { return <EditorListItem key={`object${object[0]}`} selected={object[0] === selectedObjectId} onClick={() => { setSelectedObjectId(object[0]); setSelectedCollectionId(object[1].value?.collectionId) }}>{object[1].name?.value}</EditorListItem> })}
+            </EditorList>
+            {selectedObjectId !== undefined && <Select value={asinoPuzzle.objects?.[selectedObjectId].value?.classFixedId ?? 'NONE'} onChange={event => { const objects = asinoPuzzle.objects ?? {}; const object = objects[selectedObjectId]; object.value = { ...object.value, classFixedId: event.target.value }; objects[selectedObjectId] = object; setAsinoPuzzle({ ...asinoPuzzle, objects: objects }); }}>
+              <option value='NONE'>Select Fixed Class</option>
+              {Object.entries(asinoPuzzle.classes ?? {}).filter(c => c[1].value?.collectionId === selectedCollectionId).map((asinoClass: [string, AsinoClassReference]) => { return <option key={`class${asinoClass[0]}`} value={asinoClass[0]}>{asinoClass[1].name?.value}</option> })}
+            </Select>}
+          </>}
+        </Editor>
+      </ViewContainer>
       <div>
         {drawControls(asinoPuzzle, solution, onSelectClassId, selectedCollectionId)}
       </div>

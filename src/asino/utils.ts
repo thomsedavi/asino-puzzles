@@ -1,6 +1,6 @@
 import { References } from "./References";
 import { AsinoBoolean, AsinoBooleanReference, BooleanFormula } from "./types/Boolean";
-import { AsinoClass, AsinoClassReference, AsinoClasses, Class, ClassFormula } from "./types/Class";
+import { AsinoClass, AsinoClasses, Class, ClassFormula } from "./types/Class";
 import { AsinoColor, ColorResult } from "./types/Color";
 import { AsinoNumber, NumberResult } from "./types/Number";
 import { AsinoObject, AsinoObjects, isObjectsFormula, isObjectsObjects } from "./types/Object";
@@ -424,23 +424,6 @@ export const getBooleanFromBooleanReference = (asinoBoolean: AsinoBooleanReferen
     // do nothing
   } else if (asinoBoolean.value) {
     result = asinoBoolean.value;
-  }
-
-  return result;
-}
-
-export const getClassFromClassReference = (asinoClass: AsinoClassReference | undefined, references: References, solution: Solution): Class | undefined => {
-  let result: Class | undefined = undefined;
-
-  if (asinoClass?.value?.classId !== undefined) {
-    references.classes[asinoClass?.value.classId] !== undefined && (result = getClassFromAsinoClass(references.classes[asinoClass!.value!.classId].value, references, solution));
-  }
-
-  if (asinoClass?.value?.class !== undefined) {
-    result === undefined && (result = {});
-
-    asinoClass?.value.class.layers !== undefined && (result.layers = asinoClass?.value.class.layers);
-    asinoClass?.value.class.viewBox !== undefined && (result.viewBox = asinoClass?.value.class.viewBox);
   }
 
   return result;

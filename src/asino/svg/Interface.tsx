@@ -1,5 +1,5 @@
 import React from "react"
-import { getClassFromClassReference, getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
+import { getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingRightWidth, PaddingBottomHeight, PaddingLeftWidth } from "../consts";
 import { drawLayer } from "./View";
 import { Interface } from "../types/Interface";
@@ -7,11 +7,11 @@ import { AsinoNumber } from "../types/Number";
 import { References } from "../References";
 import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";
-import { systemClassDefaults } from "../references/Classes";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { Class } from "../types/Class";
 import { getDifference, getProduct, getValueFromNumberResult } from "../utils/Number";
+import { getClassResultFromClassId } from "../utils/Class";
 
 export const drawInterface = (asinoInterface: Interface, objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], references: References, solution: Solution, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element => {
   let interfaceObjectId: string | undefined = undefined;
@@ -116,9 +116,7 @@ export const drawInterface = (asinoInterface: Interface, objectIds: (string | un
   let asinoClass: Class | undefined = undefined
 
   if (interfaceClassId !== undefined) {
-    const selectedClassReference = systemClassDefaults[interfaceClassId];
-
-    const selectedClass = getClassFromClassReference(selectedClassReference, references, solution);
+    const selectedClass = getClassResultFromClassId(interfaceClassId, references);
 
     if (selectedClass !== undefined) {
       asinoClass = selectedClass;
