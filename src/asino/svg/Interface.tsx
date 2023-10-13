@@ -14,8 +14,8 @@ import { getDifference, getNumberResultFromAsinoNumber, getProduct, getValueFrom
 import { getClassResultFromClassId } from "../utils/Class";
 
 export const drawInterface = (asinoInterface: Interface, objectIds: (string | undefined)[], fixedClassIds: (string | undefined)[], references: References, solution: Solution, defaultInterfaceWidthValue: AsinoNumber, defaultInterfaceHeightValue: AsinoNumber, key: string, styles: { [id: string]: Style }, selectedObjectId?: string): JSX.Element => {
-  let interfaceObjectId: string | undefined = undefined;
   let interfaceClassId: string | undefined = undefined;
+  let interfaceObjectId: string | undefined = undefined;
 
   objectIds.forEach((objectId: string | undefined) => {
     objectId !== undefined && (interfaceObjectId = objectId);
