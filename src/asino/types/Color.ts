@@ -1,4 +1,4 @@
-import { AsinoBoolean } from "./Boolean";
+import { AsinoBooleans } from "./Boolean";
 import { AsinoNumber, NumberResult } from "./Number";
 
 export type ColorOperator = 'NONE' | 'IF_ELSE';
@@ -18,7 +18,13 @@ export type ColorResult = {
   lightnessDark?: NumberResult;
 }
 
-export type Color = {
+export type AsinoColors = {
+  colors: AsinoColor[];
+}
+
+export type AsinoColor = {
+  id?: string;
+  name?: string; // name of this color
   red?: AsinoNumber;
   redDark?: AsinoNumber;
   green?: AsinoNumber;
@@ -31,22 +37,10 @@ export type Color = {
   saturationDark?: AsinoNumber;
   lightness?: AsinoNumber;
   lightnessDark?: AsinoNumber;
-}
-
-export type AsinoColor = {
-  color?: Color;
   colorId?: string;
-  formula?: ColorFormula;
-}
-
-export type ColorFormula = {
   operator?: ColorOperator;
-  booleanInputs?: (AsinoBoolean | undefined)[]; // boolean inputs
-  colorInputs?: (AsinoColor | undefined)[]; // color inputs
-}
-
-export type AsinoColorReference = {
-  name?: { value?: string, editedValue?: string }; // name of this color
-  value?: AsinoColor;
+  booleanInputs?: AsinoBooleans; // boolean inputs
+  colors?: AsinoColors; // color inputs
   numbers?: { [id: string]: AsinoNumber }; // number parameters
+  editedColor?: AsinoColor;
 }
