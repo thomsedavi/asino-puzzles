@@ -1,539 +1,545 @@
 import { CurveFraction, HueAzure, HueBlue, HueChartreuse, HueCyan, HueGreen, HueMagenta, HueMint, HueOrange, HuePink, HueRed, HueViolet, HueYellow, InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceBorderBottomHeight, InterfaceBorderLeftWidth, InterfaceBorderRightWidth, InterfaceBorderSize, InterfaceBorderTopHeight, InterfaceRowIndex, InterfaceHeight, InterfaceColumnIndex, InterfaceWidth, InterfaceX, InterfaceY, OuterHorizontalBorderWidth, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionBorderX, OuterHorizontalDivisionCount, OuterVerticalBorderHeight, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionBorderY, OuterVerticalDivisionCount, PathSize, ViewBoxHeight, ViewBoxMinimumX, ViewBoxMinimumY, ViewBoxWidth, InterfacePaddingTopHeight, InterfacePaddingRightWidth, InterfacePaddingBottomHeight, InterfacePaddingLeftWidth, InterfacePaddingSize, FontSize, FontSizeHorizontal, FontSizeHorizontal1, FontSizeHorizontal2, FontSizeVertical, FontSizeVertical3, FontSizeVertical2, FontSizeVertical1, FontCurve, FontCurveHorizontal, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLength, FontLengthHorizontal, FontLengthVertical, FontLengthVertical1, FontLengthVertical2 } from "../consts";
-import { AsinoNumberReference } from "../types/Number";
+import { AsinoNumber } from "../types/Number";
 
-export const systemNumberDefaults: { [id: string]: AsinoNumberReference; } = {
+export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
   [ViewBoxMinimumX]: {
-    name: { value: 'View Box Minimum X' },
-    value: { integer: { value: 0 } },
+    id: ViewBoxMinimumX,
+    name: 'View Box Minimum X',
+    integer: 0,
   },
   [ViewBoxMinimumY]: {
-    name: { value: 'View Box Minimum Y' },
-    value: { integer: { value: 0 } },
+    id: ViewBoxMinimumY,
+    name: 'View Box Minimum Y',
+    integer: 0,
   },
   [ViewBoxWidth]: {
-    name: { value: 'View Box Width' },
-    value: { integer: { value: 1 } }
+    id: ViewBoxWidth,
+    name: 'View Box Width',
+    integer: 1
   },
   [ViewBoxHeight]: {
-    name: { value: 'View Box Height' },
-    value: { integer: { value: 1 } }
+    id: ViewBoxHeight,
+    name: 'View Box Height',
+    integer: 1
   },
   [OuterHorizontalBorderWidth]: {
-    name: { value: 'Outer Horizontal Border Width' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }
+    id: OuterHorizontalBorderWidth,
+    name: 'Outer Horizontal Border Width',
+    numerator: { integer: 1 },
+    denominator: { integer: 200 }
   },
   [OuterVerticalBorderHeight]: {
-    name: { value: 'Outer Vertical Border Height' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 200 } } } }
+    id: OuterVerticalBorderHeight,
+    name: 'Outer Vertical Border Height',
+    numerator: { integer: 1 },
+    denominator: { integer: 200 }
   },
   [OuterHorizontalDivisionCount]: {
-    name: { value: 'Outer Horizontal Division Count' },
-    value: { integer: { value: 3 } }
+    id: OuterHorizontalDivisionCount,
+    name: 'Outer Horizontal Division Count',
+    integer: 3
   },
   [InnerHorizontalDivisionCount]: {
-    name: { value: 'Inner Horizontal Division Count' },
-    value: { integer: { value: 3 } }
+    id: InnerHorizontalDivisionCount,
+    name: 'Inner Horizontal Division Count',
+    integer: 3
   },
   [OuterVerticalDivisionCount]: {
-    name: { value: 'Outer Vertical Division Count' },
-    value: { integer: { value: 3 } }
+    id: OuterVerticalDivisionCount,
+    name: 'Outer Vertical Division Count',
+    integer: 3
   },
   [InnerVerticalDivisionCount]: {
-    name: { value: 'Inner Vertical Division Count' },
-    value: { integer: { value: 3 } }
+    id: InnerVerticalDivisionCount,
+    name: 'Inner Vertical Division Count',
+    integer: 3
   },
   [InterfaceBorderSize]: {
-    name: { value: 'Interface Border Size' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 40 } } } }
+    id: InterfaceBorderSize,
+    name: 'Interface Border Size',
+    numerator: { integer: 1 },
+    denominator: { integer: 40 }
   },
   [InterfacePaddingSize]: {
-    name: { value: 'Interface Padding Size' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 5 } } } }
+    id: InterfacePaddingSize,
+    name: 'Interface Padding Size',
+    numerator: { integer: 1 },
+    denominator: { integer: 5 }
   },
   [InterfaceBorderTopHeight]: {
-    name: { value: 'Interface Border Top Height' },
-    value: { numberId: InterfaceBorderSize }
+    id: InterfaceBorderTopHeight,
+    name: 'Interface Border Top Height',
+    numberId: InterfaceBorderSize
   },
   [InterfaceBorderRightWidth]: {
-    name: { value: 'Interface Border Right Width' },
-    value: { numberId: InterfaceBorderSize }
+    id: InterfaceBorderRightWidth,
+    name: 'Interface Border Right Width',
+    numberId: InterfaceBorderSize
   },
   [InterfaceBorderBottomHeight]: {
-    name: { value: 'Interface Border Bottom Height' },
-    value: { numberId: InterfaceBorderSize }
+    id: InterfaceBorderBottomHeight,
+    name: 'Interface Border Bottom Height',
+    numberId: InterfaceBorderSize
   },
   [InterfaceBorderLeftWidth]: {
-    name: { value: 'Interface Border Left Width' },
-    value: { numberId: InterfaceBorderSize }
+    id: InterfaceBorderLeftWidth,
+    name: 'Interface Border Left Width',
+    numberId: InterfaceBorderSize
   },
   [InterfacePaddingTopHeight]: {
-    name: { value: 'Interface Padding Top Height' },
-    value: { numberId: InterfacePaddingSize }
+    id: InterfacePaddingTopHeight,
+    name: 'Interface Padding Top Height',
+    numberId: InterfacePaddingSize
   },
   [InterfacePaddingRightWidth]: {
-    name: { value: 'Interface Padding Right Width' },
-    value: { numberId: InterfacePaddingSize }
+    id: InterfacePaddingRightWidth,
+    name: 'Interface Padding Right Width',
+    numberId: InterfacePaddingSize
   },
   [InterfacePaddingBottomHeight]: {
-    name: { value: 'Interface Padding Bottom Height' },
-    value: { numberId: InterfacePaddingSize }
+    id: InterfacePaddingBottomHeight,
+    name: 'Interface Padding Bottom Height',
+    numberId: InterfacePaddingSize
   },
   [InterfacePaddingLeftWidth]: {
-    name: { value: 'Interface Padding Left Width' },
-    value: { numberId: InterfacePaddingSize }
+    id: InterfacePaddingLeftWidth,
+    name: 'Interface Padding Left Width',
+    numberId: InterfacePaddingSize
   },
   [PathSize]: {
-    name: { value: 'Path Size' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 10 } } } }
+    id: PathSize,
+    name: 'Path Size',
+    numerator: { integer: 1 },
+    denominator: { integer: 10 }
   },
   [CurveFraction]: {
-    name: { value: 'Curve Fraction' },
-    value: { fraction: { numerator: { integer: { value: 11 } }, denominator: { integer: { value: 20 } } } }
+    id: CurveFraction,
+    name: 'Curve Fraction',
+    numerator: { integer: 11 },
+    denominator: { integer: 20 }
   },
   [InterfaceX]: {
-    name: { value: 'Interface X' },
-    value: {
-      formula: {
-        operator: '+',
-        numberInputs: [
+    id: InterfaceX,
+    name: 'Interface X',
+    operator: '+',
+    numbers: [
+      {
+        operator: '*',
+        numbers: [
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                {
-                  formula: {
-                    operator: '-',
-                    numberInputs: [
-                      { numberId: InterfaceColumnIndex },
-                      { integer: { value: 1 } }
-                    ]
-                  }
-                },
-                { numberId: InterfaceWidth }
-              ]
-            }
+            operator: '-',
+            numbers: [
+              { numberId: InterfaceColumnIndex },
+              { integer: 1 }
+            ]
           },
+          { numberId: InterfaceWidth }
+        ]
+      },
+      {
+        operator: '*',
+        numbers: [
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                {
-                  formula: {
-                    operator: 'FLOOR',
-                    numberInputs: [
-                      {
-                        formula: {
-                          operator: '/',
-                          numberInputs: [
-                            {
-                              formula: {
-                                operator: '-',
-                                numberInputs: [
-                                  { numberId: InterfaceColumnIndex },
-                                  { integer: { value: 1 } }
-                                ]
-                              }
-                            },
-                            { numberId: InnerHorizontalDivisionCount }
-                          ]
-                        }
-                      }
+            operator: 'FLOOR',
+            numbers: [
+              {
+                operator: '/',
+                numbers: [
+                  {
+                    operator: '-',
+                    numbers: [
+                      { numberId: InterfaceColumnIndex },
+                      { integer: 1 }
                     ]
-                  }
-                },
-                { numberId: OuterHorizontalBorderWidth }
-              ]
-            }
-          }
+                  },
+                  { numberId: InnerHorizontalDivisionCount }
+                ]
+              }
+            ]
+          },
+          { numberId: OuterHorizontalBorderWidth }
         ]
       }
-    }
+    ]
   },
   [InterfaceY]: {
-    name: { value: 'Interface Y' },
-    value: {
-      formula: {
-        operator: '+',
-        numberInputs: [
+    id: InterfaceY,
+    name: 'Interface Y',
+    operator: '+',
+    numbers: [
+      {
+        operator: '*',
+        numbers: [
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                {
-                  formula: {
-                    operator: '-',
-                    numberInputs: [
-                      { numberId: InterfaceRowIndex },
-                      { integer: { value: 1 } }
-                    ]
-                  }
-                },
-                { numberId: InterfaceHeight }
-              ]
-            }
+            operator: '-',
+            numbers: [
+              { numberId: InterfaceRowIndex },
+              { integer: 1 }
+            ]
           },
+          { numberId: InterfaceHeight }
+        ]
+      },
+      {
+        operator: '*',
+        numbers: [
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                {
-                  formula: {
-                    operator: 'FLOOR',
-                    numberInputs: [
-                      {
-                        formula: {
-                          operator: '/',
-                          numberInputs: [
-                            {
-                              formula: {
-                                operator: '-',
-                                numberInputs: [
-                                  { numberId: InterfaceRowIndex },
-                                  { integer: { value: 1 } }
-                                ]
-                              }
-                            },
-                            { numberId: InnerVerticalDivisionCount }
-                          ]
-                        }
-                      }
+            operator: 'FLOOR',
+            numbers: [
+              {
+                operator: '/',
+                numbers: [
+                  {
+                    operator: '-',
+                    numbers: [
+                      { numberId: InterfaceRowIndex },
+                      { integer: 1 }
                     ]
-                  }
-                },
-                { numberId: OuterVerticalBorderHeight }
-              ]
-            }
-          }
+                  },
+                  { numberId: InnerVerticalDivisionCount }
+                ]
+              }
+            ]
+          },
+          { numberId: OuterVerticalBorderHeight }
         ]
       }
-    }
+    ]
   },
   [InterfaceWidth]: {
-    name: { value: 'Interface Width' },
-    value: {
-      formula: {
-        operator: '/',
-        numberInputs: [
+    id: InterfaceWidth,
+    name: 'Interface Width',
+    operator: '/',
+    numbers: [
+      {
+        operator: '-',
+        numbers: [
+          { numberId: ViewBoxWidth },
           {
-            formula: {
-              operator: '-',
-              numberInputs: [
-                { numberId: ViewBoxWidth },
-                {
-                  formula: {
-                    operator: '*',
-                    numberInputs: [
-                      { numberId: OuterHorizontalBorderWidth },
-                      {
-                        formula: {
-                          operator: '-',
-                          numberInputs: [
-                            { numberId: OuterHorizontalDivisionCount },
-                            { integer: { value: 1 } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: OuterHorizontalDivisionCount },
-                { numberId: InnerHorizontalDivisionCount }
-              ]
-            }
+            operator: '*',
+            numbers: [
+              { numberId: OuterHorizontalBorderWidth },
+              {
+                operator: '-',
+                numbers: [
+                  { numberId: OuterHorizontalDivisionCount },
+                  { integer: 1 }
+                ]
+              }
+            ]
           }
         ]
+      },
+      {
+        operator: '*',
+        numbers: [
+          { numberId: OuterHorizontalDivisionCount },
+          { numberId: InnerHorizontalDivisionCount }
+        ]
       }
-    }
+    ]
   },
   [InterfaceHeight]: {
-    name: { value: 'Interface Height' },
-    value: {
-      formula: {
-        operator: '/',
-        numberInputs: [
+    id: InterfaceHeight,
+    name: 'Interface Height',
+    operator: '/',
+    numbers: [
+      {
+        operator: '-',
+        numbers: [
+          { numberId: ViewBoxHeight },
           {
-            formula: {
-              operator: '-',
-              numberInputs: [
-                { numberId: ViewBoxHeight },
-                {
-                  formula: {
-                    operator: '*',
-                    numberInputs: [
-                      { numberId: OuterVerticalBorderHeight },
-                      {
-                        formula: {
-                          operator: '-',
-                          numberInputs: [
-                            { numberId: OuterVerticalDivisionCount },
-                            { integer: { value: 1 } }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: OuterVerticalDivisionCount },
-                { numberId: InnerVerticalDivisionCount }
-              ]
-            }
+            operator: '*',
+            numbers: [
+              { numberId: OuterVerticalBorderHeight },
+              {
+                operator: '-',
+                numbers: [
+                  { numberId: OuterVerticalDivisionCount },
+                  { integer: 1 }
+                ]
+              }
+            ]
           }
         ]
+      },
+      {
+        operator: '*',
+        numbers: [
+          { numberId: OuterVerticalDivisionCount },
+          { numberId: InnerVerticalDivisionCount }
+        ]
       }
-    }
+    ]
   },
   [OuterHorizontalDivisionBorderX]: {
-    name: { value: 'Outer Horizontal Division Border X' },
-    value: {
-      formula: {
-        operator: '+',
-        numberInputs: [
+    id: OuterHorizontalDivisionBorderX,
+    name: 'Outer Horizontal Division Border X',
+    operator: '+',
+    numbers: [
+      {
+        operator: '*',
+        numbers: [
+          { numberId: InnerHorizontalDivisionCount },
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: InnerHorizontalDivisionCount },
-                {
-                  formula: {
-                    operator: '*',
-                    numberInputs: [
-                      { numberId: InterfaceWidth },
-                      { numberId: OuterHorizontalDivisionBorderIndex }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
+            operator: '*',
+            numbers: [
+              { numberId: InterfaceWidth },
+              { numberId: OuterHorizontalDivisionBorderIndex }
+            ]
+          }
+        ]
+      },
+      {
+        operator: '*',
+        numbers: [
+          { numberId: OuterHorizontalBorderWidth },
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: OuterHorizontalBorderWidth },
-                {
-                  formula: {
-                    operator: '-',
-                    numberInputs: [
-                      { numberId: OuterHorizontalDivisionBorderIndex },
-                      { integer: { value: 1 } }
-                    ]
-                  }
-                }
-              ]
-            }
+            operator: '-',
+            numbers: [
+              { numberId: OuterHorizontalDivisionBorderIndex },
+              { integer: 1 }
+            ]
           }
         ]
       }
-    }
+    ]
   },
   [OuterVerticalDivisionBorderY]: {
-    name: { value: 'Outer Horizontal Division Border Y' },
-    value: {
-      formula: {
-        operator: '+',
-        numberInputs: [
+    id: OuterVerticalDivisionBorderY,
+    name: 'Outer Horizontal Division Border Y',
+    operator: '+',
+    numbers: [
+      {
+        operator: '*',
+        numbers: [
+          { numberId: InnerVerticalDivisionCount },
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: InnerVerticalDivisionCount },
-                {
-                  formula: {
-                    operator: '*',
-                    numberInputs: [
-                      { numberId: InterfaceHeight },
-                      { numberId: OuterVerticalDivisionBorderIndex }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
+            operator: '*',
+            numbers: [
+              { numberId: InterfaceHeight },
+              { numberId: OuterVerticalDivisionBorderIndex }
+            ]
+          }
+        ]
+      },
+      {
+        operator: '*',
+        numbers: [
+          { numberId: OuterVerticalBorderHeight },
           {
-            formula: {
-              operator: '*',
-              numberInputs: [
-                { numberId: OuterVerticalBorderHeight },
-                {
-                  formula: {
-                    operator: '-',
-                    numberInputs: [
-                      { numberId: OuterVerticalDivisionBorderIndex },
-                      { integer: { value: 1 } }
-                    ]
-                  }
-                }
-              ]
-            }
+            operator: '-',
+            numbers: [
+              { numberId: OuterVerticalDivisionBorderIndex },
+              { integer: 1 }
+            ]
           }
         ]
       }
-    }
+    ]
   },
   [HueRed]: {
-    name: { value: 'Hue Red' },
-    value: { integer: { value: 0 } }
+    id: HueRed,
+    name: 'Hue Red',
+    integer: 0
   },
   [HueOrange]: {
-    name: { value: 'Hue Orange' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 12 } } } }
+    id: HueOrange,
+    name: 'Hue Orange',
+    numerator: { integer: 1 },
+    denominator: { integer: 12 }
   },
   [HueYellow]: {
-    name: { value: 'Hue Yellow' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 6 } } } }
+    id: HueYellow,
+    name: 'Hue Yellow',
+    numerator: { integer: 1 },
+    denominator: { integer: 6 }
   },
   [HueChartreuse]: {
-    name: { value: 'Hue Chartreuse' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 4 } } } }
+    id: HueChartreuse,
+    name: 'Hue Chartreuse',
+    numerator: { integer: 1 },
+    denominator: { integer: 4 }
   },
   [HueGreen]: {
-    name: { value: 'Hue Green' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 3 } } } }
+    id: HueGreen,
+    name: 'Hue Green',
+    numerator: { integer: 1 },
+    denominator: { integer: 3 }
   },
   [HueMint]: {
-    name: { value: 'Hue Mint' },
-    value: { fraction: { numerator: { integer: { value: 5 } }, denominator: { integer: { value: 12 } } } }
+    id: HueMint,
+    name: 'Hue Mint',
+    numerator: { integer: 5 },
+    denominator: { integer: 12 }
   },
   [HueCyan]: {
-    name: { value: 'Hue Cyan' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 2 } } } }
+    id: HueCyan,
+    name: 'Hue Cyan',
+    numerator: { integer: 1 },
+    denominator: { integer: 2 }
   },
   [HueAzure]: {
-    name: { value: 'Hue Azure' },
-    value: { fraction: { numerator: { integer: { value: 7 } }, denominator: { integer: { value: 12 } } } }
+    id: HueAzure,
+    name: 'Hue Azure',
+    numerator: { integer: 7 },
+    denominator: { integer: 12 }
   },
   [HueBlue]: {
-    name: { value: 'Hue Blue' },
-    value: { fraction: { numerator: { integer: { value: 2 } }, denominator: { integer: { value: 3 } } } }
+    id: HueBlue,
+    name: 'Hue Blue',
+    numerator: { integer: 2 },
+    denominator: { integer: 3 }
   },
   [HueViolet]: {
-    name: { value: 'Hue Violet' },
-    value: { fraction: { numerator: { integer: { value: 3 } }, denominator: { integer: { value: 4 } } } }
+    id: HueViolet,
+    name: 'Hue Violet',
+    numerator: { integer: 3 },
+    denominator: { integer: 4 }
   },
   [HueMagenta]: {
-    name: { value: 'Hue Magenta' },
-    value: { fraction: { numerator: { integer: { value: 5 } }, denominator: { integer: { value: 6 } } } }
+    id: HueMagenta,
+    name: 'Hue Magenta',
+    numerator: { integer: 5 },
+    denominator: { integer: 6 }
   },
   [HuePink]: {
-    name: { value: 'Hue Pink' },
-    value: { fraction: { numerator: { integer: { value: 11 } }, denominator: { integer: { value: 12 } } } }
+    id: HuePink,
+    name: 'Hue Pink',
+    numerator: { integer: 11 },
+    denominator: { integer: 12 }
   },
   [OuterHorizontalDivisionBorderIndex]: {
-    name: { value: 'Outer Horizontal Division Border Index' },
-    value: { integer: { value: 1 } }
+    id: OuterHorizontalDivisionBorderIndex,
+    name: 'Outer Horizontal Division Border Index',
+    integer: 1
   },
   [OuterVerticalDivisionBorderIndex]: {
-    name: { value: 'Outer Vertical Division Border Index' },
-    value: { integer: { value: 1 } }
+    id: OuterVerticalDivisionBorderIndex,
+    name: 'Outer Vertical Division Border Index',
+    integer: 1
   },
   [InterfaceColumnIndex]: {
-    name: { value: 'Interface Column Index' },
-    value: { integer: { value: 1 } }
+    id: InterfaceColumnIndex,
+    name: 'Interface Column Index',
+    integer: 1
   },
   [InterfaceRowIndex]: {
-    name: { value: 'Interface Row Index' },
-    value: { integer: { value: 1 } }
+    id: InterfaceRowIndex,
+    name: 'Interface Row Index',
+    integer: 1
   },
   [FontSize]: {
-    name: { value: 'Font Size' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
+    id: FontSize,
+    name: 'Font Size',
+    numerator: { integer: 1 },
+    denominator: { integer: 9 }
   },
   [FontSizeHorizontal]: {
-    name: { value: 'Font Size Horizontal' },
-    value: { numberId: FontSize }
+    id: FontSizeHorizontal,
+    name: 'Font Size Horizontal',
+    numberId: FontSize
   },
   [FontSizeHorizontal1]: {
-    name: { value: 'Font Size Horizontal 1' },
-    value: { numberId: FontSizeHorizontal }
+    id: FontSizeHorizontal1,
+    name: 'Font Size Horizontal 1',
+    numberId: FontSizeHorizontal
   },
   [FontSizeHorizontal2]: {
-    name: { value: 'Font Size Horizontal 2' },
-    value: { numberId: FontSizeHorizontal }
+    id: FontSizeHorizontal2,
+    name: 'Font Size Horizontal 2',
+    numberId: FontSizeHorizontal
   },
   [FontSizeVertical]: {
-    name: { value: 'Font Size Vertical' },
-    value: { numberId: FontSize }
+    id: FontSizeVertical,
+    name: 'Font Size Vertical',
+    numberId: FontSize
   },
   [FontSizeVertical1]: {
-    name: { value: 'Font Size Vertical 1' },
-    value: { numberId: FontSizeVertical }
+    id: FontSizeVertical1,
+    name: 'Font Size Vertical 1',
+    numberId: FontSizeVertical
   },
   [FontSizeVertical2]: {
-    name: { value: 'Font Size Vertical 2' },
-    value: { numberId: FontSizeVertical }
+    id: FontSizeVertical2,
+    name: 'Font Size Vertical 2',
+    numberId: FontSizeVertical
   },
   [FontSizeVertical3]: {
-    name: { value: 'Font Size Vertical 3' },
-    value: { numberId: FontSizeVertical }
+    id: FontSizeVertical3,
+    name: 'Font Size Vertical 3',
+    numberId: FontSizeVertical
   },
   [FontCurve]: {
-    name: { value: 'Font Curve' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
+    id: FontCurve,
+    name: 'Font Curve',
+    numerator: { integer: 1 },
+    denominator: { integer: 9 }
   },
   [FontCurveHorizontal]: {
-    name: { value: 'Font Curve Horizontal' },
-    value: { numberId: FontCurve }
+    id: FontCurveHorizontal,
+    name: 'Font Curve Horizontal',
+    numberId: FontCurve
   },
   [FontCurveHorizontal1]: {
-    name: { value: 'Font Curve Horizontal 1' },
-    value: { numberId: FontCurveHorizontal }
+    id: FontCurveHorizontal1,
+    name: 'Font Curve Horizontal 1',
+    numberId: FontCurveHorizontal
   },
   [FontCurveHorizontal2]: {
-    name: { value: 'Font Curve Horizontal 2' },
-    value: { numberId: FontCurveHorizontal }
+    id: FontCurveHorizontal2,
+    name: 'Font Curve Horizontal 2',
+    numberId: FontCurveHorizontal
   },
   [FontCurveVertical]: {
-    name: { value: 'Font Curve Vertical' },
-    value: { numberId: FontCurve }
+    id: FontCurveVertical,
+    name: 'Font Curve Vertical',
+    numberId: FontCurve
   },
   [FontCurveVertical1]: {
-    name: { value: 'Font Curve Vertical 1' },
-    value: { numberId: FontCurveVertical }
+    id: FontCurveVertical1,
+    name: 'Font Curve Vertical 1',
+    numberId: FontCurveVertical
   },
   [FontCurveVertical2]: {
-    name: { value: 'Font Curve Vertical 2' },
-    value: { numberId: FontCurveVertical }
+    id: FontCurveVertical2,
+    name: 'Font Curve Vertical 2',
+    numberId: FontCurveVertical
   },
   [FontCurveVertical3]: {
-    name: { value: 'Font Curve Vertical 3' },
-    value: { numberId: FontCurveVertical }
+    id: FontCurveVertical3,
+    name: 'Font Curve Vertical 3',
+    numberId: FontCurveVertical
   },
   [FontCurveVertical4]: {
-    name: { value: 'Font Curve Vertical 4' },
-    value: { numberId: FontCurveVertical }
+    id: FontCurveVertical4,
+    name: 'Font Curve Vertical 4',
+    numberId: FontCurveVertical
   },
   [FontLength]: {
-    name: { value: 'Font Length' },
-    value: { fraction: { numerator: { integer: { value: 1 } }, denominator: { integer: { value: 9 } } } }
+    id: FontLength,
+    name: 'Font Length',
+    numerator: { integer: 1 },
+    denominator: { integer: 9 }
   },
   [FontLengthHorizontal]: {
-    name: { value: 'Font Length Horizontal' },
-    value: { numberId: FontLength }
+    id: FontLengthHorizontal,
+    name: 'Font Length Horizontal',
+    numberId: FontLength
   },
   [FontLengthVertical]: {
-    name: { value: 'Font Length Vertical' },
-    value: { numberId: FontLength }
+    id: FontLengthVertical,
+    name: 'Font Length Vertical',
+    numberId: FontLength
   },
   [FontLengthVertical1]: {
-    name: { value: 'Font Length Vertical 1' },
-    value: { numberId: FontLengthVertical }
+    id: FontLengthVertical1,
+    name: 'Font Length Vertical 1',
+    numberId: FontLengthVertical
   },
   [FontLengthVertical2]: {
-    name: { value: 'Font Length Vertical 2' },
-    value: { numberId: FontLengthVertical }
+    id: FontLengthVertical2,
+    name: 'Font Length Vertical 2',
+    numberId: FontLengthVertical
   }
 };

@@ -1,4 +1,4 @@
-import { AsinoBooleans } from "./Boolean";
+import { AsinoBoolean } from "./Boolean";
 import { AsinoNumber, NumberResult } from "./Number";
 
 export type ColorOperator = 'NONE' | 'IF_ELSE';
@@ -39,8 +39,8 @@ export type AsinoColor = {
   lightnessDark?: AsinoNumber;
   colorId?: string;
   operator?: ColorOperator;
-  booleanInputs?: AsinoBooleans; // boolean inputs
-  colors?: AsinoColors; // color inputs
+  booleans?: AsinoBoolean[]; // boolean inputs
+  colors?: AsinoColor[]; // color inputs
   numbers?: { [id: string]: AsinoNumber }; // number parameters
   editedColor?: AsinoColor;
 }

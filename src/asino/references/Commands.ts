@@ -1,1586 +1,1244 @@
 import { FontSizeHorizontal1 } from "../consts";
 import { CurveFraction, FontCurveHorizontal1, FontCurveHorizontal2, FontCurveVertical1, FontCurveVertical2, FontCurveVertical3, FontCurveVertical4, FontLengthHorizontal, FontLengthVertical1, FontLengthVertical2, FontSizeHorizontal2, FontSizeVertical1, FontSizeVertical2, FontSizeVertical3 } from "../consts";
-import { AsinoCommandReference } from "../types/Path";
+import { AsinoCommand } from "../types/Command";
 
-export const systemCommandDefaults: { [id: string]: AsinoCommandReference; } = {
+export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
   'f-cb': {
-    name: { value: 'Font Size Left To Right 1' },
-    command: {
-      letter: 'h',
-      dx: { numberId: FontSizeHorizontal1 }
-    }
+    id: 'f-cb',
+    name: 'Font Size Left To Right 1',
+    letter: 'h',
+    dx: { numberId: FontSizeHorizontal1 }
   },
   'd-ba': {
-    name: { value: 'Font Size Right To Left 1' },
-    command: {
-      letter: 'h',
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontSizeHorizontal1 }
-          ]
-        }
-      }
+    id: 'd-ba',
+    name: 'Font Size Right To Left 1',
+    letter: 'h',
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontSizeHorizontal1 }
+      ]
     }
   },
   'b-cf': {
-    name: { value: 'Font Curve Left To Right 1' },
-    command: {
-      letter: 'h',
-      dx: { numberId: FontCurveHorizontal1 }
-    }
+    id: 'b-cf',
+    name: 'Font Curve Left To Right 1',
+    letter: 'h',
+    dx: { numberId: FontCurveHorizontal1 }
   },
   'a-fa': {
-    name: { value: 'Font Curve Right To Left 1' },
-    command: {
-      letter: 'h',
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal1 }
-          ]
-        }
-      }
+    id: 'a-fa',
+    name: 'Font Curve Right To Left 1',
+    letter: 'h',
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal1 }
+      ]
     }
   },
   'd-ef': {
-    name: { value: 'Font Length Left To Right' },
-    command: {
-      letter: 'h',
-      dx: { numberId: FontLengthHorizontal }
-    }
+    id: 'd-ef',
+    name: 'Font Length Left To Right',
+    letter: 'h',
+    dx: { numberId: FontLengthHorizontal }
   },
   'd-af': {
-    name: { value: 'Font Length Right To Left' },
-    command: {
-      letter: 'h',
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontLengthHorizontal }
-          ]
-        }
-      }
+    id: 'd-af',
+    name: 'Font Length Right To Left',
+    letter: 'h',
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontLengthHorizontal }
+      ]
     }
   },
   'a-bf': {
-    name: { value: 'Font Curve Left To Right 2' },
-    command: {
-      letter: 'h',
-      dx: { numberId: FontCurveHorizontal2 }
-    }
+    id: 'a-bf',
+    name: 'Font Curve Left To Right 2',
+    letter: 'h',
+    dx: { numberId: FontCurveHorizontal2 }
   },
   'd-fd': {
-    name: { value: 'Font Curve Right To Left 2' },
-    command: {
-      letter: 'h',
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal2 }
-          ]
-        }
-      }
+    id: 'd-fd',
+    name: 'Font Curve Right To Left 2',
+    letter: 'h',
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal2 }
+      ]
     }
   },
   'd-fb': {
-    name: { value: 'Font Size Left To Right 2' },
-    command: {
-      letter: 'h',
-      dx: { numberId: FontSizeHorizontal2 }
-    }
+    id: 'd-fb',
+    name: 'Font Size Left To Right 2',
+    letter: 'h',
+    dx: { numberId: FontSizeHorizontal2 }
   },
   'c-bb': {
-    name: { value: 'Font Size Right To Left 2' },
-    command: {
-      letter: 'h',
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontSizeHorizontal2 }
-          ]
-        }
-      }
+    id: 'c-bb',
+    name: 'Font Size Right To Left 2',
+    letter: 'h',
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontSizeHorizontal2 }
+      ]
     }
   },
   'c-dd': {
-    name: { value: 'Font Line Up To Down 1' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontSizeVertical1 }
-    }
+    id: 'c-dd',
+    name: 'Font Line Up To Down 1',
+    letter: 'v',
+    dy: { numberId: FontSizeVertical1 }
   },
   'd-bf': {
-    name: { value: 'Font Line Down To Up 1' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontSizeVertical1 }
-          ]
-        }
-      }
+    id: 'd-bf',
+    name: 'Font Line Down To Up 1',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontSizeVertical1 }
+      ]
     }
   },
   'e-df': {
-    name: { value: 'Font Curve Up To Down 1' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontCurveVertical1 }
-    }
+    id: 'e-df',
+    name: 'Font Curve Up To Down 1',
+    letter: 'v',
+    dy: { numberId: FontCurveVertical1 }
   },
   'c-ed': {
-    name: { value: 'Font Curve Down To Up 1' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical1 }
-          ]
-        }
-      }
+    id: 'c-ed',
+    name: 'Font Curve Down To Up 1',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical1 }
+      ]
     }
   },
   'f-ad': {
-    name: { value: 'Font Length Up To Down 1' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontLengthVertical1 }
-    }
+    id: 'f-ad',
+    name: 'Font Length Up To Down 1',
+    letter: 'v',
+    dy: { numberId: FontLengthVertical1 }
   },
   'b-ec': {
-    name: { value: 'Font Length Down To Up 1' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontLengthVertical1 }
-          ]
-        }
-      }
+    id: 'b-ed',
+    name: 'Font Length Down To Up 1',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontLengthVertical1 }
+      ]
     }
   },
   'e-ee': {
-    name: { value: 'Font Curve Up To Down 2' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontCurveVertical2 }
-    }
+    id: 'e-ee',
+    name: 'Font Curve Up To Down 2',
+    letter: 'v',
+    dy: { numberId: FontCurveVertical2 }
   },
   'a-ca': {
-    name: { value: 'Font Curve Down To Up 2' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical2 }
-          ]
-        }
-      }
+    id: 'a-ca',
+    name: 'Font Curve Down To Up 2',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical2 }
+      ]
     }
   },
   'd-cd': {
-    name: { value: 'Font Line Up To Down 2' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontSizeVertical2 }
-    }
+    id: 'd-cd',
+    name: 'Font Line Up To Down 2',
+    letter: 'v',
+    dy: { numberId: FontSizeVertical2 }
   },
   'd-bc': {
-    name: { value: 'Font Line Down To Up 2' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontSizeVertical2 }
-          ]
-        }
-      }
+    id: 'd-bc',
+    name: 'Font Line Down To Up 2',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontSizeVertical2 }
+      ]
     }
   },
   'f-da': {
-    name: { value: 'Font Curve Up To Down 3' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontCurveVertical3 }
-    }
+    id: 'f-da',
+    name: 'Font Curve Up To Down 3',
+    letter: 'v',
+    dy: { numberId: FontCurveVertical3 }
   },
   'a-de': {
-    name: { value: 'Font Curve Down To Up 3' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical3 }
-          ]
-        }
-      }
+    id: 'a-de',
+    name: 'Font Curve Down To Up 3',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical3 }
+      ]
     }
   },
   'c-ec': {
-    name: { value: 'Font Length Up To Down 2' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontLengthVertical2 }
-    }
+    id: 'c-ed',
+    name: 'Font Length Up To Down 2',
+    letter: 'v',
+    dy: { numberId: FontLengthVertical2 }
   },
   'f-df': {
-    name: { value: 'Font Length Down To Up 2' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontLengthVertical2 }
-          ]
-        }
-      }
+    id: 'f-df',
+    name: 'Font Length Down To Up 2',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontLengthVertical2 }
+      ]
     }
   },
   'b-eb': {
-    name: { value: 'Font Curve Up To Down 4' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontCurveVertical4 }
-    }
+    id: 'b-eb',
+    name: 'Font Curve Up To Down 4',
+    letter: 'v',
+    dy: { numberId: FontCurveVertical4 }
   },
   'f-fd': {
-    name: { value: 'Font Curve Down To Up 4' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical4 }
-          ]
-        }
-      }
+    id: 'f-fd',
+    name: 'Font Curve Down To Up 4',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical4 }
+      ]
     }
   },
   'd-ca': {
-    name: { value: 'Font Line Up To Down 3' },
-    command: {
-      letter: 'v',
-      dy: { numberId: FontSizeVertical3 }
-    }
+    id: 'd-ca',
+    name: 'Font Line Up To Down 3',
+    letter: 'v',
+    dy: { numberId: FontSizeVertical3 }
   },
   'a-ce': {
-    name: { value: 'Font Line Down To Up 3' },
-    command: {
-      letter: 'v',
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontSizeVertical3 }
-          ]
-        }
-      }
+    id: 'a-ce',
+    name: 'Font Line Down To Up 3',
+    letter: 'v',
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontSizeVertical3 }
+      ]
     }
   },
   'e-ea': {
-    name: { value: 'Font Outer Curve Down To Up 1 Left To Right 1' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
+    id: 'e-ea',
+    name: 'Font Outer Curve Down To Up 1 Left To Right 1',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
             {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeVertical1 },
-                        { numberId: FontCurveVertical1 }
-                      ]
-                    }
-                  }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontCurveVertical1 }
+              ]
             }
           ]
         }
-      },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeHorizontal1 },
-                        { numberId: FontCurveHorizontal1 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical1 },
-                  { numberId: FontCurveVertical1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
+      ]
+    },
+    dx2: {
+      operator: '-',
+      numbers: [
+        {
           operator: '+',
-          numberInputs: [
+          numbers: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical1 },
-                  { numberId: FontCurveVertical1 }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  },
-  'f-ef': {
-    name: { value: 'Font Outer Curve Left To Right 2 Up To Down 1' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
+        },
+        {
           operator: '*',
-          numberInputs: [
+          numbers: [
             { numberId: CurveFraction },
             {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveHorizontal2 },
-                  { numberId: FontSizeHorizontal2 }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontCurveHorizontal1 }
+              ]
             }
           ]
         }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
           operator: '+',
-          numberInputs: [
-            { numberId: FontCurveHorizontal2 },
-            { numberId: FontSizeHorizontal2 }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical1 },
-                  { numberId: FontCurveVertical1 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeVertical1 },
-                        { numberId: FontCurveVertical1 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveHorizontal2 },
-            { numberId: FontSizeHorizontal2 }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '+',
-          numberInputs: [
+          numbers: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
         }
-      }
+      ]
+    },
+    dx: {
+      operator: '+',
+      numbers: [
+        { numberId: FontSizeHorizontal1 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeVertical1 },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
+      ]
+    }
+  },
+  'f-ef': {
+    id: 'f-ef',
+    name: 'Font Outer Curve Left To Right 2 Up To Down 1',
+    letter: 'c',
+    dx1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveHorizontal2 },
+        { numberId: FontSizeHorizontal2 }
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeVertical1 },
+            { numberId: FontCurveVertical1 }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeVertical1 },
+                { numberId: FontCurveVertical1 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dx: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveHorizontal2 },
+        { numberId: FontSizeHorizontal2 }
+      ]
+    },
+    dy: {
+      operator: '+',
+      numbers: [
+        { numberId: FontSizeVertical1 },
+        { numberId: FontCurveVertical1 }
+      ]
     }
   },
   'f-fa': {
-    name: { value: 'Font Outer Curve Up To Down 2 Right To Left 2' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
+    id: 'f-fa',
+    name: 'Font Outer Curve Up To Down 2 Right To Left 2',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveVertical2 },
+            { numberId: FontSizeVertical2 }
+          ]
+        }
+      ]
+    },
+    dx2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontSizeHorizontal2 }
+              ]
+            }
+          ]
+        },
+        {
           operator: '*',
-          numberInputs: [
+          numbers: [
             { numberId: CurveFraction },
             {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveVertical2 },
-                  { numberId: FontSizeVertical2 }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontSizeHorizontal2 }
+              ]
             }
           ]
         }
-      },
-      dx2: {
-        formula: {
+      ]
+    },
+    dy2: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveVertical2 },
+        { numberId: FontSizeVertical2 }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
           operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveHorizontal2 },
-                        { numberId: FontSizeHorizontal2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveHorizontal2 },
-                        { numberId: FontSizeHorizontal2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
+          numbers: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
           ]
         }
-      },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveVertical2 },
-            { numberId: FontSizeVertical2 }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveHorizontal2 },
-                  { numberId: FontSizeHorizontal2 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveVertical2 },
-            { numberId: FontSizeVertical2 }
-          ]
-        }
-      }
+      ]
+    },
+    dy: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveVertical2 },
+        { numberId: FontSizeVertical2 }
+      ]
     }
   },
   'f-bd': {
-    name: { value: 'Font Inner Curve Right To Left 1 Up To Down 3' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
+    id: 'f-bd',
+    name: 'Font Inner Curve Right To Left 1 Up To Down 3',
+    letter: 'c',
+    dx1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
             { numberId: FontCurveHorizontal1 }
           ]
         }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { numberId: FontCurveVertical3 },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveVertical3 }
-                ]
-              }
-            }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        { numberId: FontCurveVertical3 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical3 }
           ]
         }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal1 }
-          ]
-        }
-      },
-      dy: { numberId: FontCurveVertical3 }
-    }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy: { numberId: FontCurveVertical3 }
   },
   'b-ae': {
-    name: { value: 'Font Outer Curve Down To Up 3 Left To Right 1' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
+    id: 'b-ae',
+    name: 'Font Outer Curve Down To Up 3 Left To Right 1',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
             {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeVertical2 },
-                        { numberId: FontCurveVertical3 }
-                      ]
-                    }
-                  }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeVertical2 },
+                { numberId: FontCurveVertical3 }
+              ]
             }
           ]
         }
-      },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeHorizontal1 },
-                        { numberId: FontCurveHorizontal1 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical2 },
-                  { numberId: FontCurveVertical3 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
+      ]
+    },
+    dx2: {
+      operator: '-',
+      numbers: [
+        {
           operator: '+',
-          numberInputs: [
+          numbers: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical2 },
-                  { numberId: FontCurveVertical3 }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  },
-  'a-be': {
-    name: { value: 'Font Inner Curve Left To Right 2 Down To Up 2' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
+        },
+        {
           operator: '*',
-          numberInputs: [
-            { numberId: CurveFraction },
-            { numberId: FontCurveHorizontal2 }
-          ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: { numberId: FontCurveHorizontal2 },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  { numberId: FontCurveVertical2 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveVertical2 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: { numberId: FontCurveHorizontal2 },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical2 }
-          ]
-        }
-      }
-    }
-  },
-  'b-cb': {
-    name: { value: 'Font Inner Curve Down To Up 1 Right To Left 2' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveVertical1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  { numberId: FontCurveHorizontal2 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal2 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical1 }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal2 }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical1 }
-          ]
-        }
-      }
-    }
-  },
-  'a-fc': {
-    name: { value: 'Font Inner Curve Right To Left 1 Up To Down 1' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal1 }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '*',
-          numberInputs: [
-            { numberId: CurveFraction },
-            { numberId: FontCurveVertical1 }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal1 }
-          ]
-        }
-      },
-      dy: { numberId: FontCurveVertical1 }
-    }
-  },
-  'd-dd': {
-    name: { value: 'Font Outer Curve Left To Right 2 Up To Down 3' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
-          operator: '*',
-          numberInputs: [
+          numbers: [
             { numberId: CurveFraction },
             {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveHorizontal2 },
-                  { numberId: FontSizeHorizontal2 }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontCurveHorizontal1 }
+              ]
             }
           ]
         }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
           operator: '+',
-          numberInputs: [
-            { numberId: FontCurveHorizontal2 },
-            { numberId: FontSizeHorizontal2 }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeVertical2 },
-                  { numberId: FontCurveVertical3 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeVertical2 },
-                        { numberId: FontCurveVertical3 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveHorizontal2 },
-            { numberId: FontSizeHorizontal2 }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '+',
-          numberInputs: [
+          numbers: [
             { numberId: FontSizeVertical2 },
             { numberId: FontCurveVertical3 }
           ]
         }
-      }
-    }
-  },
-  'b-ee': {
-    name: { value: 'Font Outer Curve Up To Down 4 Right To Left 2' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '*',
-          numberInputs: [
-            { numberId: CurveFraction },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveVertical4 },
-                  { numberId: FontSizeVertical3 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx2: {
-        formula: {
+      ]
+    },
+    dx: {
+      operator: '+',
+      numbers: [
+        { numberId: FontSizeHorizontal1 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
           operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveHorizontal2 },
-                        { numberId: FontSizeHorizontal2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveHorizontal2 },
-                        { numberId: FontSizeHorizontal2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveVertical4 },
-            { numberId: FontSizeVertical3 }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveHorizontal2 },
-                  { numberId: FontSizeHorizontal2 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            { numberId: FontCurveVertical4 },
-            { numberId: FontSizeVertical3 }
-          ]
-        }
-      }
-    }
-  },
-  'e-fa': {
-    name: { value: 'Font Outer Curve Right To Left 1 Down To Up 4' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeHorizontal1 },
-                        { numberId: FontCurveHorizontal1 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveVertical4 },
-                        { numberId: FontSizeVertical3 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveVertical4 },
-                        { numberId: FontSizeVertical3 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveVertical4 },
-                  { numberId: FontSizeVertical3 }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  },
-  'a-bd': {
-    name: { value: 'Font Inner Curve Up To Down 4 Left To Right 1' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '*',
-          numberInputs: [
-            { numberId: CurveFraction },
-            { numberId: FontCurveVertical4 }
-          ]
-        }
-      },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { numberId: FontCurveHorizontal1 },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: { numberId: FontCurveVertical4 },
-      dx: { numberId: FontCurveHorizontal1 },
-      dy: { numberId: FontCurveVertical4 }
-    }
-  },
-  'e-fc': {
-    name: { value: 'Font Inner Curve Left To Right 2 Down To Up 4' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
-          operator: '*',
-          numberInputs: [
-            { numberId: CurveFraction },
-            { numberId: FontCurveHorizontal2 }
-          ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: { numberId: FontCurveHorizontal2 },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  { numberId: FontCurveVertical4 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveVertical4 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: { numberId: FontCurveHorizontal2 },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical4 }
-          ]
-        }
-      }
-    }
-  },
-  'e-aa': {
-    name: { value: 'Font Inner Curve Down To Up 3 Right To Left 2' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveVertical3 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  { numberId: FontCurveHorizontal2 }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal2 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
+          numbers: [
+            { numberId: FontSizeVertical2 },
             { numberId: FontCurveVertical3 }
           ]
         }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveHorizontal2 }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            { numberId: FontCurveVertical3 }
-          ]
-        }
-      }
+      ]
     }
   },
-  'e-bb': {
-    name: { value: 'Font Outer Curve Right To Left 1 Down To Up 2' },
-    command: {
-      letter: 'c',
-      dx1: {
-        formula: {
+  'a-be': {
+    id: 'a-be',
+    name: 'Font Inner Curve Left To Right 2 Down To Up 2',
+    letter: 'c',
+    dx1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        { numberId: FontCurveHorizontal2 }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: { numberId: FontCurveHorizontal2 },
+    dy2: {
+      operator: '+',
+      numbers: [
+        {
           operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontSizeHorizontal1 },
-                        { numberId: FontCurveHorizontal1 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
+          numbers: [
+            { integer: 0 },
+            { numberId: FontCurveVertical2 }
           ]
-        }
-      },
-      dy1: { integer: { value: 0 } },
-      dx2: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy2: {
-        formula: {
-          operator: '+',
-          numberInputs: [
-            {
-              formula: {
-                operator: '-',
-                numberInputs: [
-                  { integer: { value: 0 } },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveVertical2 },
-                        { numberId: FontSizeVertical2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  {
-                    formula: {
-                      operator: '+',
-                      numberInputs: [
-                        { numberId: FontCurveVertical2 },
-                        { numberId: FontSizeVertical2 }
-                      ]
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dx: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontSizeHorizontal1 },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
-            }
-          ]
-        }
-      },
-      dy: {
-        formula: {
-          operator: '-',
-          numberInputs: [
-            { integer: { value: 0 } },
-            {
-              formula: {
-                operator: '+',
-                numberInputs: [
-                  { numberId: FontCurveVertical2 },
-                  { numberId: FontSizeVertical2 }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  },
-  'd-bd': {
-    name: { value: 'Font Inner Curve Up To Down 2 Left To Right 1' },
-    command: {
-      letter: 'c',
-      dx1: { integer: { value: 0 } },
-      dy1: {
-        formula: {
+        },
+        {
           operator: '*',
-          numberInputs: [
+          numbers: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical2 }
           ]
         }
-      },
-      dx2: {
-        formula: {
+      ]
+    },
+    dx: { numberId: FontCurveHorizontal2 },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical2 }
+      ]
+    }
+  },
+  'b-cb': {
+    id: 'b-cb',
+    name: 'Font Inner Curve Down To Up 1 Right To Left 2',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical1 }
+          ]
+        }
+      ]
+    },
+    dx2: {
+      operator: '+',
+      numbers: [
+        {
           operator: '-',
-          numberInputs: [
-            { numberId: FontCurveHorizontal1 },
+          numbers: [
+            { integer: 0 },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical1 }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal2 }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical1 }
+      ]
+    }
+  },
+  'a-fc': {
+    id: 'a-fc',
+    name: 'Font Inner Curve Right To Left 1 Up To Down 1',
+    letter: 'c',
+    dx1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy2: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        { numberId: FontCurveVertical1 }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal1 }
+      ]
+    },
+    dy: { numberId: FontCurveVertical1 }
+  },
+  'd-dd': {
+    id: 'd-dd',
+    name: 'Font Outer Curve Left To Right 2 Up To Down 3',
+    letter: 'c',
+    dx1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveHorizontal2 },
+        { numberId: FontSizeHorizontal2 }
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeVertical2 },
+            { numberId: FontCurveVertical3 }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
             {
-              formula: {
-                operator: '*',
-                numberInputs: [
-                  { numberId: CurveFraction },
-                  { numberId: FontCurveHorizontal1 }
-                ]
-              }
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeVertical2 },
+                { numberId: FontCurveVertical3 }
+              ]
             }
           ]
         }
-      },
-      dy2: { numberId: FontCurveVertical2 },
-      dx: { numberId: FontCurveHorizontal1 },
-      dy: { numberId: FontCurveVertical2 }
+      ]
+    },
+    dx: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveHorizontal2 },
+        { numberId: FontSizeHorizontal2 }
+      ]
+    },
+    dy: {
+      operator: '+',
+      numbers: [
+        { numberId: FontSizeVertical2 },
+        { numberId: FontCurveVertical3 }
+      ]
     }
+  },
+  'b-ee': {
+    id: 'b-ee',
+    name: 'Font Outer Curve Up To Down 4 Right To Left 2',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveVertical4 },
+            { numberId: FontSizeVertical3 }
+          ]
+        }
+      ]
+    },
+    dx2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontSizeHorizontal2 }
+              ]
+            }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveHorizontal2 },
+                { numberId: FontSizeHorizontal2 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dy2: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveVertical4 },
+        { numberId: FontSizeVertical3 }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveHorizontal2 },
+            { numberId: FontSizeHorizontal2 }
+          ]
+        }
+      ]
+    },
+    dy: {
+      operator: '+',
+      numbers: [
+        { numberId: FontCurveVertical4 },
+        { numberId: FontSizeVertical3 }
+      ]
+    }
+  },
+  'e-fa': {
+    id: 'e-fa',
+    name: 'Font Outer Curve Right To Left 1 Down To Up 4',
+    letter: 'c',
+    dx1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontCurveHorizontal1 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveVertical4 },
+                { numberId: FontSizeVertical3 }
+              ]
+            }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveVertical4 },
+                { numberId: FontSizeVertical3 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveVertical4 },
+            { numberId: FontSizeVertical3 }
+          ]
+        }
+      ]
+    }
+  },
+  'a-bd': {
+    id: 'a-bd',
+    name: 'Font Inner Curve Up To Down 4 Left To Right 1',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        { numberId: FontCurveVertical4 }
+      ]
+    },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { numberId: FontCurveHorizontal1 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy2: { numberId: FontCurveVertical4 },
+    dx: { numberId: FontCurveHorizontal1 },
+    dy: { numberId: FontCurveVertical4 }
+  },
+  'e-fc': {
+    id: 'e-fc',
+    name: 'Font Inner Curve Left To Right 2 Down To Up 4',
+    letter: 'c',
+    dx1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        { numberId: FontCurveHorizontal2 }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: { numberId: FontCurveHorizontal2 },
+    dy2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            { numberId: FontCurveVertical4 }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical4 }
+          ]
+        }
+      ]
+    },
+    dx: { numberId: FontCurveHorizontal2 },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical4 }
+      ]
+    }
+  },
+  'e-aa': {
+    id: 'e-aa',
+    name: 'Font Inner Curve Down To Up 3 Right To Left 2',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveVertical3 }
+          ]
+        }
+      ]
+    },
+    dx2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal2 }
+          ]
+        }
+      ]
+    },
+    dy2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical3 }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveHorizontal2 }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        { numberId: FontCurveVertical3 }
+      ]
+    }
+  },
+  'e-bb': {
+    id: 'e-bb',
+    name: 'Font Outer Curve Right To Left 1 Down To Up 2',
+    letter: 'c',
+    dx1: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontSizeHorizontal1 },
+                { numberId: FontCurveHorizontal1 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dy1: { integer: 0 },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy2: {
+      operator: '+',
+      numbers: [
+        {
+          operator: '-',
+          numbers: [
+            { integer: 0 },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveVertical2 },
+                { numberId: FontSizeVertical2 }
+              ]
+            }
+          ]
+        },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            {
+              operator: '+',
+              numbers: [
+                { numberId: FontCurveVertical2 },
+                { numberId: FontSizeVertical2 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    dx: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontSizeHorizontal1 },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy: {
+      operator: '-',
+      numbers: [
+        { integer: 0 },
+        {
+          operator: '+',
+          numbers: [
+            { numberId: FontCurveVertical2 },
+            { numberId: FontSizeVertical2 }
+          ]
+        }
+      ]
+    }
+  },
+  'd-bd': {
+    id: 'd-bd',
+    name: 'Font Inner Curve Up To Down 2 Left To Right 1',
+    letter: 'c',
+    dx1: { integer: 0 },
+    dy1: {
+      operator: '*',
+      numbers: [
+        { numberId: CurveFraction },
+        { numberId: FontCurveVertical2 }
+      ]
+    },
+    dx2: {
+      operator: '-',
+      numbers: [
+        { numberId: FontCurveHorizontal1 },
+        {
+          operator: '*',
+          numbers: [
+            { numberId: CurveFraction },
+            { numberId: FontCurveHorizontal1 }
+          ]
+        }
+      ]
+    },
+    dy2: { numberId: FontCurveVertical2 },
+    dx: { numberId: FontCurveHorizontal1 },
+    dy: { numberId: FontCurveVertical2 }
   }
 }

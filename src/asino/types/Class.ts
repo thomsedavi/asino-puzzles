@@ -12,7 +12,7 @@ export type AsinoClasses = {
 export type AsinoClass = {
   id?: string;
   name?: string; // name of this class
-  layers?: AsinoLayers; // layers to draw this class
+  layers?: AsinoLayer[]; // layers to draw this class
   viewBox?: ViewBox;
   classId?: string;
   operator?: ClassOperator; // formula for this class

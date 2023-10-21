@@ -8,22 +8,18 @@ export type NumberResult = {
   isNegativeInfinity?: boolean;
 }
 
-export type AsinoNumbers = {
-  numbers?: AsinoNumber[];
-}
-
 export type AsinoNumber = {
   id?: string;
   name?: string; // name of this number
   integer?: number;
   numberId?: string;
   operator?: NumberOperator; // formula for this number
-  numberInputs?: AsinoNumbers; // number inputs
+  numbers?: AsinoNumber[]; // number inputs
   collapsed?: boolean; // collapse in editor
-  numerator: AsinoNumber,
-  denominator: AsinoNumber
+  numerator?: AsinoNumber,
+  denominator?: AsinoNumber
   isInfinity?: boolean;
   isNegativeInfinity?: boolean;
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberParams?: { [id: string]: AsinoNumber }; // number parameters
   editedNumber?: AsinoNumber;
 }
