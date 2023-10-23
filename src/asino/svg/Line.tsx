@@ -1,27 +1,28 @@
 import React from "react"
 import { strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2, stroke as Stroke } from "../consts";
-import { Line } from "../types/Line";
-import { AsinoNumberReference, NumberResult } from "../types/Number";
-import { getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
-import { References } from "../References";
+import { AsinoLine } from "../types/Line";
+import { AsinoNumber, NumberResult } from "../types/Number";
+import { getValueFromColor } from "../utils";
+import { Variables } from "../Variables";
 import Utils from "../../common/utils";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { getValueFromNumberResult } from "../utils/Number";
+import { getColorResultFromLayer, getNumberResultFromLayer } from "../utils/Layer";
 
-export const drawLine = (line: Line, references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: { [id: string]: Style }): JSX.Element => {
-  let strokeWidth: NumberResult | undefined = getNumberFromLayer(line, references, 'line', StrokeWidth, defaultStrokeWidth.value ?? {});
+export const drawLine = (line: AsinoLine, variables: Variables, solution: Solution, defaultStrokeWidth: NumberResult, key: string, styles: { [id: string]: Style }): JSX.Element => {
+  let strokeWidth: NumberResult | undefined = getNumberResultFromLayer(line, variables, 'line', StrokeWidth, defaultStrokeWidth ?? {});
 
-  const x1 = getNumberFromLayer(line, references, 'line', X1, { integer: { value: 0 } });
-  const y1 = getNumberFromLayer(line, references, 'line', Y1, { integer: { value: 0 } });
-  const x2 = getNumberFromLayer(line, references, 'line', X2, { integer: { value: 0 } });
-  const y2 = getNumberFromLayer(line, references, 'line', Y2, { integer: { value: 0 } });
+  const x1 = getNumberResultFromLayer(line, variables, 'line', X1, { integer: 0 });
+  const y1 = getNumberResultFromLayer(line, variables, 'line', Y1, { integer: 0 });
+  const x2 = getNumberResultFromLayer(line, variables, 'line', X2, { integer: 0 });
+  const y2 = getNumberResultFromLayer(line, variables, 'line', Y2, { integer: 0 });
 
-  const stroke = getColorResultFromLayer(line, references, solution, 'line', Stroke);
+  const stroke = getColorResultFromLayer(line, variables, solution, 'line', Stroke);
 
-  const strokeClass = getValueFromColor(stroke, references, 's', false);
+  const strokeClass = getValueFromColor(stroke, variables, 's', false);
 
-  const strokeDarkClass = getValueFromColor(stroke, references, 'sd', true);
+  const strokeDarkClass = getValueFromColor(stroke, variables, 'sd', true);
 
   strokeClass?.key !== undefined && styles[strokeClass?.key] !== undefined && (styles[strokeClass?.key].stroke = strokeClass?.value);
   strokeClass?.key !== undefined && styles[strokeClass.key] === undefined && (styles[strokeClass?.key] = { stroke: strokeClass?.value });

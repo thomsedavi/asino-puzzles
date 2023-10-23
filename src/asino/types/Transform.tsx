@@ -1,5 +1,5 @@
 import React from 'react';
-import { AsinoNumber, getNumberRow } from './Number';
+import { AsinoNumber } from './Number';
 import { a, b, c, d, e, f, x, y } from '../consts';
 import { Button, ButtonGroup } from '../../common/styled';
 import { AsinoPuzzle } from './Puzzle';
@@ -55,12 +55,6 @@ export const getMatrixRow = (puzzle: AsinoPuzzle, matrix: AsinoMatrix | undefine
       <Button onClick={() => update({})}>Add Matrix</Button>
     </ButtonGroup>}
     {matrix !== undefined && <>
-      {getNumberRow(puzzle, matrix[a], `${rowKey}a`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [a]: value }))}
-      {getNumberRow(puzzle, matrix[b], `${rowKey}b`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [b]: value }))}
-      {getNumberRow(puzzle, matrix[c], `${rowKey}c`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [c]: value }))}
-      {getNumberRow(puzzle, matrix[d], `${rowKey}d`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [d]: value }))}
-      {getNumberRow(puzzle, matrix[e], `${rowKey}e`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [e]: value }))}
-      {getNumberRow(puzzle, matrix[f], `${rowKey}f`, depth + 1, (value: AsinoNumber | undefined) => update({ ...matrix, [f]: value }))}
     </>}
   </div>;
 }
@@ -73,8 +67,6 @@ export const getTranslateRow = (puzzle: AsinoPuzzle, translate: AsinoTranslate |
       <Button onClick={() => update({})}>Add Translate</Button>
     </ButtonGroup>}
     {translate !== undefined && <>
-      {getNumberRow(puzzle, translate[x], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...translate, [x]: value }))}
-      {getNumberRow(puzzle, translate[y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...translate, [y]: value }))}
     </>}
   </div>;
 }
@@ -87,8 +79,6 @@ export const getScaleRow = (puzzle: AsinoPuzzle, scale: AsinoScale | undefined, 
       <Button onClick={() => update({})}>Add Scale</Button>
     </ButtonGroup>}
     {scale !== undefined && <>
-      {getNumberRow(puzzle, scale[x], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...scale, [x]: value }))}
-      {getNumberRow(puzzle, scale[y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...scale, [y]: value }))}
     </>}
   </div>;
 }
@@ -101,9 +91,6 @@ export const getRotateRow = (puzzle: AsinoPuzzle, rotate: AsinoRotate | undefine
       <Button onClick={() => update({})}>Add Rotate</Button>
     </ButtonGroup>}
     {rotate !== undefined && <>
-      {getNumberRow(puzzle, rotate[a], `${rowKey}a`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rotate, [a]: value }))}
-      {getNumberRow(puzzle, rotate[x], `${rowKey}x`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rotate, [x]: value }))}
-      {getNumberRow(puzzle, rotate[y], `${rowKey}y`, depth + 1, (value: AsinoNumber | undefined) => update({ ...rotate, [y]: value }))}
     </>}
   </div>;
 }

@@ -1,8 +1,13 @@
-import { References } from "../References";
-import { AsinoObject } from "../types/Object";
+import { Variables } from "../Variables";
+import { AsinoObject, ObjectResult } from "../types/Object";
 
-export const getObjectFromObjectId = (objectId: string, references: References): AsinoObject => {
-  const objectReference = references.objects[objectId];
+export const getObjectResultFromAsinoObject = (object: AsinoObject, variables: Variables): ObjectResult => {
+  if (object.objectId !== undefined) {
+    const asinoObject = variables.objects[object.objectId];
 
-  return objectReference?.value ?? {};
+    if (asinoObject !== undefined)
+      return getObjectResultFromAsinoObject(asinoObject, variables);
+  };
+
+  return { collectionId: object.collectionId, classFixedId: object.classFixedId };
 }

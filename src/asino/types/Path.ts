@@ -13,6 +13,6 @@ export type AsinoPath = {
   [Stroke]?: string; // the stroke for this path
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
   pathId?: string;
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberParams?: { [id: string]: AsinoNumber }; // number parameters
   editedPath?: AsinoPath;
 }

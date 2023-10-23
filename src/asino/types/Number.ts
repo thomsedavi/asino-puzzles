@@ -1,13 +1,5 @@
 export type NumberOperator = 'NONE' | '*' | '/' | '-' | '+' | 'FLOOR' | 'CEILING' | 'TOTAL';
 
-export type NumberResult = {
-  integer?: number;
-  numerator?: number;
-  denominator?: number;
-  isInfinity?: boolean;
-  isNegativeInfinity?: boolean;
-}
-
 export type AsinoNumber = {
   id?: string;
   name?: string; // name of this number
@@ -20,6 +12,14 @@ export type AsinoNumber = {
   denominator?: AsinoNumber
   isInfinity?: boolean;
   isNegativeInfinity?: boolean;
-  numberParams?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
   editedNumber?: AsinoNumber;
+}
+
+export type NumberResult = {
+  integer?: number;
+  numerator?: number;
+  denominator?: number;
+  isInfinity?: boolean;
+  isNegativeInfinity?: boolean;
 }

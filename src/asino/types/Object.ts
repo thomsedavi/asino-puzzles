@@ -25,3 +25,8 @@ export type AsinoObjects = {
   collapsed?: boolean; // collapse in editor
   editedObjects?: AsinoObjects;
 }
+
+export type ObjectResult = {
+  classFixedId?: string; // fixed class of this object
+  collectionId?: string; // collection that this object belongs to
+}

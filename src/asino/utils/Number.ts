@@ -1,56 +1,85 @@
-import { References } from "../References";
-import { Addition, Division, Multiplication, Subtraction, Total } from "../consts";
-import { AsinoNumber, NumberFormula, NumberResult } from "../types/Number";
+import { Variables } from "../Variables";
+import { AsinoNumber, NumberResult } from "../types/Number";
 
-export const getNumberResultFromNumberId = (numberId: string, references: References): NumberResult => {
-  const numberReference = references.numbers[numberId];
+export const getNumberResultFromAsinoNumber = (number: AsinoNumber, variables: Variables): NumberResult => {
+  let newReferences = variables;
 
-  if (numberReference.value !== undefined) {
-    if (numberReference.numbers !== undefined) {
-      const newReferences = references.clone().addParameters(numberReference);
+  if (number.numberVariables !== undefined) {
+    newReferences = variables.clone().addParameters(number);
+  }
 
-      return getNumberResultFromAsinoNumber(numberReference.value, newReferences);
-    } else {
-      return getNumberResultFromAsinoNumber(numberReference.value, references);
+  if (number.integer !== undefined) {
+    return { integer: number.integer };
+  } else if (number.numberId !== undefined) {
+    const asinoNumber = variables.numbers[number.numberId];
+
+    if (asinoNumber !== undefined) {
+      return getNumberResultFromAsinoNumber(asinoNumber, newReferences);
+    }
+  } else if (number.operator !== undefined) {
+    const numbers: NumberResult[] = [];
+
+    number.numbers?.forEach(number => {
+      numbers.push(getNumberResultFromAsinoNumber(number, newReferences));
+    });
+
+    if (number.operator === '+') {
+      return getSum(numbers[0] ?? {}, numbers[1] ?? {}, newReferences);
+    } else if (number.operator === '-') {
+      return getDifference(numbers[0] ?? {}, numbers[1] ?? {}, newReferences);
+    } else if (number.operator === '*') {
+      return getProduct(numbers[0] ?? {}, numbers[1] ?? {}, newReferences);
+    } else if (number.operator === '/') {
+      return getQuotient(numbers[0] ?? {}, numbers[1] ?? {}, newReferences);
+    } else if (number.operator === 'FLOOR') {
+      const number = numbers[0] ?? {};
+
+      if (number.integer !== undefined) {
+        return { integer: number.integer };
+      } else if (number.numerator !== undefined && number.denominator !== undefined) {
+        return { integer: Math.floor(number.numerator / number.denominator) };
+      }
+    }
+    else if (number.operator === 'TOTAL') {
+      let result = numbers[0] ?? {};
+
+      for (let i = 1; i < numbers.length; i++) {
+        result = getSum(result, numbers[i], newReferences);
+      }
+
+      return result;
+    }
+  } else if (number.numerator !== undefined && number.denominator !== undefined) {
+    const numerator = getNumberResultFromAsinoNumber(number.numerator, newReferences);
+    const denominator = getNumberResultFromAsinoNumber(number.denominator, newReferences);
+
+    if (numerator.integer !== undefined) {
+      if (denominator.integer !== undefined) {
+        return { numerator: numerator.integer, denominator: denominator.integer };
+      }
     }
   }
 
-  return {};
-}
-
-export const getNumberResultFromAsinoNumber = (number: AsinoNumber, references: References): NumberResult => {
-  if (number.integer !== undefined) {
-    return { integer: number.integer.value };
-  } else if (number.numberId !== undefined) {
-    return getNumberResultFromNumberId(number.numberId, references);
-  } else if (number.formula !== undefined) {
-    return getNumberResultFromFormula(number.formula, references);
-  } else if (number.fraction !== undefined) {
-    const numerator = getNumberResultFromAsinoNumber(number.fraction.numerator, references);
-    const denominator = getNumberResultFromAsinoNumber(number.fraction.denominator, references);
-    return getQuotient(numerator, denominator, references);
-  }
+  console.log('number', number);
 
   return {};
 }
 
-export const getValueFromNumberResult = (number: NumberResult): number | 'infinity' | 'negativeInfinity' | 'potato' => {
-  let result: number | 'infinity' | 'negativeInfinity' | 'potato' = 0;
-
+export const getValueFromNumberResult = (number: NumberResult): number => {
   if (number.integer !== undefined) {
-    result = number.integer;
+    return number.integer;
   } else if (number.isInfinity) {
-    result = 'infinity';
+    return Math.max();
   } else if (number.isNegativeInfinity) {
-    result = 'negativeInfinity';
-  } else if (number.fraction !== undefined) {
-    return number.fraction.numerator / number.fraction.denominator;
+    return Math.min();
+  } else if (number.numerator !== undefined && number.denominator !== undefined) {
+    return number.numerator / number.denominator;
   }
 
-  return result;
+  return 0;
 }
 
-export const getSum = (left: NumberResult, right: NumberResult, references: References): NumberResult => {
+export const getSum = (left: NumberResult, right: NumberResult, variables: Variables): NumberResult => {
   if (left.integer !== undefined) {
     if (right.integer !== undefined) {
       return { integer: left.integer + right.integer };
@@ -58,10 +87,10 @@ export const getSum = (left: NumberResult, right: NumberResult, references: Refe
       return right;
     } else if (right.isNegativeInfinity) {
       return right;
-    } else if (right.fraction !== undefined) {
-      const numerator = getSum(getProduct(left, { integer: right.fraction.denominator }, references), { integer: right.fraction.numerator }, references);
-      const denominator = { integer: right.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      const numerator = getSum(getProduct(left, { integer: right.denominator }, variables), { integer: right.numerator }, variables);
+      const denominator = { integer: right.denominator };
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
@@ -77,19 +106,19 @@ export const getSum = (left: NumberResult, right: NumberResult, references: Refe
     }
 
     return left;
-  } else if (left.fraction !== undefined) {
+  } else if (left.numerator !== undefined && left.denominator !== undefined) {
     if (right.integer !== undefined) {
-      const numerator = getSum(getProduct(right, { integer: left.fraction.denominator }, references), { integer: left.fraction.numerator }, references);
-      const denominator = { integer: left.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+      const numerator = getSum(getProduct(right, { integer: left.denominator }, variables), { integer: left.numerator }, variables);
+      const denominator = { integer: left.denominator };
+      return getQuotient(numerator, denominator, variables);
     } else if (right.isInfinity) {
       return right;
     } else if (right.isNegativeInfinity) {
       return right;
-    } else if (right.fraction !== undefined) {
-      const numerator = getSum(getProduct({ integer: left.fraction.numerator }, { integer: right.fraction.denominator }, references), getProduct({ integer: right.fraction.numerator }, { integer: left.fraction.denominator }, references), references);
-      const denominator = getProduct({ integer: left.fraction.denominator }, { integer: right.fraction.denominator }, references);
-      return getQuotient(numerator, denominator, references);
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      const numerator = getSum(getProduct({ integer: left.numerator }, { integer: right.denominator }, variables), getProduct({ integer: right.numerator }, { integer: left.denominator }, variables), variables);
+      const denominator = getProduct({ integer: left.denominator }, { integer: right.denominator }, variables);
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
@@ -98,7 +127,8 @@ export const getSum = (left: NumberResult, right: NumberResult, references: Refe
   return right;
 }
 
-export const getProduct = (left: NumberResult, right: NumberResult, references: References): NumberResult => {
+
+export const getProduct = (left: NumberResult, right: NumberResult, variables: Variables): NumberResult => {
   if (left.integer !== undefined) {
     if (right.integer !== undefined) {
       return { integer: left.integer * right.integer };
@@ -106,10 +136,10 @@ export const getProduct = (left: NumberResult, right: NumberResult, references: 
       return right;
     } else if (right.isNegativeInfinity) {
       return right;
-    } else if (right.fraction !== undefined) {
-      const numerator = getProduct(left, { integer: right.fraction.numerator }, references);
-      const denominator = { integer: right.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      const numerator = getProduct(left, { integer: right.numerator }, variables);
+      const denominator = { integer: right.denominator };
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
@@ -125,19 +155,19 @@ export const getProduct = (left: NumberResult, right: NumberResult, references: 
     }
 
     return left;
-  } else if (left.fraction !== undefined) {
+  } else if (left.numerator !== undefined && left.denominator !== undefined) {
     if (right.integer !== undefined) {
-      const numerator = getProduct({ integer: left.fraction.numerator }, right, references);
-      const denominator = { integer: left.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+      const numerator = getProduct({ integer: left.numerator }, right, variables);
+      const denominator = { integer: left.denominator };
+      return getQuotient(numerator, denominator, variables);
     } else if (right.isInfinity) {
       return right;
     } else if (right.isNegativeInfinity) {
       return right;
-    } else if (right.fraction !== undefined) {
-      const numerator = getProduct({ integer: left.fraction.numerator }, { integer: right.fraction.numerator }, references);
-      const denominator = getProduct({ integer: left.fraction.denominator }, { integer: right.fraction.denominator }, references);
-      return getQuotient(numerator, denominator, references);
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      const numerator = getProduct({ integer: left.numerator }, { integer: right.numerator }, variables);
+      const denominator = getProduct({ integer: left.denominator }, { integer: right.denominator }, variables);
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
@@ -146,16 +176,16 @@ export const getProduct = (left: NumberResult, right: NumberResult, references: 
   return right;
 }
 
-export const getQuotient = (left: NumberResult, right: NumberResult, references: References): NumberResult => {
+export const getQuotient = (left: NumberResult, right: NumberResult, variables: Variables): NumberResult => {
   if (left.integer !== undefined) {
     if (right.integer !== undefined) {
-      return { fraction: { numerator: left.integer, denominator: right.integer } };
+      return { numerator: left.integer, denominator: right.integer };
     } else if (right.isInfinity) {
       return { integer: 0 };
     } else if (right.isNegativeInfinity) {
       return { integer: 0 };
-    } else if (right.fraction !== undefined) {
-      return { fraction: { numerator: left.integer * right.fraction.denominator, denominator: right.fraction.numerator } };
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      return { numerator: left.integer * right.denominator, denominator: right.numerator };
     }
 
     return left;
@@ -175,26 +205,26 @@ export const getQuotient = (left: NumberResult, right: NumberResult, references:
     }
 
     return left;
-  } else if (left.fraction !== undefined) {
+  } else if (left.numerator !== undefined && left.denominator !== undefined) {
     if (right.integer !== undefined) {
-      const numerator = { integer: left.fraction.numerator };
-      const denominator = getProduct({ integer: left.fraction.denominator }, right, references);
-      return getQuotient(numerator, denominator, references);
+      const numerator = { integer: left.numerator };
+      const denominator = getProduct({ integer: left.denominator }, right, variables);
+      return getQuotient(numerator, denominator, variables);
     } else if (right.isInfinity) {
       return { integer: 0 };
     } else if (right.isNegativeInfinity) {
       return { integer: 0 };
-    } else if (right.fraction !== undefined) {
-      return { fraction: { numerator: left.fraction.numerator * right.fraction.denominator, denominator: left.fraction.denominator * right.fraction.numerator } };
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      return { numerator: left.numerator * right.denominator, denominator: left.denominator * right.numerator };
     }
 
     return left;
   }
 
-  return getQuotient({ integer: 0 }, right, references);
+  return getQuotient({ integer: 0 }, right, variables);
 }
 
-export const getDifference = (left: NumberResult, right: NumberResult, references: References): NumberResult => {
+export const getDifference = (left: NumberResult, right: NumberResult, variables: Variables): NumberResult => {
   if (left.integer !== undefined) {
     if (right.integer !== undefined) {
       return { integer: left.integer - right.integer };
@@ -202,10 +232,10 @@ export const getDifference = (left: NumberResult, right: NumberResult, reference
       return { isNegativeInfinity: true };
     } else if (right.isNegativeInfinity) {
       return { isInfinity: true };
-    } else if (right.fraction !== undefined) {
-      const numerator = getDifference(getProduct(left, { integer: right.fraction.denominator }, references), { integer: right.fraction.numerator }, references);
-      const denominator = { integer: right.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+    } else if (right.numerator !== undefined && right.denominator !== undefined) {
+      const numerator = getDifference(getProduct(left, { integer: right.denominator }, variables), { integer: right.numerator }, variables);
+      const denominator = { integer: right.denominator };
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
@@ -221,62 +251,23 @@ export const getDifference = (left: NumberResult, right: NumberResult, reference
     }
 
     return left;
-  } else if (left.fraction !== undefined) {
+  } else if (left.numerator !== undefined && left.denominator !== undefined) {
     if (right.integer !== undefined) {
-      const numerator = getSum(getProduct(right, { integer: left.fraction.denominator }, references), { integer: left.fraction.numerator }, references);
-      const denominator = { integer: left.fraction.denominator };
-      return getQuotient(numerator, denominator, references);
+      const numerator = getSum(getProduct(right, { integer: left.denominator }, variables), { integer: left.numerator }, variables);
+      const denominator = { integer: left.denominator };
+      return getQuotient(numerator, denominator, variables);
     } else if (right.isInfinity) {
       return { isNegativeInfinity: true };
     } else if (right.isNegativeInfinity) {
       return { isInfinity: true };
-    } else if (right.fraction !== undefined) {
-      const numerator = getDifference(getProduct({ integer: left.fraction.numerator }, { integer: right.fraction.denominator }, references), getProduct({ integer: right.fraction.numerator }, { integer: left.fraction.denominator }, references), references);
-      const denominator = getProduct({ integer: left.fraction.denominator }, { integer: right.fraction.denominator }, references);
-      return getQuotient(numerator, denominator, references);
+    } else if (right !== undefined) {
+      const numerator = getDifference(getProduct({ integer: left.numerator }, { integer: right.denominator }, variables), getProduct({ integer: right.numerator }, { integer: left.denominator }, variables), variables);
+      const denominator = getProduct({ integer: left.denominator }, { integer: right.denominator }, variables);
+      return getQuotient(numerator, denominator, variables);
     }
 
     return left;
   }
 
-  return getDifference({ integer: 0 }, right, references);
-}
-
-export const getNumberResultFromFormula = (formula: NumberFormula, references: References): NumberResult => {
-  let result: NumberResult = {};
-
-  if (formula?.operator === Total) {
-    formula.numberInputs?.forEach((number: AsinoNumber | undefined) => {
-      if (number !== undefined) {
-        const thisResult = getNumberResultFromAsinoNumber(number, references);
-        result = getSum(result, thisResult, references);
-      }
-    });
-  } else if (formula?.operator === undefined || formula.numberInputs?.[0] === undefined || formula.numberInputs?.[1] === undefined) {
-    // david, what are you doing, rewrite this better please
-
-    if (formula?.operator !== undefined && formula.numberInputs?.[0] !== undefined) {
-      let left = getNumberResultFromAsinoNumber(formula.numberInputs[0], references);
-
-      let evall = getValueFromNumberResult(left);
-
-      if (formula.operator === 'FLOOR' && typeof evall === 'number') {
-        result.integer = Math.floor(evall);
-      }
-    }
-  } else {
-    let left = getNumberResultFromAsinoNumber(formula.numberInputs[0], references);
-    let right = getNumberResultFromAsinoNumber(formula.numberInputs[1], references);
-
-    if (formula.operator === Multiplication)
-      result = getProduct(left, right, references);
-    else if (formula.operator === Subtraction)
-      result = getDifference(left, right, references);
-    else if (formula.operator === Addition)
-      result = getSum(left, right, references);
-    else if (formula.operator === Division)
-      result = getQuotient(left, right, references);
-  }
-
-  return result;
+  return getDifference({ integer: 0 }, right, variables);
 }

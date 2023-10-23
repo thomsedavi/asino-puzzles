@@ -11,8 +11,9 @@ import { useState } from '../common/saveState';
 import { postAsino, putAsino } from '../common/fetchers';
 import { AsinoPuzzle } from './types/Puzzle';
 import { Solution } from './types/Solution';
-import { AsinoObjectReference } from './types/Object';
-import { AsinoClassReference } from './types/Class';
+import { generateSudoku } from './utils/Generate';
+import { AsinoObject } from './types/Object';
+import { AsinoClass } from './types/Class';
 
 interface AsinoProps {
   user?: User | null;
@@ -70,6 +71,8 @@ const Asino = (props: AsinoProps): JSX.Element => {
         return 'classes';
       case 'objects':
         return 'objects';
+      case 'generate':
+        return 'generate';
       default:
         return undefined;
     }
@@ -194,15 +197,21 @@ const Asino = (props: AsinoProps): JSX.Element => {
             <option value='collections'>Collections</option>
             <option value='classes'>Classes</option>
             <option value='objects'>Objects</option>
+            <option value='generate'>Generate</option>
           </Select>
           {selectedTab === 'objects' && <>
             <EditorList>
-              {(Object.entries(asinoPuzzle.objects ?? {})).map((object: [string, AsinoObjectReference]) => { return <EditorListItem key={`object${object[0]}`} selected={object[0] === selectedObjectId} onClick={() => { setSelectedObjectId(object[0]); setSelectedCollectionId(object[1].value?.collectionId) }}>{object[1].name?.value}</EditorListItem> })}
+              {(Object.entries(asinoPuzzle.objects ?? {})).map((object: [string, AsinoObject]) => { return <EditorListItem key={`object${object[0]}`} selected={object[0] === selectedObjectId} onClick={() => { setSelectedObjectId(object[0]); setSelectedCollectionId(object[1].collectionId) }}>{object[1].name}</EditorListItem> })}
             </EditorList>
-            {selectedObjectId !== undefined && <Select value={asinoPuzzle.objects?.[selectedObjectId].value?.classFixedId ?? 'NONE'} onChange={event => { const objects = asinoPuzzle.objects ?? {}; const object = objects[selectedObjectId]; object.value = { ...object.value, classFixedId: event.target.value }; objects[selectedObjectId] = object; setAsinoPuzzle({ ...asinoPuzzle, objects: objects }); }}>
+            {selectedObjectId !== undefined && <Select value={asinoPuzzle.objects?.[selectedObjectId].classFixedId ?? 'NONE'} onChange={event => { const objects = asinoPuzzle.objects ?? {}; let object = objects[selectedObjectId]; object = { ...object, classFixedId: event.target.value }; objects[selectedObjectId] = object; setAsinoPuzzle({ ...asinoPuzzle, objects: objects }); }}>
               <option value='NONE'>Select Fixed Class</option>
-              {Object.entries(asinoPuzzle.classes ?? {}).filter(c => c[1].value?.collectionId === selectedCollectionId).map((asinoClass: [string, AsinoClassReference]) => { return <option key={`class${asinoClass[0]}`} value={asinoClass[0]}>{asinoClass[1].name?.value}</option> })}
+              {Object.entries(asinoPuzzle.classes ?? {}).filter(c => c[1].collectionId === selectedCollectionId).map((asinoClass: [string, AsinoClass]) => { return <option key={`class${asinoClass[0]}`} value={asinoClass[0]}>{asinoClass[1].name}</option> })}
             </Select>}
+          </>}
+          {selectedTab === 'generate' && <>
+            <ButtonGroup>
+              <Button onClick={() => generateSudoku(asinoPuzzle, (asinoPuzzle: AsinoPuzzle) => setAsinoPuzzle(asinoPuzzle))}>Generate</Button>
+            </ButtonGroup>
           </>}
         </Editor>
       </ViewContainer>

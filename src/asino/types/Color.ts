@@ -41,6 +41,7 @@ export type AsinoColor = {
   operator?: ColorOperator;
   booleans?: AsinoBoolean[]; // boolean inputs
   colors?: AsinoColor[]; // color inputs
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
+  colorVariables?: { [id: string]: AsinoColor }; // color parameters
   editedColor?: AsinoColor;
 }

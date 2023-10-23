@@ -91,6 +91,7 @@ export const InterfacePaddingRightWidth = 'b-df';
 export const InterfacePaddingBottomHeight = 'a-ad';
 export const InterfacePaddingLeftWidth = 'c-aa';
 export const Color = 'a-ac';
+export const ColorWrong = 'b-ef';
 export const BorderColor = 'a-dd';
 export const InterfaceBorderTopColor = 'a-aa';
 export const InterfaceBorderRightColor = 'd-be';

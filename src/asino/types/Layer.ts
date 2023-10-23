@@ -16,13 +16,18 @@ export type AsinoLayer = {
   name?: string; // name of this rectangle
   layerId?: string;
   interface?: AsinoInterface; // draw this interface
+  interfaceId?: string;
   rectangle?: AsinoRectangle; // draw this rectangle
+  rectangleId?: string;
   line?: AsinoLine; // draw this line
+  lineId?: string;
   circle?: AsinoCircle; // draw this circle
+  circleId?: string;
   path?: AsinoPath; // draw this path
   pathId?: string;
   group?: AsinoGroup; // draw this group
   object?: AsinoObject; // id of the interface of this layer
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  objectId?: string;
+  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
   editedLayer?: AsinoLayer;
 }

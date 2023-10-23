@@ -1,30 +1,31 @@
 import React from "react"
-import { getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
+import { getValueFromColor } from "../utils";
 import { height as Height, strokeWidth as StrokeWidth, width as Width, x as X, y as Y, fill as Fill, stroke as Stroke } from "../consts";
-import { Rectangle } from "../types/Rectangle";
-import { AsinoNumberReference, NumberResult } from "../types/Number";
-import { References } from "../References";
+import { NumberResult } from "../types/Number";
+import { Variables } from "../Variables";
 import Utils from "../../common/utils";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { getValueFromNumberResult } from "../utils/Number";
+import { AsinoRectangle } from "../types/Rectangle";
+import { getColorResultFromLayer, getNumberResultFromLayer } from "../utils/Layer";
 
-export const drawRectangle = (rectangle: Rectangle, references: References, solution: Solution, defaultStrokeWidth: AsinoNumberReference, key: string, styles: { [id: string]: Style }): JSX.Element => {
-  let strokeWidth: NumberResult | undefined = getNumberFromLayer(rectangle, references, 'rectangle', StrokeWidth, defaultStrokeWidth.value ?? {});
+export const drawRectangle = (rectangle: AsinoRectangle, variables: Variables, solution: Solution, defaultStrokeWidth: NumberResult, key: string, styles: { [id: string]: Style }): JSX.Element => {
+  let strokeWidth: NumberResult | undefined = getNumberResultFromLayer(rectangle, variables, 'rectangle', StrokeWidth, defaultStrokeWidth ?? {});
 
-  const x = getNumberFromLayer(rectangle, references, 'rectangle', X, { integer: { value: 0 } });
-  const y = getNumberFromLayer(rectangle, references, 'rectangle', Y, { integer: { value: 0 } });
-  const width = getNumberFromLayer(rectangle, references, 'rectangle', Width, { integer: { value: 0 } });
-  const height = getNumberFromLayer(rectangle, references, 'rectangle', Height, { integer: { value: 0 } });
+  const x = getNumberResultFromLayer(rectangle, variables, 'rectangle', X, { integer: 0 });
+  const y = getNumberResultFromLayer(rectangle, variables, 'rectangle', Y, { integer: 0 });
+  const width = getNumberResultFromLayer(rectangle, variables, 'rectangle', Width, { integer: 0 });
+  const height = getNumberResultFromLayer(rectangle, variables, 'rectangle', Height, { integer: 0 });
 
-  const fill = getColorResultFromLayer(rectangle, references, solution, 'rectangle', Fill);
-  const stroke = getColorResultFromLayer(rectangle, references, solution, 'rectangle', Stroke);
+  const fill = getColorResultFromLayer(rectangle, variables, solution, 'rectangle', Fill);
+  const stroke = getColorResultFromLayer(rectangle, variables, solution, 'rectangle', Stroke);
 
-  const fillClass = getValueFromColor(fill, references, 'f', false);
-  const strokeClass = getValueFromColor(stroke, references, 's', false);
+  const fillClass = getValueFromColor(fill, variables, 'f', false);
+  const strokeClass = getValueFromColor(stroke, variables, 's', false);
 
-  const fillDarkClass = getValueFromColor(fill, references, 'fd', true);
-  const strokeDarkClass = getValueFromColor(stroke, references, 'sd', true);
+  const fillDarkClass = getValueFromColor(fill, variables, 'fd', true);
+  const strokeDarkClass = getValueFromColor(stroke, variables, 'sd', true);
 
   fillClass?.key !== undefined && styles[fillClass?.key] !== undefined && (styles[fillClass?.key].fill = fillClass?.value);
   fillClass?.key !== undefined && styles[fillClass.key] === undefined && (styles[fillClass?.key] = { fill: fillClass?.value });

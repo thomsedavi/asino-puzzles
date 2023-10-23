@@ -7,6 +7,7 @@ export type AsinoInterface = {
   id?: string;
   name?: string; // name of this interface
   object?: AsinoObject; // the object for this interface
+  objectId?: string;
   [Width]?: AsinoNumber; // if this exists, draw the interface this wide
   [Height]?: AsinoNumber; // if this exists, draw the interface this high
   [X]?: AsinoNumber; // if this exists, draw the interface here
@@ -30,6 +31,6 @@ export type AsinoInterface = {
   [Fill]?: AsinoColor;
   [FillSelected]?: AsinoColor;
   interfaceId?: string;
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberParams?: { [id: string]: AsinoNumber }; // number parameters
   editedInterface?: AsinoInterface;
 }

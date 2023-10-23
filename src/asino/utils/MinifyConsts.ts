@@ -75,6 +75,7 @@ export const ObjectOutput = 'otot';
 export const ObjectInputs = 'otits';
 export const ObjectsInputs = 'otsits';
 export const ObjectId = 'otid';
+export const ObjectIds = 'otids';
 export const Objectt = 'ot';
 export const Objects = 'ots';
 export const Operator = 'or';
@@ -95,6 +96,7 @@ export const RectangleId = 'reid';
 export const Rectangles = 'res';
 
 export const Sett = 'st';
+export const SetId = 'stid';
 export const SetsInputs = 'stsits';
 export const Sets = 'sts';
 export const Stroke = 'se';

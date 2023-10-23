@@ -6,7 +6,7 @@ interface MiscellanyProps {
   userId?: string | null;
 }
 
-const Miscellany = (props: MiscellanyProps) => {
+const Miscellany = (props: MiscellanyProps): JSX.Element => {
   const [isBurgerOpen, setIsBurgerOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 

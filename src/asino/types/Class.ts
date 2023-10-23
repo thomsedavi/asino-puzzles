@@ -19,6 +19,11 @@ export type AsinoClass = {
   object?: AsinoObject;
   objects?: AsinoObjects;
   collectionId?: string; // collection of this class
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
   editedClass?: AsinoClass;
+}
+
+export type ClassResult = {
+  layers?: AsinoLayer[]; // layers to draw this class
+  viewBox?: ViewBox;
 }

@@ -1,12 +1,12 @@
 import React from "react"
-import { References } from "../References"
-import { AsinoGroupReference } from "../types/Group";
+import { Variables } from "../Variables"
+import { AsinoGroup } from "../types/Group";
 import { a as A, b as B, c as C, d as D, e as E, f as F, x as X, y as Y } from "../consts";
 import { AsinoLayer } from "../types/Layer";
 import { Solution } from "../types/Solution";
 import { getNumberResultFromAsinoNumber, getValueFromNumberResult } from "../utils/Number";
 
-export const drawGroup = (groups: (AsinoGroupReference | undefined)[], references: References, solution: Solution, key: string): JSX.Element => {
+export const drawGroup = (groups: (AsinoGroup | undefined)[], variables: Variables, solution: Solution, key: string): JSX.Element => {
   let layers: (AsinoLayer | undefined)[] = [];
 
   let transform: string | undefined = undefined;
@@ -24,39 +24,39 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
   let xRotate: number | string | undefined = undefined;
   let yRotate: number | string | undefined = undefined;
 
-  groups.forEach((group: AsinoGroupReference | undefined) => {
-    const matrix = group?.value?.group?.transform?.matrix;
-    const translate = group?.value?.group?.transform?.translate;
-    const scale = group?.value?.group?.transform?.scale;
-    const rotate = group?.value?.group?.transform?.rotate;
+  groups.forEach((group: AsinoGroup | undefined) => {
+    const matrix = group?.transform?.matrix;
+    const translate = group?.transform?.translate;
+    const scale = group?.transform?.scale;
+    const rotate = group?.transform?.rotate;
 
     if (matrix !== undefined) {
-      matrix[A] !== undefined && (aMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[A], references)) ?? 1);
-      matrix[B] !== undefined && (bMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[B], references)) ?? 0);
-      matrix[C] !== undefined && (cMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[C], references)) ?? 0);
-      matrix[D] !== undefined && (dMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[D], references)) ?? 1);
-      matrix[E] !== undefined && (eMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[E], references)) ?? 0);
-      matrix[F] !== undefined && (fMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[F], references)) ?? 0);
+      matrix[A] !== undefined && (aMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[A], variables)) ?? 1);
+      matrix[B] !== undefined && (bMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[B], variables)) ?? 0);
+      matrix[C] !== undefined && (cMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[C], variables)) ?? 0);
+      matrix[D] !== undefined && (dMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[D], variables)) ?? 1);
+      matrix[E] !== undefined && (eMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[E], variables)) ?? 0);
+      matrix[F] !== undefined && (fMatrix = getValueFromNumberResult(getNumberResultFromAsinoNumber(matrix[F], variables)) ?? 0);
     }
 
     if (translate !== undefined) {
-      translate[X] !== undefined && (xTranslate = getValueFromNumberResult(getNumberResultFromAsinoNumber(translate[X], references)) ?? 1);
-      translate[Y] !== undefined && (yTranslate = getValueFromNumberResult(getNumberResultFromAsinoNumber(translate[Y], references)) ?? 1);
+      translate[X] !== undefined && (xTranslate = getValueFromNumberResult(getNumberResultFromAsinoNumber(translate[X], variables)) ?? 1);
+      translate[Y] !== undefined && (yTranslate = getValueFromNumberResult(getNumberResultFromAsinoNumber(translate[Y], variables)) ?? 1);
     }
 
     if (scale !== undefined) {
-      scale[X] !== undefined && (xScale = getValueFromNumberResult(getNumberResultFromAsinoNumber(scale[X], references)) ?? 1);
-      scale[Y] !== undefined && (yScale = getValueFromNumberResult(getNumberResultFromAsinoNumber(scale[Y], references)) ?? 1);
+      scale[X] !== undefined && (xScale = getValueFromNumberResult(getNumberResultFromAsinoNumber(scale[X], variables)) ?? 1);
+      scale[Y] !== undefined && (yScale = getValueFromNumberResult(getNumberResultFromAsinoNumber(scale[Y], variables)) ?? 1);
     }
 
     if (rotate !== undefined) {
-      rotate[A] !== undefined && (aRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[A], references)) ?? 0);
-      rotate[X] !== undefined && (xRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[X], references)) ?? 0);
-      rotate[Y] !== undefined && (yRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[Y], references)) ?? 0);
+      rotate[A] !== undefined && (aRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[A], variables)) ?? 0);
+      rotate[X] !== undefined && (xRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[X], variables)) ?? 0);
+      rotate[Y] !== undefined && (yRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[Y], variables)) ?? 0);
     }
 
-    if (group?.value?.group?.layers !== undefined) {
-      layers = group.value.group.layers;
+    if (group?.layers !== undefined) {
+      layers = group.layers;
     }
   });
 
@@ -79,6 +79,6 @@ export const drawGroup = (groups: (AsinoGroupReference | undefined)[], reference
   }
 
   return <g key={key} transform={transform}>
-    {layers.map((l, i) => <div key={`${key}-${i}`}>TODO {l?.name?.value}</div>)}
+    {layers.map((l, i) => <div key={`${key}-${i}`}>TODO {l?.name}</div>)}
   </g>;
 }

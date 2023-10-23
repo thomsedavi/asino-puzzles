@@ -6,10 +6,6 @@ import { AsinoNumber } from './Number';
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' |
   'IS_EACH_CLASS_DIFFERENT' | 'IS_ANY_BOOLEAN' | 'IS_CLASS_STATIC' | 'IS_BOOLEAN_TRUE' | 'WITH_OBJECT_AS';
 
-export type BooleanResult = {
-  boolean?: boolean;
-}
-
 export type AsinoBooleans = {
   booleans?: AsinoBoolean[];
 }
@@ -28,6 +24,10 @@ export type AsinoBoolean = {
   booleans?: AsinoBooleans;
   object?: AsinoObject;
   collapsed?: boolean; // collapse in editor
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberParams?: { [id: string]: AsinoNumber }; // number parameters
   editedBoolean?: AsinoBoolean;
+}
+
+export type BooleanResult = {
+  boolean?: boolean;
 }

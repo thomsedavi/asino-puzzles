@@ -1,30 +1,21 @@
-import { References } from "../References";
-import { AsinoClass, Class } from "../types/Class";
+import { Variables } from "../Variables";
+import { AsinoClass, ClassResult } from "../types/Class";
 
-export const getClassResultFromClassId = (classId: string, references: References): Class => {
-  const classReference = references.classes[classId];
+export const getClassResultFromAsinoClass = (asinoClass: AsinoClass, variables: Variables): ClassResult => {
+  let newReferences = variables;
 
-  if (classReference.value !== undefined) {
-    if (classReference.numbers !== undefined) {
-      const newReferences = references.clone().addParameters(classReference);
-
-      return getClassResultFromAsinoClass(classReference.value, newReferences);
-    } else {
-      return getClassResultFromAsinoClass(classReference.value, references);
-    }
+  if (asinoClass.numberVariables !== undefined) {
+    newReferences = variables.clone().addParameters(asinoClass);
   }
 
-  return {};
-}
+  if (asinoClass.classId !== undefined) {
+    const classResult = variables.classes[asinoClass.classId];
 
-export const getClassResultFromAsinoClass = (asinoClass: AsinoClass, references: References): Class => {
-  if (asinoClass.class !== undefined) {
-    return asinoClass.class;
-  } else if (asinoClass.classId !== undefined) {
-    return getClassResultFromClassId(asinoClass.classId, references);
-  } else if (asinoClass.formula !== undefined) {
-    console.log('TODO');
+    if (classResult !== undefined)
+      return getClassResultFromAsinoClass(classResult, newReferences);
+  } else if (asinoClass.operator !== undefined) {
+    console.log('asinoClass', asinoClass);
   }
 
-  return {};
+  return { viewBox: asinoClass.viewBox, layers: asinoClass.layers };
 }

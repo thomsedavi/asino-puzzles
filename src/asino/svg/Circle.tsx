@@ -1,29 +1,30 @@
 import React from "react"
-import { getColorResultFromLayer, getNumberFromLayer, getValueFromColor } from "../utils";
+import { getValueFromColor } from "../utils";
 import { cx as CX, cy as CY, r as R, strokeWidth as StrokeWidth, fill as Fill, stroke as Stroke } from "../consts";
-import { Circle } from "../types/Circle";
-import { AsinoNumber, NumberResult } from "../types/Number";
-import { References } from "../References";
+import { AsinoCircle } from "../types/Circle";
+import { NumberResult } from "../types/Number";
+import { Variables } from "../Variables";
 import Utils from "../../common/utils";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
 import { getValueFromNumberResult } from "../utils/Number";
+import { getColorResultFromLayer, getNumberResultFromLayer } from "../utils/Layer";
 
-export const drawCircle = (circle: Circle, references: References, solution: Solution, defaultStrokeWidth: AsinoNumber, key: string, styles: { [id: string]: Style }): JSX.Element => {
-  let strokeWidth: NumberResult | undefined = getNumberFromLayer(circle, references, 'circle', StrokeWidth, defaultStrokeWidth);
+export const drawCircle = (circle: AsinoCircle, variables: Variables, solution: Solution, defaultStrokeWidth: NumberResult, key: string, styles: { [id: string]: Style }): JSX.Element => {
+  let strokeWidth: NumberResult | undefined = getNumberResultFromLayer(circle, variables, 'circle', StrokeWidth, defaultStrokeWidth);
 
-  const cx = getNumberFromLayer(circle, references, 'circle', CX, { integer: { value: 0 } });
-  const cy = getNumberFromLayer(circle, references, 'circle', CY, { integer: { value: 0 } });
-  const r = getNumberFromLayer(circle, references, 'circl', R, { integer: { value: 0 } });
+  const cx = getNumberResultFromLayer(circle, variables, 'circle', CX, { integer: 0 });
+  const cy = getNumberResultFromLayer(circle, variables, 'circle', CY, { integer: 0 });
+  const r = getNumberResultFromLayer(circle, variables, 'circl', R, { integer: 0 });
 
-  const fill = getColorResultFromLayer(circle, references, solution, 'circle', Fill);
-  const stroke = getColorResultFromLayer(circle, references, solution, 'circle', Stroke);
+  const fill = getColorResultFromLayer(circle, variables, solution, 'circle', Fill);
+  const stroke = getColorResultFromLayer(circle, variables, solution, 'circle', Stroke);
 
-  const fillClass = getValueFromColor(fill, references, 'f', false);
-  const strokeClass = getValueFromColor(stroke, references, 's', false);
+  const fillClass = getValueFromColor(fill, variables, 'f', false);
+  const strokeClass = getValueFromColor(stroke, variables, 's', false);
 
-  const fillDarkClass = getValueFromColor(fill, references, 'fd', true);
-  const strokeDarkClass = getValueFromColor(stroke, references, 'sd', true);
+  const fillDarkClass = getValueFromColor(fill, variables, 'fd', true);
+  const strokeDarkClass = getValueFromColor(stroke, variables, 'sd', true);
 
   fillClass?.key !== undefined && styles[fillClass?.key] !== undefined && (styles[fillClass?.key].fill = fillClass?.value);
   fillClass?.key !== undefined && styles[fillClass.key] === undefined && (styles[fillClass?.key] = { fill: fillClass?.value });

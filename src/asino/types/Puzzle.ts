@@ -1,17 +1,18 @@
-import { AsinoBooleanReference } from "./Boolean";
-import { AsinoCircleReference } from "./Circle";
-import { AsinoClassReference } from "./Class";
-import { AsinoCollectionReference } from "./Collection";
-import { AsinoColorReference } from "./Color";
-import { AsinoGroupReference } from "./Group";
-import { AsinoInterfaceReference } from "./Interface";
+import { AsinoBoolean } from "./Boolean";
+import { AsinoCircle } from "./Circle";
+import { AsinoClass } from "./Class";
+import { AsinoCollection } from "./Collection";
+import { AsinoColor } from "./Color";
+import { AsinoCommand } from "./Command";
+import { AsinoGroup } from "./Group";
+import { AsinoInterface } from "./Interface";
 import { AsinoLayer } from "./Layer";
-import { AsinoLineReference } from "./Line";
-import { AsinoNumberReference } from "./Number";
-import { AsinoObjectReference } from "./Object";
-import { AsinoCommandReference, AsinoPathReference } from "./Path";
-import { AsinoRectangleReference } from "./Rectangle";
-import { AsinoSetReference } from "./Set";
+import { AsinoLine } from "./Line";
+import { AsinoNumber } from "./Number";
+import { AsinoObject } from "./Object";
+import { AsinoPath } from "./Path";
+import { AsinoRectangle } from "./Rectangle";
+import { AsinoSet } from "./Set";
 import { ViewBox } from "./ViewBox";
 
 export type AsinoPuzzle = {
@@ -20,20 +21,20 @@ export type AsinoPuzzle = {
   userId?: string; // id of the creator of this puzzle
   userName?: string; // name of the creator of this puzzle
   layers?: AsinoLayer[]; // ids of layers
-  interfaces?: { [id: string]: AsinoInterfaceReference; }; // interfaces
-  rectangles?: { [id: string]: AsinoRectangleReference; }; // rectangles
-  collections?: { [id: string]: AsinoCollectionReference; }; // collections
-  objects?: { [id: string]: AsinoObjectReference; }; // objects
-  classes?: { [id: string]: AsinoClassReference; }; // classes
-  sets?: { [id: string]: AsinoSetReference; }; // sets
-  lines?: { [id: string]: AsinoLineReference; }; // lines
-  circles?: { [id: string]: AsinoCircleReference; }; // circles
-  paths?: { [id: string]: AsinoPathReference; }; // paths
-  groups?: { [id: string]: AsinoGroupReference; }; // groups
-  numbers?: { [id: string]: AsinoNumberReference; }; // numbers
-  booleans?: { [id: string]: AsinoBooleanReference; }; // booleans
-  colors?: { [id: string]: AsinoColorReference; }; // colors
-  commands?: { [id: string]: AsinoCommandReference; }; // commands
+  interfaces?: { [id: string]: AsinoInterface; }; // interfaces
+  rectangles?: { [id: string]: AsinoRectangle; }; // rectangles
+  collections?: { [id: string]: AsinoCollection; }; // collections
+  objects?: { [id: string]: AsinoObject; }; // objects
+  classes?: { [id: string]: AsinoClass; }; // classes
+  sets?: { [id: string]: AsinoSet; }; // sets
+  lines?: { [id: string]: AsinoLine; }; // lines
+  circles?: { [id: string]: AsinoCircle; }; // circles
+  paths?: { [id: string]: AsinoPath; }; // paths
+  groups?: { [id: string]: AsinoGroup; }; // groups
+  numberParams?: { [id: string]: AsinoNumber; }; // numbers
+  booleans?: { [id: string]: AsinoBoolean; }; // booleans
+  colors?: { [id: string]: AsinoColor; }; // colors
+  commands?: { [id: string]: AsinoCommand; }; // commands
   viewBox?: ViewBox;
   dateCreated?: string;
   dateUpdated?: string;

@@ -12,6 +12,6 @@ export type AsinoCircle = {
   [Stroke]?: AsinoColor; // the stroke for this circle
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
   circleId?: string;
-  numbers?: { [id: string]: AsinoNumber }; // number parameters
+  numberParams?: { [id: string]: AsinoNumber }; // number parameters
   editedCircle?: AsinoCircle;
 }

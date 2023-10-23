@@ -1,27 +1,30 @@
 import Utils from "../../common/utils";
-import { References } from "../References";
+import { Variables } from "../Variables";
 import { InnerHorizontalDivisionCount, InnerVerticalDivisionCount, InterfaceColumnIndex, InterfaceRowIndex, OuterHorizontalDivisionBorderIndex, OuterHorizontalDivisionCount, OuterVerticalDivisionBorderIndex, OuterVerticalDivisionCount } from "../consts";
-import { systemClassDefaults } from "../references/Classes";
-import { AsinoClassReference } from "../types/Class";
+import { systemClassDefaults } from "../system/Classes";
+import { AsinoClass } from "../types/Class";
 import { AsinoLayer } from "../types/Layer";
 import { AsinoNumber } from "../types/Number";
-import { AsinoObjectReference } from "../types/Object";
+import { AsinoObject } from "../types/Object";
 import { AsinoPuzzle } from "../types/Puzzle";
-import { getNumberResultFromNumberId, getValueFromNumberResult } from "./Number";
+import { AsinoSet } from "../types/Set";
+import { getNumberResultFromAsinoNumber, getValueFromNumberResult } from "./Number";
 
 export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle) => void) => {
   const collectionId = Utils.getRandomId(puzzle.collections !== undefined ? Object.keys(puzzle.collections) : []);
-  const references = new References(puzzle);
+  const variables = new Variables(puzzle);
 
-  const outerHorizontalDivisionCount = getValueFromNumberResult(getNumberResultFromNumberId(OuterHorizontalDivisionCount, references));
-  const innerHorizontalDivisionCount = getValueFromNumberResult(getNumberResultFromNumberId(InnerHorizontalDivisionCount, references));
-  const outerVerticalDivisionCount = getValueFromNumberResult(getNumberResultFromNumberId(OuterVerticalDivisionCount, references));
-  const innerVerticalDivisionCount = getValueFromNumberResult(getNumberResultFromNumberId(InnerVerticalDivisionCount, references));
+  const outerHorizontalDivisionCount = getValueFromNumberResult(getNumberResultFromAsinoNumber({ numberId: OuterHorizontalDivisionCount }, variables));
+  const innerHorizontalDivisionCount = getValueFromNumberResult(getNumberResultFromAsinoNumber({ numberId: InnerHorizontalDivisionCount }, variables));
+  const outerVerticalDivisionCount = getValueFromNumberResult(getNumberResultFromAsinoNumber({ numberId: OuterVerticalDivisionCount }, variables));
+  const innerVerticalDivisionCount = getValueFromNumberResult(getNumberResultFromAsinoNumber({ numberId: InnerVerticalDivisionCount }, variables));
 
   const objectIds: string[] = puzzle.objects !== undefined ? Object.keys(puzzle.objects) : [];
   const classIds: string[] = puzzle.classes !== undefined ? Object.keys(puzzle.classes) : [];
-  const objects: { [id: string]: AsinoObjectReference } = {};
-  const classes: { [id: string]: AsinoClassReference } = {};
+  const setIds: string[] = puzzle.sets !== undefined ? Object.keys(puzzle.sets) : [];
+  const objects: { [id: string]: AsinoObject } = {};
+  const classes: { [id: string]: AsinoClass } = {};
+  const sets: { [id: string]: AsinoSet } = {};
   const layers: AsinoLayer[] = [];
 
   if (typeof outerHorizontalDivisionCount === 'number') {
@@ -32,9 +35,9 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
             const layer: AsinoLayer = { rectangleId: 'a-db' };
 
             const numbers: { [id: string]: AsinoNumber } = {};
-            r !== 1 && (numbers[OuterHorizontalDivisionBorderIndex] = { integer: { value: r } });
+            r !== 1 && (numbers[OuterHorizontalDivisionBorderIndex] = { integer: r });
 
-            Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+            Object.entries(numbers).length !== 0 && (layer.numberVariables = numbers);
 
             layers.push(layer);
           }
@@ -43,14 +46,16 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
             const layer: AsinoLayer = { rectangleId: 'e-cb' };
 
             const numbers: { [id: string]: AsinoNumber } = {};
-            c !== 1 && (numbers[OuterVerticalDivisionBorderIndex] = { integer: { value: c } });
+            c !== 1 && (numbers[OuterVerticalDivisionBorderIndex] = { integer: c });
 
-            Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+            Object.entries(numbers).length !== 0 && (layer.numberVariables = numbers);
 
             layers.push(layer);
           }
 
           for (let r = 1; r <= (outerHorizontalDivisionCount * innerHorizontalDivisionCount); r++) {
+            const horizontalSetObjects: AsinoObject[] = [];
+
             for (let c = 1; c <= (outerVerticalDivisionCount * innerVerticalDivisionCount); c++) {
               const objectId = Utils.getRandomId(objectIds);
               objectIds.push(objectId);
@@ -61,17 +66,24 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
               };
 
               const objectName = `Object R${r}C${c}`;
-              objects[objectId] = { name: { value: objectName }, value: { collectionId: collectionId } };
+              objects[objectId] = { id: objectId, name: objectName, collectionId: collectionId };
+
+              horizontalSetObjects.push({ objectId: objectId });
 
               const numbers: { [id: string]: AsinoNumber } = {};
 
-              c !== 1 && (numbers[InterfaceColumnIndex] = { integer: { value: c } });
-              r !== 1 && (numbers[InterfaceRowIndex] = { integer: { value: r } });
+              c !== 1 && (numbers[InterfaceColumnIndex] = { integer: c });
+              r !== 1 && (numbers[InterfaceRowIndex] = { integer: r });
 
-              Object.entries(numbers).length !== 0 && (layer.numbers = numbers);
+              Object.entries(numbers).length !== 0 && (layer.numberVariables = numbers);
 
               layers.push(layer);
             }
+
+            const horizontalSetId = Utils.getRandomId(setIds);
+            setIds.push(horizontalSetId);
+
+            sets[horizontalSetId] = { id: horizontalSetId, objects: { objects: horizontalSetObjects } };
           }
         }
       }
@@ -84,16 +96,17 @@ export const generateSudoku = (puzzle: AsinoPuzzle, update: (puzzle: AsinoPuzzle
     const classId = Utils.getRandomId(classIds);
     classIds.push(classId);
 
-    classes[classId] = { name: systemClassDefaults[classRefId].name, value: { classId: classRefId, collectionId: collectionId } };
+    classes[classId] = { id: classId, name: systemClassDefaults[classRefId].name, classId: classRefId, collectionId: collectionId };
   });
 
   update(
     {
       ...puzzle,
-      collections: { ...puzzle.collections, ...{ [collectionId]: { name: { value: 'Sudoku Collection' } } } },
+      collections: { ...puzzle.collections, ...{ [collectionId]: { name: 'Sudoku Collection' } } },
       objects: { ...puzzle.objects, ...objects },
       classes: { ...puzzle.classes, ...classes },
       layers: [...(puzzle.layers ?? []), ...layers],
+      sets: { ...puzzle.sets, ...sets },
     }
   );
 }
