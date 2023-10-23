@@ -6,7 +6,7 @@ import { Variables } from "../Variables";
 import Utils from "../../common/utils";
 import { Solution } from "../types/Solution";
 import { Style } from "../types/Style";
-import { getNumberResultFromAsinoNumber, getProduct, getValueFromNumberResult } from "../utils/Number";
+import { getProduct, getValueFromNumberResult } from "../utils/Number";
 import { getColorResultFromLayer, getNumberResultFromLayer } from "../utils/Layer";
 import { AsinoPath } from "../types/Path";
 import { AsinoCommand } from "../types/Command";

@@ -1,7 +1,7 @@
 import React from "react"
 import { strokeWidth as StrokeWidth, x1 as X1, x2 as X2, y1 as Y1, y2 as Y2, stroke as Stroke } from "../consts";
 import { AsinoLine } from "../types/Line";
-import { AsinoNumber, NumberResult } from "../types/Number";
+import { NumberResult } from "../types/Number";
 import { getValueFromColor } from "../utils";
 import { Variables } from "../Variables";
 import Utils from "../../common/utils";

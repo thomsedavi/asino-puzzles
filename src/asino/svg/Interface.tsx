@@ -2,7 +2,7 @@ import React from "react"
 import { getValueFromColor } from "../utils";
 import { BorderBottomFill, BorderBottomHeight, BorderLeftFill, BorderLeftWidth, BorderRightFill, BorderRightWidth, BorderTopFill, BorderTopHeight, height as Height, width as Width, x as X, y as Y, fill as Fill, fillSelected as FillSelected, PaddingTopHeight, PaddingRightWidth, PaddingBottomHeight, PaddingLeftWidth } from "../consts";
 import { drawLayer } from "./View";
-import { AsinoNumber, NumberResult } from "../types/Number";
+import { NumberResult } from "../types/Number";
 import { Variables } from "../Variables";
 import { AsinoLayer } from "../types/Layer";
 import Utils from "../../common/utils";

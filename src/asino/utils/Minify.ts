@@ -1,11 +1,10 @@
 import { AsinoClass } from "../types/Class";
 import { AsinoCollection } from "../types/Collection";
 import { AsinoLayer } from "../types/Layer";
-import { AsinoNumber } from "../types/Number";
-import { AsinoObject, AsinoObjects } from "../types/Object";
+import { AsinoObject } from "../types/Object";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { AsinoSet } from "../types/Set";
-import { ClassFixedId, ClassId, Classes, CollectionId, Collections, DateCreated, DateUpdated, Id, Integer, InterfaceId, Layers, Name, Numbers, ObjectId, Objects, RectangleId, SetId, Sets, Sett, UserId, UserName, Value } from "./MinifyConsts";
+import { Classes, Collections, DateCreated, DateUpdated, Id, InterfaceId, Layers, Name, ObjectId, Objects, RectangleId, Sets, UserId, UserName } from "./MinifyConsts";
 
 export const minifyAsino = (asino: AsinoPuzzle): any => {
   const result: any = {};
@@ -41,22 +40,6 @@ const minifyLayer = (layer: AsinoLayer): any => {
   layer.interfaceId !== undefined && (result[InterfaceId] = layer.interfaceId);
   layer.rectangleId !== undefined && (result[RectangleId] = layer.rectangleId);
   layer.objectId !== undefined && (result[ObjectId] = layer.objectId);
-
-  return result;
-}
-
-const minifyNumbers = (numbers: { [id: string]: AsinoNumber }): any => {
-  const result: any = {};
-
-  Object.entries(numbers).forEach((number: [string, AsinoNumber]) => {
-    result[number[0]] = minifyAsinoNumber(number[1]);
-  });
-
-  return result;
-}
-
-const minifyAsinoNumber = (number: AsinoNumber) => {
-  const result: any = {};
 
   return result;
 }
@@ -121,48 +104,6 @@ const minifyObjectReference = (object: AsinoObject): any => {
 
 const minifyCollectionReference = (collection: AsinoCollection): any => {
   const result: any = {};
-
-  return result;
-}
-
-const minifyAsinoSet = (set: AsinoSet): any => {
-  const result: any = {};
-
-  set.setId !== undefined && (result[SetId] = set.setId);
-
-  return result;
-}
-
-const minifyAsinoClass = (asinoClass: AsinoClass): any => {
-  const result: any = {};
-
-  asinoClass.collectionId !== undefined && (result[CollectionId] = asinoClass.collectionId);
-  asinoClass.classId !== undefined && (result[ClassId] = asinoClass.classId);
-
-  return result;
-}
-
-const minifyAsinoObject = (object: AsinoObject): any => {
-  const result: any = {};
-
-  object.classFixedId !== undefined && (result[ClassFixedId] = object.classFixedId);
-  object.collectionId !== undefined && (result[CollectionId] = object.collectionId);
-
-  return result;
-}
-
-const minifySet = (set: AsinoSet): any => {
-  const result: any = {};
-
-  set.objects !== undefined && (result[Objects] = minifyAsinoObjects(set.objects));
-
-  return result;
-}
-
-const minifyAsinoObjects = (objects: AsinoObjects): any => {
-  const result: any = {};
-
-  objects.objects !== undefined && (result[Objects] = objects.objects.map(object => minifyAsinoObject(object)));
 
   return result;
 }
