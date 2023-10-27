@@ -5,12 +5,12 @@ import { getNumberResultFromAsinoNumber } from "./Number";
 export const getCommandResultFromAsinoCommand = (command: AsinoCommand, variables: Variables): CommandResult => {
   let newReferences = variables;
 
-  if (command.numberVariables !== undefined) {
+  if (command.numberVariableDictionary !== undefined) {
     newReferences = variables.clone().addParameters(command);
   }
 
   if (command.commandId !== undefined) {
-    const commandResult = variables.commands[command.commandId];
+    const commandResult = variables.commandDictionary[command.commandId];
 
     if (commandResult !== undefined)
       return getCommandResultFromAsinoCommand(commandResult, variables);

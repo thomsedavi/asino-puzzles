@@ -20,21 +20,21 @@ export type AsinoPuzzle = {
   title?: string; // title of this puzzle
   userId?: string; // id of the creator of this puzzle
   userName?: string; // name of the creator of this puzzle
-  layers?: AsinoLayer[]; // ids of layers
-  interfaces?: { [id: string]: AsinoInterface; }; // interfaces
-  rectangles?: { [id: string]: AsinoRectangle; }; // rectangles
-  collections?: { [id: string]: AsinoCollection; }; // collections
-  objects?: { [id: string]: AsinoObject; }; // objects
-  classes?: { [id: string]: AsinoClass; }; // classes
-  sets?: { [id: string]: AsinoSet; }; // sets
-  lines?: { [id: string]: AsinoLine; }; // lines
-  circles?: { [id: string]: AsinoCircle; }; // circles
-  paths?: { [id: string]: AsinoPath; }; // paths
-  groups?: { [id: string]: AsinoGroup; }; // groups
-  numberParams?: { [id: string]: AsinoNumber; }; // numbers
-  booleans?: { [id: string]: AsinoBoolean; }; // booleans
-  colors?: { [id: string]: AsinoColor; }; // colors
-  commands?: { [id: string]: AsinoCommand; }; // commands
+  layerList?: AsinoLayer[]; // ids of layers
+  interfaceDictionary?: { [id: string]: AsinoInterface; }; // interfaces
+  rectangleDictionary?: { [id: string]: AsinoRectangle; }; // rectangles
+  collectionDictionary?: { [id: string]: AsinoCollection; }; // collections
+  objectDictionary?: { [id: string]: AsinoObject; }; // objects
+  classDictionary?: { [id: string]: AsinoClass; }; // classes
+  setDictionary?: { [id: string]: AsinoSet; }; // sets
+  lineDictionary?: { [id: string]: AsinoLine; }; // lines
+  circleDictionary?: { [id: string]: AsinoCircle; }; // circles
+  pathDictionary?: { [id: string]: AsinoPath; }; // paths
+  groupDictionary?: { [id: string]: AsinoGroup; }; // groups
+  numberVariableDictionary?: { [id: string]: AsinoNumber; }; // numbers
+  booleanDictionary?: { [id: string]: AsinoBoolean; }; // booleans
+  colorDictionary?: { [id: string]: AsinoColor; }; // colors
+  commandDictionary?: { [id: string]: AsinoCommand; }; // commands
   viewBox?: ViewBox;
   dateCreated?: string;
   dateUpdated?: string;

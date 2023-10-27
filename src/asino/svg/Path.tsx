@@ -16,10 +16,10 @@ export const drawPath = (path: AsinoPath, variables: Variables, solution: Soluti
   let d = '';
   let strokeWidth: NumberResult | undefined = getNumberResultFromLayer(path, variables, 'path', StrokeWidth, defaultStrokeWidth ?? {});
 
-  if (path.commands !== undefined) {
+  if (path.commandList !== undefined) {
     d = '';
 
-    path.commands.forEach((asinoCommand: AsinoCommand) => {
+    path.commandList.forEach((asinoCommand: AsinoCommand) => {
       const command = getCommandResultFromAsinoCommand(asinoCommand, variables);
 
       if (command === undefined) {

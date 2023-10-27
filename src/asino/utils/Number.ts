@@ -4,14 +4,14 @@ import { AsinoNumber, NumberResult } from "../types/Number";
 export const getNumberResultFromAsinoNumber = (number: AsinoNumber, variables: Variables): NumberResult => {
   let newReferences = variables;
 
-  if (number.numberVariables !== undefined) {
+  if (number.numberVariableDictionary !== undefined) {
     newReferences = variables.clone().addParameters(number);
   }
 
   if (number.integer !== undefined) {
     return { integer: number.integer };
   } else if (number.numberId !== undefined) {
-    const asinoNumber = variables.numbers[number.numberId];
+    const asinoNumber = variables.numberDictionary[number.numberId];
 
     if (asinoNumber !== undefined) {
       return getNumberResultFromAsinoNumber(asinoNumber, newReferences);
@@ -19,7 +19,7 @@ export const getNumberResultFromAsinoNumber = (number: AsinoNumber, variables: V
   } else if (number.operator !== undefined) {
     const numbers: NumberResult[] = [];
 
-    number.numbers?.forEach(number => {
+    number.numberList?.forEach(number => {
       numbers.push(getNumberResultFromAsinoNumber(number, newReferences));
     });
 

@@ -31,6 +31,6 @@ export type AsinoInterface = {
   [Fill]?: AsinoColor;
   [FillSelected]?: AsinoColor;
   interfaceId?: string;
-  numberParams?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedInterface?: AsinoInterface;
 }

@@ -122,13 +122,13 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: InterfaceX,
     name: 'Interface X',
     operator: '+',
-    numbers: [
+    numberList: [
       {
         operator: '*',
-        numbers: [
+        numberList: [
           {
             operator: '-',
-            numbers: [
+            numberList: [
               { numberId: InterfaceColumnIndex },
               { integer: 1 }
             ]
@@ -138,16 +138,16 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           {
             operator: 'FLOOR',
-            numbers: [
+            numberList: [
               {
                 operator: '/',
-                numbers: [
+                numberList: [
                   {
                     operator: '-',
-                    numbers: [
+                    numberList: [
                       { numberId: InterfaceColumnIndex },
                       { integer: 1 }
                     ]
@@ -166,13 +166,13 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: InterfaceY,
     name: 'Interface Y',
     operator: '+',
-    numbers: [
+    numberList: [
       {
         operator: '*',
-        numbers: [
+        numberList: [
           {
             operator: '-',
-            numbers: [
+            numberList: [
               { numberId: InterfaceRowIndex },
               { integer: 1 }
             ]
@@ -182,16 +182,16 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           {
             operator: 'FLOOR',
-            numbers: [
+            numberList: [
               {
                 operator: '/',
-                numbers: [
+                numberList: [
                   {
                     operator: '-',
-                    numbers: [
+                    numberList: [
                       { numberId: InterfaceRowIndex },
                       { integer: 1 }
                     ]
@@ -210,18 +210,18 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: InterfaceWidth,
     name: 'Interface Width',
     operator: '/',
-    numbers: [
+    numberList: [
       {
         operator: '-',
-        numbers: [
+        numberList: [
           { numberId: ViewBoxWidth },
           {
             operator: '*',
-            numbers: [
+            numberList: [
               { numberId: OuterHorizontalBorderWidth },
               {
                 operator: '-',
-                numbers: [
+                numberList: [
                   { numberId: OuterHorizontalDivisionCount },
                   { integer: 1 }
                 ]
@@ -232,7 +232,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: OuterHorizontalDivisionCount },
           { numberId: InnerHorizontalDivisionCount }
         ]
@@ -243,18 +243,18 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: InterfaceHeight,
     name: 'Interface Height',
     operator: '/',
-    numbers: [
+    numberList: [
       {
         operator: '-',
-        numbers: [
+        numberList: [
           { numberId: ViewBoxHeight },
           {
             operator: '*',
-            numbers: [
+            numberList: [
               { numberId: OuterVerticalBorderHeight },
               {
                 operator: '-',
-                numbers: [
+                numberList: [
                   { numberId: OuterVerticalDivisionCount },
                   { integer: 1 }
                 ]
@@ -265,7 +265,7 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: OuterVerticalDivisionCount },
           { numberId: InnerVerticalDivisionCount }
         ]
@@ -276,14 +276,14 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: OuterHorizontalDivisionBorderX,
     name: 'Outer Horizontal Division Border X',
     operator: '+',
-    numbers: [
+    numberList: [
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: InnerHorizontalDivisionCount },
           {
             operator: '*',
-            numbers: [
+            numberList: [
               { numberId: InterfaceWidth },
               { numberId: OuterHorizontalDivisionBorderIndex }
             ]
@@ -292,11 +292,11 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: OuterHorizontalBorderWidth },
           {
             operator: '-',
-            numbers: [
+            numberList: [
               { numberId: OuterHorizontalDivisionBorderIndex },
               { integer: 1 }
             ]
@@ -309,14 +309,14 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
     id: OuterVerticalDivisionBorderY,
     name: 'Outer Horizontal Division Border Y',
     operator: '+',
-    numbers: [
+    numberList: [
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: InnerVerticalDivisionCount },
           {
             operator: '*',
-            numbers: [
+            numberList: [
               { numberId: InterfaceHeight },
               { numberId: OuterVerticalDivisionBorderIndex }
             ]
@@ -325,11 +325,11 @@ export const systemNumberDefaults: { [id: string]: AsinoNumber; } = {
       },
       {
         operator: '*',
-        numbers: [
+        numberList: [
           { numberId: OuterVerticalBorderHeight },
           {
             operator: '-',
-            numbers: [
+            numberList: [
               { numberId: OuterVerticalDivisionBorderIndex },
               { integer: 1 }
             ]

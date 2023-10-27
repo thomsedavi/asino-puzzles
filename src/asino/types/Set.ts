@@ -1,19 +1,20 @@
-import { AsinoObjects } from "./Object";
+import { AsinoObject, AsinoObjects, ObjectResult } from "./Object";
 
 export type SetsOperator = 'NONE' | 'SETS_CONTAINING_OBJECT';
 
 export type SetResult = {
-  objects?: AsinoObjects
+  objectList?: ObjectResult[]
 }
 
 export type SetsResult = {
-  sets?: SetResult[];
+  setList?: SetResult[];
 }
 
 export type AsinoSet = {
   id?: string;
   name?: string; // name of this set
-  objects?: AsinoObjects
+  objectList?: AsinoObject[];
+  objects?: AsinoObjects;
   setId?: string;
   editedSet?: AsinoSet;
 }
@@ -21,7 +22,7 @@ export type AsinoSet = {
 export type AsinoSets = {
   id?: string;
   name?: string; // name of these sets
-  sets?: AsinoSet[];
+  setList?: AsinoSet[];
   operator?: SetsOperator;
   objectId?: string;
   editedSets?: AsinoSets;

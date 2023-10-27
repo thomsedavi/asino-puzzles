@@ -88,12 +88,12 @@ const Asino = (props: AsinoProps): JSX.Element => {
     if (selectedClassId !== undefined) {
       const currentSolution = { ...solution };
 
-      if (currentSolution.selectedObjectClasses === undefined) {
-        currentSolution.selectedObjectClasses = {};
+      if (currentSolution.objectClassDictionary === undefined) {
+        currentSolution.objectClassDictionary = {};
       }
 
       if (selectedObjectId !== undefined) {
-        currentSolution.selectedObjectClasses[selectedObjectId] = selectedClassId
+        currentSolution.objectClassDictionary[selectedObjectId] = selectedClassId
 
         setSolution(currentSolution);
       }
@@ -201,11 +201,11 @@ const Asino = (props: AsinoProps): JSX.Element => {
           </Select>
           {selectedTab === 'objects' && <>
             <EditorList>
-              {(Object.entries(asinoPuzzle.objects ?? {})).map((object: [string, AsinoObject]) => { return <EditorListItem key={`object${object[0]}`} selected={object[0] === selectedObjectId} onClick={() => { setSelectedObjectId(object[0]); setSelectedCollectionId(object[1].collectionId) }}>{object[1].name}</EditorListItem> })}
+              {(Object.entries(asinoPuzzle.objectDictionary ?? {})).map((object: [string, AsinoObject]) => { return <EditorListItem key={`object${object[0]}`} selected={object[0] === selectedObjectId} onClick={() => { setSelectedObjectId(object[0]); setSelectedCollectionId(object[1].collectionId) }}>{object[1].name}</EditorListItem> })}
             </EditorList>
-            {selectedObjectId !== undefined && <Select value={asinoPuzzle.objects?.[selectedObjectId].classFixedId ?? 'NONE'} onChange={event => { const objects = asinoPuzzle.objects ?? {}; let object = objects[selectedObjectId]; object = { ...object, classFixedId: event.target.value }; objects[selectedObjectId] = object; setAsinoPuzzle({ ...asinoPuzzle, objects: objects }); }}>
+            {selectedObjectId !== undefined && <Select value={asinoPuzzle.objectDictionary?.[selectedObjectId].classFixedId ?? 'NONE'} onChange={event => { const objects = asinoPuzzle.objectDictionary ?? {}; let object = objects[selectedObjectId]; object = { ...object, classFixedId: event.target.value }; objects[selectedObjectId] = object; setAsinoPuzzle({ ...asinoPuzzle, objectDictionary: objects }); }}>
               <option value='NONE'>Select Fixed Class</option>
-              {Object.entries(asinoPuzzle.classes ?? {}).filter(c => c[1].collectionId === selectedCollectionId).map((asinoClass: [string, AsinoClass]) => { return <option key={`class${asinoClass[0]}`} value={asinoClass[0]}>{asinoClass[1].name}</option> })}
+              {Object.entries(asinoPuzzle.classDictionary ?? {}).filter(c => c[1].collectionId === selectedCollectionId).map((asinoClass: [string, AsinoClass]) => { return <option key={`class${asinoClass[0]}`} value={asinoClass[0]}>{asinoClass[1].name}</option> })}
             </Select>}
           </>}
           {selectedTab === 'generate' && <>

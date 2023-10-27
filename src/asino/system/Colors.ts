@@ -2,6 +2,12 @@ import { Color, HueAzure, HuePink, BorderColor, InterfaceBorderTopColor, Interfa
 import { AsinoColor } from "../types/Color";
 
 export const systemColorDefaults: { [id: string]: AsinoColor; } = {
+  'b-ca': {
+    id: 'b-ca',
+    operator: 'IF_ELSE',
+    booleanList: [{ booleanId: 'e-bc' }],
+    colorList: [{ colorId: Color }, { colorId: ColorWrong }]
+  },
   [Color]: {
     id: Color,
     name: 'Color',

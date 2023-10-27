@@ -20,7 +20,7 @@ export type AsinoCommand = {
   [DY1]?: AsinoNumber; // if this exists, draw the rectangle here, or...
   [DY2]?: AsinoNumber; // if this exists, draw the rectangle here, or...
   commandId?: string; // refer to the command with this id
-  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedCommand?: AsinoCommand;
 };
 

@@ -17,10 +17,10 @@ import { getColorResultFromLayer, getNumberResultFromLayer } from "../utils/Laye
 
 export const drawInterface = (asinoInterface: AsinoInterface, objects: (AsinoObject | undefined)[], fixedClassIds: (string | undefined)[], variables: Variables, solution: Solution, defaultInterfaceWidthValue: NumberResult, defaultInterfaceHeightValue: NumberResult, key: string, styles: { [id: string]: Style }, selectedObject?: AsinoObject): JSX.Element => {
   let interfaceClassId: string | undefined = undefined;
-  let interfaceObject: AsinoObject = {};
+  let interfaceObjectId: string | undefined = undefined;
 
   objects.forEach((object: AsinoObject | undefined) => {
-    object !== undefined && (interfaceObject = object);
+    object !== undefined && (interfaceObjectId = object.objectId);
   });
 
   fixedClassIds.forEach((fixedClassId: string | undefined) => {
@@ -28,7 +28,7 @@ export const drawInterface = (asinoInterface: AsinoInterface, objects: (AsinoObj
     variables.setFixedClassId(fixedClassId);
   });
 
-  const solutionClassId = (interfaceObject.objectId !== undefined && solution.selectedObjectClasses !== undefined) ? solution.selectedObjectClasses[interfaceObject.objectId] : undefined;
+  const solutionClassId = (interfaceObjectId !== undefined && solution.objectClassDictionary !== undefined) ? solution.objectClassDictionary[interfaceObjectId] : undefined;
   solutionClassId !== undefined && (interfaceClassId = solutionClassId);
 
   const x = Number(getValueFromNumberResult(getNumberResultFromLayer(asinoInterface, variables, 'interface', X, { integer: 0 })));
@@ -46,7 +46,7 @@ export const drawInterface = (asinoInterface: AsinoInterface, objects: (AsinoObj
   const paddingBottomHeight = getNumberResultFromLayer(asinoInterface, variables, 'interface', PaddingBottomHeight, { integer: 0 });
   const paddingLeftWidth = getNumberResultFromLayer(asinoInterface, variables, 'interface', PaddingLeftWidth, { integer: 0 });
 
-  const fill = getColorResultFromLayer(asinoInterface, variables, solution, 'interface', interfaceObject.objectId === selectedObject?.objectId ? FillSelected : Fill);
+  const fill = getColorResultFromLayer(asinoInterface, variables, solution, 'interface', interfaceObjectId === selectedObject?.objectId ? FillSelected : Fill);
   const borderTopFill = getColorResultFromLayer(asinoInterface, variables, solution, 'interface', BorderTopFill);
   const borderRightFill = getColorResultFromLayer(asinoInterface, variables, solution, 'interface', BorderRightFill);
   const borderBottomFill = getColorResultFromLayer(asinoInterface, variables, solution, 'interface', BorderBottomFill);
@@ -113,12 +113,12 @@ export const drawInterface = (asinoInterface: AsinoInterface, objects: (AsinoObj
   //console.log(paddingInnerBottomRaw);
   //console.log(paddingInnerLeftRaw);
 
-  interfaceClassId === undefined && interfaceObject.objectId !== undefined && (interfaceClassId = solution.selectedObjectClasses?.[interfaceObject.objectId]);
+  interfaceClassId === undefined && interfaceObjectId !== undefined && (interfaceClassId = solution.objectClassDictionary?.[interfaceObjectId]);
 
   let asinoClass: ClassResult | undefined = undefined
 
   if (interfaceClassId !== undefined) {
-    const selectedClass = getClassResultFromAsinoClass({ classId: interfaceClassId }, variables);
+    const selectedClass = getClassResultFromAsinoClass({ classId: interfaceClassId }, variables, solution);
 
     if (selectedClass !== undefined) {
       asinoClass = selectedClass;
@@ -139,7 +139,7 @@ export const drawInterface = (asinoInterface: AsinoInterface, objects: (AsinoObj
       } else {
         classLayers = <>
           <g transform={`translate(${(width / 2) - ((viewBoxWidth / 2) * (width - (paddingInnerLeftScaled + paddingInnerRightScaled)))},${paddingInnerTopScaled}) scale(${(Number(paddingInnerRightRaw) ?? 1) - (Number(paddingInnerLeftRaw) ?? 1)},${(Number(paddingInnerBottomRaw) ?? 1) - (Number(paddingInnerTopRaw) ?? 1)})`}>
-            {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(solution, layer, variables.clone().addParameters(layer).setObject(interfaceObject), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObject?.id) })}
+            {asinoClass.layers?.map((layer: AsinoLayer, classLayerIndex: number) => { return drawLayer(solution, layer, variables.clone().addParameters(layer).setObject({ id: interfaceObjectId }), { numerator: 1, denominator: 9 }, `${key}clasLayer${classLayerIndex}`, styles, selectedObject?.id) })}
           </g>
         </>;
       }

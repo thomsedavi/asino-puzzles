@@ -1,10 +1,11 @@
 import { AsinoClass } from "../types/Class";
 import { AsinoCollection } from "../types/Collection";
 import { AsinoLayer } from "../types/Layer";
+import { AsinoNumber } from "../types/Number";
 import { AsinoObject } from "../types/Object";
 import { AsinoPuzzle } from "../types/Puzzle";
 import { AsinoSet } from "../types/Set";
-import { UserId, UserName, Name, DateCreated, DateUpdated, Id, Collections, Layers, InterfaceId, RectangleId, ObjectId, Objects, Classes, Sets } from "./MinifyConsts";
+import { UserId, UserName, Name, DateCreated, DateUpdated, Id, Collections, Layers, InterfaceId, RectangleId, ObjectId, Objects, Classes, Sets, NumberVariables, Denominator, Integer, NumberId, Numerator, ClassId, CollectionId, Objectt, Operator, ClassFixedId, ObjectList } from "./MinifyConsts";
 
 export const unminifyAsino = (asino: any): AsinoPuzzle => {
   const result: AsinoPuzzle = {};
@@ -15,11 +16,11 @@ export const unminifyAsino = (asino: any): AsinoPuzzle => {
   asino[DateCreated] !== undefined && (result.dateCreated = asino[DateCreated]);
   asino[DateUpdated] !== undefined && (result.dateUpdated = asino[DateUpdated]);
   asino[Id] !== undefined && (result.id = asino[Id]);
-  asino[Collections] !== undefined && (result.collections = unminifyCollectionReferences(asino[Collections]));
-  asino[Objects] !== undefined && (result.objects = unminifyObjectReferences(asino[Objects]));
-  asino[Classes] !== undefined && (result.classes = unminifyClassReferences(asino[Classes]));
-  asino[Layers] !== undefined && (result.layers = unminifyLayers(asino[Layers]));
-  asino[Sets] !== undefined && (result.sets = unminifySetReferences(asino[Sets]));
+  asino[Collections] !== undefined && (result.collectionDictionary = unminifyCollectionReferences(asino[Collections]));
+  asino[Objects] !== undefined && (result.objectDictionary = unminifyObjectReferences(asino[Objects]));
+  asino[Classes] !== undefined && (result.classDictionary = unminifyClassReferences(asino[Classes]));
+  asino[Layers] !== undefined && (result.layerList = unminifyLayers(asino[Layers]));
+  asino[Sets] !== undefined && (result.setDictionary = unminifySetReferences(asino[Sets]));
 
   return result;
 }
@@ -40,6 +41,17 @@ const unminifyLayer = (layer: any): AsinoLayer => {
   layer[InterfaceId] !== undefined && (result.interfaceId = layer[InterfaceId]);
   layer[RectangleId] !== undefined && (result.rectangleId = layer[RectangleId]);
   layer[ObjectId] !== undefined && (result.objectId = layer[ObjectId]);
+  layer[NumberVariables] !== undefined && (result.numberVariableDictionary = unminifyNumberVariables(layer[NumberVariables]));
+
+  return result;
+}
+
+const unminifyNumberVariables = (numbers: any): { [id: string]: AsinoNumber } => {
+  const result: { [id: string]: AsinoNumber } = {};
+
+  Object.entries(numbers).forEach((number: [string, any]) => {
+    result[number[0]] = unminifyNumberReference(number[1]);
+  });
 
   return result;
 }
@@ -74,7 +86,7 @@ const unminifyClassReferences = (classes: any): { [id: string]: AsinoClass } => 
   return result;
 }
 
-const unminifySetReferences = (sets: any): {[id: string]: AsinoSet} => {
+const unminifySetReferences = (sets: any): { [id: string]: AsinoSet } => {
   const result: { [id: string]: AsinoSet } = {};
 
   Object.entries(sets).forEach((set: [string, any]) => {
@@ -84,8 +96,24 @@ const unminifySetReferences = (sets: any): {[id: string]: AsinoSet} => {
   return result;
 }
 
+const unminifyNumberReference = (number: any): AsinoNumber => {
+  const result: AsinoNumber = {};
+
+  number[Denominator] !== undefined && (result.denominator = unminifyNumberReference(number[Denominator]))
+  number[Id] !== undefined && (result.id = number[Id]);
+  number[Integer] !== undefined && (result.integer = number[Integer]);
+  number[Name] !== undefined && (result.name = number[Name]);
+  number[NumberId] !== undefined && (result.numberId = number[NumberId]);
+  number[Numerator] !== undefined && (result.numerator = unminifyNumberReference(number[Numerator]))
+
+  return result;
+}
+
 const unminifyCollectionReference = (collection: any): AsinoCollection => {
   const result: AsinoCollection = {};
+
+  collection[Id] !== undefined && (result.id = collection[Id]);
+  collection[Name] !== undefined && (result.name = collection[Name]);
 
   return result;
 }
@@ -93,17 +121,35 @@ const unminifyCollectionReference = (collection: any): AsinoCollection => {
 const unminifyObjectReference = (object: any): AsinoObject => {
   const result: AsinoObject = {};
 
+  object[ClassFixedId] !== undefined && (result.classFixedId = object[ClassFixedId]);
+  object[CollectionId] !== undefined && (result.collectionId = object[CollectionId]);
+  object[Id] !== undefined && (result.id = object[Id]);
+  object[Name] !== undefined && (result.name = object[Name]);
+  object[ObjectId] !== undefined && (result.objectId = object[ObjectId]);
+
   return result;
 }
 
 const unminifyClassReference = (asinoClass: any): AsinoClass => {
   const result: AsinoClass = {};
 
+  asinoClass[ClassId] !== undefined && (result.classId = asinoClass[ClassId]);
+  asinoClass[CollectionId] !== undefined && (result.collectionId = asinoClass[CollectionId]);
+  asinoClass[Id] !== undefined && (result.id = asinoClass[Id]);
+  asinoClass[Layers] !== undefined && (result.layerList = unminifyLayers(asinoClass[Layers]));
+  asinoClass[Name] !== undefined && (result.name = asinoClass[Name]);
+  asinoClass[Objectt] !== undefined && (result.object = unminifyObjectReference(asinoClass[Objectt]));
+  asinoClass[Operator] !== undefined && (result.operator = asinoClass[Operator]);
+
   return result;
 }
 
 const unminifySetReference = (set: any): AsinoSet => {
   const result: AsinoSet = {};
+
+  set[Id] !== undefined && (result.id = set[Id]);
+  set[Name] !== undefined && (result.name = set[Name]);
+  set[ObjectList] !== undefined && (result.objectList = set[ObjectList].map((o: any) => unminifyObjectReference(o)));
 
   return result;
 }

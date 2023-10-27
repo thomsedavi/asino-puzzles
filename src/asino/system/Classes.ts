@@ -5,7 +5,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-af': {
     id: 'e-af',
     name: 'Curve Right To Bottom And Left To Top',
-    layers: [
+    layerList: [
       {
         pathId: 'f-ee'
       },
@@ -17,7 +17,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'b-dd': {
     id: 'b-dd',
     name: 'Curve Right To Bottom',
-    layers: [
+    layerList: [
       {
         pathId: 'f-ee'
       }
@@ -26,7 +26,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-be': {
     id: 'e-be',
     name: 'Curve Left To Top',
-    layers: [
+    layerList: [
       {
         pathId: 'f-eb'
       }
@@ -35,7 +35,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'd-ab': {
     id: 'd-ab',
     name: 'Curve Top To Right And Bottom To Left',
-    layers: [
+    layerList: [
       {
         pathId: 'b-ff'
       },
@@ -47,7 +47,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-cd': {
     id: 'e-cd',
     name: 'Curve Top To Bottom And Right To Left',
-    layers: [
+    layerList: [
       {
         pathId: 'c-fb'
       },
@@ -59,7 +59,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-da': {
     id: 'e-da',
     name: 'Curve Right To Left',
-    layers: [
+    layerList: [
       {
         pathId: 'c-fb'
       }
@@ -68,7 +68,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'a-cf': {
     id: 'a-cf',
     name: 'Curve Top To Right',
-    layers: [
+    layerList: [
       {
         pathId: 'b-ff'
       }
@@ -77,7 +77,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'a-df': {
     id: 'a-df',
     name: 'Curve Bottom To Left',
-    layers: [
+    layerList: [
       {
         pathId: 'b-bc'
       }
@@ -86,7 +86,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'd-ce': {
     id: 'd-ce',
     name: 'Curve Top To Bottom',
-    layers: [
+    layerList: [
       {
         pathId: 'a-ee'
       }
@@ -95,7 +95,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'b-de': {
     id: 'b-de',
     name: '1',
-    layers: [
+    layerList: [
       {
         pathId: 'd-de'
       }
@@ -106,7 +106,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       width: { numberId: FontSizeHorizontal1 },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -123,7 +123,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'f-de': {
     id: 'f-de',
     name: '2',
-    layers: [
+    layerList: [
       {
         pathId: 'f-ba'
       }
@@ -133,7 +133,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -143,7 +143,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -160,7 +160,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-eb': {
     id: 'e-eb',
     name: '3',
-    layers: [
+    layerList: [
       {
         pathId: 'f-cd'
       },
@@ -173,7 +173,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -183,7 +183,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -200,7 +200,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'a-ae': {
     id: 'a-ae',
     name: '4',
-    layers: [
+    layerList: [
       {
         pathId: 'c-bc'
       }
@@ -210,7 +210,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -220,7 +220,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -237,7 +237,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'c-ee': {
     id: 'c-ee',
     name: '5',
-    layers: [
+    layerList: [
       {
         pathId: 'f-cf'
       }
@@ -247,7 +247,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -257,7 +257,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -274,7 +274,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'd-df': {
     id: 'd-df',
     name: '6',
-    layers: [
+    layerList: [
       {
         pathId: 'e-ca'
       }
@@ -284,7 +284,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -294,7 +294,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -311,7 +311,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'f-ce': {
     id: 'f-ce',
     name: '7',
-    layers: [
+    layerList: [
       {
         pathId: 'f-ec'
       }
@@ -321,7 +321,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -331,7 +331,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -348,7 +348,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'f-ed': {
     id: 'f-ed',
     name: '8',
-    layers: [
+    layerList: [
       {
         pathId: 'c-ab'
       },
@@ -361,7 +361,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -371,7 +371,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },
@@ -388,7 +388,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
   'e-ff': {
     id: 'e-ff',
     name: '9',
-    layers: [
+    layerList: [
       {
         pathId: 'f-db'
       }
@@ -398,7 +398,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       minY: { integer: 0 },
       width: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeHorizontal1 },
           { numberId: FontSizeHorizontal2 },
           { numberId: FontCurveHorizontal1 },
@@ -408,7 +408,7 @@ export const systemClassDefaults: { [id: string]: AsinoClass; } = {
       },
       height: {
         operator: 'TOTAL',
-        numbers: [
+        numberList: [
           { numberId: FontSizeVertical1 },
           { numberId: FontSizeVertical2 },
           { numberId: FontSizeVertical3 },

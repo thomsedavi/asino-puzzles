@@ -8,7 +8,7 @@ import { AsinoPath } from "./Path";
 import { AsinoRectangle } from "./Rectangle";
 
 export type AsinoLayers = {
-  layers?: AsinoLayer[];
+  layerList?: AsinoLayer[];
 }
 
 export type AsinoLayer = {
@@ -28,6 +28,6 @@ export type AsinoLayer = {
   group?: AsinoGroup; // draw this group
   object?: AsinoObject; // id of the interface of this layer
   objectId?: string;
-  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedLayer?: AsinoLayer;
 }

@@ -13,6 +13,6 @@ export type AsinoRectangle = {
   [Stroke]?: AsinoColor; // the stroke for this rectangle
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
   rectangleId?: string;
-  numberParams?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedRectangle?: AsinoRectangle;
 }

@@ -1,6 +1,6 @@
 import { AsinoClass, AsinoClasses } from './Class';
 import { AsinoObject, AsinoObjects } from './Object';
-import { AsinoSets } from './Set';
+import { AsinoSet, AsinoSets } from './Set';
 import { AsinoNumber } from './Number';
 
 export type BooleanOperator = 'NONE' | 'IS_OBJECT' | 'IS_EACH_SET' | 'IS_EACH_OBJECT' | 'IS_OBJECT_CLASS' |
@@ -18,13 +18,19 @@ export type AsinoBoolean = {
   booleanId?: string;
   operator?: BooleanOperator;
   class?: AsinoClass;
+  classList?: AsinoClass[];
   classes?: AsinoClasses;
+  classesId?: string;
+  setList?: AsinoSet[];
   sets?: AsinoSets;
+  setsId?: string;
   objects?: AsinoObjects;
-  booleans?: AsinoBooleans;
-  object?: AsinoObject;
+  objectList?: AsinoObject[];
+  objectsId?: string;
+  booleanList?: AsinoBoolean[];
+  objectId?: string;
   collapsed?: boolean; // collapse in editor
-  numberParams?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedBoolean?: AsinoBoolean;
 }
 

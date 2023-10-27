@@ -120,7 +120,7 @@ export const getObjectIdFromAsinoObject = (object: AsinoObject | undefined, vari
   } else if (typeof object === 'string') {
     result = object;
 
-    Object.entries(variables.objects).forEach(referenceObject => {
+    Object.entries(variables.objectDictionary).forEach(referenceObject => {
       referenceObject[0] === object && typeof referenceObject[1] === 'string' && (result = getObjectIdFromAsinoObject(referenceObject[1], variables));
     });
   } else {

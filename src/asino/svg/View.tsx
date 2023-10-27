@@ -17,7 +17,7 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, variables: Vari
   if (layer.line !== undefined) {
     return drawLine(layer.line, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
   } else if (layer.lineId !== undefined) {
-    const line = variables.lines[layer.lineId];
+    const line = variables.lineDictionary[layer.lineId];
 
     if (line !== undefined)
       return drawLine(line, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
@@ -30,7 +30,7 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, variables: Vari
 
     return drawInterface(layer.interface, [{ objectId: layer.interface.objectId }, { objectId: layer.objectId }], [class1, class2], variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 9 }, { numerator: 1, denominator: 9 }, key, styles, { objectId: selectedObjectId });
   } else if (layer.interfaceId !== undefined) {
-    const asinoInterface = variables.interfaces[layer.interfaceId];
+    const asinoInterface = variables.interfaceDictionary[layer.interfaceId];
 
     if (asinoInterface !== undefined) {
       const object1 = getObjectResultFromAsinoObject({ objectId: asinoInterface.objectId }, variables.clone().addParameters(layer));
@@ -44,21 +44,21 @@ export const drawLayer = (solution: Solution, layer: AsinoLayer, variables: Vari
   } else if (layer.circle !== undefined) {
     return drawCircle(layer.circle, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
   } else if (layer.circleId !== undefined) {
-    const circle = variables.circles[layer.circleId];
+    const circle = variables.circleDictionary[layer.circleId];
 
     if (circle !== undefined)
       return drawCircle(circle, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
   } else if (layer.rectangle !== undefined) {
     return drawRectangle(layer.rectangle, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
   } else if (layer.rectangleId !== undefined) {
-    const rectangle = variables.rectangles[layer.rectangleId];
+    const rectangle = variables.rectangleDictionary[layer.rectangleId];
 
     if (rectangle !== undefined)
       return drawRectangle(rectangle, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, key, styles);
   } else if (layer.path !== undefined) {
     return drawPath(layer.path, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, scale, key, styles);
   } else if (layer.pathId !== undefined) {
-    const path = variables.paths[layer.pathId];
+    const path = variables.pathDictionary[layer.pathId];
 
     if (path !== undefined)
       return drawPath(path, variables.clone().addParameters(layer), solution, { numerator: 1, denominator: 200 }, scale, key, styles);
@@ -72,18 +72,18 @@ export const drawView = (puzzle: AsinoPuzzle, solution: Solution, setSelectedCol
   const styles: { [id: string]: Style } = {};
   const references = new Variables(puzzle);
 
-  puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
+  puzzle.layerList?.forEach((layer: AsinoLayer, layerIndex: number) => {
     layers.push(drawLayer(solution, layer, references, { integer: 1 }, `layer${layerIndex}`, styles, selectedObjectId));
   });
 
-  puzzle.layers?.forEach((layer: AsinoLayer, layerIndex: number) => {
+  puzzle.layerList?.forEach((layer: AsinoLayer, layerIndex: number) => {
     if (layer.interface !== undefined) {
       const object1 = getObjectResultFromAsinoObject({ objectId: layer.interface.objectId }, references.clone().addParameters(layer));
       const object2 = getObjectResultFromAsinoObject({ objectId: layer.objectId }, references.clone().addParameters(layer));
 
       object1?.classFixedId === undefined && object2?.classFixedId === undefined && layers.push(drawInterfaceInteractive(layer.interface, [object1?.collectionId, object2?.collectionId], [layer.interface.objectId, layer.objectId], references.clone().addParameters(layer), { numerator: 1, denominator: 9 }, { numerator: 1, denominator: 9 }, layerIndex, setSelectedCollectionId, setSelectedObjectId));
     } else if (layer.interfaceId !== undefined) {
-      const asinoInterface = references.interfaces[layer.interfaceId];
+      const asinoInterface = references.interfaceDictionary[layer.interfaceId];
 
       if (asinoInterface !== undefined) {
         const object1 = getObjectResultFromAsinoObject(asinoInterface, references.clone().addParameters(layer));

@@ -15,7 +15,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'h',
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontSizeHorizontal1 }
       ]
@@ -33,7 +33,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'h',
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal1 }
       ]
@@ -51,7 +51,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'h',
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontLengthHorizontal }
       ]
@@ -69,7 +69,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'h',
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal2 }
       ]
@@ -87,7 +87,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'h',
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontSizeHorizontal2 }
       ]
@@ -105,7 +105,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontSizeVertical1 }
       ]
@@ -123,7 +123,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical1 }
       ]
@@ -141,7 +141,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontLengthVertical1 }
       ]
@@ -159,7 +159,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical2 }
       ]
@@ -177,7 +177,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontSizeVertical2 }
       ]
@@ -195,7 +195,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical3 }
       ]
@@ -213,7 +213,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontLengthVertical2 }
       ]
@@ -231,7 +231,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical4 }
       ]
@@ -249,7 +249,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'v',
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontSizeVertical3 }
       ]
@@ -262,15 +262,15 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeVertical1 },
                 { numberId: FontCurveVertical1 }
               ]
@@ -281,21 +281,21 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeHorizontal1 },
                 { numberId: FontCurveHorizontal1 }
               ]
@@ -306,11 +306,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
@@ -319,18 +319,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontSizeHorizontal1 },
         { numberId: FontCurveHorizontal1 }
       ]
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
@@ -344,11 +344,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveHorizontal2 },
             { numberId: FontSizeHorizontal2 }
           ]
@@ -358,28 +358,28 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal2 },
         { numberId: FontSizeHorizontal2 }
       ]
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeVertical1 },
                 { numberId: FontCurveVertical1 }
               ]
@@ -390,14 +390,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal2 },
         { numberId: FontSizeHorizontal2 }
       ]
     },
     dy: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontSizeVertical1 },
         { numberId: FontCurveVertical1 }
       ]
@@ -410,11 +410,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveVertical2 },
             { numberId: FontSizeVertical2 }
           ]
@@ -423,14 +423,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveHorizontal2 },
                 { numberId: FontSizeHorizontal2 }
               ]
@@ -439,11 +439,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveHorizontal2 },
                 { numberId: FontSizeHorizontal2 }
               ]
@@ -454,18 +454,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveVertical2 },
         { numberId: FontSizeVertical2 }
       ]
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveHorizontal2 },
             { numberId: FontSizeHorizontal2 }
           ]
@@ -474,7 +474,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveVertical2 },
         { numberId: FontSizeVertical2 }
       ]
@@ -486,11 +486,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -500,18 +500,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal1 }
       ]
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { numberId: FontCurveVertical3 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical3 }
           ]
@@ -520,7 +520,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal1 }
       ]
@@ -534,15 +534,15 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeVertical2 },
                 { numberId: FontCurveVertical3 }
               ]
@@ -553,21 +553,21 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeHorizontal1 },
                 { numberId: FontCurveHorizontal1 }
               ]
@@ -578,11 +578,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical2 },
             { numberId: FontCurveVertical3 }
           ]
@@ -591,18 +591,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontSizeHorizontal1 },
         { numberId: FontCurveHorizontal1 }
       ]
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical2 },
             { numberId: FontCurveVertical3 }
           ]
@@ -616,7 +616,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         { numberId: FontCurveHorizontal2 }
       ]
@@ -625,17 +625,17 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx2: { numberId: FontCurveHorizontal2 },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             { numberId: FontCurveVertical2 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical2 }
           ]
@@ -645,7 +645,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx: { numberId: FontCurveHorizontal2 },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical2 }
       ]
@@ -658,11 +658,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical1 }
           ]
@@ -671,17 +671,17 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             { numberId: FontCurveHorizontal2 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal2 }
           ]
@@ -690,21 +690,21 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical1 }
       ]
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal2 }
       ]
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical1 }
       ]
@@ -716,11 +716,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -730,21 +730,21 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal1 }
       ]
     },
     dy2: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         { numberId: FontCurveVertical1 }
       ]
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal1 }
       ]
@@ -757,11 +757,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveHorizontal2 },
             { numberId: FontSizeHorizontal2 }
           ]
@@ -771,28 +771,28 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal2 },
         { numberId: FontSizeHorizontal2 }
       ]
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical2 },
             { numberId: FontCurveVertical3 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeVertical2 },
                 { numberId: FontCurveVertical3 }
               ]
@@ -803,14 +803,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal2 },
         { numberId: FontSizeHorizontal2 }
       ]
     },
     dy: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontSizeVertical2 },
         { numberId: FontCurveVertical3 }
       ]
@@ -823,11 +823,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveVertical4 },
             { numberId: FontSizeVertical3 }
           ]
@@ -836,14 +836,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveHorizontal2 },
                 { numberId: FontSizeHorizontal2 }
               ]
@@ -852,11 +852,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveHorizontal2 },
                 { numberId: FontSizeHorizontal2 }
               ]
@@ -867,18 +867,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveVertical4 },
         { numberId: FontSizeVertical3 }
       ]
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveHorizontal2 },
             { numberId: FontSizeHorizontal2 }
           ]
@@ -887,7 +887,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy: {
       operator: '+',
-      numbers: [
+      numberList: [
         { numberId: FontCurveVertical4 },
         { numberId: FontSizeVertical3 }
       ]
@@ -899,15 +899,15 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeHorizontal1 },
                 { numberId: FontCurveHorizontal1 }
               ]
@@ -919,11 +919,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -932,14 +932,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveVertical4 },
                 { numberId: FontSizeVertical3 }
               ]
@@ -948,11 +948,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveVertical4 },
                 { numberId: FontSizeVertical3 }
               ]
@@ -963,11 +963,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -976,11 +976,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveVertical4 },
             { numberId: FontSizeVertical3 }
           ]
@@ -995,18 +995,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         { numberId: FontCurveVertical4 }
       ]
     },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal1 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -1023,7 +1023,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         { numberId: FontCurveHorizontal2 }
       ]
@@ -1032,17 +1032,17 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx2: { numberId: FontCurveHorizontal2 },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             { numberId: FontCurveVertical4 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical4 }
           ]
@@ -1052,7 +1052,7 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx: { numberId: FontCurveHorizontal2 },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical4 }
       ]
@@ -1065,11 +1065,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveVertical3 }
           ]
@@ -1078,17 +1078,17 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             { numberId: FontCurveHorizontal2 }
           ]
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal2 }
           ]
@@ -1097,21 +1097,21 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical3 }
       ]
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveHorizontal2 }
       ]
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         { numberId: FontCurveVertical3 }
       ]
@@ -1123,15 +1123,15 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     letter: 'c',
     dx1: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontSizeHorizontal1 },
                 { numberId: FontCurveHorizontal1 }
               ]
@@ -1143,11 +1143,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dy1: { integer: 0 },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -1156,14 +1156,14 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy2: {
       operator: '+',
-      numbers: [
+      numberList: [
         {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 0 },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveVertical2 },
                 { numberId: FontSizeVertical2 }
               ]
@@ -1172,11 +1172,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
         },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 { numberId: FontCurveVertical2 },
                 { numberId: FontSizeVertical2 }
               ]
@@ -1187,11 +1187,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dx: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -1200,11 +1200,11 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     },
     dy: {
       operator: '-',
-      numbers: [
+      numberList: [
         { integer: 0 },
         {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontCurveVertical2 },
             { numberId: FontSizeVertical2 }
           ]
@@ -1219,18 +1219,18 @@ export const systemCommandDefaults: { [id: string]: AsinoCommand; } = {
     dx1: { integer: 0 },
     dy1: {
       operator: '*',
-      numbers: [
+      numberList: [
         { numberId: CurveFraction },
         { numberId: FontCurveVertical2 }
       ]
     },
     dx2: {
       operator: '-',
-      numbers: [
+      numberList: [
         { numberId: FontCurveHorizontal1 },
         {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             { numberId: FontCurveHorizontal1 }
           ]

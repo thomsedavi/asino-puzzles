@@ -39,9 +39,9 @@ export type AsinoColor = {
   lightnessDark?: AsinoNumber;
   colorId?: string;
   operator?: ColorOperator;
-  booleans?: AsinoBoolean[]; // boolean inputs
-  colors?: AsinoColor[]; // color inputs
-  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
-  colorVariables?: { [id: string]: AsinoColor }; // color parameters
+  booleanList?: AsinoBoolean[]; // boolean inputs
+  colorList?: AsinoColor[]; // color inputs
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
+  colorVariableDictionary?: { [id: string]: AsinoColor }; // color parameters
   editedColor?: AsinoColor;
 }

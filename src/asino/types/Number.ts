@@ -6,13 +6,13 @@ export type AsinoNumber = {
   integer?: number;
   numberId?: string;
   operator?: NumberOperator; // formula for this number
-  numbers?: AsinoNumber[]; // number inputs
+  numberList?: AsinoNumber[]; // number inputs
   collapsed?: boolean; // collapse in editor
   numerator?: AsinoNumber,
   denominator?: AsinoNumber
   isInfinity?: boolean;
   isNegativeInfinity?: boolean;
-  numberVariables?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedNumber?: AsinoNumber;
 }
 

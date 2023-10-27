@@ -5,7 +5,7 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'd-de': {
     id: 'd-de',
     name: '1',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { numberId: FontSizeHorizontal2 },
@@ -72,22 +72,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: {
-      operator: 'IF_ELSE',
-      booleans: [{ booleanId: 'e-bc' }],
-      colors: [{ colorId: Color }, { colorId: ColorWrong }]
-    }
+    fill: { colorId: 'b-ca' }
   },
   'f-ba': {
     id: 'f-ba',
     name: '2',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { integer: 0 },
         dy: {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
@@ -184,18 +180,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'f-cd': {
     id: 'f-cd',
     name: '3a',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { integer: 0 },
         dy: {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
@@ -238,17 +234,17 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'e-ba': {
     id: 'e-ba',
     name: '3b',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 },
             { numberId: FontLengthHorizontal }
@@ -256,7 +252,7 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         dy: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 },
             { numberId: FontLengthVertical1 },
@@ -301,12 +297,12 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'c-bc': {
     id: 'c-bc',
     name: '4',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { numberId: FontSizeHorizontal1 },
@@ -421,17 +417,17 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'f-cf': {
     id: 'f-cf',
     name: '5',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 },
             { numberId: FontLengthHorizontal },
@@ -544,17 +540,17 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'e-ca': {
     id: 'e-ca',
     name: '6',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeHorizontal1 },
             { numberId: FontCurveHorizontal1 },
             { numberId: FontLengthHorizontal },
@@ -563,7 +559,7 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         dy: {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveHorizontal1 }
           ]
@@ -666,12 +662,12 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'f-ec': {
     id: 'f-ec',
     name: '7',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { integer: 0 },
@@ -762,18 +758,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'c-ab': {
     id: 'c-ab',
     name: '8a',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { integer: 0 },
         dy: {
           operator: '+',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 }
           ]
@@ -834,18 +830,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'b-be': {
     id: 'b-be',
     name: '8b',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { integer: 0 },
         dy: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 },
             { numberId: FontLengthVertical1 },
@@ -910,18 +906,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'f-db': {
     id: 'f-db',
     name: '9',
-    commands: [
+    commandList: [
       {
         letter: 'm',
         dx: { numberId: FontSizeHorizontal1 },
         dy: {
           operator: 'TOTAL',
-          numbers: [
+          numberList: [
             { numberId: FontSizeVertical1 },
             { numberId: FontCurveVertical1 },
             { numberId: FontLengthVertical1 },
@@ -1029,25 +1025,25 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'z'
       }
     ],
-    fill: { colorId: Color }
+    fill: { colorId: 'b-ca' }
   },
   'f-ee': {
     id: 'f-ee',
     name: 'Curve Right To Bottom',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: { integer: 1 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1059,22 +1055,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '-',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1087,14 +1083,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1103,14 +1099,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1119,22 +1115,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '-',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1147,14 +1143,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1167,14 +1163,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'L',
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1187,14 +1183,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1203,22 +1199,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '+',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1231,22 +1227,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '+',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1259,14 +1255,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1276,14 +1272,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 1 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1300,19 +1296,19 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'f-eb': {
     id: 'f-eb',
     name: 'Curve Left To Top',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1325,14 +1321,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1341,18 +1337,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1363,18 +1359,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1385,14 +1381,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1402,14 +1398,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 0 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1422,14 +1418,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 0 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1441,18 +1437,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '-',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1463,14 +1459,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1479,14 +1475,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1495,18 +1491,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '-',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1517,14 +1513,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1542,19 +1538,19 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'b-ff': {
     id: 'b-ff',
     name: 'Curve Top To Right',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1567,14 +1563,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1583,18 +1579,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '-',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1605,22 +1601,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '-',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1633,14 +1629,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1650,14 +1646,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 1 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1670,14 +1666,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 1 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1689,22 +1685,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '+',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -1717,14 +1713,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1733,14 +1729,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1749,18 +1745,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -1771,14 +1767,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1796,20 +1792,20 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'c-fb': {
     id: 'c-fb',
     name: 'Curve Right To Left',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: { integer: 0 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1822,14 +1818,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 0 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1842,14 +1838,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 1 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1862,14 +1858,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 1 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1886,19 +1882,19 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'a-ee': {
     id: 'a-ee',
     name: 'Curve Top To Bottom',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1911,14 +1907,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'L',
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1931,14 +1927,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'L',
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1951,14 +1947,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'L',
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -1976,20 +1972,20 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
   'b-bc': {
     id: 'b-bc',
     name: 'Curve Bottom To Left',
-    commands: [
+    commandList: [
       {
         letter: 'M',
         x: { integer: 0 },
         y: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2001,18 +1997,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '+',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -2023,14 +2019,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2039,14 +2035,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2055,22 +2051,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '+',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -2083,14 +2079,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2103,14 +2099,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'L',
         x: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2123,14 +2119,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         letter: 'C',
         x1: {
           operator: '-',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2139,22 +2135,22 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y1: {
           operator: '-',
-          numbers: [
+          numberList: [
             { integer: 1 },
             {
               operator: '*',
-              numbers: [
+              numberList: [
                 { numberId: CurveFraction },
                 {
                   operator: '-',
-                  numbers: [
+                  numberList: [
                     {
                       numerator: { integer: 1 },
                       denominator: { integer: 2 }
                     },
                     {
                       operator: '/',
-                      numbers: [
+                      numberList: [
                         { numberId: PathSize },
                         { integer: 2 }
                       ]
@@ -2167,18 +2163,18 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         x2: {
           operator: '*',
-          numbers: [
+          numberList: [
             { numberId: CurveFraction },
             {
               operator: '-',
-              numbers: [
+              numberList: [
                 {
                   numerator: { integer: 1 },
                   denominator: { integer: 2 }
                 },
                 {
                   operator: '/',
-                  numbers: [
+                  numberList: [
                     { numberId: PathSize },
                     { integer: 2 }
                   ]
@@ -2189,14 +2185,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         },
         y2: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]
@@ -2206,14 +2202,14 @@ export const systemPathDefaults: { [id: string]: AsinoPath; } = {
         x: { integer: 0 },
         y: {
           operator: '+',
-          numbers: [
+          numberList: [
             {
               numerator: { integer: 1 },
               denominator: { integer: 2 }
             },
             {
               operator: '/',
-              numbers: [
+              numberList: [
                 { numberId: PathSize },
                 { integer: 2 }
               ]

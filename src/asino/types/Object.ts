@@ -19,14 +19,25 @@ export type AsinoObjects = {
   id?: string;
   name?: string; // name of these objects
   operator?: ObjectsOperator;
-  objects?: AsinoObject[];
-  objectsList?: AsinoObjectsList;
+  objectList?: AsinoObject[];
+  objects?: AsinoObjects;
+  objectsList?: AsinoObjects[];
+  objectLists?: AsinoObjectsList;
   set?: AsinoSet;
   collapsed?: boolean; // collapse in editor
   editedObjects?: AsinoObjects;
 }
 
 export type ObjectResult = {
+  id?: string;
   classFixedId?: string; // fixed class of this object
   collectionId?: string; // collection that this object belongs to
+}
+
+export type ObjectListResult = {
+  objectList?: ObjectResult[];
+}
+
+export type ObjectsListResult = {
+  objectsList?: ObjectListResult[];
 }

@@ -12,6 +12,6 @@ export type AsinoLine = {
   [Stroke]?: AsinoColor; // the stroke for this line
   [StrokeWidth]?: AsinoNumber; // if this exists, draw stroke with width
   lineId?: string;
-  numberParams?: { [id: string]: AsinoNumber }; // number parameters
+  numberVariableDictionary?: { [id: string]: AsinoNumber }; // number parameters
   editedLine?: AsinoLine;
 }

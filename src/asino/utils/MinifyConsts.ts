@@ -56,6 +56,8 @@ export const Integer = 'ir';
 export const Interface = 'ie';
 export const InterfaceId = 'ieid';
 export const Interfaces = 'ies';
+export const IsInfinity = 'isiy';
+export const IsNegativeInfinity = 'isneiy';
 
 export const Layers = 'lrs';
 export const Line = 'le';
@@ -69,6 +71,7 @@ export const Numberr = 'nr';
 export const NumberId = 'nrid';
 export const Numbers = 'nrs';
 export const NumberInputs = 'nrits';
+export const NumberVariables = 'nrves';
 export const Numerator = 'nr';
 
 export const ObjectOutput = 'otot';
@@ -79,6 +82,7 @@ export const ObjectIds = 'otids';
 export const Objectt = 'ot';
 export const Objects = 'ots';
 export const Operator = 'or';
+export const ObjectList = 'otlt';
 
 export const PaddingTopHeight = 'pgtpht';
 export const PaddingRightWidth = 'pgrtwh';

@@ -12,10 +12,10 @@ export const drawControls = (puzzle: AsinoPuzzle, solution: Solution, selectClas
   const styles: { [id: string]: Style } = {};
   const references = new Variables(puzzle);
 
-  const classes = Object.entries(puzzle.classes ?? {}).filter(asinoClass => asinoClass[1].collectionId === selectedCollectionId);
+  const classes = Object.entries(puzzle.classDictionary ?? {}).filter(asinoClass => asinoClass[1].collectionId === selectedCollectionId);
 
   classes?.forEach((asinoClass: [string, AsinoClass], classIndex: number) => {
-    const result = getClassResultFromAsinoClass(asinoClass[1], references);
+    const result = getClassResultFromAsinoClass({ class: asinoClass[1] }, references, solution);
 
     result?.layers?.forEach((layer, layerIndex) => {
       layers.push(

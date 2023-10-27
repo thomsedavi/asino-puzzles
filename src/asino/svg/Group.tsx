@@ -55,8 +55,8 @@ export const drawGroup = (groups: (AsinoGroup | undefined)[], variables: Variabl
       rotate[Y] !== undefined && (yRotate = getValueFromNumberResult(getNumberResultFromAsinoNumber(rotate[Y], variables)) ?? 0);
     }
 
-    if (group?.layers !== undefined) {
-      layers = group.layers;
+    if (group?.layerList !== undefined) {
+      layers = group.layerList;
     }
   });
 
